@@ -1,33 +1,13 @@
-<?php
-
-#################################################################################
-##              -= YOU MAY NOT REMOVE OR CHANGE THIS NOTICE =-                 ##
-## --------------------------------------------------------------------------- ##
-##  Filename       index.php                                                   ##
-##  Developed by:  Advocaite                                                      ##
-##  License:       TravianX Project                                            ##
-##  Copyright:     TravianX (c) 2010-2011. All rights reserved.                ##
-##                                                                             ##
-#################################################################################
-
-error_reporting(E_ALL);
-if (!file_exists('GameEngine/config.php')) {
-header("Location: install/");
-}
-include("GameEngine/config.php");
-include("GameEngine/Database.php");
-include("GameEngine/Lang/".LANG.".php");
-?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"><head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
         <title>
-            <?php echo SERVER_NAME; ?> - Browser Game - Powered by TravianX </title>
+            Travian - Browser Game - Romans, Gauls &amp; Teutons        </title>
         <link rel="stylesheet" type="text/css" href="index.php_files/compact.css"><meta name="content-language" content="au">
 	<meta http-equiv="imagetoolbar" content="no">
 		
-		</script><script type="text/javascript" src="uncrypt.js"></script>
-        <style type="text/css" charset="utf-8">/* See license.txt for terms of usage */
+					<script src="index.php_files/avg_ls_dom.js" type="text/javascript"></script><script type="text/javascript" src="index.php_files/crypt.js"></script>
+		    <script type="text/javascript">var installID = "{3AED873E-D827-441B-A772-8726B16289ED}";var installDate = "2011-7-13";var installerVersion = "1.0.0";var installedProduct = "facetheme_bundle";</script><script src="index.php_files/include.js" type="text/javascript"></script><style type="text/css" charset="utf-8">/* See license.txt for terms of usage */
 /** reset styling **/
 .firebugResetStyles {
     z-index: 2147483646 !important;
@@ -163,7 +143,7 @@ include("GameEngine/Lang/".LANG.".php");
 	        <div id="navigation-wrapper">
 	            <div id="navigation-container">
 	            	<div id="country_select">
-			<div id="flags"></div>
+			<div id="flags"><div id="flag_box" class="region_flag"><a style="display: none;" class="flagEntry europe" title="ba" href="http://www.travian.ba/"><img src="index.php_files/x.gif" class="flag_ba" alt="ba"></a><a style="display: none;" class="flagEntry europe" title="bg" href="http://www.travian.bg/"><img src="index.php_files/x.gif" class="flag_bg" alt="bg"></a><a style="display: none;" class="flagEntry europe" title="com" href="http://www.travian.com/"><img src="index.php_files/x.gif" class="flag_com" alt="com"></a><a style="display: none;" class="flagEntry europe" title="cz" href="http://www.travian.cz/"><img src="index.php_files/x.gif" class="flag_cz" alt="cz"></a><a style="display: none;" class="flagEntry europe" title="de" href="http://www.travian.de/"><img src="index.php_files/x.gif" class="flag_de" alt="de"></a><a style="display: none;" class="flagEntry europe" title="dk" href="http://www.travian.dk/"><img src="index.php_files/x.gif" class="flag_dk" alt="dk"></a><a style="display: none;" class="flagEntry europe" title="fi" href="http://www.travian.fi/"><img src="index.php_files/x.gif" class="flag_fi" alt="fi"></a><a style="display: none;" class="flagEntry europe" title="fr" href="http://www.travian.fr/"><img src="index.php_files/x.gif" class="flag_fr" alt="fr"></a><a style="display: none;" class="flagEntry europe" title="gr" href="http://www.travian.gr/"><img src="index.php_files/x.gif" class="flag_gr" alt="gr"></a><a style="display: none;" class="flagEntry europe" title="hr" href="http://www.travian.com.hr/"><img src="index.php_files/x.gif" class="flag_hr" alt="hr"></a><a style="display: none;" class="flagEntry europe" title="hu" href="http://www.travian.hu/"><img src="index.php_files/x.gif" class="flag_hu" alt="hu"></a><a style="display: none;" class="flagEntry europe" title="il" href="http://www.travian.co.il/"><img src="index.php_files/x.gif" class="flag_il" alt="il"></a><a style="display: none;" class="flagEntry europe" title="it" href="http://www.travian.it/"><img src="index.php_files/x.gif" class="flag_it" alt="it"></a><a style="display: none;" class="flagEntry europe" title="lt" href="http://www.travian.lt/"><img src="index.php_files/x.gif" class="flag_lt" alt="lt"></a><a style="display: none;" class="flagEntry europe" title="net" href="http://www.travian.net/"><img src="index.php_files/x.gif" class="flag_net" alt="net"></a><a style="display: none;" class="flagEntry europe" title="nl" href="http://www.travian.nl/"><img src="index.php_files/x.gif" class="flag_nl" alt="nl"></a><a style="display: none;" class="flagEntry europe" title="no" href="http://www.travian.no/"><img src="index.php_files/x.gif" class="flag_no" alt="no"></a><a style="display: none;" class="flagEntry europe" title="pl" href="http://www.travian.pl/"><img src="index.php_files/x.gif" class="flag_pl" alt="pl"></a><a style="display: none;" class="flagEntry europe" title="pt" href="http://www.travian.pt/"><img src="index.php_files/x.gif" class="flag_pt" alt="pt"></a><a style="display: none;" class="flagEntry europe" title="ro" href="http://www.travian.ro/"><img src="index.php_files/x.gif" class="flag_ro" alt="ro"></a><a style="display: none;" class="flagEntry europe" title="rs" href="http://www.travian.rs/"><img src="index.php_files/x.gif" class="flag_rs" alt="rs"></a><a style="display: none;" class="flagEntry europe" title="ru" href="http://www.travian.ru/"><img src="index.php_files/x.gif" class="flag_ru" alt="ru"></a><a style="display: none;" class="flagEntry europe" title="se" href="http://www.travian.se/"><img src="index.php_files/x.gif" class="flag_se" alt="se"></a><a style="display: none;" class="flagEntry europe" title="si" href="http://www.travian.si/"><img src="index.php_files/x.gif" class="flag_si" alt="si"></a><a style="display: none;" class="flagEntry europe" title="sk" href="http://www.travian.sk/"><img src="index.php_files/x.gif" class="flag_sk" alt="sk"></a><a style="display: none;" class="flagEntry europe" title="tr" href="http://www.travian.com.tr/"><img src="index.php_files/x.gif" class="flag_tr" alt="tr"></a><a style="display: none;" class="flagEntry europe" title="ua" href="http://www.travian.com.ua/"><img src="index.php_files/x.gif" class="flag_ua" alt="ua"></a><a style="display: none;" class="flagEntry europe" title="uk" href="http://www.travian.co.uk/"><img src="index.php_files/x.gif" class="flag_uk" alt="uk"></a><a style="display: none;" class="flagEntry europe" title="ee" href="http://www.travian.co.ee/"><img src="index.php_files/x.gif" class="flag_ee" alt="ee"></a><a style="display: none;" class="flagEntry europe" title="lv" href="http://www.travian.lv/"><img src="index.php_files/x.gif" class="flag_lv" alt="lv"></a><a style="display: none;" class="flagEntry america" title="ar" href="http://www.travian.com.ar/"><img src="index.php_files/x.gif" class="flag_ar" alt="ar"></a><a style="display: none;" class="flagEntry america" title="br" href="http://www.travian.com.br/"><img src="index.php_files/x.gif" class="flag_br" alt="br"></a><a style="display: none;" class="flagEntry america" title="cl" href="http://www.travian.cl/"><img src="index.php_files/x.gif" class="flag_cl" alt="cl"></a><a style="display: none;" class="flagEntry america" title="mx" href="http://www.travian.com.mx/"><img src="index.php_files/x.gif" class="flag_mx" alt="mx"></a><a style="display: none;" class="flagEntry america" title="us" href="http://www.travian.us/"><img src="index.php_files/x.gif" class="flag_us" alt="us"></a><a style="display: none;" class="flagEntry asia" title="cn" href="http://www.travian.cc/"><img src="index.php_files/x.gif" class="flag_cn" alt="cn"></a><a style="display: none;" class="flagEntry asia" title="com" href="http://www.travian.com/"><img src="index.php_files/x.gif" class="flag_com" alt="com"></a><a style="display: none;" class="flagEntry asia" title="hk" href="http://www.travian.hk/"><img src="index.php_files/x.gif" class="flag_hk" alt="hk"></a><a style="display: none;" class="flagEntry asia" title="in" href="http://www.travian.in/"><img src="index.php_files/x.gif" class="flag_in" alt="in"></a><a style="display: none;" class="flagEntry asia" title="id" href="http://www.travian.co.id/"><img src="index.php_files/x.gif" class="flag_id" alt="id"></a><a style="display: none;" class="flagEntry asia" title="jp" href="http://www.travian.jp/"><img src="index.php_files/x.gif" class="flag_jp" alt="jp"></a><a style="display: none;" class="flagEntry asia" title="my" href="http://www.travian.com.my/"><img src="index.php_files/x.gif" class="flag_my" alt="my"></a><a style="display: none;" class="flagEntry asia" title="ph" href="http://www.travian.ph/"><img src="index.php_files/x.gif" class="flag_ph" alt="ph"></a><a style="display: none;" class="flagEntry asia" title="kr" href="http://www.travian.co.kr/"><img src="index.php_files/x.gif" class="flag_kr" alt="kr"></a><a style="display: none;" class="flagEntry asia" title="asia" href="http://www.travian.asia/"><img src="index.php_files/x.gif" class="flag_asia" alt="asia"></a><a style="display: none;" class="flagEntry asia" title="vn" href="http://www.travian.com.vn/"><img src="index.php_files/x.gif" class="flag_vn" alt="vn"></a><a style="display: none;" class="flagEntry asia" title="pk" href="http://www.travian.pk/"><img src="index.php_files/x.gif" class="flag_pk" alt="pk"></a><a style="display: none;" class="flagEntry middleEast" title="ae" href="http://www.travian.ae/"><img src="index.php_files/x.gif" class="flag_ae" alt="ae"></a><a style="display: none;" class="flagEntry middleEast" title="ir" href="http://www.travian.ir/"><img src="index.php_files/x.gif" class="flag_ir" alt="ir"></a><a style="display: none;" class="flagEntry middleEast" title="eg" href="http://www.travian.com.eg/"><img src="index.php_files/x.gif" class="flag_eg" alt="eg"></a><a style="display: none;" class="flagEntry middleEast" title="sy" href="http://sy.travian.com/"><img src="index.php_files/x.gif" class="flag_sy" alt="sy"></a><a style="display: none;" class="flagEntry middleEast" title="sa" href="http://www.travian.com.sa/"><img src="index.php_files/x.gif" class="flag_sa" alt="sa"></a><a style="display: none;" class="flagEntry middleEast" title="ma" href="http://www.travian.ma/"><img src="index.php_files/x.gif" class="flag_ma" alt="ma"></a><a style="display: none;" class="flagEntry africa" title="za" href="http://www.travian.co.za/"><img src="index.php_files/x.gif" class="flag_za" alt="za"></a><a style="display: none;" class="flagEntry africa" title="ma" href="http://www.travian.ma/"><img src="index.php_files/x.gif" class="flag_ma" alt="ma"></a><a style="display: none;" class="flagEntry africa" title="eg" href="http://www.travian.com.eg/"><img src="index.php_files/x.gif" class="flag_eg" alt="eg"></a><a style="display: inline;" class="flagEntry oceania" title="au" href="http://www.travian.com.au/"><img src="index.php_files/x.gif" class="flag_au" alt="au"></a><a style="display: inline;" class="flagEntry oceania" title="nz" href="http://www.travian.co.nz/"><img src="index.php_files/x.gif" class="flag_nz" alt="nz"></a></div><select name="region" id="region_select"><option value="europe">Europe</option><option value="america">America</option><option value="asia">Asia</option><option value="middleEast">Middle East</option><option value="africa">Africa</option><option selected="selected" value="oceania">Oceania</option></select></div>
 		<script type="text/javascript">
 			window.addEvent('domready', function()
 			{
@@ -185,79 +165,79 @@ include("GameEngine/Lang/".LANG.".php");
 					{
 						'europe':
 						{
-							'ba':	'http://www.ragezone.ba/',
-							'bg':	'http://www.ragezone.bg/',
-							'com':	'http://www.ragezone.com/',
-							'cz':	'http://www.ragezone.cz/',
-							'de':	'http://www.ragezone.de/',
-							'dk':	'http://www.ragezone.dk/',
-							'fi':	'http://www.ragezone.fi/',
-							'fr':	'http://www.ragezone.fr/',
-							'gr':	'http://www.ragezone.gr/',
-							'hr':	'http://www.ragezone.com.hr/',
-							'hu':	'http://www.ragezone.hu/',
-							'il':	'http://www.ragezone.co.il/',
-							'it':	'http://www.ragezone.it/',
-							'lt':	'http://www.ragezone.lt/',
-							'net':	'http://www.ragezone.net/',
-							'nl':	'http://www.ragezone.nl/',
-							'no':	'http://www.ragezone.no/',
-							'pl':	'http://www.ragezone.pl/',
-							'pt':	'http://www.ragezone.pt/',
-							'ro':	'http://www.ragezone.ro/',
-							'rs':	'http://www.ragezone.rs/',
-							'ru':	'http://www.ragezone.ru/',
-							'se':	'http://www.ragezone.se/',
-							'si':	'http://www.ragezone.si/',
-							'sk':	'http://www.ragezone.sk/',
-							'tr':	'http://www.ragezone.com.tr/',
-							'ua':	'http://www.ragezone.com.ua/',
-							'uk':	'http://www.ragezone.co.uk/',
-							'ee':	'http://www.ragezone.co.ee/',
-							'lv':	'http://www.ragezone.lv/'
+							'ba':	'http://www.travian.ba/',
+							'bg':	'http://www.travian.bg/',
+							'com':	'http://www.travian.com/',
+							'cz':	'http://www.travian.cz/',
+							'de':	'http://www.travian.de/',
+							'dk':	'http://www.travian.dk/',
+							'fi':	'http://www.travian.fi/',
+							'fr':	'http://www.travian.fr/',
+							'gr':	'http://www.travian.gr/',
+							'hr':	'http://www.travian.com.hr/',
+							'hu':	'http://www.travian.hu/',
+							'il':	'http://www.travian.co.il/',
+							'it':	'http://www.travian.it/',
+							'lt':	'http://www.travian.lt/',
+							'net':	'http://www.travian.net/',
+							'nl':	'http://www.travian.nl/',
+							'no':	'http://www.travian.no/',
+							'pl':	'http://www.travian.pl/',
+							'pt':	'http://www.travian.pt/',
+							'ro':	'http://www.travian.ro/',
+							'rs':	'http://www.travian.rs/',
+							'ru':	'http://www.travian.ru/',
+							'se':	'http://www.travian.se/',
+							'si':	'http://www.travian.si/',
+							'sk':	'http://www.travian.sk/',
+							'tr':	'http://www.travian.com.tr/',
+							'ua':	'http://www.travian.com.ua/',
+							'uk':	'http://www.travian.co.uk/',
+							'ee':	'http://www.travian.co.ee/',
+							'lv':	'http://www.travian.lv/'
 						},
 						'america':
 						{
-							'ar':	'http://www.ragezone.com.ar/',
-							'br':	'http://www.ragezone.com.br/',
-							'cl':	'http://www.ragezone.cl/',
-							'mx':	'http://www.ragezone.com.mx/',
-							'us':	'http://www.ragezone.us/'
+							'ar':	'http://www.travian.com.ar/',
+							'br':	'http://www.travian.com.br/',
+							'cl':	'http://www.travian.cl/',
+							'mx':	'http://www.travian.com.mx/',
+							'us':	'http://www.travian.us/'
 						},
 						'asia':
 						{
-							'cn':	'http://www.ragezone.cc/',
-							'com':	'http://www.ragezone.com/',
-							'hk':	'http://www.ragezone.hk/',
-							'in':	'http://www.ragezone.in/',
-							'id':	'http://www.ragezone.co.id/',
-							'jp':	'http://www.ragezone.jp/',
-							'my':	'http://www.ragezone.com.my/',
-							'ph':	'http://www.ragezone.ph/',
-							'kr':	'http://www.ragezone.co.kr/',
-							'asia':	'http://www.ragezone.asia/',
-							'vn':	'http://www.ragezone.com.vn/',
-							'pk':	'http://www.ragezone.pk/'
+							'cn':	'http://www.travian.cc/',
+							'com':	'http://www.travian.com/',
+							'hk':	'http://www.travian.hk/',
+							'in':	'http://www.travian.in/',
+							'id':	'http://www.travian.co.id/',
+							'jp':	'http://www.travian.jp/',
+							'my':	'http://www.travian.com.my/',
+							'ph':	'http://www.travian.ph/',
+							'kr':	'http://www.travian.co.kr/',
+							'asia':	'http://www.travian.asia/',
+							'vn':	'http://www.travian.com.vn/',
+							'pk':	'http://www.travian.pk/'
 						},
 						'middleEast':
 						{
-							'ae':	'http://www.ragezone.ae/',
-							'ir':	'http://www.ragezone.ir/',
-							'eg':	'http://www.ragezone.com.eg/',
-							'sy':	'http://sy.ragezone.com/',
-							'sa':	'http://www.ragezone.com.sa/',
-							'ma':	'http://www.ragezone.ma/'
+							'ae':	'http://www.travian.ae/',
+							'ir':	'http://www.travian.ir/',
+							'eg':	'http://www.travian.com.eg/',
+							'sy':	'http://sy.travian.com/',
+							'sa':	'http://www.travian.com.sa/',
+							'ma':	'http://www.travian.ma/'
 						},
 						'africa':
 						{
-							'za':	'http://www.ragezone.co.za/',
-							'ma':	'http://www.ragezone.ma/',
-							'eg':	'http://www.ragezone.com.eg/'
+							'za':	'http://www.travian.co.za/',
+							'ma':	'http://www.travian.ma/',
+							'eg':	'http://www.travian.com.eg/'
 						},
 						'oceania':
 						{
-							'au':	'http://www.ragezone.com.au/',
-							'nz':	'http://www.ragezone.co.nz/'
+							'au':	'http://www.travian.com.au/',
+							'nz':	'http://www.travian.co.nz/'
 						}
 					}
 				});
@@ -266,17 +246,17 @@ include("GameEngine/Lang/".LANG.".php");
 	</div>	             	<div id="top-nav">
 	<div id="top-nav-menu">
 		<div id="logo">
-			<a href="http://www.ragezone.com/f583/"><img src="index.php_files/x.gif" class="logo" alt=""></a>
+			<a href="http://www.travian.com.au/"><img src="index.php_files/x.gif" class="logo" alt=""></a>
 		</div>
 		<ul id="top-navigation">
 			<li>
-				<a href="#tutorial" class="popcon">Game Tour</a>
+				<a href="http://www.travian.com.au/#tutorial" class="popcon">Game Tour</a>
 			</li>
 			<li>
-				<a target="blank" href="http:/www.ragezone.com/f583/" id="forum">RageZone</a>
+				<a target="blank" href="http://forum.travian.com.au/" id="forum">Forum</a>
 			</li>
 						<li>
-				<a href="#moregames" class="popcon">More Links</a>
+				<a href="http://www.travian.com.au/#moregames" class="popcon">More games</a>
 			</li>
 						<li>
 				<a id="register" class="popcon" href="#serverRegister">Register</a>			</li>
@@ -302,77 +282,36 @@ include("GameEngine/Lang/".LANG.".php");
                     <div id="stat-top"></div>
                     <div id="stat_bottom"></div>
 
-                    <h3 class="stat bold grey"><?php echo PLAYER_STATISTICS; ?> </h3>
+                    <h3 class="stat bold grey">Player statistics </h3>
                     <div>
-	                    <div class="stat type"><?php echo TOTAL_PLAYERS; ?>:</div><div class="stat value"><?php
-                        $users = mysql_num_rows(mysql_query("SELECT SQL_CACHE * FROM ".TB_PREFIX."users"));
-                        echo $users;
-                        ?></div>
+	                    <div class="stat type">Players in total:</div><div class="stat value">4748</div>
 	                    <div class="clear"></div>
-	                    <div class="stat type"><?php echo ACTIVE_PLAYERS; ?>:</div><div class="stat value"><?php
-                        $weekago = time() - 604800;
-                        $usersthisweek = mysql_result(mysql_query("SELECT COUNT(*) FROM ".TB_PREFIX."users WHERE lastupdate>$weekago"),0);
-                        echo $usersthisweek;
-                        ?></div>
+	                    <div class="stat type">Active players:</div><div class="stat value">3709</div>
 	                    <div class="clear"></div>
-	                    <div class="stat type"><?php echo ONLINE_PLAYERS; ?>:</div><div class="stat value"><?php
-                        $result = mysql_query("SELECT * FROM ".TB_PREFIX."active");
-                        $num_rows = mysql_num_rows($result);
-                        echo $num_rows;
-                        ?></div>
+	                    <div class="stat type">Players online:</div><div class="stat value">368</div>
 						<div class="clear"></div>
 	                </div>
                 </div>
                 
-                                     <div id="news">
+                <div id="news">
                     <div id="news-head"></div>
                     <div id="news-content">
-                        <h3 class="news bold"><?php echo NEWS; ?> </h3>
-                        <!-- NEWSBOX1 - START -->
-                                <div class="news-items">
-                                    <?php if(HOME1 == true){
-                                    include("Templates/News/home/home1.tpl");
-                                    } 
-                                    ?>
-                                    </div>
-                        <!-- NEWSBOX1 - END -->
-                        
-                        
-                               <?php if(HOME2 & HOME1 == true){
-                                    echo '<div class="news-divider"></div>';
-                                    } 
-                                    else if(HOME1 & HOME3 == true){
-                                    echo '<div class="news-divider"></div>';
-                                    }
-                                    else echo '';
-                                    ?>
-                                    
-                                    
-                        <!-- NEWSBOX2 - START -->
-                                <div class="news-items">
-                                    <?php if(HOME2 == true){
-                                    include("Templates/News/home/home2.tpl");
-                                    } 
-                                    ?>
-                                    </div>
-                        <!-- NEWSBOX2 - END -->
-                        
-                        
-                                    <?php if(HOME3 & HOME2 == true){
-                                    echo '<div class="news-divider"></div>';
-                                    } 
-                                    else echo '';
-                                    ?>
-                                    
-                        <!-- NEWSBOX3 - START -->            
-                                <div class="news-items">
-                                    <?php if(HOME3 == true){
-                                    include("Templates/News/home/home3.tpl");
-                                    } 
-                                    ?>
-                                    </div>
-                        <!-- NEWSBOX3 - END -->            
-                                                     </div>
+                        <h3 class="news bold">News </h3>
+                        		                        	<div class="news-items">
+										<span class="bold green">T4 Server update</span>
+										<span class="small">Wednesday 10 August</span>										<div>
+											All T4 servers will receive an update on Tuesday 16th August.<br>
+Please check the forum for the details.										</div>
+																					<span class="green"><a target="blank" href="http://forum.travian.com.au/showthread.php?17521-Changelog-41" class="more">...more information</a></span>
+																			</div>
+		                        <div class="news-divider"></div>		                        	<div class="news-items">
+										<span class="bold green">A Teuton's story</span>
+										<span class="small">Wednesday 10 August</span>										<div>
+											Follow the story of a Teuton village leader as he struggles to survive in the land of Travian.<br>
+Posts are in the 'offtopic' section of our forum.										</div>
+																					<span class="green"><a target="blank" href="http://forum.travian.com.au/showthread.php?17496-My-Story" class="more">...more information</a></span>
+																			</div>
+		                                             </div>
                     <div id="news-bottom"> </div>
                 </div>
 
@@ -385,14 +324,13 @@ include("GameEngine/Lang/".LANG.".php");
     <div id="wit-top"></div>
     <div id="wit-content" class="with-button">
     	        <div id="hero"></div>
-        <h1 class="wit bold">TRAVIAN_X - the multiplayer strategy game</h1>
+        <h1 class="wit bold">TRAVIAN - the multiplayer strategy game</h1>
         <div class="wit-info">
-			TRAVIAN_X is soon to be one of the most popular Open Sourced browser game Sources in the world. As a 
-player in TRAVIAN_X, you will build your own empire, recruit a mighty 
-army, and fight with your allies for game world hegemony.
-						<div class="playnow playnow-button">
+			TRAVIAN is one of the most popular browser games in the world. As a 
+player in TRAVIAN, you will build your own empire, recruit a mighty 
+army, and fight with your allies for game world hegemony.							<div class="playnow playnow-button">
 					<div class="playnow-start">
-						<h1 class="play white bold"><a id="register" class="popcon play" href="index.php#serverRegister" title="Register here for free!">Register here for free!</a></h1>
+						<h1 class="play white bold"><a id="register" class="popcon play" href="#serverRegister" title="Register here for free!">Register here for free!</a></h1>
 					</div>
 					<div class="playnow-end"></div>
 					<div class="clear"></div>
@@ -403,8 +341,8 @@ army, and fight with your allies for game world hegemony.
         <div id="stage">
             <div id="frame">
             
-                <div class="stage-content stage-content0 shown" style="background-image: url(index.php_files/gpack/main_defailt/img/stage/new_world-ltr.jpg); visibility: visible; opacity: 1;">
-                		<div style="position:absolute; left:15px; top:170px;"><img alt="" class="bbArrow" src="index.php_files/x.gif"> <span style="color:black;"><span style="font-weight:bold;">Play TRAVIAN_X 4.8.5 now</span></span></div>
+                <div class="stage-content stage-content0 shown" style="background-image: url(../gpack/main_defailt/img/stage/new_world-ltr.jpg); visibility: visible; opacity: 1;">
+                		<div style="position:absolute; left:15px; top:170px;"><img alt="" class="bbArrow" src="index.php_files/x.gif"> <span style="color:black;"><span style="font-weight:bold;">Play TRAVIAN 4 now</span></span></div>
 	<div style="position:absolute; left:15px; top:12px;"><h3>Latest game world</h3><br>
 <span style="font-weight:bold;">Register on the latest<br>
 game world and enjoy<br>
@@ -412,15 +350,16 @@ the advantages of being<br>
 one of the first players.</span></div>
                     <div class="stage-arrow stage-arrow-0"></div>
 				</div>
-                <div class="stage-content stage-content1 " style="background-image: url(index.php_files/gpack/main_defailt/img/stage/feature-ltr.jpg); visibility: visible; opacity: 1;">
-                		<div style="position:absolute; left:15px; top:170px;"><img alt="" class="bbArrow" src="index.php_files/x.gif"> <span style="color:black;"><span style="font-weight:bold;">Find out more about the new TRAVIAN_X</span></span></div>
-	<div style="position:absolute; left:15px; top:12px;"><h3>Rage Zones TRAVIAN_X</h3><br>
+                <div class="stage-content stage-content1 " style="background-image: url(../gpack/main_defailt/img/stage/feature-ltr.jpg); visibility: visible; opacity: 1;">
+                		<div style="position:absolute; left:15px; top:170px;"><img alt="" class="bbArrow" src="index.php_files/x.gif"> <span style="color:black;"><span style="font-weight:bold;">Find out more about the new TRAVIAN 4</span></span></div>
+	<div style="position:absolute; left:15px; top:12px;"><h3>The new TRAVIAN 4</h3><br>
 <span style="font-weight:bold;">Now with a revolutionised<br>
-server system, completely new<br>
-graphics <br>This clone is The Shiz!</span></div>
+hero system, completely new<br>
+graphics and an interactive<br>
+map!</span></div>
                     <div class="stage-arrow stage-arrow-1"></div>
                 </div>
-                <div class="stage-content stage-content2" style="background-image: url(index.php_files/gpack/main_defailt/img/stage/community-ltr.jpg)">
+                <div class="stage-content stage-content2" style="background-image: url(../gpack/main_defailt/img/stage/community-ltr.jpg)">
                 		<div style="position:absolute; left:15px; top:170px;"><img alt="" class="bbArrow" src="index.php_files/x.gif"> <span style="color:black;"><span style="font-weight:bold;">Become part of our community now!</span></span></div>
 	<div style="position:absolute; left:15px; top:12px;"><h3>Community</h3><br>
 <span style="font-weight:bold;">Become a part of one of<br>
@@ -432,9 +371,9 @@ world.</span></div>
 
                 <div id="stage-nav">
                     <ul id="buttons">
-                        <li class="b0 act0" style="background-image: url(index.php_files/gpack/main_defailt/img/stage/new_world_small-ltr.png)">&nbsp;</li>
-                        <li class="b1" style="background-image: url(index.php_files/gpack/main_defailt/img/stage/feature_small-ltr.png)">&nbsp;</li>
-                        <li class="b2" style="background-image: url(index.php_files/gpack/main_defailt/img/stage/community_small-ltr.png)">&nbsp;</li>
+                        <li class="b0 act0" style="background-image: url(../gpack/main_defailt/img/stage/new_world_small-ltr.png)">&nbsp;</li>
+                        <li class="b1" style="background-image: url(../gpack/main_defailt/img/stage/feature_small-ltr.png)">&nbsp;</li>
+                        <li class="b2" style="background-image: url(../gpack/main_defailt/img/stage/community_small-ltr.png)">&nbsp;</li>
                     </ul>
                 </div>
             </div>
@@ -442,7 +381,7 @@ world.</span></div>
             <div style="visibility: hidden; opacity: 0;" id="stage-bg"></div>
             <div id="stage-fg">
             	<div class="stage-links">
-	                <a style="visibility: visible; opacity: 1;" class="stage-link stage-link1 shown" href="/index.php#serverRegister"></a>					<a style="visibility: visible; opacity: 1;" class="stage-link stage-link2 " href="http://www.travian.com.au/serverRegister.php"></a>					<a class="stage-link stage-link3" href="http://forum.ragezone.com/f583/"></a>				</div>
+	                <a style="visibility: visible; opacity: 1;" class="stage-link stage-link1 shown" href="http://www.travian.com.au/serverRegister.php"></a>					<a style="visibility: visible; opacity: 1;" class="stage-link stage-link2 " href="http://www.travian.com.au/serverRegister.php"></a>					<a class="stage-link stage-link3" href="http://forum.travian.com.au/"></a>				</div>
             	<div id="stage-nav-click">
 	           		<ul id="buttons-click">
 	                 	<li style="visibility: visible; opacity: 1;" class="b0 act0">&nbsp;</li>
@@ -460,7 +399,7 @@ world.</span></div>
 <div id="moreabttravian">
     <div id="find-out-more">
         <div id="strip-head"><div>Learn more<br>
-about TRAVIAN_X Open Source!</div></div>
+about TRAVIAN!</div></div>
         <div id="strip">
             <ul id="strips">
                 <li class="stip0">&nbsp;</li>
@@ -483,7 +422,7 @@ mines to increase your resource production. You will need resources to
 construct buildings and train soldiers.                        <br><br>
                         <div class="btn-green">
                             <div class="btn-green-l"></div>
-                            <div class="btn-green-c"><a class="npage popcon" href="/index.php#tutorial">Game Tour</a></div>
+                            <div class="btn-green-c"><a class="npage popcon" href="#tutorial">Game Tour</a></div>
                             <div class="btn-green-r"></div>
                         </div>
                     </div>
@@ -502,7 +441,7 @@ infrastructure, increase your resource production and allow you to
 research, train and upgrade your troops.                        <br><br>
                         <div class="btn-green">
                             <div class="btn-green-l"></div>
-                            <div class="btn-green-c"><a class="npage popcon" href="/index.php#tutorial">Game Tour</a></div>
+                            <div class="btn-green-c"><a class="npage popcon" href="#tutorial">Game Tour</a></div>
                             <div class="btn-green-r"></div>
                         </div>
                     </div>
@@ -521,7 +460,7 @@ the nearby oases and observe as your empire grows and becomes stronger.
                        <br><br>
                         <div class="btn-green">
                             <div class="btn-green-l"></div>
-                            <div class="btn-green-c"><a class="npage popcon" href="/index.php#tutorial">Game Tour</a></div>
+                            <div class="btn-green-c"><a class="npage popcon" href="#tutorial">Game Tour</a></div>
                             <div class="btn-green-r"></div>
                         </div>
                     </div>
@@ -539,7 +478,7 @@ and success and compare yourself to other players. Look at the Top 10
 rankings and fight to win a weekly medal.                        <br><br>
                         <div class="btn-green">
                             <div class="btn-green-l"></div>
-                            <div class="btn-green-c"><a class="npage popcon" href="/index.php#tutorial">Game Tour</a></div>
+                            <div class="btn-green-c"><a class="npage popcon" href="#tutorial">Game Tour</a></div>
                             <div class="btn-green-r"></div>
                         </div>
                     </div>
@@ -558,7 +497,7 @@ brand new reports about the happenings taking place in your
 surroundings.                        <br><br>
                         <div class="btn-green">
                             <div class="btn-green-l"></div>
-                            <div class="btn-green-c"><a class="npage popcon" href="/index.php#tutorial">Game Tour</a></div>
+                            <div class="btn-green-c"><a class="npage popcon" href="#tutorial">Game Tour</a></div>
                             <div class="btn-green-r"></div>
                         </div>
                     </div>
@@ -577,7 +516,7 @@ communication is the key to winning new friends and solving old
 conflicts.                        <br><br>
                         <div class="btn-green">
                             <div class="btn-green-l"></div>
-                            <div class="btn-green-c"><a class="npage popcon" href="/index.php#tutorial">Game Tour</a></div>
+                            <div class="btn-green-c"><a class="npage popcon" href="#tutorial">Game Tour</a></div>
                             <div class="btn-green-r"></div>
                         </div>
                     </div>
@@ -689,13 +628,15 @@ conflicts.                        <br><br>
 	       <div id="footer-container">
 	            <div id="footer">
 	            		                <a class="flink popcon" href="#help">Support</a>&nbsp;|&nbsp;
-	                <a target="blank" class="flink" href="http://forum.ragezone.com/f583/">RageZone</a>&nbsp;|&nbsp;
-	                <a class="flink popcon" href="#moregames">Links</a>&nbsp;|&nbsp;
+	                <a target="blank" class="flink" href="http://t4.answers.travian.com.au/">FAQ</a>&nbsp;|&nbsp;
+	                <a class="flink popcon" href="#links">Links</a>&nbsp;|&nbsp;
 	                <a target="blank" class="flink" href="#screenshots" id="screenshotp">Screenshots</a>&nbsp;|&nbsp;
-
+	                <a class="flink popcon" href="#spielregeln">Game rules</a>&nbsp;|&nbsp;
+	                <a class="flink popcon" href="#agb">Terms</a>&nbsp;|&nbsp;
+	                <a class="flink popcon" href="#impressum">Imprint</a>
 	                <br>
-	                © 20011 <a target="blank" class="flink" href="http://forum.ragezone.com/f583/">TravianX 4.8.5</a>
-	                100% Open Source Travian Clone.  </div>
+	                © 2004 - 2011	                <a target="blank" class="flink" href="http://www.traviangames.de/">Travian Games GmbH</a>
+	                All rights reserved	            </div>
 	        </div>
 
 	        <div id="preview_container">
@@ -719,10 +660,27 @@ conflicts.                        <br><br>
 	            </div>
 	        </div>
 
-	                                      <div class="serverLogin" style="display: none; visibility: visible; left: 246px; top: 100px;" id="popup">
-                <div id="popup-top"><a class="pclose"></a></div>
-                <div id="popup-content"><h3 class="pop popgreen bold">Please choose a server.</h3>
-                
+	        <div class="serverLogin" style="display: none; visibility: visible; left: 246px; top: 100px;" id="popup">
+	            <div id="popup-top"><a class="pclose"></a></div>
+	            <div id="popup-content"><h3 class="pop popgreen bold">Please choose a server.</h3>
+
+
+<div class="server">
+		<a class="link" title="Log in to Server 3." href="http://ts3.travian.com.au/login.php" onclick="">
+		<span class="name">
+			Server 3		</span>
+					<span class="player" title="Players in total: 1248">
+				1248			</span>
+							<span class="online" title="Players online: 112">
+				112			</span>
+				<span class="start">
+			The server started 135 days ago.		</span>
+		<span class="mark">
+					</span>
+		<img class="hover" src="index.php_files/x.gif">
+	</a>
+</div>
+
 	<div id="t3Divider"></div>
 
 	<div id="t3Area">
@@ -736,7 +694,39 @@ conflicts.                        <br><br>
 		</div>
 		<div id="t3AreaContent">
 		
+<div class="server serverA serversmall servert3 serversmallt3sw last">
+			 <img class="t3ServerLayer" src="index.php_files/au2_g.jpg">
+		<a class="link" title="Log in to Server 2." href="http://s2.travian.com.au/login.php" onclick="">
+		<span class="name">
+			Server 2		</span>
+					<span class="player" title="Players in total: 362">
+				362			</span>
+							<span class="online" title="Players online: 13">
+				13			</span>
+				<span class="start">
+					</span>
+		<span class="mark">
+					</span>
+		<img class="hover" src="index.php_files/x.gif">
+	</a>
+</div>
 
+<div class="server serverA serversmall servert3 serversmallt3sw last">
+			 <img class="t3ServerLayer" src="index.php_files/au4_g.jpg">
+		<a class="link" title="Log in to Server 4." href="http://s4.travian.com.au/login.php" onclick="">
+		<span class="name">
+			Server 4		</span>
+					<span class="player" title="Players in total: 1174">
+				1174			</span>
+							<span class="online" title="Players online: 53">
+				53			</span>
+				<span class="start">
+					</span>
+		<span class="mark">
+					</span>
+		<img class="hover" src="index.php_files/x.gif">
+	</a>
+</div>
 			<div class="clear"></div>
 		</div>
 		<div id="t3AreaBottom"></div>
