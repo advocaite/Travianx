@@ -1325,11 +1325,11 @@ class MYSQL_DB {
 		return mysql_query($q, $this->connection);
 	}
 	
-	function addAttack($vid,$t1,$t2,$t3,$t4,$t5,$t6,$t7,$t8,$t9,$t10,$t11,$type) {
-			$q = "INSERT INTO ".TB_PREFIX."attacks values (0,$vid,$t1,$t2,$t3,$t4,$t5,$t6,$t7,$t8,$t9,$t10,$t11,$type)";
-			mysql_query($q, $this->connection);
-			return mysql_insert_id($this->connection);
-	}
+	function addAttack($vid,$t1,$t2,$t3,$t4,$t5,$t6,$t7,$t8,$t9,$t10,$t11,$type,$ctar1,$ctar2,$spy) {
+            $q = "INSERT INTO ".TB_PREFIX."attacks values (0,$vid,$t1,$t2,$t3,$t4,$t5,$t6,$t7,$t8,$t9,$t10,$t11,$type,$ctar1,$ctar2,$spy)";
+            mysql_query($q, $this->connection);
+            return mysql_insert_id($this->connection);
+    }
 	
 	function modifyAttack($aid,$unit,$amt) {
 		$unit = 't'.$unit;
@@ -1366,7 +1366,7 @@ class MYSQL_DB {
 		return $this->mysql_fetch_all($result);
 	}
 	
-function getAllMember($aid) {
+    function getAllMember($aid) {
       $q = "SELECT * FROM ".TB_PREFIX."users where alliance = $aid order  by (SELECT sum(pop) FROM ".TB_PREFIX."vdata WHERE owner =  ".TB_PREFIX."users.id) desc";
       $result = mysql_query($q, $this->connection);
       return $this->mysql_fetch_all($result);

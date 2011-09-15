@@ -283,6 +283,9 @@ CREATE TABLE IF NOT EXISTS `%PREFIX%attacks` (
   `t10` int(11) unsigned NOT NULL,
   `t11` int(11) unsigned NOT NULL,
   `attack_type` tinyint(1) NOT NULL,
+  `ctar1` int(11) unsigned NOT NULL, 
+  `ctar2` int(11) unsigned NOT NULL,
+  `spy` int(11) unsigned NOT NULL, 
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 

@@ -20,7 +20,7 @@ $ckey= $generator->generateRandStr(6);
  if (!isset($process['t1']) || $process['t1'] == ''){  $t1='0'; }else{  $t1=$process['t1']; }
  if (!isset($process['t2']) || $process['t2'] == ''){  $t2='0'; }else{  $t2=$process['t2']; } 
  if (!isset($process['t3']) || $process['t3'] == ''){  $t3='0'; }else{  $t3=$process['t3']; } 
- if (!isset($process['t4']) || $process['t4'] == ''){  $t4='0'; }else{  $t4=$process['t4']; } 
+ if (!isset($process['t4']) || $process['t4'] == ''){  $t4='0'; }else{  $t4=$process['t4']; $scout=1; } 
  if (!isset($process['t5']) || $process['t5'] == ''){  $t5='0'; }else{  $t5=$process['t5']; } 
  if (!isset($process['t6']) || $process['t6'] == ''){  $t6='0'; }else{  $t6=$process['t6']; } 
  if (!isset($process['t7']) || $process['t7'] == ''){  $t7='0'; }else{  $t7=$process['t7']; } 
@@ -28,12 +28,21 @@ $ckey= $generator->generateRandStr(6);
  if (!isset($process['t9']) || $process['t9'] == ''){  $t9='0'; }else{  $t9=$process['t9']; } 
  if (!isset($process['t10']) || $process['t10'] == ''){  $t10='0'; }else{  $t10=$process['t10']; } 
  if (!isset($process['t11']) || $process['t11'] == ''){  $t11='0'; }else{  $t11=$process['t11']; } 
+$totalunits =$process['t1']+$process['t2']+$process['t3']+$process['t5']+$process['t6']+$process['t7']+$process['t8']+$process['t9']+$process['t10']+$process['t11'];
+     if ($scout==1 && $totalunits==0) {
 
-	$id = $database->addA2b($ckey,time(),$process['0'],$t1,$t2,$t3,$t4,$t5,$t6,$t7,$t8,$t9,$t10,$t11,$process['c']);
+$process['c'] = 1;
+
+}
+    $id = $database->addA2b($ckey,time(),$process['0'],$t1,$t2,$t3,$t4,$t5,$t6,$t7,$t8,$t9,$t10,$t11,$process['c']);
 
 
 
-if ($process['c']==2){
+if ($process['c']==1){
+
+$actionType = "Scout";
+
+}else if ($process['c']==2){
 
 $actionType = "Reinforcement";
 
@@ -148,22 +157,154 @@ $actionType = "Raid";
                      </tr>
 
 				</tbody>
+                                         <?php                if ($process['c']==1){
 
-				<tbody class="infos">
+?>
+                <tbody class="options">
+        <tr>
+            <th>Options</th>
+            <td colspan="10"><input class="radio" name="spy" value="1" checked="checked" type="radio">Scout resources and troops<br>
+            <input class="radio" name="spy" value="2" type="radio">Scout defences and troops                                            </td>
+        </tr>
+    </tbody>
+    <?php } ?>
+                
 
-		<?php if(isset($kata) AND $process['c']!='2'){?><tr>
+        <?php if(isset($kata) AND $process['c']!='2'){?><tr>
 
-			<th>Information:</th>
+            <?php if($process['c']=='3'){ ?><tbody class="cata">
+                <tr>
+                    <th>Destination:</th>
+                    <td colspan="10">
+                    <?php if($building->getTypeLevel(16) == 20) { ?>
+                     <select name="ctar2" class="dropdown">
+                            <option value="0">Random</option>
+                            <?php if($building->getTypeLevel(16) >= 5) { ?>
+                            <optgroup label="Resources">
+                                <option value="0">Woodcutter</option>
+                                <option value="0">Clay Pit</option>
+                                <option value="0">Iron Mine</option>
+                                <option value="0">Cropland</option>
+                                <option value="5">Sawmill</option>
+                                <option value="6">Brickyard</option>
+                            
+                                <option value="7">Iron Foundry</option>
+                                <option value="8">Grain Mill</option>
+                                <option value="9">Bakery</option>
+                            </optgroup>
+                            <?php } ?>
+                            <?php if($building->getTypeLevel(16) >= 3) { ?>
+                            <optgroup label="Infrastructure">
+                                <option value="10">Warehouse</option>
+                                <option value="11">Granary</option>
+                                <?php if($building->getTypeLevel(16) >= 10) { ?>
+                                <option value="15">Main building</option>
+                                <option value="17">Marketplace</option>
+                                <option value="18">Embassy</option>
+                                <option value="24">Townhall</option>
+                                <option value="25">Residence</option>
+                                <option value="26">Palace</option>
+                                
+                                <option value="27">Treasury</option>
+                                <option value="28">Trade office</option>
+                                <?php } ?>
+                                <option value="38">Great warehouse</option>
+                                <option value="39">Great granary</option>
+                            </optgroup>
+                            <?php } ?>
+                            <?php if($building->getTypeLevel(16) >= 10) { ?>
+                            <optgroup label="Military">
+                                <option value="12">Blacksmith</option>
+                                <option value="13">Armoury</option>
+                                <option value="14">Tournament square</option>
+                                <option value="16">Rally point</option>
+                                <option value="19">Barracks</option>
+                                <option value="20">Stable</option>
+                                <option value="21">Workshop</option>
+                                
+                                <option value="22">Academy</option>
+                                <option value="29">Great barracks</option>
+                                <option value="30">Great stable</option>
+                                <option value="37">Hero's mansion</option>
+                            </optgroup>
+                            <?php } ?>
+                        </select>
+                    <?php }?>
+                        <select name="ctar1" class="dropdown">
+                            <option value="0">Random</option>
+                            <?php if($building->getTypeLevel(16) >= 5) { ?>
+                            <optgroup label="Resources">
+                            <option value="0">Woodcutter</option>
+                                <option value="0">Clay Pit</option>
+                                <option value="0">Iron Mine</option>
+                                <option value="0">Cropland</option>
+                                <option value="5">Sawmill</option>
+                                <option value="6">Brickyard</option>
+                            
+                                <option value="7">Iron Foundry</option>
+                                <option value="8">Grain Mill</option>
+                                <option value="9">Bakery</option>
+                            </optgroup>
+                            <?php } ?>
+                            <?php if($building->getTypeLevel(16) >= 3) { ?>
+                            <optgroup label="Infrastructure">
+                                <option value="10">Warehouse</option>
+                                <option value="11">Granary</option>
+                                <?php if($building->getTypeLevel(16) >= 10) { ?>
+                                <option value="15">Main building</option>
+                                <option value="17">Marketplace</option>
+                                <option value="18">Embassy</option>
+                                <option value="24">Townhall</option>
+                                <option value="25">Residence</option>
+                                <option value="26">Palace</option>
+                                
+                                <option value="27">Treasury</option>
+                                <option value="28">Trade office</option>
+                                <?php } ?>
+                                <option value="38">Great warehouse</option>
+                                <option value="39">Great granary</option>
+                            </optgroup>
+                            <?php } ?>
+                            <?php if($building->getTypeLevel(16) >= 10) { ?>
+                            <optgroup label="Military">
+                                <option value="12">Blacksmith</option>
+                                <option value="13">Armoury</option>
+                                <option value="14">Tournament square</option>
+                                <option value="16">Rally point</option>
+                                <option value="19">Barracks</option>
+                                <option value="20">Stable</option>
+                                <option value="21">Workshop</option>
+                                
+                                <option value="22">Academy</option>
+                                <option value="29">Great barracks</option>
+                                <option value="30">Great stable</option>
+                                <option value="37">Hero's mansion</option>
+                            </optgroup>
+                            <?php } ?>
+                        </select>
+                    <span class="info">(will be attacked by catapult(s))</span>
+                     </td>
+                </tr>
+            </tbody><?PHP  
+            }
+            else if($process['c']=='4')
+            {
+                ?><tbody class="infos">  
+                <th>Destination:</th>
 
-			<td colspan="10">
+            <td colspan="10">
+                <?PHP
+                
+                echo"Warning: Catapult will <b>ONLY</b> shoot with a normal attack (they dont shoot with raids!)";
+                ?>
+                </td>
 
-			<?php if($process['c']=='3'){ echo"Fire Catapult will shoot: Random"; } else if($process['c']=='4'){ echo"Warning: Fire Catapult will <b>ONLY</b> shoot with a normal attack"; }?>
+        </tr>
+                <?PHP
+            }
+            ?>
 
-			</td>
-
-		</tr>
-
-		<?php } ?>
+        <?php } ?>
 
 
 

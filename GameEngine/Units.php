@@ -223,6 +223,9 @@ class Units {
 				}
 				
 		$time = $generator->procDistanceTime($from,$to,min($speeds),1);
+        if (isset($post['ctar1'])){$post['ctar1'] = $post['ctar1'];}else{ $post['ctar1'] = 0;}
+        if (isset($post['ctar2'])){$post['ctar2'] = $post['ctar2'];}else{ $post['ctar2'] = 0;}  
+        if (isset($post['spy'])){$post['spy'] = $post['spy'];}else{ $post['spy'] = 0;}  
 		$reference = $database->addAttack(($village->wid),$data['u1'],$data['u2'],$data['u3'],$data['u4'],$data['u5'],$data['u6'],$data['u7'],$data['u8'],$data['u9'],$data['u10'],$data['u11'],$data['type']);
   		$database->addMovement(3,$village->wid,$data['to_vid'],$reference,($time+time()));
     } else {

@@ -1,9 +1,16 @@
 <?php
 $maxherolevel = 100;
+$see = 1;
 $resetlevelreq = 3;
     $getheroinfo1 = mysql_query("SELECT * FROM ".TB_PREFIX."hero  WHERE `uid`='".$session->uid."'") or die(mysql_error());
     $heroinfo1 = mysql_fetch_array($getheroinfo1);
 
+    if ( isset($_POST['changename'])) {
+mysql_query("UPDATE ".TB_PREFIX."hero SET `heroname`='".($_POST['changename'])."' where `uid`='".$session->uid."'") or die("ERROR:".mysql_error());
+$see = 0;
+$message = "Heros name has been changed.";
+
+}
 // revive hero
 if(mysql_num_rows($getheroinfo1) == 1) {
 if($heroinfo1['dead'] == 1) {
@@ -341,9 +348,14 @@ echo "<tr class='next'><td><a href='build.php?id=".$id."&revive=1'>Press here to
 
 
 <table id="distribution" cellpadding="1" cellspacing="1">
-	<thead><tr>
-		<th colspan="5"><a href="build.php?id=<?php echo "$id"; ?>&rename"><?php echo $heroinfo['heroname']; ?></a><span class="info"> Level <?php echo $level; ?> (<img class="unit u<?php echo $heroinfo['type']; ?>" src="img/x.gif" alt="<?php echo $heronames; ?>" title="<?php echo $heronames; ?>" /><?php echo $heronames; ?>)</span></th>
-	</tr></thead>
+    <thead><?php echo $message; ?><tr>
+    <?php if (isset($_GET['rename'])){?>
+    <th colspan="5"><?php if ($see == 1){?><form action="" method="POST">
+<input type=text name=changename value=<?php echo $heroinfo['heroname']; ?>><form><?php }else{ ?><a href="build.php?id=<?php echo "$id"; ?>&rename"><?php echo $heroinfo['heroname']; ?></a><?php } ?><span class="info"> Level <?php echo $level; ?> (<img class="unit u<?php echo $heroinfo['type']; ?>" src="img/x.gif" alt="<?php echo $heronames; ?>" title="<?php echo $heronames; ?>" /><?php echo $heronames; ?>)</span></th>
+     <?php }else{?>
+        <th colspan="5"><a href="build.php?id=<?php echo "$id"; ?>&rename"><?php echo $heroinfo['heroname']; ?></a><span class="info"> Level <?php echo $level; ?> (<img class="unit u<?php echo $heroinfo['type']; ?>" src="img/x.gif" alt="<?php echo $heronames; ?>" title="<?php echo $heronames; ?>" /><?php echo $heronames; ?>)</span></th>
+    <?php  }?>
+    </tr></thead>
 
 	<tbody><tr>
 		<th>Attack</th>
