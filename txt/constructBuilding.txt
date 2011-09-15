@@ -1,0 +1,30 @@
+	private function constructBuilding($id,$tid) {
+		global $database,$village,$session,$logging;
+		if($this->allocated < $this->maxConcurrent) {
+			if($tid == 16) {
+				$id = 39;
+			}
+			else if($tid == 31 || $tid == 32 || $tid == 33) {
+				$id = 40;
+			}
+			$uprequire = $this->resourceRequired($id,$tid);
+			$time = time() + $uprequire['time'];
+			$bindicate = $this->canBuild($id,$village->resarray['f'.$id.'t']);
+			$loop = ($bindicate == 9 ? 1 : 0);
+			if($loop == 1) {
+				foreach($this->buildArray as $build) {
+					if($build['field'] >= 19) {
+						$time = $build['timestamp'] + $uprequire['time'];
+					}
+				}
+			}
+			if($this->meetRequirement($tid)) {
+				if($database->addBuilding($village->wid,$id,$tid,$loop,$time)) {
+					$logging->addBuildLog($village->wid,$this->procResType($tid),($village->resarray['f'.$id]+1),1);
+					$database->modifyResource($village->wid,$uprequire['wood'],$uprequire['clay'],$uprequire['iron'],$uprequire['crop'],0);
+					header("Location: dorf2.php");
+				}
+			}
+		}
+	}
+	
