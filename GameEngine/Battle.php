@@ -4,8 +4,8 @@
 ##              -= YOU MAY NOT REMOVE OR CHANGE THIS NOTICE =-                 ##
 ## --------------------------------------------------------------------------- ##
 ##  Filename       Battle.php                                                  ##
-##  Developed by:  Dzoki & Dixie                                               ##
-##  Thanks to:     Akakori & Elmar
+##  Developed by:  Dzoki & Dixie  Reworked buy Advocaite love it or hate it    ##
+##  Thanks to:     Akakori & Elmar                                             ##
 ##  License:       TravianX Project                                            ##
 ##  Copyright:     TravianX (c) 2010-2011. All rights reserved.                ##
 ##                                                                             ##

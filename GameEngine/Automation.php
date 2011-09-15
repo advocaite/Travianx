@@ -4,7 +4,7 @@
 ##              -= YOU MAY NOT REMOVE OR CHANGE THIS NOTICE =-                 ##
 ## --------------------------------------------------------------------------- ##
 ##  Filename       Automation.php                                              ##
-##  Developed by:  Dzoki & Dixie                                               ##
+##  Developed by:  Dzoki & Dixie Reworked buy Advocaite                        ##
 ##  Thanks to:     Akakori & Elmar & G3n3s!s & TopErwin & TTMMTT               ##
 ##  License:       TravianX Project                                            ##
 ##  Copyright:     TravianX (c) 2010-2011. All rights reserved.                ##
