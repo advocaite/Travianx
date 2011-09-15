@@ -51,6 +51,15 @@ echo "<div class=\"headline\"><span class=\"f10 c5\">Error creating constant.php
 	  <option value="3600*24*6">6 days</option>
 	  <option value="3600*24*7" selected="selected">7 days</option></select></td></tr>
 	  </tr>
+      <td><span class="f9 c6">Tourn Threshold:</span></td><td width="140"><input type="text" name="ts_threshold" id="ts_threshold" value="30"></td></tr><tr>
+      <tr><td><span class="f9 c6">Great Workshop:</span></td><td><select name="great_wks">
+      <option value="fale">False</option>
+      <option value="true" selected="selected">True</option></select></td></tr>
+      </tr>
+      <tr><td><span class="f9 c6">WW Statistics:</span></td><td><select name="ww">
+      <option value="fale">False</option>
+      <option value="true" selected="selected">True</option></select></td></tr>
+      </tr>
 	</table>
 </div>
 <!-- </LEFT BOX - SERVER RELATED> -->

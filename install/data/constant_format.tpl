@@ -4,7 +4,7 @@
 ## --------------------------------------------------------------------------- ##
 ##  Filename       config.php                                                  ##
 ##  Version        4.8.5                                                       ##
-##  Developed by:  Dzoki                                                       ##
+##  Developed by:  Dzoki Edited by Advocaite                                   ##
 ##  License:       TravianX Project                                            ##
 ##  Copyright:     TravianX (c) 2010-2011. All rights reserved.                ##
 ##                                                                             ##
@@ -77,7 +77,7 @@ define("QUEST",%QUEST%);
 define("PROTECTION","%BEGINNER%");
 
 // ***** Enable WW Statistics
-define("WW",false);
+define("WW",%WW%);
 
 // ***** Activation Mail
 // true = activation mail will be sent, users will have to finish registration
@@ -90,7 +90,10 @@ define("AUTH_EMAIL",%ACTIVATE%);
 define("PLUS_TIME",%PLUS_TIME%);
 //+25% production lenght
 define("PLUS_PRODUCTION",%PLUS_PRODUCTION%);
-
+// ***** Great Workshop
+define("GREAT_WKS",%GREAT_WKS%);
+// ***** Tourn threshold
+define("TS_THRESHOLD",%TS_THRESHOLD%);  
 
 
 
@@ -240,7 +243,7 @@ define("SERVER", "%DOMAIN%");
 ## --------------------------------------------------------------------------- ##
 ##  Filename       config.php                                                  ##
 ##  Version        4.8.5                                                       ##
-##  Developed by:  Dzoki                                                       ##
+##  Developed by:  Dzoki Edited by Advocaite                                   ##
 ##  License:       TravianX Project                                            ##
 ##  Copyright:     TravianX (c) 2010-2011. All rights reserved.                ##
 ##                                                                             ##
