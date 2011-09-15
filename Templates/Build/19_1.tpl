@@ -5,7 +5,7 @@
 						<a href=\"#\" onClick=\"return Popup(1,1);\"> Legionnaire</a> <span class=\"info\">(Available: ".$village->unitarray['u1'].")</span>
 					</div>
 					<div class=\"details\">
-						<img class=\"r1\" src=\"img/x.gif\" alt=\"Wood\" title=\"Wood\" />$u1['wood']|<img class=\"r2\" src=\"img/x.gif\" alt=\"Clay\" title=\"Clay\" />100|<img class=\"r3\" src=\"img/x.gif\" alt=\"Iron\" title=\"Iron\" />150|<img class=\"r4\" src=\"img/x.gif\" alt=\"Crop\" title=\"Crop\" />30|<img class=\"r5\" src=\"img/x.gif\" alt=\"Crop consumption\" title=\"Crop consumption\" />1|<img class=\"clock\" src=\"img/x.gif\" alt=\"Duration\" title=\"Duration\" />";
+						<img class=\"r1\" src=\"img/x.gif\" alt=\"Wood\" title=\"Wood\" />".$u1['wood']."|<img class=\"r2\" src=\"img/x.gif\" alt=\"Clay\" title=\"Clay\" />100|<img class=\"r3\" src=\"img/x.gif\" alt=\"Iron\" title=\"Iron\" />150|<img class=\"r4\" src=\"img/x.gif\" alt=\"Crop\" title=\"Crop\" />30|<img class=\"r5\" src=\"img/x.gif\" alt=\"Crop consumption\" title=\"Crop consumption\" />1|<img class=\"clock\" src=\"img/x.gif\" alt=\"Duration\" title=\"Duration\" />";
 				echo $generator->getTimeFormat(round($u1['time'] * ($bid19[$village->resarray['f'.$id]]['attri'] / 100) / SPEED));
 				echo "</div>
 				</td>
