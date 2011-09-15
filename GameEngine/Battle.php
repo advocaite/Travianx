@@ -147,7 +147,7 @@ class Battle {
 		// Berekenen het totaal aantal punten van Aanvaller
 		//
 		$start = ($att_tribe == 1)? 1 : (($att_tribe == 2)? 11: 21);
-		$end = ($att_tribe == 1)? 10 : (($att_tribe == 2)? 20: 30);
+		$end = ($att_tribe == 1)? 10 : (($att_tribe == 2)? 20: 50);
 		$abcount = 1;
 		
 		if($type == 1)
@@ -210,7 +210,7 @@ class Battle {
 		// Berekent het totaal aantal punten van de Defender
 		//
 		$start = ($def_tribe == 1)? 1 : (($def_tribe == 2)? 11: 21);
-		$end = ($def_tribe == 1)? 10 : (($def_tribe == 2)? 20: 30);
+		$end = ($def_tribe == 1)? 10 : (($def_tribe == 2)? 20: 50);
 		$abcount = 1;
 		
 		if($type == 1)
