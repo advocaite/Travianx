@@ -1024,6 +1024,22 @@ CREATE TABLE IF NOT EXISTS `%PREFIX%tdata` (
   `t27` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `t28` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `t29` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `t32` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `t33` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `t34` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `t35` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `t36` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `t37` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `t38` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `t39` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `t42` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `t43` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `t44` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `t45` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `t46` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `t47` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `t48` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `t49` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`vref`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 

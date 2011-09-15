@@ -20,6 +20,17 @@
              <?php 
             $success = 0;
             $start = ($session->tribe == 1)? 7 : (($session->tribe == 2)? 17 : 27);
+            if ($session->tribe == 1){
+            $start = 7;
+            }else if ($session->tribe == 2){
+            $start = 17;
+            }else if ($session->tribe == 3){
+            $start = 27;
+            }else if ($session->tribe == 4){
+            $start = 37;
+            }else if ($session->tribe == 5){
+            $start = 47;
+            }
             for($i=$start;$i<=($start+1);$i++) {
                 if($technology->getTech($i)) {
                 echo "<tr><td class=\"desc\"><div class=\"tit\"><img class=\"unit u$i\" src=\"img/x.gif\" alt=\"".$technology->getUnitName($i)."\" title=\"".$technology->getUnitName($i)."\" />

@@ -31,25 +31,28 @@ $townhall = $building->getTypeLevel(24);
 $tournamentsquare = $building->getTypeLevel(14);
 $bakery = $building->getTypeLevel(9);
 $tradeoffice = $building->getTypeLevel(28);
+$greatbarracks = $building->getTypeLevel(29);
+$greatstable = $building->getTypeLevel(30);
 $brewery = $building->getTypeLevel(35);
 $horsedrinkingtrough = $building->getTypeLevel(41);
 $herosmansion = $building->getTypeLevel(37);
+$greatworkshop = $building->getTypeLevel(42);
 
 foreach ($database->getJobs($_SESSION['wid']) as $bdata) {
-	$UnderConstruction = strtolower(str_replace(array(" ","'"),"",$building->procResType($bdata['type'])));
-	$$UnderConstruction = ($$UnderConstruction == 0 ? -1 : $$UnderConstruction);
+    $UnderConstruction = strtolower(str_replace(array(" ","'"),"",$building->procResType($bdata['type'])));
+    $$UnderConstruction = ($$UnderConstruction == 0 ? -1 : $$UnderConstruction);
 }
 ?>
 <div id="build" class="gid0"><h1>Construct new building</h1>
 <?php
 if($mainbuilding == 0 && $id != 39  && $id != 40) {
-	include("avaliable/mainbuilding.tpl");
+    include("avaliable/mainbuilding.tpl");
 }
 if(($cranny == 0 || $cranny == 10) && $mainbuilding >= 1 && $id != 39 && $id != 40) {
-	include("avaliable/cranny.tpl");
+    include("avaliable/cranny.tpl");
 }
 if(($granary == 0 || $granary == 20) && $mainbuilding >= 1 && $id != 39 && $id != 40 ) {
-	include("avaliable/granary.tpl");
+    include("avaliable/granary.tpl");
 }
 if($wall == 0) {
     if($session->tribe == 1 && $id != 39) {
@@ -122,24 +125,33 @@ if($ironfoundry == 0 && $ironmine >= 10 && $mainbuilding >= 5  && $id != 39 && $
 if($workshop == 0 && $academy >= 10 && $mainbuilding  >= 5  && $id != 39 && $id != 40) {
    include("avaliable/workshop.tpl");
 }
-   if($tournamentsquare == 0 && $rallypoint >= 15  && $id != 39 && $id != 40) {
+if($tournamentsquare == 0 && $rallypoint >= 15  && $id != 39 && $id != 40) {
     include("avaliable/tsquare.tpl");
-    }
-    if($bakery == 0 && $grainmill >= 5 && $cropland >= 10 && $mainbuilding >= 5  && $id != 39 && $id != 40) {
+}
+if($bakery == 0 && $grainmill >= 5 && $cropland >= 10 && $mainbuilding >= 5  && $id != 39 && $id != 40) {
     include("avaliable/bakery.tpl");
-    }
-    if($townhall == 0 && $mainbuilding >= 10 && $academy >= 10  && $id != 39 && $id != 40) {
+}
+if($townhall == 0 && $mainbuilding >= 10 && $academy >= 10  && $id != 39 && $id != 40) {
     include("avaliable/townhall.tpl");
-    }
-    if($tradeoffice == 0 && $market == 20 && $stable >= 10  && $id != 39 && $id != 40) {
+}
+if($tradeoffice == 0 && $market == 20 && $stable >= 10  && $id != 39 && $id != 40) {
     include("avaliable/tradeoffice.tpl");
-    }
-    if($session->tribe == 1 && $horsedrinkingtrough == 0 && $rallypoint >= 10 && $stable == 20  && $id != 39 && $id != 40) {
+}
+if($session->tribe == 1 && $horsedrinkingtrough == 0 && $rallypoint >= 10 && $stable == 20  && $id != 39 && $id != 40) {
     include("avaliable/horsedrinking.tpl");
-    }
-    if($session->tribe == 2 && $brewery == 0 && $rallypoint >= 10 && $granary == 20  && $id != 39 && $id != 40) {
+}
+if($session->tribe == 2 && $brewery == 0 && $rallypoint >= 10 && $granary == 20  && $id != 39 && $id != 40) {
     include("avaliable/brewery.tpl");
-    }
+}
+if($greatbarracks == 0 && $barrack == 20 && $village->capital == 0 && $id != 39 && $id != 40) {
+    include("avaliable/greatbarracks.tpl");
+}
+if($greatstable == 0 && $stable == 20 && $village->capital == 0 && $id != 39 && $id != 40) {
+    include("avaliable/greatstable.tpl");
+}
+if($greatworkshop == 0 && $workshop == 20 && $village->capital == 0 && $id != 39 && $id != 40 && GREAT_WKS) {
+    include("avaliable/greatworkshop.tpl");
+}
 if($id != 39 && $id != 40) {
 ?>
 <p class="switch"><a id="soon_link" href="javascript:show_build_list('soon');">show soon available buildings</a></p>
@@ -150,18 +162,18 @@ if($rallypoint == 0 && $session->tribe == 3 && $trapper == 0 ) {
 //include("soon/trapper.tpl");
 }
 if($hero == 0 && ($mainbuilding <= 2 || $rallypoint == 0)){
-	include("soon/hero.tpl");
+    include("soon/hero.tpl");
 }
-if($barracks == 0 && ($rallypoint == 0 || $mainbuilding <= 2) ) {
-	include("soon/barracks.tpl");
+if($barrack == 0 && ($rallypoint == 0 || $mainbuilding <= 2) ) {
+    include("soon/barracks.tpl");
 }
 if($armoury == 0 && ($mainbuilding <= 2 || $academy == 0)) {
-	include("soon/armoury.tpl");
+    include("soon/armoury.tpl");
 }
 if($cropland <= 4) {
    include("soon/grainmill.tpl");
 }
-if($marketplace == 0 && ($mainbuilding <= 2 || $granary == 0 || $warehouse == 0)) {
+if($marketplace == 0 && ($mainbuilding <= 2 || $granary <= 0 || $warehouse <= 0)) {
    include("soon/marketplace.tpl");
 }
 if($residence == 0 && $mainbuilding <= 4) {
@@ -215,9 +227,18 @@ if($session->tribe == 1 && $horsedrinkingtrough == 0 && $rallypoint <= 9 && $ral
 if($brewery == 0 && $rallypoint <= 9 && $rallypoint >= 5 || $granary <= 19 && $granary >= 10 && $session->tribe == 2) {
     include("soon/brewery.tpl");
 }
+if($greatbarracks == 0 && $barrack >= 18 && $village->capital == 0) {
+    include("soon/greatbarracks.tpl");
+}
+if($greatstable == 0 && $stable >= 18 && $village->capital == 0) {
+    include("soon/greatstable.tpl");
+}
+if($greatworkshop == 0 && $workshop >= 18 && $village->capital == 0 && GREAT_WKS) {
+    include("soon/greatworkshop.tpl");
+}
    ?>
     </div><p class="switch"><a id="all_link" class="hide"
-	href="javascript:show_build_list('all');">show more</a></p>
+    href="javascript:show_build_list('all');">show more</a></p>
     
     <div id="build_list_all" class="hide">
     <?php
@@ -269,42 +290,51 @@ if($brewery == 0 && $rallypoint <= 9 && $rallypoint >= 5 || $granary <= 19 && $g
     if($brewery == 0 && ($rallypoint <= 5 || $granary <= 10) && $session->tribe == 2) {
     include("soon/brewery.tpl");
     }
+    if($greatbarracks == 0 && $barrack >= 15 && $village->capital == 0) {
+        include("soon/greatbarracks.tpl");
+    }
+    if($greatstable == 0 && $stable >= 15 && $village->capital == 0) {
+        include("soon/greatstable.tpl");
+    }
+    if($greatworkshop == 0 && $workshop >= 15 && $village->capital == 0 && GREAT_WKS) {
+        include("soon/greatworkshop.tpl");
+    }
     ?>
     </div><script language="JavaScript" type="text/javascript">
 function show_build_list(list) {
-	// aktuelle liste, aktueller link
-	var build_list = document.getElementById('build_list_'+list);
-	var link = document.getElementById(list+'_link');
+    // aktuelle liste, aktueller link
+    var build_list = document.getElementById('build_list_'+list);
+    var link = document.getElementById(list+'_link');
 
-	var all_link = document.getElementById('all_link');
-	var soon_link = document.getElementById('soon_link');
+    var all_link = document.getElementById('all_link');
+    var soon_link = document.getElementById('soon_link');
 
-	var build_list_all = document.getElementById('build_list_all');
-	var build_list_soon = document.getElementById('build_list_soon');
+    var build_list_all = document.getElementById('build_list_all');
+    var build_list_soon = document.getElementById('build_list_soon');
 
-	if (build_list.className == 'hide') {
-		build_list.className = '';
-		if (link == soon_link) {
-			link.innerHTML = 'hide soon available buildings';
-			if (all_link !== null) {
-				all_link.className = '';
-			}
-		} else {
-			link.innerHTML = 'hide more';
-		}
-	} else {
-		build_list.className = 'hide';
-		if (link == soon_link) {
-			link.innerHTML = 'show soon available buildings';
-			if (all_link !== null) {
-				all_link.innerHTML = 'show more';
-				all_link.className = 'hide';
-				build_list_all.className = 'hide';
-			}
-		} else {
-			link.innerHTML = 'show more';
-		}
-	}
+    if (build_list.className == 'hide') {
+        build_list.className = '';
+        if (link == soon_link) {
+            link.innerHTML = 'hide soon available buildings';
+            if (all_link !== null) {
+                all_link.className = '';
+            }
+        } else {
+            link.innerHTML = 'hide more';
+        }
+    } else {
+        build_list.className = 'hide';
+        if (link == soon_link) {
+            link.innerHTML = 'show soon available buildings';
+            if (all_link !== null) {
+                all_link.innerHTML = 'show more';
+                all_link.className = 'hide';
+                build_list_all.className = 'hide';
+            }
+        } else {
+            link.innerHTML = 'show more';
+        }
+    }
 }
 </script>
 <?php 

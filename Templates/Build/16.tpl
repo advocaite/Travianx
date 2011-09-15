@@ -49,7 +49,17 @@ if($units_incomming >= 1){
                   echo "<a href=\"spieler.php?uid=".$database->getVillageField($enforce['from'],"owner")."\">".$database->getUserField($database->getVillageField($enforce['from'],"owner"),"username",0)." troops</a>";
                   echo "</td></tr></thead><tbody class=\"units\">";
                   $tribe = $database->getUserField($database->getVillageField($enforce['from'],"owner"),"tribe",0);
-                  $start = ($tribe == 1)? 1 : (($tribe == 2)? 11 : 21);
+                  if ($tribe == 1){
+                  $start = 1;
+                  }else if ($tribe == 2){
+                  $start = 11;
+                  }else if ($tribe == 3){
+                  $start = 21;
+                  }else if ($tribe == 4){
+                  $start = 31;
+                  }else if ($tribe == 5){
+                  $start = 41;
+                  }
                   echo "<tr><th>&nbsp;</th>";
                   for($i=$start;$i<=($start+9);$i++) {
                   	echo "<td><img src=\"img/x.gif\" class=\"unit u$i\" title=\"".$technology->getUnitName($i)."\" alt=\"".$technology->getUnitName($i)."\" /></td>";	
@@ -79,8 +89,17 @@ if($units_incomming >= 1){
                   echo "<a href=\"spieler.php?uid=".$database->getVillageField($enforce['from'],"owner")."\">".$database->getUserField($database->getVillageField($enforce['from'],"owner"),"username",0)." troops</a>";
                   echo "</td></tr></thead><tbody class=\"units\">";
                   $tribe = $database->getUserField($database->getVillageField($enforce['from'],"owner"),"tribe",0);
-                  $start = ($tribe == 1)? 1 : (($tribe == 2)? 11 : 21);
-                  echo "<tr><th>&nbsp;</th>";
+                  if ($tribe == 1){
+                  $start = 1;
+                  }else if ($tribe == 2){
+                  $start = 11;
+                  }else if ($tribe == 3){
+                  $start = 21;
+                  }else if ($tribe == 4){
+                  $start = 31;
+                  }else if ($tribe == 5){
+                  $start = 41;
+                  }echo "<tr><th>&nbsp;</th>";
                   for($i=$start;$i<=($start+9);$i++) {
                   	echo "<td><img src=\"img/x.gif\" class=\"unit u$i\" title=\"".$technology->getUnitName($i)."\" alt=\"".$technology->getUnitName($i)."\" /></td>";	
                   }

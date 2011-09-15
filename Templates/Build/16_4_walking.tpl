@@ -1,42 +1,39 @@
 <?php
-
-/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-|              .: PLEASE DONT'T REMOVE OR CHANGE THIS NOTICE :.               	|
-| ---------------------------------------------------------------------------   |
-|  Filename       16_5_walking.tpl	                                       	 	|
-|  Version        0.5                                                           |
-|  Description    show settlers wallking in rallypoint                          |
-|  Developed by:  DesPlus <Faralive@gmail.com>                                  |
- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
- 
-$units = $database->getMovement(5,$village->wid,0);
+$units = $database->getMovement(3,$village->wid,0);
 $total_for = count($units);
 
 for($y=0;$y<$total_for;$y++){
-$timer += $y+1;
+$timer += 1;
+
+if($units[$y]['attack_type'] == 2){
+	$attack_type = "Reinforcing";
+	}
+if($units[$y]['attack_type'] == 1){
+	$attack_type = "Scouting";
+	}
+if($units[$y]['attack_type'] == 3){
+	$attack_type = "Attack to";
+	}
+if($units[$y]['attack_type'] == 4){
+	$attack_type = "Raid to";
+	}
 	
+$to = $database->getMInfo($units[$y]['to']);
+
+
 ?>
 <table class="troop_details" cellpadding="1" cellspacing="1">            
 	<thead>
 		<tr>
 			<td class="role"><a href="karte.php?d=<?php echo $village->wid."&c=".$generator->getMapCheck($village->wid); ?>"><?php echo $village->vname; ?></a></td>
-			<td colspan="10"><a href="karte.php?d=<?php echo $units[0]['to']."&c=".$generator->getMapCheck($units[0]['to']); ?>"><?php echo $attack_type." ".$to['name']; ?>Found new village.</a></td>
+			<td colspan="10"><a href="karte.php?d=<?php echo $to['wref']."&c=".$generator->getMapCheck($to['wref']); ?>"><?php echo $attack_type." ".$to['name']; ?></a></td>
 		</tr>
 	</thead>
 	<tbody class="units">
 			<?php
-				$tribe = $session->tribe;
-                  if ($tribe == 1){
-                  $start = 1;
-                  }else if ($tribe == 2){
-                  $start = 11;
-                  }else if ($tribe == 3){
-                  $start = 21;
-                  }else if ($tribe == 4){
-                  $start = 31;
-                  }else if ($tribe == 5){
-                  $start = 41;
-                  }echo "<tr><th>&nbsp;</th>";
+				$tribe = 4;
+                  $start = ($tribe == 3)? 21 : (($tribe == 4)? 31 : 41);
+                  echo "<tr><th>&nbsp;</th>";
                   for($i=$start;$i<=($start+9);$i++) {
                   	echo "<td><img src=\"img/x.gif\" class=\"unit u$i\" title=\"".$technology->getUnitName($i)."\" alt=\"".$technology->getUnitName($i)."\" /></td>";	
                   }
@@ -44,7 +41,6 @@ $timer += $y+1;
 			</tr>
  <tr><th>Troops</th>
             <?php
-			$units[$y]['t10']=3;
             for($i=1;$i<11;$i++) {
             	if($units[$y]['t'.$i] == 0) {
                 	echo "<td class=\"none\">";

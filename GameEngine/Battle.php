@@ -31,6 +31,9 @@ class Battle {
 				if(isset($post['a2_v4'])) {
 					array_push($target,4);
 				}
+                if(isset($post['a2_v5'])) {
+                    array_push($target,5);
+                }
 				$_POST['target'] = $target;
 				if(isset($post['a1_1'])) {
 					$sum = $sum2 = 0;
@@ -49,7 +52,11 @@ class Battle {
 						}
 						if(isset($post['wall3']) && $post['wall3'] == "") {
 							$post['wall3'] = 0;
-						}
+						}if(isset($post['wall4']) && $post['wall4'] == "") {
+                            $post['wall4'] = 0;
+                        }if(isset($post['wall5']) && $post['wall5'] == "") {
+                            $post['wall5'] = 0;
+                        }
 						$post['tribe'] = $target[0];
 						$_POST['result'] = $this->simulate($post);
 						$form->valuearray = $post;
@@ -61,7 +68,17 @@ class Battle {
 	private function simulate($post) {
 		// Establecemos los arrays con las unidades del atacante y defensor
 		$attacker = array('u1'=>0,'u2'=>0,'u3'=>0,'u4'=>0,'u5'=>0,'u6'=>0,'u7'=>0,'u8'=>0,'u9'=>0,'u10'=>0,'u11'=>0,'u12'=>0,'u13'=>0,'u14'=>0,'u15'=>0,'u16'=>0,'u17'=>0,'u18'=>0,'u19'=>0,'u20'=>0,'u21'=>0,'u22'=>0,'u23'=>0,'u24'=>0,'u25'=>0,'u26'=>0,'u27'=>0,'u28'=>0,'u29'=>0,'u30'=>0,'u31'=>0,'u32'=>0,'u33'=>0,'u34'=>0,'u35'=>0,'u36'=>0,'u37'=>0,'u38'=>0,'u39'=>0,'u40'=>0,'u41'=>0,'u42'=>0,'u43'=>0,'u44'=>0,'u45'=>0,'u46'=>0,'u47'=>0,'u48'=>0,'u49'=>0,'u50'=>0);
-		$start = ($post['a1_v'] == 1)? 1 : (($post['a1_v'] == 2)? 11 : 21);
+		if ($post['a1_v'] == 1){
+            $start = 1;
+        }else if ($post['a1_v'] == 2){
+            $start = 11;
+        }else if ($post['a1_v'] == 3){
+            $start = 21;
+        }else if ($post['a1_v'] == 4){
+            $start = 31;
+        }else if ($post['a1_v'] == 5){
+            $start = 41;
+        }
 		$att_ab = array('a1'=>0,'a2'=>0,'a3'=>0,'a4'=>0,'a5'=>0,'a6'=>0,'a7'=>0,'a8'=>0);
 		$def_ab = array('b1'=>0,'b2'=>0,'b3'=>0,'b4'=>0,'b5'=>0,'b6'=>0,'b7'=>0,'b8'=>0);
 		$index = 1;
@@ -102,6 +119,18 @@ class Battle {
 			}
 			$wall = $post['wall3'];
 			break;
+            case 4:
+            for($i=31;$i<=38;$i++) {
+                $def_ab['b'.$i] = $post['f2_'.$i];
+            }
+            $wall = $post['wall4'];
+            break;
+            case 5:
+            for($i=41;$i<=48;$i++) {
+                $def_ab['b'.$i] = $post['f2_'.$i];
+            }
+            $wall = $post['wall5'];
+            break;
 		}
 		if($post['kata'] == "") {
 			$post['kata'] = 0;
@@ -111,7 +140,7 @@ class Battle {
 		
 		$scout = 1;		
 		for($i=$start;$i<=($start+9);$i++) {
-			if($i == 4 || $i == 14 || $i == 23)
+			if($i == 4 || $i == 14 || $i == 23 || $i == 34 || $i == 44)
 			{}
 			else{
 				if($attacker['u'.$i]>0) {
@@ -132,9 +161,9 @@ class Battle {
 	function calculateBattle($Attacker,$Defender,$def_wall,$att_tribe,$def_tribe,$residence,$attpop,$defpop,$type,$def_ab,$att_ab,$tblevel,$stonemason) {
 		global $bid34;
 		// Definieer de array met de eenheden
-		$calvary = array(4,5,6,15,16,23,24,25,26);
-		$catapult = array(8,18,28);
-		$rams = array(7,17,27);		
+		$calvary = array(4,5,6,15,16,23,24,25,26,35,36,45,46);
+		$catapult = array(8,18,28,38,48);
+		$rams = array(7,17,27,37,47);		
 		$catp = $ram = 0;
 		// Array om terug te keren met het resultaat van de berekening
 		$result = array();
@@ -146,8 +175,28 @@ class Battle {
 		//
 		// Berekenen het totaal aantal punten van Aanvaller
 		//
-		$start = ($att_tribe == 1)? 1 : (($att_tribe == 2)? 11: 21);
-		$end = ($att_tribe == 1)? 10 : (($att_tribe == 2)? 20: 50);
+		if ($att_tribe == 1){
+            $start = 1;
+        }else if ($att_tribe == 2){
+            $start = 11;
+        }else if ($att_tribe == 3){
+            $start = 21;
+        }else if ($att_tribe == 4){
+            $start = 31;
+        }else if ($att_tribe == 5){
+            $start = 41;
+        }
+        if ($att_tribe == 1){
+            $end = 10;
+        }else if ($att_tribe == 2){
+            $end = 20;
+        }else if ($att_tribe == 3){
+            $end = 30;
+        }else if ($att_tribe == 4){
+            $end = 40;
+        }else if ($att_tribe == 5){
+            $end = 50;
+        }
 		$abcount = 1;
 		
 		if($type == 1)
@@ -209,14 +258,34 @@ class Battle {
 		//
 		// Berekent het totaal aantal punten van de Defender
 		//
-		$start = ($def_tribe == 1)? 1 : (($def_tribe == 2)? 11: 21);
-		$end = ($def_tribe == 1)? 10 : (($def_tribe == 2)? 20: 50);
-		$abcount = 1;
+		if ($def_tribe == 1){
+            $start = 1;
+        }else if ($def_tribe == 2){
+            $start = 11;
+        }else if ($def_tribe == 3){
+            $start = 21;
+        }else if ($def_tribe == 4){
+            $start = 31;
+        }else if ($def_tribe == 5){
+            $start = 41;
+        }
+        if ($def_tribe == 1){
+            $end = 10;
+        }else if ($def_tribe == 2){
+            $end = 20;
+        }else if ($def_tribe == 3){
+            $end = 30;
+        }else if ($def_tribe == 4){
+            $end = 40;
+        }else if ($def_tribe == 5){
+            $end = 50;
+        }
+        $abcount = 1;
 		
 		if($type == 1)
 		{
-			for($y=4;$y<=24;$y++) {
-				if($y == 4 || $y == 14 || $y == 23)
+			for($y=4;$y<=44;$y++) {
+				if($y == 4 || $y == 14 || $y == 23 || $y == 34 || $y == 44)
 				{
 					global ${'u'.$y};
 					if($y >= $start && $y <= ($end-2) && $def_ab['b'.$abcount] > 0) {
@@ -344,7 +413,18 @@ class Battle {
 			$result[2] = round($result[2],8);
 			// Als aangevallen met "Hero"
 			$kings = ($att_tribe == 1)? $Attacker['u9'] : (($att_tribe == 2)? $Attacker['u19']: $Attacker['u29']);
-			$aviables= $kings-round($kings*$result[1]);
+			if ($att_tribe == 1){
+            $kings = $Attacker['u9'];    
+            }else if ($att_tribe == 2){
+            $kings = $Attacker['u19'];    
+            }else if ($att_tribe == 3){
+            $kings = $Attacker['u29'];    
+            }else if ($att_tribe == 4){
+            $kings = $Attacker['u39'];    
+            }else if ($att_tribe == 5){
+            $kings = $Attacker['u49'];    
+            }
+            $aviables= $kings-round($kings*$result[1]);
 			if ($aviables>0){
 				switch($aviables){
 				case 1:
@@ -383,8 +463,28 @@ class Battle {
 		$result[6] = pow($rap/$rdp*$moralbonus,$Mfactor);		
 
 		$total_att_units = count($units['Att_unit']);
-		$start = ($att_tribe == 1)? 1 : (($att_tribe == 2)? 11: 21);
-		$end = ($att_tribe == 1)? 10 : (($att_tribe == 2)? 20: 30);
+		if ($att_tribe == 1){
+            $start = 1;
+        }else if ($att_tribe == 2){
+            $start = 11;
+        }else if ($att_tribe == 3){
+            $start = 21;
+        }else if ($att_tribe == 4){
+            $start = 31;
+        }else if ($att_tribe == 5){
+            $start = 41;
+        }
+        if ($att_tribe == 1){
+            $end = 10;
+        }else if ($att_tribe == 2){
+            $end = 20;
+        }else if ($att_tribe == 3){
+            $end = 30;
+        }else if ($att_tribe == 4){
+            $end = 40;
+        }else if ($att_tribe == 5){
+            $end = 50;
+        }
 		for($i=$start;$i <= $end;$i++){
 			if($att_tribe == 1){
 				$y = $i;
@@ -394,14 +494,37 @@ class Battle {
 			}
 			if($att_tribe == 3){
 				$y = $i-20;
-			}
+			}if($att_tribe == 4){
+                $y = $i-30;
+            }if($att_tribe == 5){
+                $y = $i-40;
+            }
 			$result['casualties_attacker'][$y] = round($result[1]*$units['Att_unit'][$i]);
 		}
 		
 		// Work out bounty
-		$start = ($att_tribe == 1)? 1 : (($att_tribe == 2)? 11: 21);
-		$end = ($att_tribe == 1)? 10 : (($att_tribe == 2)? 20: 30);
-		$max_bounty = 0;
+		if ($att_tribe == 1){
+            $start = 1;
+        }else if ($att_tribe == 2){
+            $start = 11;
+        }else if ($att_tribe == 3){
+            $start = 21;
+        }else if ($att_tribe == 4){
+            $start = 31;
+        }else if ($att_tribe == 5){
+            $start = 41;
+        }
+        if ($att_tribe == 1){
+            $end = 10;
+        }else if ($att_tribe == 2){
+            $end = 20;
+        }else if ($att_tribe == 3){
+            $end = 30;
+        }else if ($att_tribe == 4){
+            $end = 40;
+        }else if ($att_tribe == 5){
+            $end = 50;
+        }$max_bounty = 0;
 		
 		for($i=$start;$i<=$end;$i++) {
 			if($att_tribe == 1){
@@ -412,7 +535,11 @@ class Battle {
 			}
 			if($att_tribe == 3){
 				$y = $i-20;
-			}
+			}if($att_tribe == 4){
+                $y = $i-30;
+            }if($att_tribe == 5){
+                $y = $i-40;
+            }
 			
 			$max_bounty += ($Attacker['u'.$i]-$result['casualties_attacker'][$y])*${'u'.$i}['cap'];
 		

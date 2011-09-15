@@ -95,7 +95,7 @@ class Units {
 					if (!$database->getVillageState($id)){
 						$form->addError("error","Coordinates do not exist");
 					}
-					if ($session->tribe == 1){$Gtribe = "";}elseif ($session->tribe == 2){$Gtribe = "1";}else{$Gtribe = "2";}
+					if ($session->tribe == 1){$Gtribe = "";}elseif ($session->tribe == 2){$Gtribe = "1";}elseif ($session->tribe == 3){$Gtribe = "2";}elseif ($session->tribe == 4){$Gtribe = "3";}elseif ($session->tribe == 5){$Gtribe = "4";}
 					for($i=1; $i<11; $i++)
 					{
 						if(isset($post['t'.$i]))
@@ -152,7 +152,7 @@ class Units {
 		
 		
 		 $Gtribe = "";
-		if ($session->tribe == '2'){ $Gtribe = "1"; } else if ($session->tribe == '3'){ $Gtribe = "2"; }
+		if ($session->tribe == '2'){ $Gtribe = "1"; } else if ($session->tribe == '3'){ $Gtribe = "2"; }else if ($session->tribe == '4'){ $Gtribe = "3"; }else if ($session->tribe == '5'){ $Gtribe = "4"; }
 				for($i=1; $i<9; $i++){
 						if(isset($data['u'.$i])){
 							if ($data['u'.$i] > $village->unitarray['u'.$Gtribe.$i])
@@ -175,7 +175,7 @@ class Units {
 				} else {
 		
 		
-		 if($session->tribe == 1){ $u = ""; } elseif($session->tribe == 2){ $u = "1"; } else {$u = "2"; }
+		 if($session->tribe == 1){ $u = ""; } elseif($session->tribe == 2){ $u = "1"; } elseif($session->tribe == 3){ $u = "2"; }elseif($session->tribe == 4){ $u = "3"; }else {$u = "4"; }
 				
 		
 		$database->modifyUnit($village->wid,$u."1",$data['u1'],0);
@@ -205,10 +205,29 @@ class Units {
 		$from = array('x'=>$eigen['x'], 'y'=>$eigen['y']);
 		$ander = $database->getCoor($data['to_vid']);
 		$to = array('x'=>$ander['x'], 'y'=>$ander['y']);
-			$start = ($data21['tribe'] == 1)? 1 : (($data21['tribe'] == 2)? 11: 21);
-			$end = ($data21['tribe'] == 1)? 10 : (($data21['tible'] == 2)? 20: 30);
-			$unitspeeds = array(6,5,7,16,14,10,4,3,4,5,7,7,6,9,10,9,4,3,4,5,7,6,17,19,16,13,4,3,4,5);
-			$speeds = array();
+        if($data21['tribe'] == 1){
+          $start = 1;  
+        }else if($data21['tribe'] == 2){
+          $start = 11;  
+        }else if($data21['tribe'] == 3){
+          $start = 21;  
+        }else if($data21['tribe'] == 4){
+          $start = 31;  
+        }else if($data21['tribe'] == 5){
+          $start = 41;  
+        }if($data21['tribe'] == 1){
+          $end = 10;  
+        }else if($data21['tribe'] == 2){
+          $end = 20;  
+        }else if($data21['tribe'] == 3){
+          $end = 30;  
+        }else if($data21['tribe'] == 4){
+          $end = 40;  
+        }else if($data21['tribe'] == 5){
+          $end = 50;  
+        }
+			$unitspeeds = array(6,5,7,16,14,10,4,3,4,5,7,7,6,9,10,9,4,3,4,5,7,6,17,19,16,13,4,3,4,5,7,7,6,9,10,9,4,3,4,5,7,7,6,9,10,9,4,3,4,5);
+            $speeds = array();
 			$scout = 1;
 
 				//find slowest unit.
@@ -249,7 +268,7 @@ class Units {
 		if(($enforce['from']==$village->wid) || ($enforce['vref']==$village->wid)){
 			$to = $database->getVillage($enforce['from']);
 			$Gtribe = "";
-			if ($database->getUserField($to['owner'],'tribe',0) == '2'){ $Gtribe = "1"; } else if ($database->getUserField($to['owner'],'tribe',0) == '3'){ $Gtribe = "2"; }
+			if ($database->getUserField($to['owner'],'tribe',0) == '2'){ $Gtribe = "1"; } else if ($database->getUserField($to['owner'],'tribe',0) == '3'){ $Gtribe = "2"; } else if ($database->getUserField($to['owner'],'tribe',0) == '4'){ $Gtribe = "3"; }else if ($database->getUserField($to['owner'],'tribe',0) == '5'){ $Gtribe = "4"; }  
 		
 					for($i=1; $i<10; $i++){
 						if(isset($post['t'.$i])){
@@ -278,9 +297,29 @@ class Units {
 				} else {
 					
 					//change units
-					$start = ($database->getUserField($to['owner'],'tribe',0) == 1)? 1 : (($database->getUserField($to['owner'],'tribe',0) == 2)? 11: 21);
-					$end = ($database->getUserField($to['owner'],'tribe',0) == 1)? 10 : (($database->getUserField($to['owner'],'tribe',0) == 2)? 20: 30);
-					$j='1';
+					if ($database->getUserField($to['owner'],'tribe',0) == 1){
+                     $start = 1;   
+                    }else if ($database->getUserField($to['owner'],'tribe',0) == 2){
+                     $start = 11;   
+                    }else if ($database->getUserField($to['owner'],'tribe',0) == 3){
+                     $start = 21;   
+                    }else if ($database->getUserField($to['owner'],'tribe',0) == 42){
+                     $start = 31;   
+                    }else if ($database->getUserField($to['owner'],'tribe',0) == 5){
+                     $start = 41;   
+                    }
+                    if ($database->getUserField($to['owner'],'tribe',0) == 1){
+                     $end = 10;   
+                    }else if ($database->getUserField($to['owner'],'tribe',0) == 2){
+                     $end = 20;   
+                    }else if ($database->getUserField($to['owner'],'tribe',0) == 3){
+                     $end = 30;   
+                    }else if ($database->getUserField($to['owner'],'tribe',0) == 42){
+                     $end = 40;   
+                    }else if ($database->getUserField($to['owner'],'tribe',0) == 5){
+                     $end = 50;   
+                    }  
+                    $j='1';
 					for($i=$start;$i<=$end;$i++){
 						$database->modifyEnforce($post['ckey'],$i,$post['t'.$j.''],0); $j++;
 					}
@@ -291,7 +330,7 @@ class Units {
 						$fromCor = array('x'=>$tocoor['x'], 'y'=>$tocoor['y']);
 						$toCor = array('x'=>$fromcoor['x'], 'y'=>$fromcoor['y']);
 		
-				$unitspeeds = array(6,5,7,16,14,10,4,3,4,5,7,7,6,9,10,9,4,3,4,5,7,6,17,19,16,13,4,3,4,5);
+				$unitspeeds = array(6,5,7,16,14,10,4,3,4,5,7,7,6,9,10,9,4,3,4,5,7,6,17,19,16,13,4,3,4,5,7,7,6,9,10,9,4,3,4,5,7,7,6,9,10,9,4,3,4,5);
 				$speeds = array();
 
 				//find slowest unit.
@@ -338,9 +377,13 @@ class Units {
 		  }
 		  elseif($session->tribe == 2){
 			  $unit = 20;
-		  }
+		  }elseif($session->tribe == 3){
+              $unit = 30;
+          }elseif($session->tribe == 4){
+              $unit = 40;
+          }
 		  else{
-			  $unit = 30;
+			  $unit = 50;
 		  }
 		  $database->modifyResource($village->wid,750,750,750,750,0);
 		  $database->modifyUnit($village->wid,$unit,3,0);

@@ -89,14 +89,14 @@ class Technology {
 	public function getTrainingList($type) {
 		global $database,$village;
 		$trainingarray = $database->getTraining($village->wid);
-		$listarray = array();
-		$barracks = array(1,2,3,11,12,13,14,21,22);
-		$greatbarracks = array(61,62,63,71,72,73,84,81,82);
-		$stables = array(4,5,6,15,16,23,24,25,26);
-		$greatstables = array(64,65,66,75,76,83,84,85,86);
-		$workshop = array(7,8,17,18,27,28);
-		$greatworkshop = array(67,68,77,78,87,88);
-		$residence = array(9,10,19,20,29,30);
+        $listarray = array();
+		$barracks = array(1,2,3,11,12,13,14,21,22,31,32,33,34,41,42,43,44);
+		$greatbarracks = array(61,62,63,71,72,73,84,81,82,91,92,93,94,101,102,103,104);
+		$stables = array(4,5,6,15,16,23,24,25,26,35,36,45,46);
+		$greatstables = array(64,65,66,75,76,83,84,85,86,95,96,105,106);
+		$workshop = array(7,8,17,18,27,28,37,38,47,48);
+		$greatworkshop = array(67,68,77,78,87,88,97,98,107,108);
+		$residence = array(9,10,19,20,29,30,39,40,49,50);
 		if(count($trainingarray) > 0) {
 			foreach($trainingarray as $train) {
 				if($type == 1 && in_array($train['unit'],$barracks)) {
@@ -281,6 +281,36 @@ mysql_query("UPDATE ".TB_PREFIX."units set u".$i." = '0' where vref = $village->
 			case 30:
 			if($session->tribe == 3) { return true; } else { return false; }
 			break;
+            case 31:
+            if($session->tribe == 4) { return true; } else { return false; }
+            break;
+            case 32: 
+            case 33:
+            case 34:
+            case 35:
+            case 36:
+            case 37:
+            case 38:
+            if($session->tribe == 4 && $this->getTech($unit)) { return true; } else { return false; }
+            break;
+            case 40:
+            if($session->tribe == 4) { return true; } else { return false; }
+            break;
+            case 41:
+            if($session->tribe == 5) { return true; } else { return false; }
+            break;
+            case 42: 
+            case 43:
+            case 44:
+            case 45:
+            case 46:
+            case 47:
+            case 48:
+            if($session->tribe == 5 && $this->getTech($unit)) { return true; } else { return false; }
+            break;
+            case 50:
+            if($session->tribe == 5) { return true; } else { return false; }
+            break;
 		}
 	}
 	
@@ -291,8 +321,18 @@ mysql_query("UPDATE ".TB_PREFIX."units set u".$i." = '0' where vref = $village->
 	
 	private function procTrain($post,$great=false) {
 		global $session;
-		$start = ($session->tribe == 1)? 1 : (($session->tribe == 2)? 11 : 21);
-		for($i=$start;$i<=($start+9);$i++) {
+		if ($session->tribe == 1){
+            $start = 1;
+        }else if ($session->tribe == 2){
+            $start = 11;
+        }else if ($session->tribe == 3){
+            $start = 21;
+        }else if ($session->tribe == 4){
+            $start = 31;
+        }else if ($session->tribe == 5){
+            $start = 41;
+        }
+        for($i=$start;$i<=($start+9);$i++) {
 			if(isset($post['t'.$i]) && $post['t'.$i] != 0) {
 				$amt = $post['t'.$i];
 				$amt = intval($amt);
@@ -326,6 +366,10 @@ mysql_query("UPDATE ".TB_PREFIX."units set u".$i." = '0' where vref = $village->
 			$start = 31;
 			$end = 40;
 			break;
+            case 5:
+            $start = 41;
+            $end = 50;
+            break;
 		}	
 		for($i=$start;$i<=$end;$i++) {
 			$unit = "u".$i;
@@ -340,10 +384,10 @@ private function trainUnit($unit,$amt,$great=false) {
         global $session,$database,${'u'.$unit},$building,$village,$bid19,$bid20,$bid21,$bid25,$bid26,$bid29,$bid30,$bid42;        
         
         if($this->getTech($unit) || $unit%10 <= 1) {
-            $footies = array(1,2,3,11,12,13,14,21,22);
-            $calvary = array(4,5,6,15,16,23,24,25,26);
-            $workshop = array(7,8,17,18,27,28);
-            $special = array(9,10,19,20,29,30);
+            $footies = array(1,2,3,11,12,13,14,21,22,31,32,33,34,41,42,43,44);
+            $calvary = array(4,5,6,15,16,23,24,25,26,35,36,45,46);
+            $workshop = array(7,8,17,18,27,28,37,38,47,48);
+            $special = array(9,10,19,20,29,30,39,40,49,50);
             if(in_array($unit,$footies)) {
 				if($great) {
 					$each = round(($bid29[$building->getTypeLevel(29)]['attri'] / 100) * ${'u'.$unit}['time'] / SPEED);
@@ -417,32 +461,48 @@ private function trainUnit($unit,$amt,$great=false) {
 			if($building->getTypeLevel(22) >= 20 && $building->getTypeLevel(16) >= 10) { return true; } else { return false; }
 			break;
 			case 12:
+            case 32:
+            case 42:
 			if($building->getTypeLevel(22) >= 1 && $building->getTypeLevel(19) >= 3) { return true; } else { return false; }
 			break;
 			case 13:
+            case 33:
+            case 43:
 			if($building->getTypeLevel(22) >= 3 && $building->getTypeLevel(11) >= 1) { return true; } else { return false; }
 			break;
 			case 14:
+            case 34:
+            case 44:
 			if($building->getTypeLevel(22) >= 1 && $building->getTypeLevel(15) >= 5) { return true; } else { return false; }
 			break;
 			case 15:
+            case 35:
+            case 45:
 			if($building->getTypeLevel(22) >= 1 && $building->getTypeLevel(20) >= 3) { return true; } else { return false; }
 			break;
 			case 16:
 			case 26:
+            case 36:
+            case 46:
 			if($building->getTypeLevel(22) >= 15 && $building->getTypeLevel(20) >= 10) { return true; } else { return false; }
 			break;
 			case 7:
 			case 17:
 			case 27:
+            case 37:
+            case 47:
 			if($building->getTypeLevel(22) >= 10 && $building->getTypeLevel(21) >= 1) { return true; } else { return false; }
 			break;
 			case 8:
 			case 18:
 			case 28:
+            case 38:
+            case 48:
 			if($building->getTypeLevel(22) >= 15 && $building->getTypeLevel(21) >= 10) { return true; } else { return false; }
 			break;
 			case 19:
+            case 39:
+            case 49:
 			if($building->getTypeLevel(22) >= 20 && $building->getTypeLevel(16) >= 5) { return true; } else { return false; }
 			break;
 			case 22:

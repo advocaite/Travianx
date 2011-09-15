@@ -1439,11 +1439,11 @@ class MYSQL_DB {
 	function trainUnit($vid,$unit,$amt,$pop,$each,$time,$mode) {
 		global $village, $building, $session, $technology;
 
-		if (!$mode) {
-			$barracks = array(1,2,3,11,12,13,14,21,22);
-			$stables = array(4,5,6,15,16,23,24,25,26);
-			$workshop = array(7,8,17,18,27,28);
-			$residence = array(9,10,19,20,29,30);
+		if (!$mode) {             
+			$barracks = array(1,2,3,11,12,13,14,21,22,31,32,33,34,41,42,43,44);
+			$stables = array(4,5,6,15,16,23,24,25,26,35,36,45,46);
+			$workshop = array(7,8,17,18,27,28,37,38,47,48);
+			$residence = array(9,10,19,20,29,30,39,40,49,50);
 
 			if (in_array($unit,$barracks)) {
 				$queued = $technology->getTrainingList(1);
@@ -1777,6 +1777,88 @@ class MYSQL_DB {
 			return false;
 		}
 	}
+    
+    public function getAvailableExpansionTraining() {
+                global $building,$session,$technology,$village;
+                $q = "SELECT (IF(exp1=0,1,0)+IF(exp2=0,1,0)+IF(exp3=0,1,0)) FROM ".TB_PREFIX."vdata WHERE wref = $village->wid";
+                $result = mysql_query($q, $this->connection);
+                $row = mysql_fetch_row($result);
+                $maxslots = $row[0];
+                $residence=$building->getTypeLevel(25);
+                $palace=$building->getTypeLevel(26);
+                if ($residence > 0) { $maxslots -= (3-floor($residence/10)); }
+                if ($palace > 0) { $maxslots -= (3-floor(($palace-5)/5)); }
+
+                $q = "SELECT (u10+u20+u30) FROM ".TB_PREFIX."units WHERE vref = $village->wid";
+                $result = mysql_query($q, $this->connection);
+                $row = mysql_fetch_row($result);
+                $settlers = $row[0];
+                $q = "SELECT (u9+u19+u29) FROM ".TB_PREFIX."units WHERE vref = $village->wid";
+                $result = mysql_query($q, $this->connection);
+                $row = mysql_fetch_row($result);
+                $chiefs = $row[0];
+
+                $settlers += 3*count($this->getMovement(5,$village->wid,0));
+                $current_movement = $this->getMovement(3,$village->wid,0);
+                if (count($current_movement)>0 ) {
+                        foreach($current_movement as $build) {
+                                $settlers += $build['t10'];
+                                $chiefs += $build['t9'];
+                        }
+                }
+                $current_movement = $this->getMovement(3,$village->wid,1);
+                if (count($current_movement)>0 ) {
+                        foreach($current_movement as $build) {
+                                $settlers += $build['t10'];
+                                $chiefs += $build['t9'];
+                        }
+                }
+                $current_movement = $this->getMovement(4,$village->wid,0);
+                if (count($current_movement)>0 ) {
+                        foreach($current_movement as $build) {
+                                $settlers += $build['t10'];
+                                $chiefs += $build['t9'];
+                        }
+                }
+                $current_movement = $this->getMovement(4,$village->wid,1);
+                if (count($current_movement)>0 ) {
+                        foreach($current_movement as $build) {
+                                $settlers += $build['t10'];
+                                $chiefs += $build['t9'];
+                        }
+                }
+                $q = "SELECT (u10+u20+u30) FROM ".TB_PREFIX."enforcement WHERE `from` = $village->wid";
+                $result = mysql_query($q, $this->connection);
+                $row = mysql_fetch_row($result);
+                if (count($row)>0) {
+                        foreach($row as $reinf) {
+                                $settlers += $reinf[0];
+                        }
+                }
+                $q = "SELECT (u9+u19+u29) FROM ".TB_PREFIX."enforcement WHERE `from` = $village->wid";
+                $result = mysql_query($q, $this->connection);
+                $row = mysql_fetch_row($result);
+                if (count($row)>0) {
+                        foreach($row as $reinf) {
+                                $chiefs += $reinf[0];
+                        }
+                }
+                $trainlist = $technology->getTrainingList(4);
+                if(count($trainlist) > 0) {
+                        foreach($trainlist as $train) {
+                                if ($train['unit']%10 == 0) { $settlers += $train['amt']; }
+                                if ($train['unit']%10 == 9) { $chiefs += $train['amt']; }
+                        }
+                }
+                // trapped settlers/chiefs calculation required
+
+                $settlerslots = $maxslots * 3 - $settlers - $chiefs * 3;
+                $chiefslots = $maxslots - $chiefs - floor(($settlers+2)/3);
+
+                if (!$technology->getTech(($session->tribe-1)*10+9)) { $chiefslots = 0; }
+                $slots = array("chiefs"=>$chiefslots,"settlers"=>$settlerslots);
+                return $slots;
+        }
 	
 };
 

@@ -14,7 +14,7 @@
 		}
         ?>
 		
-        <td class="line-first large"><img class="unit u4" src="img/x.gif" title="Scout" alt="Scout"> <input class="text" <?php if ($village->unitarray['u14']<=0) {echo ' disabled="disabled"';}?> name="t4" value="" maxlength="6" type="text">
+        <td class="line-first large"><img class="unit u14" src="img/x.gif" title="Scout" alt="Scout"> <input class="text" <?php if ($village->unitarray['u14']<=0) {echo ' disabled="disabled"';}?> name="t4" value="" maxlength="6" type="text">
 		<?php 
         if ($village->unitarray['u14']>0){
         	echo "<a href=\"#\" onclick=\"document.snd.t4.value=".$village->unitarray['u14']."; return false;\">(".$village->unitarray['u14'].")</a></td>";
