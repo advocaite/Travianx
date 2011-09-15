@@ -772,15 +772,20 @@ class MYSQL_DB {
 	function modifyPoints($aid,$points,$amt) {
 		$q = "UPDATE ".TB_PREFIX."users set $points = $points + $amt where id = $aid";
 		return mysql_query($q,$this->connection);
-	}  
+	}
+    
+    function modifyPointsAlly($aid,$points,$amt) {
+        $q = "UPDATE ".TB_PREFIX."alidata set $points = $points + $amt where id = $aid";
+        return mysql_query($q,$this->connection);
+    }    
 	
 	/*****************************************
 	Function to create an alliance
 	References: 
 	*****************************************/
 	function createAlliance($tag,$name,$uid,$max) {
-		$q = "INSERT into ".TB_PREFIX."alidata values (0,'$name','$tag',$uid,0,0,0,'','',$max)";
-		mysql_query($q,$this->connection);
+		 $q = "INSERT into ".TB_PREFIX."alidata values (0,'$name','$tag',$uid,0,0,0,'','',$max,'','','','','','','','')";
+         mysql_query($q,$this->connection);
 		return mysql_insert_id($this->connection);
 	}
 	
@@ -1002,34 +1007,35 @@ class MYSQL_DB {
 	References: User ID/Message ID, Mode
 	***************************/
 	function getMessage($id,$mode) {
-		switch($mode) {
-			case 1:
-			$q = "SELECT * FROM ".TB_PREFIX."mdata WHERE target = $id and send = 0 and archived = 0 ORDER BY time DESC";
-			break;
-			case 2:
-			$q = "SELECT * FROM ".TB_PREFIX."mdata WHERE owner = $id and send = 1 and archived = 0 ORDER BY time DESC";
-			break;
-			case 3:
-			$q = "SELECT * FROM ".TB_PREFIX."mdata where id = $id";
-			break;
-			case 4:
-			$q = "UPDATE ".TB_PREFIX."mdata set viewed = 1 where id = $id";
-			break;
-			case 5:
-			$q = "DELETE FROM ".TB_PREFIX."mdata where id = $id";
-			break;
-			case 6:
-			$q = "SELECT * FROM ".TB_PREFIX."mdata where target = $id and send = 0 and archived = 1";
-			break;
-		}
-		if($mode <= 3 || $mode == 6) {
-			$result = mysql_query($q, $this->connection);
-			return $this->mysql_fetch_all($result);
-		}
-		else {
-			return mysql_query($q, $this->connection);
-		}
-	}
+        global $session; 
+        switch($mode) {
+            case 1:
+            $q = "SELECT * FROM ".TB_PREFIX."mdata WHERE target = $id and send = 0 and archived = 0 ORDER BY time DESC";
+            break;
+            case 2:
+            $q = "SELECT * FROM ".TB_PREFIX."mdata WHERE owner = $id  ORDER BY time DESC";
+            break;
+            case 3:
+            $q = "SELECT * FROM ".TB_PREFIX."mdata where id = $id";
+            break;
+            case 4:
+            $q = "UPDATE ".TB_PREFIX."mdata set viewed = 1 where id = $id AND target = $session->uid";
+            break;
+            case 5:
+            $q = "DELETE FROM ".TB_PREFIX."mdata where id = $id";
+            break;
+            case 6:
+            $q = "SELECT * FROM ".TB_PREFIX."mdata where target = $id and send = 0 and archived = 1";
+            break;
+        }
+        if($mode <= 3 || $mode == 6) {
+            $result = mysql_query($q, $this->connection);
+            return $this->mysql_fetch_all($result);
+        }
+        else {
+            return mysql_query($q, $this->connection);
+        }
+    }
 	
 	function unarchiveNotice($id) {
 		$q = "UPDATE ".TB_PREFIX."ndata set ntype = archive, archive = 0 where id = $id";
@@ -1289,7 +1295,11 @@ class MYSQL_DB {
 			case 2: $q = "SELECT * FROM ".TB_PREFIX."movement where ".TB_PREFIX."movement.".$where." = $village and ".TB_PREFIX."movement.proc = 0 and ".TB_PREFIX."movement.sort_type = 2"; break;
 			case 3: $q = "SELECT * FROM ".TB_PREFIX."movement, ".TB_PREFIX."attacks where ".TB_PREFIX."movement.".$where." = $village and ".TB_PREFIX."movement.ref = ".TB_PREFIX."attacks.id and ".TB_PREFIX."movement.proc = 0 and ".TB_PREFIX."movement.sort_type = 3 ORDER BY endtime DESC"; break;
 			case 4: $q = "SELECT * FROM ".TB_PREFIX."movement, ".TB_PREFIX."attacks where ".TB_PREFIX."movement.".$where." = $village and ".TB_PREFIX."movement.ref = ".TB_PREFIX."attacks.id and ".TB_PREFIX."movement.proc = 0 and ".TB_PREFIX."movement.sort_type = 4 ORDER BY endtime DESC"; break;
-			case 5: $q = "SELECT * FROM ".TB_PREFIX."movement where ".TB_PREFIX."movement.".$where." = $village and sort_type = 5 and proc = 0"; break;						case 34: $q = "SELECT * FROM ".TB_PREFIX."movement, ".TB_PREFIX."attacks where ".TB_PREFIX."movement.".$where." = $village and ".TB_PREFIX."movement.ref = ".TB_PREFIX."attacks.id and ".TB_PREFIX."movement.proc = 0 and ".TB_PREFIX."movement.sort_type = 3 or ".TB_PREFIX."movement.".$where." = $village and ".TB_PREFIX."movement.ref = ".TB_PREFIX."attacks.id and ".TB_PREFIX."movement.proc = 0 and ".TB_PREFIX."movement.sort_type = 4 ORDER BY endtime DESC"; break;
+			case 5: $q = "SELECT * FROM ".TB_PREFIX."movement where ".TB_PREFIX."movement.".$where." = $village and sort_type = 5 and proc = 0"; 
+            case 6: $q = "SELECT * FROM ".TB_PREFIX."movement,".TB_PREFIX."odata, ".TB_PREFIX."attacks where ".TB_PREFIX."odata.conqured = $village and ".TB_PREFIX."movement.to = ".TB_PREFIX."odata.wref and ".TB_PREFIX."movement.ref = ".TB_PREFIX."attacks.id and ".TB_PREFIX."movement.proc = 0 and ".TB_PREFIX."movement.sort_type = 3 ORDER BY endtime DESC"; 
+            break;						
+            case 34: $q = "SELECT * FROM ".TB_PREFIX."movement, ".TB_PREFIX."attacks where ".TB_PREFIX."movement.".$where." = $village and ".TB_PREFIX."movement.ref = ".TB_PREFIX."attacks.id and ".TB_PREFIX."movement.proc = 0 and ".TB_PREFIX."movement.sort_type = 3 or ".TB_PREFIX."movement.".$where." = $village and ".TB_PREFIX."movement.ref = ".TB_PREFIX."attacks.id and ".TB_PREFIX."movement.proc = 0 and ".TB_PREFIX."movement.sort_type = 4 ORDER BY endtime DESC"; 
+            break;
 		}
 		$result = mysql_query($q, $this->connection);
 		$array = $this->mysql_fetch_all($result);
@@ -1604,6 +1614,49 @@ function getAllMember($aid) {
 		$q = "UPDATE ".TB_PREFIX."fdata SET `wwname` = '$name' WHERE ".TB_PREFIX."fdata.`vref` = $vref";
 		return mysql_query($q,$this->connection);
 	}
+    
+    //medal functions
+        function addclimberpop($user,$cp) {
+        $q = "UPDATE ".TB_PREFIX."users set Rc = Rc + '$cp' where id = $user";
+        return mysql_query($q, $this->connection);
+    }
+    function addclimberrankpop($user,$cp) {
+        $q = "UPDATE ".TB_PREFIX."users set clp = clp + '$cp' where id = $user";
+        return mysql_query($q, $this->connection);
+    }
+    function removeclimberrankpop($user,$cp) {
+        $q = "UPDATE ".TB_PREFIX."users set clp = clp - '$cp'' where id = $user";
+        return mysql_query($q, $this->connection);
+    }
+    function updateoldrank($user,$cp) {
+        $q = "UPDATE ".TB_PREFIX."users set oldrank = '$cp' where id = $user";
+        return mysql_query($q, $this->connection);
+    }
+    function removeclimberpop($user,$cp) {
+        $q = "UPDATE ".TB_PREFIX."users set Rc = Rc - '$cp' where id = $user";
+        return mysql_query($q, $this->connection);
+    }
+    // ALLIANCE MEDAL FUNCTIONS
+    function addclimberpopAlly($user,$cp) {
+        $q = "UPDATE ".TB_PREFIX."alidata set Rc = Rc + '$cp' where id = $user";
+        return mysql_query($q, $this->connection);
+    }
+    function addclimberrankpopAlly($user,$cp) {
+        $q = "UPDATE ".TB_PREFIX."alidata set clp = clp + '$cp' where id = $user";
+        return mysql_query($q, $this->connection);
+    }
+    function removeclimberrankpopAlly($user,$cp) {
+        $q = "UPDATE ".TB_PREFIX."alidata set clp = clp - '$cp'' where id = $user";
+        return mysql_query($q, $this->connection);
+    }
+    function updateoldrankAlly($user,$cp) {
+        $q = "UPDATE ".TB_PREFIX."alidata set oldrank = '$cp' where id = $user";
+        return mysql_query($q, $this->connection);
+    }
+    function removeclimberpopAlly($user,$cp) {
+        $q = "UPDATE ".TB_PREFIX."alidata set Rc = Rc - '$cp' where id = $user";
+        return mysql_query($q, $this->connection);
+    }
 	
 	function modifyCommence($id) {	
 	$time = time();		

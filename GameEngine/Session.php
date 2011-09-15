@@ -37,8 +37,8 @@ class Session {
 	private $time;
 	var $logged_in = false;
 	var $referrer, $url;
-	var $username,$uid,$access,$plus,$tribe,$isAdmin,$alliance,$gold;
-	var $bonus = 0;
+	var $username,$uid,$access,$plus,$tribe,$isAdmin,$alliance,$gold,$oldrank,$gpack;    
+    var $bonus = 0;
 	var $bonus1 = 0;
 	var $bonus2 = 0; 
 	var $bonus3 = 0;
@@ -158,6 +158,7 @@ die("We're sorry but you were banned. <br /><br /><b>Reason:</b> ".$ban['reason'
 		$this->checker = $_SESSION['checker'];
 		$this->mchecker = $_SESSION['mchecker'];
 		$this->gold = $this->userarray['gold'];
+        $this->oldrank =  $this->userarray['oldrank'];
 		$_SESSION['ok'] = $this->userarray['ok'];
 		if($this->userarray['b1'] > $this->time) {
 			$this->bonus1 = 1;

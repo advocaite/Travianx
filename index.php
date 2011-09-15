@@ -442,7 +442,7 @@ world.</span></div>
             <div style="visibility: hidden; opacity: 0;" id="stage-bg"></div>
             <div id="stage-fg">
             	<div class="stage-links">
-	                <a style="visibility: visible; opacity: 1;" class="stage-link stage-link1 shown" href="/index.php#serverRegister"></a>					<a style="visibility: visible; opacity: 1;" class="stage-link stage-link2 " href="/index.php#serverRegister"></a>					<a class="stage-link stage-link3" href="http://forum.ragezone.com/f583/"></a>				</div>
+	                <a style="visibility: visible; opacity: 1;" class="stage-link stage-link1 shown" href="/index.php#serverRegister"></a>					<a style="visibility: visible; opacity: 1;" class="stage-link stage-link2 " href="http://www.travian.com.au/serverRegister.php"></a>					<a class="stage-link stage-link3" href="http://forum.ragezone.com/f583/"></a>				</div>
             	<div id="stage-nav-click">
 	           		<ul id="buttons-click">
 	                 	<li style="visibility: visible; opacity: 1;" class="b0 act0">&nbsp;</li>

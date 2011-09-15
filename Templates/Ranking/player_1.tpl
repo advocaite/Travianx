@@ -11,8 +11,8 @@ $search = $_SESSION['search'];
 	<thead>
 				<tr>
 					<th colspan="5">
-                        The largest players                    <div id="submenu"><a title="Top 10" href="statistiken.php?id=7"><img class="btn_top10" src="img/x.gif" alt="Top 10" /></a><a title="defender" href="statistiken.php?id=32"><img class="btn_def" src="img/x.gif" alt="defender" /></a><a title="attacker" href="statistiken.php?id=31"><img class="btn_off" src="img/x.gif" alt="attacker" /></a></div><br><div id="submenu2"><a title="Romans" href="/statistiken.php?id=11"><img class="btn_v1" src="img/x.gif" alt="attacker"></a><a title="Teutons" href="/statistiken.php?id=12"><img class="btn_v2" src="img/x.gif" alt="attacker"></a><a title="Gauls" href="/statistiken.php?id=13"><img class="btn_v3" src="img/x.gif" alt="attacker"></a></div>            
-                    </th>
+						The largest Romans					<div id="submenu"><a title="Top 10" href="statistiken.php?id=7"><img class="btn_top10" src="img/x.gif" alt="Top 10" /></a><a title="defender" href="statistiken.php?id=32"><img class="btn_def" src="img/x.gif" alt="defender" /></a><a title="attacker" href="statistiken.php?id=31"><img class="btn_off" src="img/x.gif" alt="attacker" /></a></div><br><div id="submenu2"><a title="Romans" href="/statistiken.php?id=11"><img class="btn_v1" src="img/x.gif" alt="attacker"></a><a title="Teutons" href="/statistiken.php?id=12"><img class="btn_v2" src="img/x.gif" alt="attacker"></a><a title="Gauls" href="/statistiken.php?id=13"><img class="btn_v3" src="img/x.gif" alt="attacker"></a></div>    	    
+					</th>
 				</tr>
 		<tr><td></td><td>Player</td><td>Alliance</td><td>Population</td><td>Villages</td></tr>
 		</thead><tbody>  
@@ -30,9 +30,9 @@ $search = $_SESSION['search'];
 			} else { $start = ($_SESSION['start']+1); }
 		} else { $start = ($_SESSION['start']+1); }
         if(count($ranking->getRank()) > 0) {
-        	$ranking = $ranking->getRank();
+        	$ranking = $ranking->getRank(); 
             for($i=$start;$i<($start+20);$i++) {
-            	if(isset($ranking[$i]['username']) && $ranking[$i] != "pad") {
+            	if(isset($ranking[$i]['username'])  && $ranking[$i] != "pad") {
                 	if($i == $search) {
                     echo "<tr class=\"hl\"><td class=\"ra fc\" >";
                     }
@@ -46,8 +46,8 @@ $search = $_SESSION['search'];
 						echo"<a href=\"spieler.php?uid=".$ranking[$i]['userid']."\">".$ranking[$i]['username']."</a>";
 						}
 					echo"</td><td class=\"al\" >";
-                    if($ranking[$i]['aname'] != "") {
-                    echo "<a href=\"allianz.php?aid=".$ranking[$i]['aname']."\">".$ranking[$i]['aname']."</a>";
+                    if($ranking[$i]['alliance'] != 0) {
+                    echo "<a href=\"allianz.php?aid=".$ranking[$i]['alliance']."\">".$ranking[$i]['aname']."</a>";
                     }
                     else {
                     echo "-";

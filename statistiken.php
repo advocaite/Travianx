@@ -64,7 +64,6 @@ if(isset($_GET['newdid'])) {
 <?php include("Templates/menu.tpl"); ?>
 		<div id="content"  class="statistics">
 <h1>Statistics</h1>           	
-<?php if($session->access == ADMIN) { echo "<a href=\"medals.php\">Update Top 10</a>"; } ?>
 <div id="textmenu">
    <a href="statistiken.php" <?php if(!isset($_GET['id']) || (isset($_GET['id']) && ($_GET['id'] == 1 || $_GET['id'] == 31 || $_GET['id'] == 32 || $_GET['id'] == 7))) { echo "class=\"selected \""; } ?>>Player</a>
  | <a href="statistiken.php?id=4" <?php if(isset($_GET['id']) && ($_GET['id'] == 4 || $_GET['id'] == 41 || $_GET['id'] == 42 || $_GET['id'] == 47)) { echo "class=\"selected \""; } ?>>Alliances</a>
@@ -78,41 +77,53 @@ if(isset($_GET['newdid'])) {
 <?php
 if(isset($_GET['id'])) {
 	switch($_GET['id']) {
-		case 31:
-		include("Templates/Ranking/player_attack.tpl");
-		break;
-		case 32:
-		include("Templates/Ranking/player_defend.tpl");
-		break;
-		case 7:
-		include("Templates/Ranking/player_top10.tpl");
-		break;
-		case 2:
-		include("Templates/Ranking/villages.tpl");
-		break;
-		case 4:
-		include("Templates/Ranking/alliance.tpl");
-		break;
-		case 8:
-		include("Templates/Ranking/heroes.tpl");
-		break;
-		case 41:
-		include("Templates/Ranking/alliance_attack.tpl");
-		break;
-		case 42:
-		include("Templates/Ranking/alliance_defend.tpl");
-		break;
-		case 0:
-		include("Templates/Ranking/general.tpl");
-		break;
-		case 1:
-		default:
-		include("Templates/Ranking/overview.tpl");
-		break;
-		case 99:
-		default:
-		include("Templates/Ranking/ww.tpl");
-		break;
+		 case 31:
+        include("Templates/Ranking/player_attack.tpl");
+        break;
+        case 32:
+        include("Templates/Ranking/player_defend.tpl");
+        break;
+        case 7:
+        include("Templates/Ranking/player_top10.tpl");
+        break;
+        case 2:
+        include("Templates/Ranking/villages.tpl");
+        break;
+        case 4:
+        include("Templates/Ranking/alliance.tpl");
+        break;
+        case 8:
+        include("Templates/Ranking/heroes.tpl");
+        break;
+        case 11:
+        include("Templates/Ranking/player_1.tpl");
+        break;
+        case 12:
+        include("Templates/Ranking/player_2.tpl");
+        break;
+        case 13:
+        include("Templates/Ranking/player_3.tpl");
+        break;
+        case 41:
+        include("Templates/Ranking/alliance_attack.tpl");
+        break;
+        case 42:
+        include("Templates/Ranking/alliance_defend.tpl");
+        break;
+        case 43:
+        include("Templates/Ranking/ally_top10.tpl");
+        break;
+        case 0:
+        include("Templates/Ranking/general.tpl");
+        break;
+        case 1:
+        default:
+        include("Templates/Ranking/overview.tpl");
+        break;
+        case 99:
+        default:
+        include("Templates/Ranking/ww.tpl");
+        break;
 	}
 }
 else {

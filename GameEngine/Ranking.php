@@ -4,11 +4,11 @@
 ##              -= YOU MAY NOT REMOVE OR CHANGE THIS NOTICE =-                 ##
 ## --------------------------------------------------------------------------- ##
 ##  Filename       Ranking.php                                                 ##
-##  Developed by:  Dzoki & Dixie & SlimShady & Genesis & Extreme               ##
+##  Developed by:  Dzoki & Dixie & SlimShady & Genesis & Extreme & advocaite   ##
 ##  Optimised by:  Genesis                                                     ##
 ##  License:       TravianX Project                                            ##
 ##  Copyright:     TravianX (c) 2010-2011. All rights reserved.                ##
-##                                                                             ##
+##  New Additions: Tribe rankings for best player                              ##
 #################################################################################
 
 class Ranking {
@@ -21,7 +21,7 @@ class Ranking {
     }
 
     public function procRankReq($get) {
-        global $village, $session;
+        global $village, $session, $database;
         if (isset($get['id'])) {
             switch ($get['id']) {
                 case 1:
@@ -29,6 +29,15 @@ class Ranking {
                     break;
                 case 8:
                     $this->procHeroRankArray();
+                    break;
+                case 11:
+                    $this->procRankRaceArray(1);
+                    break;
+                case 12:
+                    $this->procRankRaceArray(2);
+                    break;
+                case 13:
+                    $this->procRankRaceArray(3);
                     break;
                 case 31:
                     $this->procAttRankArray();
@@ -47,6 +56,13 @@ class Ranking {
                     }
                     else {
                         $this->getStart($this->searchRank($session->alliance, "id"));
+                        $oldrank = $this->searchRank($session->alliance,"id");
+                    
+                    
+                    $ally= $database->getAlliance($session->alliance);                 
+                    if ($ally['oldrank'] > $oldrank){$totalpoints = $ally['oldrank'] - $oldrank;$database->addclimberrankpopAlly($ally['id'],$totalpoints);$database->updateoldrankAlly($ally['id'],$oldrank);} else
+                    if($ally['oldrank'] < $oldrank){$totalpoints = $oldrank-$ally['oldrank'];$database->removeclimberrankpopAlly($ally['id'],$totalpoints);$database->updateoldrankAlly($ally['id'],$oldrank);}
+                    $database->updateoldrankAlly($ally['id'],$oldrank); 
                     }
                     break;
                 case 41:
@@ -72,6 +88,10 @@ class Ranking {
         else {
             $this->procRankArray();
             $this->getStart($this->searchRank($session->username, "username"));
+            $oldrank = $this->searchRank($session->username,"username");
+            if ($session->oldrank > $oldrank){$totalpoints = $session->oldrank - $oldrank;$database->addclimberrankpop($session->uid,$totalpoints);$database->updateoldrank($session->uid,$oldrank);} else
+            if($session->oldrank < $oldrank){$totalpoints = $oldrank-$session->oldrank;$database->removeclimberrankpop($session->uid,$session->oldrank);$database->updateoldrank($session->uid,$oldrank);}
+            $database->updateoldrank($session->uid,$oldrank); 
         }
     }
 
@@ -167,7 +187,7 @@ class Ranking {
         //$value['totalvillage'] = count($database->getVillagesID($value['id']));
         //$value['totalpop'] = $database->getVSumField($value['id'],"pop");
         //$value['aname'] = $database->getAllianceName($value['alliance']);
-        $q = "SELECT ".TB_PREFIX."users.id userid, ".TB_PREFIX."users.username username, (
+        $q = "SELECT ".TB_PREFIX."users.id userid, ".TB_PREFIX."users.username username,".TB_PREFIX."users.alliance alliance, (
 
             SELECT SUM( ".TB_PREFIX."vdata.pop ) 
             FROM ".TB_PREFIX."vdata
@@ -176,7 +196,7 @@ class Ranking {
 
             SELECT COUNT( ".TB_PREFIX."vdata.wref ) 
             FROM ".TB_PREFIX."vdata
-            WHERE ".TB_PREFIX."vdata.owner = userid
+            WHERE ".TB_PREFIX."vdata.owner = userid AND type != 99
             )totalvillages, (
 
             SELECT ".TB_PREFIX."alidata.tag
@@ -186,7 +206,7 @@ class Ranking {
             )allitag
             FROM ".TB_PREFIX."users
             WHERE ".TB_PREFIX."users.id >0 AND ".TB_PREFIX."users.access < ".(INCLUDE_ADMIN?"10":"8")."
-			ORDER BY totalpop DESC, totalvillages DESC, username ASC";
+            ORDER BY totalpop DESC, totalvillages DESC, username ASC";
 
 
         $result = (mysql_query($q));
@@ -198,13 +218,81 @@ class Ranking {
             //$value = $array[$result['userid']];
             $value['userid'] = $result['userid'];
             $value['username'] = $result['username'];
+            $value['alliance'] = $result['alliance'];  
             $value['aname'] = $result['allitag'];
             $value['totalpop'] = $result['totalpop'];
             $value['totalvillage'] = $result['totalvillages'];
-			//SELECT (SELECT SUM(".TB_PREFIX."vdata.pop) FROM ".TB_PREFIX."vdata WHERE ".TB_PREFIX."vdata.owner = 2)  totalpop, (SELECT COUNT(".TB_PREFIX."vdata.wref) FROM ".TB_PREFIX."vdata WHERE ".TB_PREFIX."vdata.owner = 2) totalvillages, (SELECT ".TB_PREFIX."alidata.tag FROM ".TB_PREFIX."alidata WHERE ".TB_PREFIX."alidata.id = ".TB_PREFIX."users.alliance AND ".TB_PREFIX."users.id = 2);
+            //SELECT (SELECT SUM(".TB_PREFIX."vdata.pop) FROM ".TB_PREFIX."vdata WHERE ".TB_PREFIX."vdata.owner = 2)  totalpop, (SELECT COUNT(".TB_PREFIX."vdata.wref) FROM ".TB_PREFIX."vdata WHERE ".TB_PREFIX."vdata.owner = 2) totalvillages, (SELECT ".TB_PREFIX."alidata.tag FROM ".TB_PREFIX."alidata WHERE ".TB_PREFIX."alidata.id = ".TB_PREFIX."users.alliance AND ".TB_PREFIX."users.id = 2);
             array_push($holder, $value);
         }
 
+        //$holder = $multisort->sorte($holder, "'totalvillage'", false, 2, "'totalpop'", false, 2);
+        $newholder = array("pad");
+        foreach ($holder as $key) {
+            array_push($newholder, $key);
+        }
+        $this->rankarray = $newholder;
+    }
+    
+    private function procRankRaceArray($race) {
+        global $database, $multisort;
+        //$array = $database->getRanking();
+        $holder = array();
+        //$value['totalvillage'] = count($database->getVillagesID($value['id']));
+        //$value['totalvillage'] = count($database->getVillagesID($value['id']));
+        //$value['totalpop'] = $database->getVSumField($value['id'],"pop");
+        //$value['aname'] = $database->getAllianceName($value['alliance']);
+        $q = "SELECT ".TB_PREFIX."users.id userid, ".TB_PREFIX."users.tribe tribe, ".TB_PREFIX."users.username username,".TB_PREFIX."users.alliance alliance, (
+
+            SELECT SUM( ".TB_PREFIX."vdata.pop ) 
+            FROM ".TB_PREFIX."vdata
+            WHERE ".TB_PREFIX."vdata.owner = userid
+            )totalpop, (
+
+            SELECT COUNT( ".TB_PREFIX."vdata.wref ) 
+            FROM ".TB_PREFIX."vdata
+            WHERE ".TB_PREFIX."vdata.owner = userid AND type != 99
+            )totalvillages, (
+
+            SELECT ".TB_PREFIX."alidata.tag
+            FROM ".TB_PREFIX."alidata, ".TB_PREFIX."users
+            WHERE ".TB_PREFIX."alidata.id = ".TB_PREFIX."users.alliance
+            AND ".TB_PREFIX."users.id = userid
+            )allitag
+            FROM ".TB_PREFIX."users
+            WHERE ".TB_PREFIX."users.tribe =$race AND ".TB_PREFIX."users.id >0 AND ".TB_PREFIX."users.access < ".(INCLUDE_ADMIN?"10":"8")."
+            ORDER BY totalpop DESC, totalvillages DESC, username ASC";
+
+
+        $result = (mysql_query($q));
+        while ($row = mysql_fetch_assoc($result)) {
+            $datas[] = $row;
+        }
+        
+        if(mysql_num_rows($result)) {
+         
+
+        foreach ($datas as $result) {
+            //$value = $array[$result['userid']];
+            $value['userid'] = $result['userid'];
+            $value['username'] = $result['username'];
+            $value['alliance'] = $result['alliance'];  
+            $value['aname'] = $result['allitag'];
+            $value['totalpop'] = $result['totalpop'];
+            $value['totalvillage'] = $result['totalvillages'];
+            //SELECT (SELECT SUM(".TB_PREFIX."vdata.pop) FROM ".TB_PREFIX."vdata WHERE ".TB_PREFIX."vdata.owner = 2)  totalpop, (SELECT COUNT(".TB_PREFIX."vdata.wref) FROM ".TB_PREFIX."vdata WHERE ".TB_PREFIX."vdata.owner = 2) totalvillages, (SELECT ".TB_PREFIX."alidata.tag FROM ".TB_PREFIX."alidata WHERE ".TB_PREFIX."alidata.id = ".TB_PREFIX."users.alliance AND ".TB_PREFIX."users.id = 2);
+            array_push($holder, $value);
+        }
+           }
+        else {
+          $value['userid'] = 0;
+            $value['username'] = "No User";
+            $value['alliance'] = "";  
+            $value['aname'] = "";
+            $value['totalpop'] = "";
+            $value['totalvillage'] = "" ;
+            array_push($holder, $value);    
+        }
         //$holder = $multisort->sorte($holder, "'totalvillage'", false, 2, "'totalpop'", false, 2);
         $newholder = array("pad");
         foreach ($holder as $key) {
@@ -224,7 +312,7 @@ class Ranking {
 
             SELECT COUNT( ".TB_PREFIX."vdata.wref ) 
             FROM ".TB_PREFIX."vdata
-            WHERE ".TB_PREFIX."vdata.owner = userid
+            WHERE ".TB_PREFIX."vdata.owner = userid AND type != 99
             )totalvillages, (
 
             SELECT SUM( ".TB_PREFIX."vdata.pop ) 
@@ -248,7 +336,7 @@ class Ranking {
             $value['totalpop'] = $row['pop'];
             $value['apall'] = $row['apall'];
             array_push($holder, $value);
-			printf("\n<!-- %s %s %s %s -->\n",$value['username'],$value['totalvillages'],$value['totalpop'],$value['apall']);
+            printf("\n<!-- %s %s %s %s -->\n",$value['username'],$value['totalvillages'],$value['totalpop'],$value['apall']);
         }
 
         //$holder = $multisort->sorte($holder, "'ap'", false, 2, "'totalvillages'", false, 2, "'ap'", false, 2);
@@ -267,7 +355,7 @@ class Ranking {
 
             SELECT COUNT( ".TB_PREFIX."vdata.wref ) 
             FROM ".TB_PREFIX."vdata
-            WHERE ".TB_PREFIX."vdata.owner = userid
+            WHERE ".TB_PREFIX."vdata.owner = userid AND type != 99
             )totalvillages, (
 
             SELECT SUM( ".TB_PREFIX."vdata.pop ) 
@@ -276,7 +364,7 @@ class Ranking {
             )pop
             FROM ".TB_PREFIX."users
             WHERE ".TB_PREFIX."users.dpall >=0 AND ".TB_PREFIX."users.access < ".(INCLUDE_ADMIN?"10":"8")."
-			ORDER BY ".TB_PREFIX."users.dpall DESC, pop DESC, username ASC";
+            ORDER BY ".TB_PREFIX."users.dpall DESC, pop DESC, username ASC";
         $result = mysql_query($q) or die(mysql_error());
         while ($row = mysql_Fetch_assoc($result)) {
             $datas[] = $row;
@@ -434,4 +522,4 @@ class Ranking {
 
 $ranking = new Ranking;
 
-?> 
+?>

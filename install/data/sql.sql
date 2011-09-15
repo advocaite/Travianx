@@ -149,6 +149,20 @@ CREATE TABLE IF NOT EXISTS `%PREFIX%admin_log` (
 
 
 -- --------------------------------------------------------
+--
+-- Table structure for table `%PREFIX%allimedal`
+--
+
+CREATE TABLE IF NOT EXISTS `%PREFIX%allimedal` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `allyid` int(11) NOT NULL,
+  `categorie` int(11) NOT NULL,
+  `plaats` int(11) NOT NULL,
+  `week` int(11) NOT NULL,
+  `points` bigint(255) NOT NULL,
+  `img` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 --
 -- Table structure for table `%PREFIX%alidata`
@@ -165,6 +179,14 @@ CREATE TABLE IF NOT EXISTS `%PREFIX%alidata` (
   `notice` text NOT NULL,
   `desc` text NOT NULL,
   `max` tinyint(2) unsigned NOT NULL,
+  `ap` bigint(255) unsigned NOT NULL DEFAULT '0',
+  `dp` bigint(255) unsigned NOT NULL DEFAULT '0',
+  `Rc` bigint(255) unsigned NOT NULL DEFAULT '0',
+  `RR` bigint(255) unsigned NOT NULL DEFAULT '0',
+  `Aap` bigint(255) unsigned NOT NULL DEFAULT '0',
+  `Adp` bigint(255) unsigned NOT NULL DEFAULT '0',
+  `clp` bigint(255) unsigned NOT NULL DEFAULT '0',
+  `oldrank` bigint(255) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
@@ -1106,6 +1128,7 @@ CREATE TABLE IF NOT EXISTS `%PREFIX%units` (
   `u48` int(11) unsigned NOT NULL DEFAULT '0',
   `u49` int(11) unsigned NOT NULL DEFAULT '0',
   `u50` int(11) unsigned NOT NULL DEFAULT '0',
+  `hero` int(11) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`vref`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
@@ -1156,8 +1179,10 @@ CREATE TABLE IF NOT EXISTS `%PREFIX%users` (
   `RR` int(255) unsigned NOT NULL DEFAULT '0',
   `Rc` int(255) unsigned NOT NULL DEFAULT '0',
   `ok` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `clp` bigint(255) unsigned NOT NULL DEFAULT '0',
+  `oldrank` bigint(255) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `%prefix%users`

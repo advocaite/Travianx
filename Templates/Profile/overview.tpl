@@ -11,7 +11,7 @@
 
 $ranking->procRankReq($_GET);
 $displayarray = $database->getUserArray($_GET['uid'],1);
-
+ 
 
 $varmedal = $database->getProfileMedal($_GET['uid']);
 
@@ -67,7 +67,9 @@ if($_GET['uid'] == $session->uid) { include("menu.tpl"); } ?>
                 echo "Gauls";
                 }
 				else if($displayarray['tribe'] == 4) {
-                echo "Natars";
+                echo "Nature";
+                }else if($displayarray['tribe'] == 5) {
+                echo "Nartars";
                 }				?></td>
             </tr>
 

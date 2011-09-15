@@ -6,22 +6,8 @@
 	$gpack= $session->gpack;
 	}
 
-	
-//de bird
-if($displayarray['protect'] > time()){
-$uurover=date('H:i:s', ($displayarray['protect']-time()));
-$profiel = preg_replace("/\[#0]/is",'<img src="'.$gpack.'img/t/tn.gif" border="0" onmouseout="med_closeDescription()" onmousemove="med_mouseMoveHandler(arguments[0],\'<table><tr><td>This player has '.$uurover.' hours of beginners protection left.</td></tr></table>\')">', $profiel, 1);
-} else {
-$geregistreerd=date('d-m-Y', ($displayarray['timestamp']));
-$profiel = preg_replace("/\[#0]/is",'<img src="'.$gpack.'img/t/tnd.gif" border="0" onmouseout="med_closeDescription()" onmousemove="med_mouseMoveHandler(arguments[0],\'<table><tr><td>This player registered his account on '.$geregistreerd.'.</td></tr></table>\')">', $profiel, 1);
-}
 
-//natar image
-if($displayarray['username'] == "Natars"){
-$profiel = preg_replace("/\[#natars]/is",'<img src="'.$gpack.'img/t/t10_2.jpg" border="0" onmouseout="med_closeDescription()" onmousemove="med_mouseMoveHandler(arguments[0],\'<table><tr><td>Official Natar account</td></tr></table>\')">', $profiel, 1);
-$profiel = preg_replace("/\[#WW]/is",'<img src="'.$gpack.'img/t/g40_11-ltr.png" width="250" border="0" onmouseout="med_closeDescription()" onmousemove="med_mouseMoveHandler(arguments[0],\'<table><tr><td>Official World Wonder Village</td></tr></table>\')">', $profiel, 1);
-}
-
+  
 //de lintjes
 /******************************
 INDELING CATEGORIEEN:
@@ -36,6 +22,14 @@ INDELING CATEGORIEEN:
 == 8. in top 3 - klimmers    ==
 == 9. in top 3 - overval     ==
 ******************************/
+$geregistreerd=date('d-m-Y', ($allianceinfo['timestamp']));
+$profiel = preg_replace("/\[#0]/i",'<img src="'.$gpack.'img/t/tnd.gif" border="0" >', $profiel, 1);
+
+$profiel = preg_replace("/\[war]/s",'WAR With<br>'.$database->getAllianceDipProfile($aid,3), $profiel, 1); 
+$profiel = preg_replace("/\[ally]/s",'Confeds With<br>'.$database->getAllianceDipProfile($aid,2), $profiel, 1); 
+$profiel = preg_replace("/\[nap]/s",'NAPS With<br>'.$database->getAllianceDipProfile($aid,1), $profiel, 1); 
+$profiel = preg_replace("/\[diplomatie]/s",'WAR With<br>'.$database->getAllianceDipProfile($aid,3).'NAPS With<br>'.$database->getAllianceDipProfile($aid,1).'Confeds With<br>'.$database->getAllianceDipProfile($aid,2), $profiel, 1); 
+
 
 foreach($varmedal as $medal) {
 
@@ -49,38 +43,34 @@ switch ($medal['categorie']) {
  		$woord="Points";
        break;
     case "3":
-        $titel="Pop Climbers of the week";
- 		$woord="Pop";
+        $titel="Climbers of the week(Ranks)";
+ 		$woord="Ranks";
        break;
     case "4":
         $titel="Robbers of the week";
 		$woord="Resources";
         break;
 	 case "5":
-        $titel="Receiving this medal shows that you where in the top 10 of both attacckers and defenders of the week.";
+        $titel="Receiving this medal shows that your alliance was in the top 3 of both attacckers and defenders of the week.";
         $bonus[$medal['id']]=1;
 		break;
 	 case "6":
-        $titel="Receiving this medal shows that you were in the top 3 Attackers of the week ".$medal['points']." in a row";
+        $titel="Receiving this medal shows that your alliance was in the top 3 of the attackers of the week ".$medal['points']." in a row";
         $bonus[$medal['id']]=1;
 		break;
 	 case "7":
-        $titel="Receiving this medal shows that you were in the top 3 Defenders of the week ".$medal['points']." in a row";
+        $titel="Receiving this medal shows that your alliance was in the top 3 of the deffenders of the week ".$medal['points']." in a row";
         $bonus[$medal['id']]=1;
 		break;
 	 case "8":
-        $titel="Receiving this medal shows that you were in the top 3 Pop Climbers of the week ".$medal['points']." in a row.";
+        $titel="Receiving this medal shows that your alliance was in the top 3 of the rank climbers of the week ".$medal['points']." in a row.";
         $bonus[$medal['id']]=1;
 		break;
 	 case "9":
-        $titel="Receiving this medal shows that you were in the top 3 Robbers of the week ".$medal['points']." in a row.";
+        $titel="Receiving this medal shows that your alliance was in the top 3 of the robbers of the week ".$medal['points']." in a row.";
         $bonus[$medal['id']]=1;
 		break;
-     case "10":
-        $titel="Rank Climbers of the week.";
-        $woord="Ranks"; 
-        break;
-         case "11":
+    case "11":
         $titel="Receiving this medal shows that you were in the top 3 of the Rank Climbers of the week ".$medal['points']." in a row.";
         $bonus[$medal['id']]=1;
         break;
@@ -92,10 +82,6 @@ switch ($medal['categorie']) {
         $titel="Receiving this medal shows that you were in the top 10 Defenders of the week ".$medal['points']." in a row.";
         $bonus[$medal['id']]=1;
         break;
-        case "14":
-        $titel="Receiving this medal shows that you were in the top 10 Pop Climbers of the week ".$medal['points']." in a row.";
-        $bonus[$medal['id']]=1;
-        break;
         case "15":
         $titel="Receiving this medal shows that you were in the top 10 Robbers of the week ".$medal['points']." in a row.";
         $bonus[$medal['id']]=1;
@@ -104,7 +90,6 @@ switch ($medal['categorie']) {
         $titel="Receiving this medal shows that you were in the top 10 Rank Climbers of the week ".$medal['points']." in a row.";
         $bonus[$medal['id']]=1;
         break;
-        
 
 }
 

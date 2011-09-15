@@ -618,7 +618,11 @@ class Automation {
 			$database->modifyPoints($from['owner'],'apall',$totaldead_def);
 			$database->modifyPoints($toF['owner'],'dp',$totaldead_att );
 			$database->modifyPoints($from['owner'],'ap',$totaldead_def);
-				
+			$database->modifyPointsAlly($targetally,'Adp',$totaldead_att );
+            $database->modifyPointsAlly($ownally,'Aap',$totaldead_def);
+            $database->modifyPointsAlly($targetally,'dp',$totaldead_att );
+            $database->modifyPointsAlly($ownally,'ap',$totaldead_def);    
+                	
 				
 			// get toatal cranny value:
 			$buildarray = $database->getResourceLevel($data['to']);

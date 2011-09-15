@@ -63,7 +63,7 @@ include("menu.tpl"); ?>
 		<tr><td class="rbg" colspan="4">Medals</td></tr>
 		<tr>
 			<td>Category</td>
-			<td>Rank</td>
+			<td>Rang</td>
 			<td>Week</td>
 			<td>BB-Code</td>
 		</tr>
@@ -93,10 +93,34 @@ INDELING CATEGORIEEN:
         $titel="Defender of the Week";
         break;
     case "3":
-        $titel="Climber of the week";
+        $titel="Pop Climber of the week";
         break;
     case "4":
         $titel="Robber of the week";
+        break;
+    case "5":
+        $titel="Top 10 of both attacckers and defenders";
+        break;
+    case "6":
+        $titel="Top 3 of Attackers of week ".$medal['points']." in a row";
+        break;
+    case "7":
+        $titel="Top 3 of Defenders of week ".$medal['points']." in a row";
+        break;
+    case "8":
+        $titel="Top 3 of Pop climbers of week ".$medal['points']." in a row";
+        break;
+    case "9":
+        $titel="Top 3 of Robbers of week ".$medal['points']." in a row";
+        break;
+    case "10":
+        $titel="Rank Climber of the week";
+        break;
+    case "11":
+        $titel="Top 3 of Rank climbers of week ".$medal['points']." in a row";
+        break;
+    case "12":
+        $titel="Top 10 of Rank Attackers of week ".$medal['points']." in a row";
         break;
 	}			
 				 echo"<tr>
