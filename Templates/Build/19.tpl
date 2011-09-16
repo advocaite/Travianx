@@ -15,7 +15,7 @@
 					<td>Max</td>
 				</tr></thead><tbody>
                 <?php
-	                include("19_".$session->tribe.".tpl");
+	                include("19_train.tpl");
                 ?></table>
 	<p><input type="image" id="btn_train" class="dynamic_img" value="ok" name="s1" src="img/x.gif" alt="train" /></form></p>
     <?php
