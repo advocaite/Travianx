@@ -346,7 +346,7 @@ class Units {
 					}
 				}
 				$time = $generator->procDistanceTime($fromCor,$toCor,min($speeds),1);
-				$reference = $database->addAttack($enforce['from'],$post['t1'],$post['t2'],$post['t3'],$post['t4'],$post['t5'],$post['t6'],$post['t7'],$post['t8'],$post['t9'],$post['t10'],0,2);
+				$reference = $database->addAttack($enforce['from'],$post['t1'],$post['t2'],$post['t3'],$post['t4'],$post['t5'],$post['t6'],$post['t7'],$post['t8'],$post['t9'],$post['t10'],0,2,0,0,0);
 				$database->addMovement(4,$village->wid,$enforce['from'],$reference,($time+time()));
 				$technology->checkReinf($post['ckey']);
 
