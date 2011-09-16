@@ -64,6 +64,12 @@ if($wall == 0) {
     if($session->tribe == 3 && $id != 39) {
     include("avaliable/palisade.tpl");
     }
+    if($session->tribe == 4 && $id != 39) {
+    include("avaliable/earthwall.tpl");
+    }
+     if($session->tribe == 5 && $id != 39) {
+    include("avaliable/citywall.tpl");
+    }
 }
 if(($warehouse == 0 || $warehouse == 20) && $id != 39 && $id != 40) {
 include("avaliable/warehouse.tpl");
