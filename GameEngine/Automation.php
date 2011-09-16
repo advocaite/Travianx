@@ -410,36 +410,10 @@ class Automation {
 								}
 							}
 									//get attack units			
-									$Attacker = array();
-												if($owntribe == 1){
-                                                $start = 1;    
-                                                }else if($owntribe == 2){
-                                                $start = 11;    
-                                                }else if($owntribe == 3){
-                                                $start = 21;    
-                                                }else if($owntribe == 4){
-                                                $start = 31;    
-                                                }else if($owntribe == 5){
-                                                $start = 41;    
-                                                }
-                                                if($owntribe == 1){
-                                                $end = 10;    
-                                                }else if($owntribe == 2){
-                                                $end = 20;    
-                                                }else if($owntribe == 3){
-                                                $end = 30;    
-                                                }else if($owntribe == 4){
-                                                $end = 40;    
-                                                }else if($owntribe == 5){
-                                                $end = 50;    
-                                                }
-												if($owntribe == 1){ $u = 0; }
-												if($owntribe == 2){	$u = 10; }
-												if($owntribe == 3){	$u = 20; }
-                                                if($owntribe == 4){ $u = 30; }  
-                                                if($owntribe == 5){ $u = 40; }  
-
-											
+									        $Attacker = array();
+                                            $start = ($owntribe-1)*10+1;
+                                            $end = ($owntribe*10);
+									        $u = (($owntribe-1)*10);															
                                             $catp =  0;                                
                                             $catapult = array(8,18,28,38,48);
                                             $ram = array(7,17,27,37,47);
@@ -595,29 +569,10 @@ class Automation {
 			
 					//kill own defence
 					$q = "SELECT * FROM ".TB_PREFIX."units WHERE vref='".$data['to']."'";
-					$unitlist = $database->query_return($q);
-						if ($targettribe == 1){
-                            $start = 1;
-                        }else if ($targettribe == 2){
-                            $start = 11;
-                        }else if ($targettribe == 3){
-                            $start = 21;
-                        }else if ($targettribe == 4){
-                            $start = 31;
-                        }else if ($targettribe == 5){
-                            $start = 41;
-                        }
-                        if ($targettribe == 1){
-                            $end = 10;
-                        }else if ($targettribe == 2){
-                            $end = 20;
-                        }else if ($targettribe == 3){
-                            $end = 30;
-                        }else if ($targettribe == 4){
-                            $end = 40;
-                        }else if ($targettribe == 5){
-                            $end = 50;
-                        }
+					$unitlist = $database->query_return($q); 
+                    $start = ($targettribe-1)*10+1;
+                    $end = ($targettribe*10);
+						
 						if($targettribe == 1){ $u = ""; $rom='1'; } else if($targettribe == 2){ $u = "1"; $ger='1'; } else if($targettribe == 3){$u = "2"; $gal='1'; }else if($targettribe == 4){ $u = "3"; $nat='1'; } else { $u = "4"; $natar='1'; }     //FIX
                             for($i=$start;$i<=$end;$i++) { if($i==$end){ $u=$targettribe; }
 								if($unitlist){
@@ -630,17 +585,9 @@ class Automation {
 				foreach($database->getEnforceVillage($data['to'],0) as $enforce) {
 					$life='';	$notlife=''; $wrong='0';
 				    $tribe = $database->getUserField($database->getVillageField($enforce['from'],"owner"),"tribe",0);
-					if ($tribe == 1){
-                            $start = 1;
-                        }else if ($tribe == 2){
-                            $start = 11;
-                        }else if ($tribe == 3){
-                            $start = 21;
-                        }else if ($tribe == 4){
-                            $start = 31;
-                        }else if ($tribe == 5){
-                            $start = 41;
-                        }if($tribe == 1){ $rom='1'; } else if($tribe == 2){ $ger='1'; }else if($tribe == 3){ $gal='1'; }else if($tribe == 4){ $nat='1'; } else { $natar='1'; }
+					$start = ($tribe-1)*10+1;
+                    
+                    if($tribe == 1){ $rom='1'; } else if($tribe == 2){ $ger='1'; }else if($tribe == 3){ $gal='1'; }else if($tribe == 4){ $nat='1'; } else { $natar='1'; }
                         for($i=$start;$i<=($start+9);$i++) {
 							if($enforce['u'.$i]>'0'){
 								$database->modifyEnforce($enforce['id'],$i,round($battlepart[2]*$enforce['u'.$i]),0);
@@ -817,28 +764,9 @@ class Automation {
 			
 			
 			//work out time of return
-			if ($owntribe == 1){
-                            $start = 1;
-                        }else if ($owntribe == 2){
-                            $start = 11;
-                        }else if ($owntribe == 3){
-                            $start = 21;
-                        }else if ($owntribe == 4){
-                            $start = 31;
-                        }else if ($owntribe == 5){
-                            $start = 41;
-                        }
-			if ($owntribe == 1){
-                            $end = 10;
-                        }else if ($owntribe == 2){
-                            $end = 20;
-                        }else if ($owntribe == 3){
-                            $end = 30;
-                        }else if ($owntribe == 4){
-                            $end = 40;
-                        }else if ($owntribe == 5){
-                            $end = 50;
-                        }
+            $start = ($owntribe-1)*10+1;
+            $end = ($owntribe*10);
+			
 			$unitspeeds = array(6,5,7,16,14,10,4,3,4,5,
 								7,7,6,9,10,9,4,3,4,5,
 								7,6,17,19,16,13,4,3,4,5,
@@ -1120,28 +1048,9 @@ class Automation {
 				$database->addEnforce($data);
 				} else{
 				//yes
-				if ($owntribe == 1){
-                            $start = 1;
-                        }else if ($owntribe == 2){
-                            $start = 11;
-                        }else if ($owntribe == 3){
-                            $start = 21;
-                        }else if ($owntribe == 4){
-                            $start = 31;
-                        }else if ($owntribe == 5){
-                            $start = 41;
-                        }
-            if ($owntribe == 1){
-                            $end = 10;
-                        }else if ($owntribe == 2){
-                            $end = 20;
-                        }else if ($owntribe == 3){
-                            $end = 30;
-                        }else if ($owntribe == 4){
-                            $end = 40;
-                        }else if ($owntribe == 5){
-                            $end = 50;
-                        }
+                $start = ($owntribe-1)*10+1;
+                $end = ($owntribe*10);
+				
 	
 				//add unit.
 				$j='1';
