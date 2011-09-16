@@ -397,6 +397,13 @@ class MYSQL_DB {
 
    }
    
+   function getProfileMedalAlly($uid) {
+      $q = "SELECT id,categorie,plaats,week,img,points from ".TB_PREFIX."allimedal where allyid = $uid order by id desc";
+      $result = mysql_query($q,$this->connection);
+      return $this->mysql_fetch_all($result);
+
+   }
+   
    function getVillageID($uid) {
 		$q = "SELECT wref FROM ".TB_PREFIX."vdata WHERE owner = $uid";
 		$result = mysql_query($q,$this->connection);
