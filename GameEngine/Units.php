@@ -208,32 +208,14 @@ class Units {
     $data21 = mysql_fetch_assoc($query21);
 
 				
-    if($data2['protect'] < time()) {
+    
 		$eigen = $database->getCoor($village->wid);
 		$from = array('x'=>$eigen['x'], 'y'=>$eigen['y']);
 		$ander = $database->getCoor($data['to_vid']);
 		$to = array('x'=>$ander['x'], 'y'=>$ander['y']);
-        if($data21['tribe'] == 1){
-          $start = 1;  
-        }else if($data21['tribe'] == 2){
-          $start = 11;  
-        }else if($data21['tribe'] == 3){
-          $start = 21;  
-        }else if($data21['tribe'] == 4){
-          $start = 31;  
-        }else if($data21['tribe'] == 5){
-          $start = 41;  
-        }if($data21['tribe'] == 1){
-          $end = 10;  
-        }else if($data21['tribe'] == 2){
-          $end = 20;  
-        }else if($data21['tribe'] == 3){
-          $end = 30;  
-        }else if($data21['tribe'] == 4){
-          $end = 40;  
-        }else if($data21['tribe'] == 5){
-          $end = 50;  
-        }
+        $start = ($data21['tribe']-1)*10+1;
+        $end = ($data21['tribe']*10);
+        
 			$unitspeeds = array(6,5,7,16,14,10,4,3,4,5,7,7,6,9,10,9,4,3,4,5,7,6,17,19,16,13,4,3,4,5,7,7,6,9,10,9,4,3,4,5,7,7,6,9,10,9,4,3,4,5);
             $speeds = array();
 			$scout = 1;
@@ -255,9 +237,7 @@ class Units {
         if (isset($post['spy'])){$post['spy'] = $post['spy'];}else{ $post['spy'] = 0;}  
 		$reference = $database->addAttack(($village->wid),$data['u1'],$data['u2'],$data['u3'],$data['u4'],$data['u5'],$data['u6'],$data['u7'],$data['u8'],$data['u9'],$data['u10'],$data['u11'],$data['type'],$post['ctar1'],$post['ctar2'],$post['spy']);
   		$database->addMovement(3,$village->wid,$data['to_vid'],$reference,($time+time()));
-    } else {
-      header("Location: build.php?id=39");
-    }
+   
 			
 		
 		if($form->returnErrors() > 0) {
@@ -305,28 +285,9 @@ class Units {
 				} else {
 					
 					//change units
-					if ($database->getUserField($to['owner'],'tribe',0) == 1){
-                     $start = 1;   
-                    }else if ($database->getUserField($to['owner'],'tribe',0) == 2){
-                     $start = 11;   
-                    }else if ($database->getUserField($to['owner'],'tribe',0) == 3){
-                     $start = 21;   
-                    }else if ($database->getUserField($to['owner'],'tribe',0) == 42){
-                     $start = 31;   
-                    }else if ($database->getUserField($to['owner'],'tribe',0) == 5){
-                     $start = 41;   
-                    }
-                    if ($database->getUserField($to['owner'],'tribe',0) == 1){
-                     $end = 10;   
-                    }else if ($database->getUserField($to['owner'],'tribe',0) == 2){
-                     $end = 20;   
-                    }else if ($database->getUserField($to['owner'],'tribe',0) == 3){
-                     $end = 30;   
-                    }else if ($database->getUserField($to['owner'],'tribe',0) == 42){
-                     $end = 40;   
-                    }else if ($database->getUserField($to['owner'],'tribe',0) == 5){
-                     $end = 50;   
-                    }  
+                    $start = ($database->getUserField($to['owner'],'tribe',0)-1)*10+1;
+                    $end = ($database->getUserField($to['owner'],'tribe',0)*10);
+					
                     $j='1';
 					for($i=$start;$i<=$end;$i++){
 						$database->modifyEnforce($post['ckey'],$i,$post['t'.$j.''],0); $j++;
@@ -380,19 +341,8 @@ class Units {
     $cps = $database->getUserField($session->uid, 'cp',0);
 
     if($cps >= $need_cps) {
-      if($session->tribe == 1){
-			  $unit = 10;
-		  }
-		  elseif($session->tribe == 2){
-			  $unit = 20;
-		  }elseif($session->tribe == 3){
-              $unit = 30;
-          }elseif($session->tribe == 4){
-              $unit = 40;
-          }
-		  else{
-			  $unit = 50;
-		  }
+     $unit = ($session->tribe*10);
+      
 		  $database->modifyResource($village->wid,750,750,750,750,0);
 		  $database->modifyUnit($village->wid,$unit,3,0);
 		  $database->addMovement(5,$village->wid,$post['s'],0,$post['timestamp']);
