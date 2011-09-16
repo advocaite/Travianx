@@ -114,6 +114,14 @@ class Units {
 						}												
 					}
 				}
+                //check if has beginners protection
+                $villageOwner = $database->getVillageField($id,'owner');
+                $userprotect = $database->getUserField($villageOwner,'protect',0);
+                if($data2['protect'] > time()) {
+                $form->addError("error","Player is under beginners protection. You can't attack him");
+                                
+                }    
+                
 				//check if banned:
 				$villageOwner = $database->getVillageField($id,'owner');
 				$userAccess = $database->getUserField($villageOwner,'access',0);
