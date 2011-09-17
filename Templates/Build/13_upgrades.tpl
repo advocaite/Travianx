@@ -33,14 +33,14 @@
 		            echo "<br><span class=\"none\">Enough resources ".$time[0]." at ".$time[1]."</span></div></td>";
 		            echo "<td class=\"act\"><div class=\"none\">Too few<br>resources</div></td></tr>";
 				}
-				else if ($building->getTypeLevel(12) <= $abdata['a'.$j]) {
+				else if ($building->getTypeLevel(13) <= $abdata['a'.$j]) {
 					echo "<td class=\"act\"><div class=\"none\">Upgrade<br>armoury</div></td></tr>";
 				}
 				else if (count($ABups) > 0) {
 					echo "<td class=\"act\"><div class=\"none\">Upgrade in<br>progress</div></td></tr>";
 				}
 				else {
-					echo "<td class=\"act\"><a class=\"research\" href=\"build.php?id=$id&amp;a=$j&amp;c=".$session->mchecker."\">Research</a></td></tr>";
+					echo "<td class=\"act\"><a class=\"research\" href=\"build.php?id=$id&amp;a=$j&amp;c=".$session->mchecker."\">Upgrade</a></td></tr>";
 				}
 			}
 		}
