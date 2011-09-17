@@ -10,44 +10,12 @@
 ##                                                                             ##
 #################################################################################
 
-   $query = mysql_query('SELECT * FROM `'.TB_PREFIX.'units` WHERE `vref` = '.$village->wid);
-   $data = mysql_fetch_assoc($query);
-   $max_settlers = floor($building->getTypeLevel(25) / 10) * 3;
-   $query2 = mysql_query('SELECT * FROM `'.TB_PREFIX.'vdata` WHERE `wref` = '.$village->wid);
-   $data2 = mysql_fetch_assoc($query2);
-   $exp_c = 0;
+	$slots = $database->getAvailableExpansionTraining();
 
-   if($data2['exp1'] != 0) ++$exp_c;
-//   if($data2['exp2'] != 0) ++$exp_c;
-   if($data2['exp3'] != 0) ++$exp_c;
-   $can_settle = 2 - $exp_c;
+	if ($slots['settlers']+$slots['chiefs']>0) { ?>
 
-   if($data['u'.$session->tribe.'0'] < $max_settlers and $building->getTypeLevel(25) >= 10 and $can_settle != 0 and $data[''.$chiefunit.''] < $can_settle) {
-
-	printf("\n<!-- %s -->\n",$building->getTypeLevel(25));
-
-       $query = mysql_query('SELECT * FROM `'.TB_PREFIX.'units` WHERE `vref` = '.$village->wid);
-       $data = mysql_fetch_assoc($query);
-       $max_chief = ($building->getTypeLevel(25) * 1) / 10;
-       $query2 = mysql_query('SELECT * FROM `'.TB_PREFIX.'vdata` WHERE `wref` = '.$village->wid);
-       $data2 = mysql_fetch_assoc($query2);
-       $exp_c = 0;
-
-       if($data2['exp1'] != 0) ++$exp_c;
-//       if($data2['exp2'] != 0) ++$exp_c;
-       if($data2['exp3'] != 0) ++$exp_c;
-       $can_chief = 2 - $exp_c;
-
-       $chiefunitID = $session->tribe * 10 - 1;
-	   $chiefunit = 'u'.$chiefunitID;
-
-       if($data[''.$chiefunit.''] < $max_chief and $building->getTypeLevel(25) >= 10 and $can_chief != 0) {
-
-?>
 <form method="POST" name="snd" action="build.php">
-<input type="hidden" name="id" value="<?php echo $id;
-
-?>" />
+<input type="hidden" name="id" value="<?php echo $id; ?>" />
 <input type="hidden" name="ft" value="t1" />
 
 <table cellpadding="1" cellspacing="1" class="build_details">
@@ -60,74 +28,24 @@
 </thead>
 <tbody>
 <?php
-           $unitID = $session->tribe."0";
-           if($technology->maxUnit($unitID) > ($max_settlers - $data['u'.$session->tribe.'0']) ) {
-               $maxunit = ($max_settlers - $data['u'.$session->tribe.'0']);
-           } else {
-               $maxunit = $technology->maxUnit($unitID);
-           }
+		for ($i=($session->tribe-1)*10+9;$i<=($session->tribe*10);$i++) {
+			if ($slots['settlers']>0 && $i%10==0 || $slots['chiefs']>0 && $i%10==9) {
+			       $maxunit = MIN($technology->maxUnit($i),($i%10==0?$slots['settlers']:$slots['chiefs']));
 
-           echo "<tr><td class=\"desc\">
-    <div class=\"tit\">
-    <img class=\"unit u".$unitID."\" src=\"img/x.gif\" alt=\"".$technology->getUnitName($unitID)."\" title=\"".$technology->getUnitName($unitID)."\" />
-    <a href=\"#\" onClick=\"return Popup(".$unitID.",1);\">".$technology->getUnitName($unitID)."</a> <span class=\"info\">(Available: ".$village->unitarray['u'.$unitID].")</span>
-    </div>
-    <div class=\"details\"><img class=\"r1\" src=\"img/x.gif\" alt=\"Lumber\" title=\"Lumber\" />".${'u'.$unitID}['wood']."|<img class=\"r2\" src=\"img/x.gif\" alt=\"Clay\" title=\"Clay\" />".${'u'.$unitID}['clay']."|<img class=\"r3\" src=\"img/x.gif\" alt=\"Iron\" title=\"Iron\" />".${'u'.$unitID}['iron']."|<img class=\"r4\" src=\"img/x.gif\" alt=\"Crop\" title=\"Crop\" />".${'u'.$unitID}['crop']."|<img class=\"clock\" src=\"img/x.gif\" alt=\"duration\" title=\"duration\" />";
-           echo $generator->getTimeFormat(round(${'u'.$unitID}['time'] * ($bid25[$village->resarray['f'.$id]]['attri'] / 100) / SPEED));
-           if($session->userinfo['gold'] >= 3 && $building->getTypeLevel(17) > 1) {
-               echo "|<a href=\"build.php?gid=17&t=3&r1=".${'r'.$unitID}['wood']."&r2=".${'r'.$unitID}['clay']."&r3=".${'r'.$unitID}['iron']."&r4=".${'r'.$unitID}['crop']."\" title=\"NPC trade\"><img class=\"npc\" src=\"img/x.gif\" alt=\"NPC trade\" title=\"NPC trade\" /></a>";
-           }
-           if($data['u'.$session->tribe.'0'] == 9) {
-               echo "
-    <td class=\"val\"><input type=\"text\" disabled=\"disabled\" class=\"text\" name=\"t".$unitID."\" value=\"\" ".$block." maxlength=\"4\"></td>
-    <td class=\"max\"><a href=\"#\"><font color=\"#B3B3B3\">(0)</font></a></td></tr></tbody>
-    ";
-           } else {
-               echo "
-    <td class=\"val\"><input type=\"text\" class=\"text\" name=\"t".$unitID."\" value=\"0\" ".$block." maxlength=\"4\"></td>
-    <td class=\"max\"><a href=\"#\" onClick=\"document.snd.t".$unitID.".value=".$maxunit."; return false;\">(".$maxunit.")</a></td></tr></tbody>
-    ";
-           }
+echo "<tr><td class=\"desc\">
+<div class=\"tit\">
+<img class=\"unit u".$i."\" src=\"img/x.gif\" alt=\"".$technology->getUnitName($i)."\" title=\"".$technology->getUnitName($i)."\" />
+<a href=\"#\" onClick=\"return Popup(".$i.",1);\">".$technology->getUnitName($i)."</a> <span class=\"info\">(Available: ".$village->unitarray['u'.$i].")</span></div>
+<div class=\"details\"><img class=\"r1\" src=\"img/x.gif\" alt=\"Lumber\" title=\"Lumber\" />".${'u'.$i}['wood']."|<img class=\"r2\" src=\"img/x.gif\" alt=\"Clay\" title=\"Clay\" />".${'u'.$i}['clay']."|<img class=\"r3\" src=\"img/x.gif\" alt=\"Iron\" title=\"Iron\" />".${'u'.$i}['iron']."|<img class=\"r4\" src=\"img/x.gif\" alt=\"Crop\" title=\"Crop\" />".${'u'.$i}['crop']."|<img class=\"clock\" src=\"img/x.gif\" alt=\"duration\" title=\"duration\" />";
+echo $generator->getTimeFormat(round(${'u'.$i}['time'] * ($bid25[$village->resarray['f'.$id]]['attri'] / 100) / SPEED));
 
-?>
-    
-<?php
-
-           $unitID = $chiefunitID;
-           if($technology->maxUnit($unitID) > 1) {
-               $maxunit = 1;
-           }
-           $vref = $database->getVillageID($session->uid);
-           $research = $database->checkIfResearched($vref, "t".$chiefunitID."");
-           if($research == 0) {
-               $disable = 'disabled="disabled"';
-           } else {
-               $disable = '';
-           }
-
-           echo "<tr><td class=\"desc\">
-    <div class=\"tit\">
-    <img class=\"unit u".$unitID."\" src=\"img/x.gif\" alt=\"".$technology->getUnitName($unitID)."\" title=\"".$technology->getUnitName($unitID)."\" />
-    <a href=\"#\" onClick=\"return Popup(".$unitID.",1);\">".$technology->getUnitName($unitID)."</a> <span class=\"info\">(Available: ".$village->unitarray['u'.$unitID].")</span>
-    </div>
-    <div class=\"details\"><img class=\"r1\" src=\"img/x.gif\" alt=\"Lumber\" title=\"Lumber\" />".${'u'.$unitID}['wood']."|<img class=\"r2\" src=\"img/x.gif\" alt=\"Clay\" title=\"Clay\" />".${'u'.$unitID}['clay']."|<img class=\"r3\" src=\"img/x.gif\" alt=\"Iron\" title=\"Iron\" />".${'u'.$unitID}['iron']."|<img class=\"r4\" src=\"img/x.gif\" alt=\"Crop\" title=\"Crop\" />".${'u'.$unitID}['crop']."|<img class=\"clock\" src=\"img/x.gif\" alt=\"duration\" title=\"duration\" />";
-           echo $generator->getTimeFormat(round(${'u'.$unitID}['time'] * ($bid25[$village->resarray['f'.$id]]['attri'] / 100) / SPEED));
-           if($session->userinfo['gold'] >= 3 && $building->getTypeLevel(17) > 1) {
-               echo "|<a href=\"build.php?gid=17&t=3&r1=".${'r'.$unitID}['wood']."&r2=".${'r'.$unitID}['clay']."&r3=".${'r'.$unitID}['iron']."&r4=".${'r'.$unitID}['crop']."\" title=\"NPC trade\"><img class=\"npc\" src=\"img/x.gif\" alt=\"NPC trade\" title=\"NPC trade\" /></a>";
-           }
-           if($data[''.$chiefunit.''] == 3 or $research == 0) {
-               echo "<td class=\"val\"><input type=\"text\" disabled=\"disabled\" class=\"text\" name=\"t".$unitID."\" value=\"\" maxlength=\"4\"></td>
-    <td class=\"max\"><a href=\"#\"><font color=\"#B3B3B3\">(0)</font></a></td></tr></tbody>
-    ";
-           } else {
-               echo "
-    <td class=\"val\"><input type=\"text\" ".$disable." class=\"text\" name=\"t".$unitID."\" value=\"0\" maxlength=\"4\"></td>
-    <td class=\"max\"><a href=\"#\" onClick=\"document.snd.t".$unitID.".value=".$maxunit."; return false;\">(".$maxunit.")</a></td></tr></tbody>
-    ";
-           }
-
-?>
-
+				if($session->userinfo['gold'] >= 3 && $building->getTypeLevel(17) > 1) {
+echo "|<a href=\"build.php?gid=17&t=3&r1=".${'r'.$i}['wood']."&r2=".${'r'.$i}['clay']."&r3=".${'r'.$i}['iron']."&r4=".${'r'.$i}['crop']."\" title=\"NPC trade\"><img class=\"npc\" src=\"img/x.gif\" alt=\"NPC trade\" title=\"NPC trade\" /></a>";
+				}
+echo "<td class=\"val\"><input type=\"text\" class=\"text\" name=\"t".$i."\" value=\"0\" maxlength=\"4\"></td>
+<td class=\"max\"><a href=\"#\" onClick=\"document.snd.t".$i.".value=".$maxunit."; return false;\">(".$maxunit.")</a></td></tr></tbody>";
+			}
+		} ?>
 </tbody>
 </table>
 <p>
@@ -135,31 +53,8 @@
 </p>
 </form>
 <?php
-           // if prgress
-           include ("25_progress.tpl");
-           // end if
-
-
+	} else {
+		echo '<div class="c">In order to found a new village you need a level 10 or 20 residence and 3 settlers. In order to conquer a new village you need a level 10 or 20 residence and a senator, chief or chieftain.</div>';
+	}
+    include ("25_progress.tpl");
 ?>
-<?php
-       } else {
-           if($building->getTypeLevel(25) >= 10 and $can_settle != 0) {
-               print 'You need to build your residence up to level 20';
-           } else
-               if($building->getTypeLevel(25) == 20) {
-                   print 'You can\'t train any more units.';
-               }
-       }
-
-?>
-<?php
-   } else {
-       if($building->getTypeLevel(25) >= 10 and $can_chief != 0) {
-           print 'You need to build your residence up to level 20';
-       } else
-           if($building->getTypeLevel(25) == 20) {
-               print 'You can\'t train any more units.';
-           }
-   }
-
-?> 

@@ -7,9 +7,12 @@
 		title="Residence" /> </a>
 	The residence is a small palace, where the king or queen lives when (s)he visits the village. The residence protects the village against enemies who want to conquer it.</p>
 
-<?php include("25_menu.tpl"); ?>
-
 <?php
+if ($village->capital == 1) {
+	echo "<p class=\"act\">This is your capital</p>";
+}
+
+include("25_menu.tpl");
 
 if($village->resarray['f'.$id] >= 10){
 	include ("25_train.tpl");	
@@ -18,10 +21,6 @@ else{
 	echo '<div class="c">In order to found a new village you need a level 10 or 20 residence and 3 settlers. In order to conquer a new village you need a level 10 or 20 residence and a senator, chief or chieftain.</div>';
 }
 
-?>
-<p class="none">This is your capital</p>
-
-<?php 
 include("upgrade.tpl");
 ?>
 </div>

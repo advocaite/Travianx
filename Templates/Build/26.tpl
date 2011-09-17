@@ -48,9 +48,13 @@ if($_POST AND $_GET['action'] == 'change_capital') {
 		title="Palace" /> </a>
 	The king or queen of the empire lives in the palace. Only one palace can exist in your realm at a time. You need a palace in order to proclaim a village to be your capital.</p>
 
-<?php include("26_menu.tpl"); ?>
+<?php 
+if ($building->getTypeLevel(26) > 0) {
 
-<?php
+include("26_menu.tpl"); 
+
+$test=$database->getAvailableExpansionTraining();
+
 if($village->resarray['f'.$id] >= 10){
 	include ("26_train.tpl");	
 }
@@ -80,7 +84,9 @@ if($data['wref'] == $village->wid) {
     </p>';
   }
 }
-
+} else {
+	echo "<b>Palace under construction</b>";
+}
 include("upgrade.tpl");
 ?>
 </div>

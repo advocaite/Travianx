@@ -1,4 +1,4 @@
-<div id="build" class="gid26"><h1>Residence <span class="level">level <?php echo $village->resarray['f'.$id]; ?></span></h1>
+<div id="build" class="gid25"><h1>Residence <span class="level">level <?php echo $village->resarray['f'.$id]; ?></span></h1>
 <p class="build_desc">
 	<a href="#" onClick="return Popup(25,4, 'gid');"
 		class="build_logo"> <img
@@ -25,37 +25,26 @@
 $slot1 = $database->getVillageField($village->wid, 'exp1');
 $slot2 = $database->getVillageField($village->wid, 'exp2');
 $slot3 = $database->getVillageField($village->wid, 'exp3');
-$data = $database->getProfileVillages($session->uid);
 
-if($slot1 != 0){
-	$total = 1;
-}
-if($slot2 != 0){
-	$total += 1;
-}
-if($slot3 != 0){
-	$total += 1;
-}
-if($total >= 1){
-	for($i=1; $i <= $total; $i++){
-	$coor = $database->getCoor($data[$i]['wref']);
-	$owner = $database->getVillageField($data[$i]['wref'],'owner');
-	$ownername = $database->getUserField($owner,'username',0);
-
-
-		echo '
-		<tr>
-			<td class="ra">'.$i.'.</td>
-			<td class="vil"><a href="karte.php?d='.$data[$i]['wref'].'&c='.$generator->getMapCheck($data[$i]['wref']).'">'.$data[$i]['name'].'</a></td>
-			<td class="pla"><a href="spieler.php?uid='.$owner.'">'.$ownername.'</a></td>
-			<td class="ha">'.$data[$i]['pop'].'</td>
-			<td class="aligned_coords">
-					<div class="cox">('.$coor['x'].'</div>
-					<div class="pi">|</div>
-					<div class="coy">'.$coor['y'].')</div>
-			</td>
-			<td class="dat">'.date('d-m-Y',$data[$i]['created']).'</td>
-		</tr>';
+if($slot1 != 0 || $slot2 != 0 || $slot3 != 0){
+	for($i=1; $i <= 3; $i++){
+		if (${'slot'.$i}<>0) {
+			$coor = $database->getCoor(${'slot'.$i});
+			$vname = $database->getVillageField(${'slot'.$i},'name');
+			$owner = $database->getVillageField(${'slot'.$i},'owner');
+			$pop = $database->getVillageField(${'slot'.$i},'pop');
+			$vcreated = $database->getVillageField(${'slot'.$i},'created');
+			$ownername = $database->getUserField($owner,'username',0);
+echo '
+<tr>
+<td class="ra">'.$i.'.</td>
+<td class="vil"><a href="karte.php?d='.${'slot'.$i}.'&c='.$generator->getMapCheck(${'slot'.$i}).'">'.$vname.'</a></td>
+<td class="pla"><a href="spieler.php?uid='.$owner.'">'.$ownername.'</a></td>
+<td class="ha">'.$pop.'</td>
+<td class="aligned_coords"><div class="cox">('.$coor['x'].'</div><div class="pi">|</div><div class="coy">'.$coor['y'].')</div></td>
+<td class="dat">'.date('d-m-Y',$vcreated).'</td>
+</tr>';
+		}
 	}
 }
 else{

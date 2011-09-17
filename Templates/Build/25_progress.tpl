@@ -13,8 +13,7 @@ $trainlist = $technology->getTrainingList(4);
 		<tbody>";
         foreach($trainlist as $train) {
         echo "<tr><td class=\"desc\">";
-        echo "<img class=\"unit u".$train['unit']."\" src=\"img/x.gif\" alt=\"".$technology->getUnitName($train['unit'])."\" title=\"".$technology->getUnitName($train['unit'])."\" />
-        ".$train['amt']." ".$technology->getUnitName($train['unit'])."</td>
+        echo "<img class=\"unit u".$train['unit']."\" src=\"img/x.gif\" alt=\"".$technology->getUnitName($train['unit'])."\" title=\"".$technology->getUnitName($train['unit'])."\" />".$train['amt']." ".$technology->getUnitName($train['unit'])."</td>
         <td class=\"dur\"><span id=timer".$timer.">".$generator->getTimeFormat(($train['commence']+($train['eachtime']*$train['amt']))-time())."</span></td>
         <td class=\"fin\">";
         $timer -= 1;
