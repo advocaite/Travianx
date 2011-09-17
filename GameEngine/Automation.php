@@ -603,7 +603,7 @@ class Automation {
 						}
 						//NEED TO SEND A RAPPORTAGE!!!
 						$data2 = ''.$database->getVillageField($enforce['from'],"owner").','.$to['wref'].','.addslashes($to['name']).','.$tribe.''.$life.''.$notlife.'';
-						$database->addNotice($database->getVillageField($enforce['from'],"owner"),1,'Reinforcement in '.addslashes($to['name']).' is attacked',$data2,$AttackArrivalTime);
+						$database->addNotice($database->getVillageField($enforce['from'],"owner"),15,'Reinforcement in '.addslashes($to['name']).' was attacked',$data2,$AttackArrivalTime);
 						//delete reinf sting when its killed all.
 						if($wrong=='0'){ $database->deleteReinf($enforce['id']); }
 				}
@@ -911,8 +911,7 @@ class Automation {
 		
 			
 			
-			              if($scout){
-                echo $data['spy'];
+			    if($scout){
                 if ($data['spy'] == 1){
                 $info_spy = "".$spy_pic.",<div class=\"res\"><img class=\"r1\" src=\"img/x.gif\" alt=\"Lumber\" title=\"Lumber\" />".round($totwood)." | 
                  <img class=\"r2\" src=\"img/x.gif\" alt=\"Clay\" title=\"Clay\" />".round($totclay)." | 
@@ -976,14 +975,18 @@ class Automation {
 				for($i=1;$i<=10;$i++)
 				{
 					if($battlepart['casualties_attacker'][$i]){
-						$database->addNotice($to['owner'],7,''.addslashes($from['name']).' scouts '.addslashes($to['name']).'',$data2,$AttackArrivalTime);
+						$database->addNotice($to['owner'],0,''.addslashes($from['name']).' scouts '.addslashes($to['name']).'',$data2,$AttackArrivalTime);
 						break;
 					}
 				}
 			}
-			else
-				$database->addNotice($to['owner'],7,''.addslashes($from['name']).' attacks '.addslashes($to['name']).'',$data2,$AttackArrivalTime);
-				
+			else {
+                if ($totaldead_def == 0){
+				$database->addNotice($to['owner'],4,''.addslashes($from['name']).' attacks '.addslashes($to['name']).'',$data2,$AttackArrivalTime);
+			}else {
+            $database->addNotice($to['owner'],5,''.addslashes($from['name']).' attacks '.addslashes($to['name']).'',$data2,$AttackArrivalTime);
+                }
+            }	
 			//to here
 			
 			// If the dead units not equal the ammount sent they will return and report
@@ -991,11 +994,16 @@ class Automation {
 			{
 				$endtime = $this->procDistanceTime($from,$to,min($speeds),1) + $AttackArrivalTime;
 				//$endtime = $this->procDistanceTime($from,$to,min($speeds),1) + time();
-				if($type == 1)
-					$database->addNotice($from['owner'],7,''.addslashes($from['name']).' scouts '.addslashes($to['name']).'',$data2,$AttackArrivalTime);
-				else
-					$database->addNotice($from['owner'],7,''.addslashes($from['name']).' attacks '.addslashes($to['name']).'',$data2,$AttackArrivalTime);
-			
+				if($type == 1) {
+					$database->addNotice($from['owner'],0,''.addslashes($from['name']).' scouts '.addslashes($to['name']).'',$data2,$AttackArrivalTime);
+				}else {
+                    if ($totaldead_att == 0){
+					$database->addNotice($from['owner'],1,''.addslashes($from['name']).' attacks '.addslashes($to['name']).'',$data2,$AttackArrivalTime);
+                    }else{ 
+                    $database->addNotice($from['owner'],2,''.addslashes($from['name']).' attacks '.addslashes($to['name']).'',$data2,$AttackArrivalTime);
+                    }       
+                }
+                
 				$database->setMovementProc($data['moveid']); 
 				$database->addMovement(4,$to['wref'],$from['wref'],$data['ref'],$endtime);
 				
@@ -1009,17 +1017,18 @@ class Automation {
 					$totalstolengain=$steal[0]+$steal[1]+$steal[2]+$steal[3];
                     $totalstolentaken=($totalstolentaken-($steal[0]+$steal[1]+$steal[2]+$steal[3]));
                     $database->modifyPoints($from['owner'],'RR',$totalstolengain);
-					$database->modifyPoints($to['owner'],'RR',$totalstolentaken);
-				}
+                    $database->modifyPoints($to['owner'],'RR',$totalstolentaken);
+                }
 			}
 			else //else they die and don't return or report.
 			{
 				$database->setMovementProc($data['moveid']);
-				if($type == 1)
-					$database->addNotice($from['owner'],7,''.addslashes($from['name']).' scouts '.addslashes($to['name']).'',$data_fail,$AttackArrivalTime);
-				else
-					$database->addNotice($from['owner'],7,''.addslashes($from['name']).' attacks '.addslashes($to['name']).'',$data_fail,$AttackArrivalTime);
-			}
+				if($type == 1){
+					$database->addNotice($from['owner'],0,''.addslashes($from['name']).' scouts '.addslashes($to['name']).'',$data_fail,$AttackArrivalTime);
+				}else{
+					$database->addNotice($from['owner'],3,''.addslashes($from['name']).' attacks '.addslashes($to['name']).'',$data_fail,$AttackArrivalTime);
+			        }
+            }
 		
 
 			
