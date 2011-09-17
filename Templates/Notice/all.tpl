@@ -1,5 +1,5 @@
 <?php 
-$noticeClass = array("","Won as attacker without losses","","","","Won as defender with losses","Lost as defender with losses","Lost as defender without losses","Reinforcement arrived");
+$noticeClass = array("Scout Report","Won as attacker without losses","Won as attacker with losses","Lost as attacker with losses","Won as defender without losses","Won as defender with losses","Lost as defender with losses","Lost as defender without losses","Reinforcement arrived","","Wood Delivered","Clay Delivered","Iron Delivered","Crop Delivered","","Reinforcement Attacked");
 ?>
 <form method="post" action="berichte.php" name="msg">
 <table cellpadding="1" cellspacing="1" id="overview"
