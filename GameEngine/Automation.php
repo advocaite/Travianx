@@ -1006,8 +1006,10 @@ class Automation {
 					$database->modifyResource($to['wref'],$steal[0],$steal[1],$steal[2],$steal[3],0);
 					$database->addMovement(6,$to['wref'],$from['wref'],$reference,$endtime);
 					//$database->updateVillage($to['wref']);
-					
-					$database->modifyPoints($from['owner'],'RR',$steal[0]+$steal[1]+$steal[2]+$steal[3]);
+					$totalstolengain=$steal[0]+$steal[1]+$steal[2]+$steal[3];
+                    $totalstolentaken=($totalstolentaken-($steal[0]+$steal[1]+$steal[2]+$steal[3]));
+                    $database->modifyPoints($from['owner'],'RR',$totalstolengain);
+					$database->modifyPoints($to['owner'],'RR',$totalstolentaken);
 				}
 			}
 			else //else they die and don't return or report.
