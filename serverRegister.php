@@ -22,7 +22,7 @@ include("GameEngine/Lang/".LANG.".php");
 //connect info for server
 ?>
 <div class="server serverA serverbig servernormal serverbignormal ">
-<a class="link" onclick="" href="/anmelden.php" title="Register on Server 1.">
+<a class="link" onclick="" href="anmelden.php" title="Register on Server 1.">
 <span class="name"> Server 1 </span>
 <?php
 $users = mysql_num_rows(mysql_query("SELECT SQL_CACHE * FROM ".TB_PREFIX."users"));
