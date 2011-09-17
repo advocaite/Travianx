@@ -114,22 +114,22 @@ $tocoor = $database->getCoor($enforce['vref']);
 			<th>Arrived:</th>
 
 			<?php
-			$att_tribe = 3;
-			$start = ($att_tribe == 1)? 1 : (($att_tribe == 2)? 11: 21);
-			$end = ($att_tribe == 1)? 10 : (($att_tribe == 2)? 20: 30);
-			$unitspeeds = array(6,5,7,16,14,10,4,3,4,5,7,7,6,9,10,9,4,3,4,5,7,6,17,19,16,13,4,3,4,5);
-			$speeds = array();
-				//find slowest unit.
-				for($i=$start;$i<=$end;$i++)
-				{
-					if (isset($enforce['u'.$i]))
-					{ 
-						if($enforce['u'.$i]!='' && $enforce['u'.$i]>0)
-						{ 
-							$speeds[] = $unitspeeds[$i-2];
-						}
-					}
-				}
+			$att_tribe = $session->tribe;  
+            $start = ($att_tribe-1)*10+1;
+            $end = ($att_tribe*10);
+            $speeds = array();
+                //find slowest unit.
+                for($i=$start;$i<=$end;$i++)
+                {
+                    if (isset($enforce['u'.$i]))
+                    { 
+                        if($enforce['u'.$i]!='' && $enforce['u'.$i]>0)
+                        { 
+                            //$speeds[] = $unitspeeds[$i-2];
+                            $speeds[] = ${'u'.$i}['speed'];
+                        }
+                    }
+                }
 				$time = $generator->procDistanceTime($fromCor,$toCor,min($speeds),1);
 
 			?>

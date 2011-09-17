@@ -252,7 +252,7 @@ class Automation {
 	}
 	
 	private function buildComplete() {
-		global $database,$bid18,$bid10,$bid11,$village;
+		global $database,$bid18,$bid10,$bid11,$village,$building;
 		$ourFileHandle = fopen("GameEngine/Prevention/build.txt", 'w');
 		fclose($ourFileHandle);
 		$time = time();
@@ -777,10 +777,13 @@ class Automation {
 	
 			//find slowest unit.
 			for($i=1;$i<=10;$i++)
-			{
-				if ($data['t'.$i] > $battlepart['casualties_attacker'][$i])
-					$speeds[] = $unitspeeds[$i-2+$start];
-			}
+            {
+                if ($data['t'.$i] > $battlepart['casualties_attacker'][$i]) {
+                if($unitarray) { reset($unitarray); }
+                $unitarray = $GLOBALS["u".(($owntribe-1)*10+$i)];
+                $speeds[] = $unitarray['speed'];
+                 }
+            }
 
 
 // Data for when troops return.

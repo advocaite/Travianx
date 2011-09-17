@@ -325,13 +325,7 @@ $actionType = "Raid";
 			$start = ($att_tribe == 3)? 21 : (($att_tribe == 4)? 31: 41);
 
 			$end = ($att_tribe == 3)? 30 : (($att_tribe == 4)? 40: 50);
-
-			
-
-			$unitspeeds = array(6,5,7,16,14,10,4,3,4,5,7,7,6,9,10,9,4,3,4,5,7,6,17,19,16,13,4,3,4,5,7,7,6,9,10,9,4,3,4,5);
-
-			
-
+            
 			$speeds = array();
 
 			$scout = 1;
@@ -350,7 +344,7 @@ $actionType = "Raid";
 
 						{
 
-							$speeds[] = $unitspeeds[$i-2+$start];
+							$speeds[] = ${'u'.(($session->tribe-1)*10+$i)}['speed'];
 
 							if($i != 4)
 

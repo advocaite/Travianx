@@ -216,18 +216,17 @@ class Units {
         $start = ($data21['tribe']-1)*10+1;
         $end = ($data21['tribe']*10);
         
-			$unitspeeds = array(6,5,7,16,14,10,4,3,4,5,7,7,6,9,10,9,4,3,4,5,7,6,17,19,16,13,4,3,4,5,7,7,6,9,10,9,4,3,4,5,7,7,6,9,10,9,4,3,4,5);
-            $speeds = array();
+			$speeds = array();
 			$scout = 1;
 
 				//find slowest unit.
 				for($i=1;$i<=10;$i++){
 					if (isset($data['u'.$i])){
 						if( $data['u'.$i] != '' && $data['u'.$i] > 0){
-							$speeds[] = $unitspeeds[$i-2+$start];
-							//if($i != 4)
-							//$scout = 0;
-						}
+                        if($unitarray) { reset($unitarray); }
+                        $unitarray = $GLOBALS["u".(($session->tribe-1)*10+$i)];
+                        $speeds[] = $unitarray['speed'];
+                        }
 					}
 				}
 				
@@ -299,15 +298,16 @@ class Units {
 						$fromCor = array('x'=>$tocoor['x'], 'y'=>$tocoor['y']);
 						$toCor = array('x'=>$fromcoor['x'], 'y'=>$fromcoor['y']);
 		
-				$unitspeeds = array(6,5,7,16,14,10,4,3,4,5,7,7,6,9,10,9,4,3,4,5,7,6,17,19,16,13,4,3,4,5,7,7,6,9,10,9,4,3,4,5,7,7,6,9,10,9,4,3,4,5);
 				$speeds = array();
 
 				//find slowest unit.
 				for($i=1;$i<=10;$i++){
 					if (isset($post['t'.$i])){
 						if( $post['t'.$i] != '' && $post['t'.$i] > 0){
-							$speeds[] = $unitspeeds[$i-2+$start];
-						} else {
+                        if($unitarray) { reset($unitarray); }
+                        $unitarray = $GLOBALS["u".(($session->tribe-1)*10+$i)];
+                        $speeds[] = $unitarray['speed'];
+                    } else {
 						$post['t'.$i.'']='0';
 						}
 					} else {
