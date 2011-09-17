@@ -546,12 +546,12 @@ private function trainUnit($unit,$amt,$great=false) {
 	}
 	
 	private function upgradeArmour($get) {
-		global $database,$session,${'ab'.$get['a']},$bid12,$building,$village,$logging;
+		global $database,$session,${'ab'.$get['a']},$bid13,$building,$village,$logging;
 		$ABTech = $database->getABTech($village->wid);
 		$CurrentTech = $ABTech["a".$get['a']];
-		if(($this->getTech(($session->tribe-1)*10+$get['a']) || ($get['a'] % 10) == 1) && ($CurrentTech < $building->getTypeLevel(12)) && $get['c'] == $session->mchecker) {
+		if(($this->getTech(($session->tribe-1)*10+$get['a']) || ($get['a'] % 10) == 1) && ($CurrentTech < $building->getTypeLevel(13)) && $get['c'] == $session->mchecker) {
 			$data = ${'ab'.$get['a']};
-			$time = time() + round(($data[$CurrentTech+1]['time'] * ($bid12[$building->getTypeLevel(12)]['attri'] / 100))/SPEED);
+			$time = time() + round(($data[$CurrentTech+1]['time'] * ($bid13[$building->getTypeLevel(13)]['attri'] / 100))/SPEED);
 			if ($database->modifyResource($village->wid,$data[$CurrentTech+1]['wood'],$data[$CurrentTech+1]['clay'],$data[$CurrentTech+1]['iron'],$data[$CurrentTech+1]['crop'],0)) {
 				$database->addResearch($village->wid,"a".$get['a'],$time);
 				$logging->addTechLog($village->wid,"a".$get['a'],$CurrentTech+1);
