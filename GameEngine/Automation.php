@@ -252,7 +252,7 @@ class Automation {
 	}
 	
 	private function buildComplete() {
-		global $database,$bid18,$bid10,$bid11,$village,$building;
+		global $database,$bid18,$bid10,$bid11;
 		$ourFileHandle = @fopen("GameEngine/Prevention/build.txt", 'w');
 		@fclose($ourFileHandle);
 		$time = time();
