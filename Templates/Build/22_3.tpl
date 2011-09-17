@@ -39,10 +39,10 @@ for($i=22;$i<=29;$i++) {
 					<div class=\"none\">Too few<br>resources</div>
 				</td></tr>";
                 }
-                else if ( $count(acares) > 0 ) {
-                echo "</td>";
-					echo "<td class=\"none\">
-					Research in progress</td></tr>";
+                 else if ( count($acares) > 0 ) {
+                     echo "</td>";
+                    echo "<td class=\"none\">
+                    Research in progress</td></tr>";
                 }
                 else {
                 echo "</td>";

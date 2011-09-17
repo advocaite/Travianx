@@ -397,6 +397,13 @@ class MYSQL_DB {
 
    }
    
+   function getProfileMedalAlly($uid) {
+      $q = "SELECT id,categorie,plaats,week,img,points from ".TB_PREFIX."allimedal where allyid = $uid order by id desc";
+      $result = mysql_query($q,$this->connection);
+      return $this->mysql_fetch_all($result);
+
+   }
+   
    function getVillageID($uid) {
 		$q = "SELECT wref FROM ".TB_PREFIX."vdata WHERE owner = $uid";
 		$result = mysql_query($q,$this->connection);
@@ -1338,12 +1345,7 @@ class MYSQL_DB {
 	}
 	
 	function getRanking() {
-		//if(INCLUDE_ADMIN) {
-		//	$q = "SELECT id,username,alliance,ap,apall,dp,dpall,access FROM ".TB_PREFIX."users WHERE tribe<=3";
-		//}
-		//else {
-			$q = "SELECT id,username,alliance,ap,apall,dp,dpall,access FROM ".TB_PREFIX."users WHERE tribe<=3 AND access<".(INCLUDE_ADMIN?"10":"8");
-		//}
+		$q = "SELECT id,username,alliance,ap,apall,dp,dpall,access FROM ".TB_PREFIX."users WHERE tribe<=3 AND access<".(INCLUDE_ADMIN?"10":"8");
 		$result = mysql_query($q, $this->connection);
 		return $this->mysql_fetch_all($result);
 	}
@@ -1497,9 +1499,9 @@ class MYSQL_DB {
 	mysql_query($q, $this->connection);
 	$id=mysql_insert_id($this->connection);
 	$owntribe = $this->getUserField($this->getVillageField($data['from'],"owner"),"tribe",0);
-	$start = ($owntribe == 1)? 1 : (($owntribe == 2)? 11: 21);
-	$end = ($owntribe == 1)? 10 : (($owntribe == 2)? 20: 30);
-	//add unit
+	$start = ($owntribe-1)*10+1;
+    $end = ($owntribe*10);
+    //add unit
 	$j='1';			
 	for($i=$start;$i<=$end;$i++){
 	$this->modifyEnforce($id,$i,$data['t'.$j.''],1); $j++;
