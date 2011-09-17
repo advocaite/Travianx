@@ -275,7 +275,7 @@ class Automation {
 
 					if($indi['type'] == 10) {
 					  $max=$database->getVillageField($indi['wid'],"maxstore");
-					  if($level=='1' && $building->getTypeLevel(10) != 20){ $max-=800; }
+					  if($level=='1' && $max==800){ $max-=800; }
 					  $max-=$bid10[$level-1]['attri'];      
 					  $max+=$bid10[$level]['attri'];  
 					  $database->setVillageField($indi['wid'],"maxstore",$max);
@@ -283,7 +283,7 @@ class Automation {
 					
 					if($indi['type'] == 11) {
 					  $max=$database->getVillageField($indi['wid'],"maxcrop");
-					  if($level=='1' && $building->getTypeLevel(11) != 20){ $max-=800; }
+					  if($level=='1' && $max==800){ $max-=800; }
 					  $max-=$bid11[$level-1]['attri'];      
 					  $max+=$bid11[$level]['attri']; 
 					  $database->setVillageField($indi['wid'],"maxcrop",$max);
