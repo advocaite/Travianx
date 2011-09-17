@@ -144,8 +144,8 @@ class Automation {
 	
 	private function clearDeleting() {
 		global $database;
-		$ourFileHandle = fopen("GameEngine/Prevention/cleardeleting.txt", 'w');
-		fclose($ourFileHandle);
+		$ourFileHandle = @fopen("GameEngine/Prevention/cleardeleting.txt", 'w');
+		@fclose($ourFileHandle);
 		$needDelete = $database->getNeedDelete();
 		if(count($needDelete) > 0) {
 			foreach($needDelete as $need) {
@@ -187,7 +187,7 @@ class Automation {
 			}
 		}
 		if(file_exists("GameEngine/Prevention/cleardeleting.txt")) {
-			unlink("GameEngine/Prevention/cleardeleting.txt");
+			@unlink("GameEngine/Prevention/cleardeleting.txt");
 		}
 	}
 	
@@ -231,8 +231,8 @@ class Automation {
 	
 	private function culturePoints() {
 		global $database;
-		$ourFileHandle = fopen("GameEngine/Prevention/culturepoints.txt", 'w');
-		fclose($ourFileHandle);
+		$ourFileHandle = @fopen("GameEngine/Prevention/culturepoints.txt", 'w');
+		@fclose($ourFileHandle);
 		$time = time()-84600;
 		$array = array();
 		$q = "SELECT id, lastupdate FROM ".TB_PREFIX."users where lastupdate < $time";
@@ -247,14 +247,14 @@ class Automation {
 			}
 		}
 		if(file_exists("GameEngine/Prevention/culturepoints.txt")) {
-			unlink("GameEngine/Prevention/culturepoints.txt");
+			@unlink("GameEngine/Prevention/culturepoints.txt");
 		}
 	}
 	
 	private function buildComplete() {
 		global $database,$bid18,$bid10,$bid11,$village,$building;
-		$ourFileHandle = fopen("GameEngine/Prevention/build.txt", 'w');
-		fclose($ourFileHandle);
+		$ourFileHandle = @fopen("GameEngine/Prevention/build.txt", 'w');
+		@fclose($ourFileHandle);
 		$time = time();
 		$array = array();
 		$q = "SELECT * FROM ".TB_PREFIX."bdata where timestamp < $time";
@@ -296,7 +296,7 @@ class Automation {
 			}
 		}
 		if(file_exists("GameEngine/Prevention/build.txt")) {
-			unlink("GameEngine/Prevention/build.txt");
+			@unlink("GameEngine/Prevention/build.txt");
 		}
 	}
 	
@@ -311,8 +311,8 @@ class Automation {
 	
 	private function marketComplete() {
 		global $database,$generator;
-		$ourFileHandle = fopen("GameEngine/Prevention/market.txt", 'w');
-		fclose($ourFileHandle);
+		$ourFileHandle = @fopen("GameEngine/Prevention/market.txt", 'w');
+		@fclose($ourFileHandle);
 		$time = time();
 		$q = "SELECT * FROM ".TB_PREFIX."movement, ".TB_PREFIX."send where ".TB_PREFIX."movement.ref = ".TB_PREFIX."send.id and ".TB_PREFIX."movement.proc = 0 and sort_type = 0 and endtime < $time";
 		$dataarray = $database->query_return($q);
@@ -340,14 +340,14 @@ class Automation {
 		$q = "UPDATE ".TB_PREFIX."movement set proc = 1 where endtime < $time and sort_type = 2";
 		$database->query($q);
 		if(file_exists("GameEngine/Prevention/market.txt")) {
-			unlink("GameEngine/Prevention/market.txt");
+			@unlink("GameEngine/Prevention/market.txt");
 		}
 	}
 	
 	private function sendunitsComplete() {
 		global $bid23,$database,$battle,$village,$technology,$logging;
-			$ourFileHandle = fopen("GameEngine/Prevention/sendunits.txt", 'w');
-			fclose($ourFileHandle);
+			$ourFileHandle = @fopen("GameEngine/Prevention/sendunits.txt", 'w');
+			@fclose($ourFileHandle);
 		$time = time();
 		$q = "SELECT * FROM ".TB_PREFIX."movement, ".TB_PREFIX."attacks where ".TB_PREFIX."movement.ref = ".TB_PREFIX."attacks.id and ".TB_PREFIX."movement.proc = '0' and ".TB_PREFIX."movement.sort_type = '3' and ".TB_PREFIX."attacks.attack_type != '2' and endtime < $time";
 		$dataarray = $database->query_return($q);
@@ -1034,14 +1034,14 @@ class Automation {
 			
 		}
 			if(file_exists("GameEngine/Prevention/sendunits.txt")) {
-				unlink("GameEngine/Prevention/sendunits.txt");
+				@unlink("GameEngine/Prevention/sendunits.txt");
 			}
 	}
 	
 	private function sendreinfunitsComplete() {
 		global $bid23,$database,$battle;
-			$ourFileHandle = fopen("GameEngine/Prevention/sendreinfunits.txt", 'w');
-			fclose($ourFileHandle);
+			$ourFileHandle = @fopen("GameEngine/Prevention/sendreinfunits.txt", 'w');
+			@fclose($ourFileHandle);
 		$time = time();
 		$q = "SELECT * FROM ".TB_PREFIX."movement, ".TB_PREFIX."attacks where ".TB_PREFIX."movement.ref = ".TB_PREFIX."attacks.id and ".TB_PREFIX."movement.proc = '0' and ".TB_PREFIX."movement.sort_type = '3' and ".TB_PREFIX."attacks.attack_type = '2' and endtime < $time";
 		$dataarray = $database->query_return($q);
@@ -1083,14 +1083,14 @@ class Automation {
 
 		}
 			if(file_exists("GameEngine/Prevention/sendreinfunits.txt")) {
-				unlink("GameEngine/Prevention/sendreinfunits.txt");
+				@unlink("GameEngine/Prevention/sendreinfunits.txt");
 			}
 	}
 	
 	private function returnunitsComplete() {
 		global $database;
-		$ourFileHandle = fopen("GameEngine/Prevention/returnunits.txt", 'w');
-		fclose($ourFileHandle);
+		$ourFileHandle = @fopen("GameEngine/Prevention/returnunits.txt", 'w');
+		@fclose($ourFileHandle);
 		$time = time();
 		$q = "SELECT * FROM ".TB_PREFIX."movement, ".TB_PREFIX."attacks where ".TB_PREFIX."movement.ref = ".TB_PREFIX."attacks.id and ".TB_PREFIX."movement.proc = '0' and ".TB_PREFIX."movement.sort_type = '4' and endtime < $time";
 		$dataarray = $database->query_return($q);
@@ -1135,14 +1135,14 @@ class Automation {
 		
 		
 		if(file_exists("GameEngine/Prevention/returnunits.txt")) {
-			unlink("GameEngine/Prevention/returnunits.txt");
+			@unlink("GameEngine/Prevention/returnunits.txt");
 		}
 	}		
 	
 	private function sendSettlersComplete() {
 		global $database, $building;
-		$ourFileHandle = fopen("GameEngine/Prevention/settlers.txt", 'w');
-		fclose($ourFileHandle);
+		$ourFileHandle = @fopen("GameEngine/Prevention/settlers.txt", 'w');
+		@fclose($ourFileHandle);
 		$time = time();
 		$q = "SELECT * FROM ".TB_PREFIX."movement where proc = 0 and sort_type = 5 and endtime < $time";
 		$dataarray = $database->query_return($q);
@@ -1183,14 +1183,14 @@ class Automation {
 					}
 			}
 			if(file_exists("GameEngine/Prevention/settlers.txt")) {
-				unlink("GameEngine/Prevention/settlers.txt");
+				@unlink("GameEngine/Prevention/settlers.txt");
 			}
 	}
 	
 	private function researchComplete() {
 		global $database;
-		$ourFileHandle = fopen("GameEngine/Prevention/research.txt", 'w');
-		fclose($ourFileHandle);
+		$ourFileHandle = @fopen("GameEngine/Prevention/research.txt", 'w');
+		@fclose($ourFileHandle);
 		$time = time();
 		$q = "SELECT * FROM ".TB_PREFIX."research where timestamp < $time";
 		$dataarray = $database->query_return($q);
@@ -1210,7 +1210,7 @@ class Automation {
 			$database->query($q);
 		}
 		if(file_exists("GameEngine/Prevention/research.txt")) {
-			unlink("GameEngine/Prevention/research.txt");
+			@unlink("GameEngine/Prevention/research.txt");
 		}
 	}
 	
@@ -1423,8 +1423,8 @@ class Automation {
 
 	private function trainingComplete() {
 		global $database;
-		$ourFileHandle = fopen("GameEngine/Prevention/training.txt", 'w');
-		fclose($ourFileHandle);
+		$ourFileHandle = @fopen("GameEngine/Prevention/training.txt", 'w');
+		@fclose($ourFileHandle);
 		$trainlist = $database->getTrainingList();
 		if(count($trainlist) > 0) {
 			foreach($trainlist as $train) {
@@ -1450,7 +1450,7 @@ class Automation {
 			}
 		}
 		if(file_exists("GameEngine/Prevention/training.txt")) {
-			unlink("GameEngine/Prevention/training.txt");
+			@unlink("GameEngine/Prevention/training.txt");
 		}
 	}
 	
@@ -1542,8 +1542,8 @@ class Automation {
 	
 	private function celebrationComplete() {
 		global $database;
-		$ourFileHandle = fopen("GameEngine/Prevention/celebration.txt", 'w');
-		fclose($ourFileHandle);
+		$ourFileHandle = @fopen("GameEngine/Prevention/celebration.txt", 'w');
+		@fclose($ourFileHandle);
 
 		$varray = $database->getCel(); 
 			foreach($varray as $vil){
@@ -1555,7 +1555,7 @@ class Automation {
 				$database->setCelCp($user,$cp);
 			}
 		if(file_exists("GameEngine/Prevention/celebration.txt")) {
-			unlink("GameEngine/Prevention/celebration.txt");
+			@unlink("GameEngine/Prevention/celebration.txt");
 		}
 	}
 	
