@@ -19,6 +19,7 @@ foreach($varray as $vil){
 		${'slot'.$i} = $database->getVillageField($vid, 'exp'.$i);
 		if(${'slot'.$i} != 0) { $exp++;	}
 	}
+	$lvlTH = $building->getTypeLevel(24,$vid);
 	$lvlRes = $building->getTypeLevel(25,$vid);
 	$lvlPal = $building->getTypeLevel(26,$vid);
 	$maxslots = ($lvlRes>=10?floor($lvlRes/10):0)+($lvlPal>=10?floor(($lvlPal-5)/5):0);
@@ -29,7 +30,7 @@ foreach($varray as $vil){
 
 	echo '<tr class="'.$class.'"><td class="vil fc"><a href="dorf1.php?newdid='.$vid.'">'.$vil['name'].'</a></td>';
 	echo '<td class="cps">'.$cp.'</td>';
-	echo '<td class="cel">'.($hasCel<>0?'<span id="timer'.$timer.'">'.$generator->getTimeFormat($hasCel-time()).'</span>':'&nbsp;').'</td>';
+	echo '<td class="cel">'.($lvlTH>0?'<a href="build.php?newdid='.$vid.'&amp;gid=24">'.($hasCel<>0?'<span id="timer'.$timer.'">'.$generator->getTimeFormat($hasCel-time()).'</span>':'●').'</a>':'&nbsp;').'</td>';
 	echo '<td class="tro"><span class="">';
 	$unit = $database->getUnit($vid);
 	$tribe = $session->tribe;
