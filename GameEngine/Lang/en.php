@@ -22,7 +22,7 @@ define("PROFILE","Profile");
 define("SUPPORT","Support");
 define("UPDATE_T_10","Update Top 10");
 define("SYSTEM_MESSAGE","System message");
-define("TRAVIAN_PLUS","Travian <b><span class="plus_g">P</span><span class="plus_o">l</span><span class="plus_g">u</span><span class="plus_o">s</span></span></span></b>");
+define("TRAVIAN_PLUS","Travian <b><span class=\"plus_g\">P</span><span class=\"plus_o\">l</span><span class=\"plus_g\">u</span><span class=\"plus_o\">s</span></span></span></b>");
 define("CONTACT","Contact us!");
 
 //MENU

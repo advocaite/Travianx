@@ -34,10 +34,10 @@ define("MORE_LINKS","Enlaces");
 define("TOUR","Tutorial");
 
 //ERRORS
-define("USRNM_EMPTY","(Campo de usuario vac&iacute;)");
+define("USRNM_EMPTY","(Nombre de usuario vac&iacute;)");
 define("USRNM_TAKEN","(El nombre ya esta en uso.)");
 define("USRNM_SHORT","(min. ".USRNM_MIN_LENGTH." caracteres)");
-define("USRNM_CHAR","(Caracteres invalidos)");
+define("USRNM_CHAR","(Caracteres inv&aacute;lidos)");
 define("PW_EMPTY","(Contrase&ntilde;a en blanco)");
 define("PW_SHORT","(min. ".PW_MIN_LENGTH." caracteres)");
 define("PW_INSECURE","(Contrasena insegura. Por favor escoja una con ma&acute;s seguridad.)");
@@ -46,19 +46,19 @@ define("EMAIL_INVALID","(Direccio&acute;n de correo inva&acute;lida)");
 define("EMAIL_TAKEN","(El correo ya esta&acute; en uso)");
 define("TRIBE_EMPTY","<li>Por favor escoja una tribu.</li>");
 define("AGREE_ERROR","<li>Tiene que estar de acuerdo con las reglas y condicio&acute;n de uso antes de registrarse.</li>");
-define("LOGIN_USR_EMPTY","Nombre.");
+define("LOGIN_USR_EMPTY","Nombre vac&iacute;o.");
 define("LOGIN_PASS_EMPTY","Contrase&ntilde;a.");
-define("EMAIL_ERROR","Email does not match existing");
+define("EMAIL_ERROR","El correo electr&oacute;nico no existe");
 define("PASS_MISMATCH","Las contrase&ntilde;as no coinciden");
-define("ALLI_OWNER","Por favor escoja un lider de alianza antes de borrarla.");
+define("ALLI_OWNER","Por favor escoja un l&iacute;der de alianza antes de borrarla.");
 define("SIT_ERROR","Cuidador ya configurado");
 define("USR_NT_FOUND","Nombre no existente.");
 define("LOGIN_PW_ERROR","La contrase&ntilde;a es incorrecta.");
 define("WEL_TOPIC","Concejos &uacute;tiles e informaci&oacute;n ");
 define("ATAG_EMPTY","Etiqueta vac&iacute;a");
 define("ANAME_EMPTY","Nombre vac&iacute;o");
-define("ATAG_EXIST","Etiqueta tomada");
-define("ANAME_EXIST","Nombre tomado");
+define("ATAG_EXIST","Etiqueta en uso");
+define("ANAME_EXIST","Nombre en uso");
 
 //COPYRIGHT
 define("TRAVIAN_COPYRIGHT","TravianX Clon de Travian 100% C&oacute;digo Libre.");
@@ -90,7 +90,7 @@ define("MULTI_V_HEADER","Villas");
 define("ANNOUNCEMENT","Anuncio");
 define("GO2MY_VILLAGE","Ir a mi villa");
 define("VILLAGE_CENTER","Centro de la Villa");
-define("FINISH_GOLD","¿Terminar todas las construcciones e investigaciones en esta aldea por 2 oros?");
+define("FINISH_GOLD","&iquest;Terminar todas las construcciones e investigaciones en esta aldea por 2 oros?");
 define("WAITING_LOOP","(lazo de espera)");
 define("HRS","(hrs.)");
 define("DONE_AT","listo a las ");
