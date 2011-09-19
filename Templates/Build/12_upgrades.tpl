@@ -42,7 +42,7 @@
 				}
 				else {
 
-					echo "<td class=\"act\"><a class=\"research\" href=\"build.php?id=$id&amp;a=$j&amp;c=".$session->mchecker."\">Research</a></td></tr>";
+					echo "<td class=\"act\"><a class=\"research\" href=\"build.php?id=$id&amp;a=$j&amp;c=".$session->mchecker."\">Upgrade</a></td></tr>";
 				}
 			}
 		}
