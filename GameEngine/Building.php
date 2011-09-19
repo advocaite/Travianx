@@ -79,7 +79,7 @@ class Building {
 						$soonPop += $buildarray[$database->getFieldLevel($village->wid,$j['field'])+1]['pop'];
 					}
 				}
-				if(($village->getProd("crop") - $soonPop - $resRequiredPop) <= 1 && $tid != 4) {
+				if(($village->getProd("crop") - $soonPop - $resRequiredPop) <= 1 && $village->resarray['f'.$id.'t'] <> 4) {  
 					return 4;
 				}
 				else {
