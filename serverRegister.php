@@ -17,25 +17,25 @@ include("GameEngine/config.php");
 include("GameEngine/Database.php");
 include("GameEngine/Lang/".LANG.".php");
 ?>
-<h3 class="pop popgreen bold">Please choose a server.</h3>
+<h3 class="pop popgreen bold"><?php echo CHOOSE ?></h3>
 <?php
 //connect info for server
 ?>
 <div class="server serverA serverbig servernormal serverbignormal ">
-<a class="link" onclick="" href="anmelden.php" title="Register on Server 1.">
-<span class="name"> Server 1 </span>
+<a class="link" onclick="" href="anmelden.php" title="<?php echo REGIN_TO ?>">
+<span class="name"> <?php echo SERVER_NAME ?> </span>
 <?php
 $users = mysql_num_rows(mysql_query("SELECT SQL_CACHE * FROM ".TB_PREFIX."users"));
                        
                         ?>
-<span class="player" title="Players in total: <?php echo $users;?>"><?php echo $users;?>  </span>
+<span class="player" title="<?php echo P_TOTAL . $users;?>"><?php echo $users;?>  </span>
 <?php
 $result = mysql_query("SELECT * FROM ".TB_PREFIX."active");
                         $num_rows = mysql_num_rows($result);
                         X
                         ?>
-<span class="online" title="Players online: <?php echo $num_rows;?>"><?php echo $num_rows;?>  </span>
-<span class="start"> The server started <?php echo round((time()-COMMENCE)/86400);?> days ago. </span>
+<span class="online" title="<?php echo P_ONLINE . $num_rows;?>"><?php echo $num_rows;?>  </span>
+<span class="start"> <?php echo STARTED ?> </span>
 <span class="mark"> </span>
 <img class="hover" src="img/x.gif">
 </a>

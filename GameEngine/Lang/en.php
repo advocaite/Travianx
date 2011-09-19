@@ -11,16 +11,29 @@
 									//         ENGLISH         //
 			                        //      Author: Dzoki      //
 									/////////////////////////////
+
+//MAIN MENU
 define("HOME","Homepage");
 define("INSTRUCT","Instructions");
-define("LOGIN","Login");
+define("ADMIN_PANEL","Admin Panel");
+define("MASS_MESSAGE","Mass Message");
 define("LOGOUT","Logout");
+define("PROFILE","Profile");
+define("SUPPORT","Support");
+define("UPDATE_T_10","Update Top 10");
+define("SYSTEM_MESSAGE","System message");
+define("TRAVIAN_PLUS","Travian <b><span class="plus_g">P</span><span class="plus_o">l</span><span class="plus_g">u</span><span class="plus_o">s</span></span></span></b>");
+define("CONTACT","Contact us!");
+
+//MENU
 define("REG","Register");
 define("FORUM","Forum");
 define("CHAT","Chat");
 define("IMPRINT","Imprint");
-define("PROFILE","Profile");
-define("SUPPORT","Support");
+define("MORE_LINKS","More Links");
+define("TOUR","Game Tour");
+
+//ERRORS
 define("USRNM_EMPTY","(Username empty)");
 define("USRNM_TAKEN","(Name is already in use.)");
 define("USRNM_SHORT","(min. ".USRNM_MIN_LENGTH." figures)");
@@ -41,6 +54,30 @@ define("ALLI_OWNER","Please appoint an alliance owner before deleting");
 define("SIT_ERROR","Sitter already set");
 define("USR_NT_FOUND","Name does not exist.");
 define("LOGIN_PW_ERROR","The password is wrong.");
+define("WEL_TOPIC","Useful tips & information ");
+define("ATAG_EMPTY","Tag empty");
+define("ANAME_EMPTY","Name empty");
+define("ATAG_EXIST","Tag taken");
+define("ANAME_EXIST","Name taken");
+
+//COPYRIGHT
+define("TRAVIAN_COPYRIGHT","TravianX 100% Open Source Travian Clone.");
+
+//BUILD.TPL
+define("CUR_PROD","Current production");
+define("NEXT_PROD","Production at level ");
+
+//BUILDINGS
+define("B1","Woodcutter");
+define("B1_DESC","The Woodcutter cuts down trees in order to produce lumber. The further you extend the bid1 the more lumber is produced by him.");
+define("B2","Clay Pit");
+define("B2_DESC","Clay is produced here. By increasing its level you increase its clay production.");
+define("B3","Iron Mine");
+define("B3_DESC","Here miners produce the precious resource iron. By increasing the mine`s level you increase its iron production.");
+define("B4","Cropland");
+define("B4_DESC","Your population`s food is produced here. By increasing the farm`s level you increase its crop production.");
+
+//DORF1
 define("LUMBER","Lumber");
 define("CLAY","Clay");
 define("IRON","Iron");
@@ -50,23 +87,58 @@ define("CROP_COM",CROP." consumption");
 define("PER_HR","per hour");
 define("PROD_HEADER","Production");
 define("MULTI_V_HEADER","Villages");
-define("WEL_TOPIC","Useful tips & information ");
-define("ATAG_EMPTY","Tag empty");
-define("ANAME_EMPTY","Name empty");
-define("ATAG_EXIST","Tag taken");
-define("ANAME_EXIST","Name taken");
-define("TRAVIAN_COPYRIGHT","TravianX");
-define("CUR_PROD","Current production");
-define("NEXT_PROD","Production at level ");
-define("B1","Woodcutter");
-define("B1_DESC","The Woodcutter cuts down trees in order to produce lumber. The further you extend the bid1 the more lumber is produced by him.");
-define("B2","Clay Pit");
-define("B2_DESC","Clay is produced here. By increasing its level you increase its clay production.");
-define("B3","Iron Mine");
-define("B3_DESC","Here miners produce the precious resource iron. By increasing the mine`s level you increase its iron production.");
-define("B4","Cropland");
-define("B4_DESC","Your population`s food is produced here. By increasing the farm`s level you increase its crop production.");
-define("NEWS","News");
+define("ANNOUNCEMENT","Announcement");
+define("GO2MY_VILLAGE","Go to my village");
+define("VILLAGE_CENTER","Village centre");
+define("FINISH_GOLD","Finish all construction and research orders in this village immediately for 2 Gold?");
+define("WAITING_LOOP","(waiting loop)");
+define("HRS","(hrs.)");
+define("DONE_AT","done at");
+define("CANCEL","cancel");
+
+//QUEST
+define("Q_CONTINUE","Continue with the next task.");
+define("Q_REWARD","Your reward:");
+define("Q0","Welcome to ");
+define("Q0_DESC","As I see you have been made chieftain of this little village. I will be your counselor for the first few days and never leave your (right hand) side.");
+define("Q0_OPT1","To the first task.");
+define("Q0_OPT2","Look around on your own.");
+define("Q0_OPT3","Play no tasks.");
+
+define("Q1","Task 1: Woodcutter");
+define("Q1_DESC","There are four green forests around your village. Construct a woodcutter on one of them. Lumber is an important resource for our new settlement.");
+define("Q1_ORDER","Order:<\/p>Construct a woodcutter.");
+define("Q1_RESP","Yes, that way you gain more lumber.I helped a bit and completed the order instantly.");
+define("Q1_REWARD","Woodcutter instantly completed.");
+
+define("Q2","Task 2: Crop");
+define("Q2_DESC","Now your subjects are hungry from working all day. Extend a cropland to improve your subjects' supply. Come back here once the building is complete.");
+define("Q2_ORDER","Order:<\/p>Extend one cropland.");
+define("Q2_RESP","Very good. Now your subjects have enough to eat again...");
+
+define("Q3","Task 3: Your Village's Name");
+define("Q3_DESC","Creative as you are you can grant your village the ultimate name.\r\n<br \/><br \/>\r\nClick on 'profile' in the left hand menu and then select 'change profile'...");
+define("Q3_ORDER","Order:<\/p>Change your village's name to something nice.");
+define("Q3_RESP","Wow, a great name for their village. It could have been the name of my village!...");
+
+define("Q4","Task 4: Other Players");
+define("Q4_DESC","In ". SERVER_NAME ." you play along with billions of other players. Click 'statistics' in the top menu to look up your rank and enter it here.");
+define("Q4_ORDER","Order:<\/p>Look for your rank in the statistics and enter it here.");
+define("Q4_BUTN","complete task");
+define("Q4_RESP","Exactly! That's your rank.");
+
+define("Q5","Task 5: Two Building Orders");
+define("Q5_DESC","Build an iron mine and a clay pit. Of iron and clay one can never have enough.");
+define("Q5_ORDER","Order:<\/p><ul><li>Extend one iron mine.<\/li><li>Extend one clay pit.<\/li><\/ul>");
+define("Q5_RESP","As you noticed, building orders take rather long. The world of ". SERVER_NAME ." will continue to spin even if you are offline. Even in a few months there will be many new things for you to discover.\r\n<br \/><br \/>\r\nThe best thing to do is occasionally checking your village and giving you subjects new tasks to do.");
+
+define("Q6","Message From The Taskmaster");
+define("Q6_DESC","You are to be informed that a nice reward is waiting for you at the taskmaster.<br /><br />Hint: The message has been generated automatically. An answer is not necessary.");
+
+define("Q5","Task 5: Two Building Orders");
+define("Q5_DESC","Build an iron mine and a clay pit. Of iron and clay one can never have enough.");
+define("Q5_ORDER","Order:<\/p><ul><li>Extend one iron mine.<\/li><li>Extend one clay pit.<\/li><\/ul>");
+define("Q5_RESP","As you noticed, building orders take rather long. The world of ". SERVER_NAME ." will continue to spin even if you are offline. Even in a few months there will be many new things for you to discover.\r\n<br \/><br \/>\r\nThe best thing to do is occasionally checking your village and giving you subjects new tasks to do.");
 
 //======================================================//
 //================ UNITS - DO NOT EDIT! ================//
@@ -130,9 +202,8 @@ define("U47","War Elephant");
 define("U48","Ballista");
 define("U49","Natarian Emperor");
 
-
-
 //INDEX.php
+define("LOGIN","Login");
 define("PLAYERS","Players");
 define("ONLINE","Online");
 define("TUTORIAL","Tutorial");
@@ -147,6 +218,24 @@ define("LATEST_GAME_WORLD","Latest game world");
 define("LATEST_GAME_WORLD2","Register on the latest<br/>game world and enjoy<br/>the advantages of<br/>being one of the<br/>first players.");
 define("PLAY_NOW","Play ".SERVER_NAME." now");
 define("LEARN_MORE","Learn more <br/>about ".SERVER_NAME."!");
+define("LEARN_MORE2","Now with a revolutionised<br>server system, completely new<br>graphics <br>This clone is The Shiz!");
+define("COMUNITY","Community");
+define("BECOME_COMUNITY","Become part of our community now!");
+define("BECOME_COMUNITY2","Become a part of one of<br>the biggest gaming<br>communities in the<br>world.");
+define("NEWS","News");
+define("SCREENSHOTS","Screenshots");
+define("LEARN1","Upgrade your fields and mines to increase your resource production. You will need resources to construct buildings and train soldiers.");
+define("LEARN2","Construct and expand the buildings in your village. Buildings improve your overall infrastructure, increase your resource production and allow you to research, train and upgrade your troops.");
+define("LEARN3","View and interact with your surroundings. You can make new friends or new enemies, make use of the nearby oases and observe as your empire grows and becomes stronger.");
+define("LEARN4","Follow your improvement and success and compare yourself to other players. Look at the Top 10 rankings and fight to win a weekly medal.");
+define("LEARN5","Receive detailed reports about your adventures, trades and battles. Don't forget to check the brand new reports about the happenings taking place in your surroundings.");
+define("LEARN6","Exchange information and conduct diplomacy with other players. Always remember that communication is the key to winning new friends and solving old conflicts.");
+define("LOGIN_TO","Log in to ". SERVER_NAME);
+define("REGIN_TO","Register in ". SERVER_NAME);
+define("P_ONLINE","Players online: ");
+define("P_TOTAL","Players in total: ");
+define("CHOOSE","Please choose a server.");
+define("STARTED"," The server started ". round((time()-COMMENCE)/86400) ." days ago.");
 
 //ANMELDEN.php
 define("NICKNAME","Nickname");
