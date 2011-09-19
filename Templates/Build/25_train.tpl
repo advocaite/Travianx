@@ -46,6 +46,7 @@ echo "<td class=\"val\"><input type=\"text\" class=\"text\" name=\"t".$i."\" val
 <td class=\"max\"><a href=\"#\" onClick=\"document.snd.t".$i.".value=".$maxunit."; return false;\">(".$maxunit.")</a></td></tr></tbody>";
 			}
 		} ?>
+</div>
 </tbody>
 </table>
 <p>
