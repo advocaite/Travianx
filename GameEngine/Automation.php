@@ -333,7 +333,7 @@ class Automation {
 			$tocoor = $database->getCoor($data['from']);
 			$fromcoor = $database->getCoor($data['to']);
 			$targettribe = $database->getUserField($database->getVillageField($data['from'],"owner"),"tribe",0);
-			$endtime = $this->procDistanceTime($tocoor,$fromcoor,$targettribe,0) + $time;
+			$endtime = $this->procDistanceTime($tocoor,$fromcoor,$targettribe,0) + $data['endtime'];
 			$database->addMovement(2,$data['to'],$data['from'],$data['merchant'],$endtime);
 			$database->setMovementProc($data['moveid']);
 		}
