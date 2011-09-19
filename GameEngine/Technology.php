@@ -571,21 +571,23 @@ private function trainUnit($unit,$amt,$great=false) {
 		$database->query($q);
     }
 	
-	public function calculateAvaliable($id) {
+	public function calculateAvaliable($id,$resarray=array()) {
 		global $village,$generator,${'r'.$id};
-		$rwood = ${'r'.$id}['wood']-$village->awood;
-		$rclay = ${'r'.$id}['clay']-$village->aclay;
-		$rcrop = ${'r'.$id}['crop']-$village->acrop;
-		$riron = ${'r'.$id}['iron']-$village->airon;
-		$rwtime = $rwood / $village->getProd("wood") * 3600;
-		$rcltime = $rclay / $village->getProd("clay")* 3600;
-		$rctime = $rcrop / $village->getProd("crop")* 3600;
-		$ritime = $riron / $village->getProd("iron")* 3600;
-		$reqtime = max($rwtime,$rctime,$rcltime,$ritime);
+		if(count($resarray)==0) {
+			$resarray['wood'] = ${'r'.$id}['wood'];
+			$resarray['clay'] = ${'r'.$id}['clay'];
+			$resarray['iron'] = ${'r'.$id}['iron'];
+			$resarray['crop'] = ${'r'.$id}['crop'];
+		}
+		$rwtime = ($resarray['wood']-$village->awood) / $village->getProd("wood") * 3600;
+		$rcltime = ($resarray['clay']-$village->aclay) / $village->getProd("clay") * 3600;
+		$ritime = ($resarray['iron']-$village->airon) / $village->getProd("iron") * 3600;
+		$rctime = ($resarray['crop']-$village->acrop) / $village->getProd("crop") * 3600;
+		$reqtime = max($rwtime,$rctime,$ritime,$rcltime);
 		$reqtime += time();
 		return $generator->procMtime($reqtime);
 	}
-	
+
 	public function checkReinf($id) {
 		global $database;
 		$enforce=$database->getEnforceArray($id,0);

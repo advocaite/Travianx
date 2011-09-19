@@ -33,7 +33,7 @@ for($i=2;$i<=9;$i++) {
 				</td></tr>";
                 }
                    else if(${'r'.$i}['wood'] > $village->awood || ${'r'.$i}['clay'] > $village->aclay || ${'r'.$i}['iron'] > $village->airon || ${'r'.$i}['crop'] > $village->acrop) {
-                   	$time = $technology->calculateAvaliable($i);
+                   	$time = $technology->calculateAvaliable(22,${'r'.$i});
                     echo "<br><span class=\"none\">Enough resources ".$time[0]." at ".$time[1]."</span></div></td>";
                     echo "<td class=\"act\">
 					<div class=\"none\">Too few<br>resources</div>
