@@ -8,7 +8,7 @@
 	if ($building->getTypeLevel(13) > 0) {
 		include("13_upgrades.tpl");
 	} else {
-		echo "<p><b>Research can commence when armoury is completed.</b><br>\n";
+		echo "<p><b>Upgrades can commence when armoury is completed.</b><br>\n";
 	}
 include("upgrade.tpl");
 ?>
