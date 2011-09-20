@@ -9,9 +9,6 @@
 ##                                                                             ##
 #################################################################################
 
-//date_default_timezone_set('Europe/Amsterdam');
-date_default_timezone_set('Pacific/Auckland');
-
 include("Session.php");
 include("Building.php");
 include("Market.php");
