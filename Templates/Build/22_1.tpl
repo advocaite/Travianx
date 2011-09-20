@@ -32,12 +32,14 @@ for($i=2;$i<=9;$i++) {
 					<div class=\"none\">Expand<br>granary</div>
 				</td></tr>";
                 }
-                   else if(${'r'.$i}['wood'] > $village->awood || ${'r'.$i}['clay'] > $village->aclay || ${'r'.$i}['iron'] > $village->airon || ${'r'.$i}['crop'] > $village->acrop) {
-                   	$time = $technology->calculateAvaliable(22,${'r'.$i});
-                    echo "<br><span class=\"none\">Enough resources ".$time[0]." at ".$time[1]."</span></div></td>";
-                    echo "<td class=\"act\">
-					<div class=\"none\">Too few<br>resources</div>
-				</td></tr>";
+                else if(${'r'.$i}['wood'] > $village->awood || ${'r'.$i}['clay'] > $village->aclay || ${'r'.$i}['iron'] > $village->airon || ${'r'.$i}['crop'] > $village->acrop) {
+					if($village->getProd("crop")>0){
+						$time = $technology->calculateAvaliable(22,${'r'.$i});
+						echo "<br><span class=\"none\">Enough resources ".$time[0]." at ".$time[1]."</span></div></td>";
+					} else {
+						echo "<br><span class=\"none\">Crop production is negative so you will never reach the required resources</span></div></td>";
+					}
+                    echo "<td class=\"act\"><div class=\"none\">Too few<br>resources</div></td></tr>";
                 }
                 else if (count($acares) > 0) {
                 echo "</td>";
