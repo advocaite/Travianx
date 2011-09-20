@@ -1,6 +1,0 @@
-# DEBUGGING
-$debugFile = "/tmp/debug";
-$fh = fopen($debugFile, 'a') or die('No debug file');
-fwrite($fh,"\n".date("Y-m-d H:i:s")." : ".$unit.",".$amt.",".$each.",".date("Ymd H:i:s",$time));
-fclose($fh);
-# DEBUGGING
