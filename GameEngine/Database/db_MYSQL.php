@@ -1531,14 +1531,43 @@ class MYSQL_DB {
 
 	function getEnforceVillage($id,$mode) {	
 	if(!$mode) {
-	$q = "SELECT * from ".TB_PREFIX."enforcement where vref = $id";
+		$q = "SELECT * from ".TB_PREFIX."enforcement where vref = $id";
 	} else {	
-	$q = "SELECT * from ".TB_PREFIX."enforcement where `from` = $id";	
+		$q = "SELECT * from ".TB_PREFIX."enforcement where `from` = $id";	
 	}	
 	$result = mysql_query($q,$this->connection);
 	return $this->mysql_fetch_all($result);	
 	}	
 	
+	function getVillageMovement($id) {
+		$vinfo = $this->getVillage($id);
+		$vtribe = $this->getUserField($vinfo['owner'],"tribe",0);
+		$movingunits = array();
+		$outgoingarray = $this->getMovement(3,$id,0);
+		if(!empty($outgoingarray)) {
+			foreach($outgoingarray as $out) {
+				for($i=1;$i<=10;$i++){
+					$movingunits['u'.(($vtribe-1)*10+$i)] += $out['t'.$i];
+				}
+			}
+		}
+		$returningarray = $this->getMovement(4,$id,1);
+			if(!empty($returningarray)) {
+				foreach($returningarray as $ret) {
+					if($ret['attack_type'] != 1) {
+						for($i=1;$i<=10;$i++){
+							$movingunits['u'.(($vtribe-1)*10+$i)] += $ret['t'.$i];
+						}
+					}
+				}
+			}
+		$settlerarray = $this->getMovement(5,$id,0);
+		if(!empty($settlerarray)) {
+			$movingunits['u'.($vtribe*10)] += 3 * count($settlerarray);
+		}
+		return $movingunits;
+	}
+
 	################# -START- ##################
 	##   WORLD WONDER STATISTICS FUNCTIONS!   ##
 	############################################
@@ -1716,10 +1745,6 @@ class MYSQL_DB {
 	References: Query
 	***************************/
 	function query($query) {
-		//$debugFile = "/tmp/debug";
-		//$fh = fopen($debugFile, 'a') or die('No debug file');
-		//fwrite($fh,"\n".date("Y-m-d H:i:s")." : ".$query."\n");
-		//fclose($fh);
 		return mysql_query($query, $this->connection);
 	}
 	
@@ -1766,12 +1791,6 @@ class MYSQL_DB {
     }  
 
 	public function debug($time,$uid,$debug_info) {
-
-	$debugFile = "/tmp/debug";
-	$fh = fopen($debugFile, 'a') or die('No debug file');
-	fwrite($fh,"\n".date("Y-m-d H:i:s")." : ".$time.",".$uid.",".$debug_info."\n");
-	fclose($fh);
-
 		$q = "INSERT INTO ".TB_PREFIX."debug_info (time,uid,debug_info) VALUES ($time,$uid,$debug_info)";
 		if(mysql_query($q,$this->connection)) {
 			return mysql_insert_id($this->connection);
@@ -1802,28 +1821,28 @@ class MYSQL_DB {
 
                 $settlers += 3*count($this->getMovement(5,$village->wid,0));
                 $current_movement = $this->getMovement(3,$village->wid,0);
-                if (count($current_movement)>0 ) {
+                if (!empty($current_movement)) {
                         foreach($current_movement as $build) {
                                 $settlers += $build['t10'];
                                 $chiefs += $build['t9'];
                         }
                 }
                 $current_movement = $this->getMovement(3,$village->wid,1);
-                if (count($current_movement)>0 ) {
+                if (!empty($current_movement)) {
                         foreach($current_movement as $build) {
                                 $settlers += $build['t10'];
                                 $chiefs += $build['t9'];
                         }
                 }
                 $current_movement = $this->getMovement(4,$village->wid,0);
-                if (count($current_movement)>0 ) {
+                if (!empty($current_movement)) {
                         foreach($current_movement as $build) {
                                 $settlers += $build['t10'];
                                 $chiefs += $build['t9'];
                         }
                 }
                 $current_movement = $this->getMovement(4,$village->wid,1);
-                if (count($current_movement)>0 ) {
+                if (!empty($current_movement)) {
                         foreach($current_movement as $build) {
                                 $settlers += $build['t10'];
                                 $chiefs += $build['t9'];
@@ -1832,7 +1851,7 @@ class MYSQL_DB {
                 $q = "SELECT (u10+u20+u30) FROM ".TB_PREFIX."enforcement WHERE `from` = $village->wid";
                 $result = mysql_query($q, $this->connection);
                 $row = mysql_fetch_row($result);
-                if (count($row)>0) {
+                if (!empty($row)) {
                         foreach($row as $reinf) {
                                 $settlers += $reinf[0];
                         }
@@ -1840,13 +1859,13 @@ class MYSQL_DB {
                 $q = "SELECT (u9+u19+u29) FROM ".TB_PREFIX."enforcement WHERE `from` = $village->wid";
                 $result = mysql_query($q, $this->connection);
                 $row = mysql_fetch_row($result);
-                if (count($row)>0) {
+                if (!empty($row)) {
                         foreach($row as $reinf) {
                                 $chiefs += $reinf[0];
                         }
                 }
                 $trainlist = $technology->getTrainingList(4);
-                if(count($trainlist) > 0) {
+                if (!empty($trainlist)) {
                         foreach($trainlist as $train) {
                                 if ($train['unit']%10 == 0) { $settlers += $train['amt']; }
                                 if ($train['unit']%10 == 9) { $chiefs += $train['amt']; }

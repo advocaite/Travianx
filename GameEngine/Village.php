@@ -9,9 +9,6 @@
 ##                                                                             ##
 #################################################################################
 
-//date_default_timezone_set('Europe/Amsterdam');
-date_default_timezone_set('Pacific/Auckland');
-
 include("Session.php");
 include("Building.php");
 include("Market.php");
@@ -69,7 +66,7 @@ class Village {
 		$this->unitarray = $database->getUnit($this->wid);
 		$this->enforcetome = $database->getEnforceVillage($this->wid,0);
 		$this->enforcetoyou = $database->getEnforceVillage($this->wid,1);
-		$this->unitall =  $technology->getUnits($this->unitarray,$this->enforcetome);
+		$this->unitall =  $technology->getAllUnits($this->wid);
 		$this->techarray = $database->getTech($this->wid);
 		$this->abarray = $database->getABTech($this->wid);
 		$this->researching = $database->getResearching($this->wid);
@@ -213,13 +210,6 @@ class Village {
 			}
 		}
 		for($i=0;$i<=count($cropholder)-1;$i++) { $crop+= $bid4[$this->resarray[$cropholder[$i]]]['prod']; }
-//		if($grainmill >= 1 && $bakery == 0) {
-//			$crop += $crop /100 * $bid8[$grainmill]['attri'];
-//		} elseif($grainmill == 0 && $bakery >= 1) {
-//			$crop += $crop /100 * $bid9[$bakery]['attri'];
-//		} elseif($grainmill >= 1 && $bakery >= 1) {
-//			$crop += $crop /100 * ($bid8[$grainmill]['attri'] + $bid9[$bakery]['attri']);
-//		}
 		if($grainmill >= 1 || $bakery >= 1) {
 			$crop += $crop /100 * ($bid8[$grainmill]['attri'] + $bid9[$bakery]['attri']);
 		}

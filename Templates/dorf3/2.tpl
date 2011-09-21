@@ -25,7 +25,7 @@ foreach($varray as $vil){
 		<td class="clay">'.number_format(round($clay)).'</td>
 		<td class="iron">'.number_format(round($iron)).'</td>
 		<td class="crop">'.number_format(round($crop)).'</td>
-		<td class="tra lc"><a href="build.php?newdid='.$vid.'&amp;gid=17">'.$availmerchants.'/'.$totalmerchants.'</a></td>  
+		<td class="tra lc">'.($totalmerchants>0?'<a href="build.php?newdid='.$vid.'&amp;gid=17">':'').$availmerchants.'/'.$totalmerchants.'</a></td>  
 	</tr>
 	';
 	$woodSUM += $wood;  

@@ -1,23 +1,20 @@
 <?php
-$marketpos = $building->getTypeField(17);
 $bindicate = $building->canBuild($id,$village->resarray['f'.$id.'t']);
 if($bindicate == 1) {
 	echo "<p><span class=\"none\">Building already at max level</span></p>";
-}
-else {
-	$loopsame = 0;
-	foreach($building->buildArray as $jobs) {
-		if($jobs['field'] == $id) {
-			$loopsame += 1;
-		}
+} else if($bindicate == 10) {
+	echo "<p><span class=\"none\">Building max level under construction</span></p>";
+} else {
+	$loopsame = $building->isCurrent($id)?1:0;
+	if ($loopsame>0 && $building->isLoop($id)) {
+		$doublebuild = 1;
 	}
-	$uprequire = $building->resourceRequired($id,$village->resarray['f'.$id.'t'],($loopsame > 0 ? 2:1));
+	$uprequire = $building->resourceRequired($id,$village->resarray['f'.$id.'t'],($loopsame > 0 ? 2:1)+$doublebuild);
 ?>
-<p id="contract"><b>Costs</b> for upgrading to level <?php echo $village->resarray['f'.$id]+($loopsame > 0 ? 2:1); ?>:<br />
+<p id="contract"><b>Costs</b> for upgrading to level <?php echo $village->resarray['f'.$id]+($loopsame > 0 ? 2:1)+$doublebuild; ?>:<br />
 <img class="r1" src="img/x.gif" alt="Lumber" title="Lumber" /><span class="little_res"><?php echo $uprequire['wood']; ?></span> | <img class="r2" src="img/x.gif" alt="Clay" title="Clay" /><span class="little_res"><?php echo $uprequire['clay']; ?></span> | <img class="r3" src="img/x.gif" alt="Iron" title="Iron" /><span class="little_res"><?php echo $uprequire['iron']; ?></span> | <img class="r4" src="img/x.gif" alt="Crop" title="Crop" /><span class="little_res"><?php echo $uprequire['crop']; ?></span> | <img class="r5" src="img/x.gif" alt="Crop consumption" title="Crop consumption" /><?php echo $uprequire['pop']; ?> | <img class="clock" src="img/x.gif" alt="duration" title="duration" /><?php echo $generator->getTimeFormat($uprequire['time']); 
 if($session->userinfo['gold'] >= 3 && $building->getTypeLevel(17) >= 1) {
-//                   echo "|<a href=\"build.php?gid=17&t=3&r1=".$uprequire['wood']."&r2=".$uprequire['clay']."&r3=".$uprequire['iron']."&r4=".$uprequire['crop']."\" title=\"NPC trade\"><img class=\"npc\" src=\"img/x.gif\" alt=\"NPC trade\" title=\"NPC trade\" /></a>";
-	echo "|<a href=\"build.php?id=".$marketpos."&t=3&r1=".$uprequire['wood']."&r2=".$uprequire['clay']."&r3=".$uprequire['iron']."&r4=".$uprequire['crop']."\" title=\"NPC trade\"><img class=\"npc\" src=\"img/x.gif\" alt=\"NPC trade\" title=\"NPC trade\" /></a>";
+    echo "|<a href=\"build.php?gid=17&t=3&r1=".$uprequire['wood']."&r2=".$uprequire['clay']."&r3=".$uprequire['iron']."&r4=".$uprequire['crop']."\" title=\"NPC trade\"><img class=\"npc\" src=\"img/x.gif\" alt=\"NPC trade\" title=\"NPC trade\" /></a>";
                  } ?><br />
 <?php
     if($bindicate == 2) {
@@ -36,7 +33,7 @@ if($session->userinfo['gold'] >= 3 && $building->getTypeLevel(17) >= 1) {
     	echo "<span class=\"none\">Upgrade Granary.</span>";
     }
     else if($bindicate == 7) {
-    	$neededtime = $building->calculateAvaliable($id,$village->resarray['f'.$id.'t']);
+    	$neededtime = $building->calculateAvaliable($id,$village->resarray['f'.$id.'t'],($loopsame > 0 ? 2:1));
     	echo "<span class=\"none\">Enough resources ".$neededtime[0]." at  ".$neededtime[1]."</span>";
     }
     else if($bindicate == 8) {

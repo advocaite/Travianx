@@ -85,32 +85,7 @@ foreach($varray as $vil){
 	$prod_crop *= SPEED;
 
 	$prod_crop -= $pop;
-
-	$units = $technology->getAllUnits($vid);
-	$outgoingarray = $database->getMovement(3,$vid,0);
-	if(count($outgoingarray) > 0) {
-		foreach($outgoingarray as $out) {
-			for($i=1;$i<=10;$i++) {
-				$units['u'.(($session->tribe-1)*10+$i)] += $out['t'.$i];
-			}
-		}
-	}
-	$returningarray = $database->getMovement(4,$vid,1);
-	if(count($returningarray) > 0) {
-		foreach($returningarray as $ret) {
-			if($ret['attack_type'] != 1) {
-				for($i=1;$i<=10;$i++) {
-					$units['u'.(($session->tribe-1)*10+$i)] += $ret['t'.$i];
-				}
-			}
-		}
-	}
-	$settlerarray = $database->getMovement(5,$vid,0);
-	if(count($settlerarray) > 0) {
-		$units['u'.($session->tribe*10)] += 3 * count($settlerarray);
-	}
-
-	for($i=1;$i<=50;$i++) { $prod_crop -= ${'u'.$i}['pop'] * $units['u'.$i]; }
+    $prod_crop -= $technology->getUpkeep($technology->getAllUnits($vid),0);
 
 	$percentW = floor($wood/($maxs/100));
 	$percentC = floor($clay/($maxs/100));

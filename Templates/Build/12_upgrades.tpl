@@ -30,8 +30,12 @@
 					echo "<td class=\"act\"><div class=\"none\">Expand<br>granary</div></td></tr>";
 				}
 				else if (${'ab'.$i}[$abdata['b'.$j]+1]['wood'] > $village->awood || ${'ab'.$i}[$abdata['b'.$j]+1]['clay'] > $village->aclay || ${'ab'.$i}[$abdata['b'.$j]+1]['iron'] > $village->airon || ${'ab'.$i}[$abdata['b'.$j]+1]['crop'] > $village->acrop) {
-					$time = $technology->calculateAvaliable(12,${'ab'.$i}[$abdata['b'.$j]+1]);
-		            echo "<br><span class=\"none\">Enough resources ".$time[0]." at ".$time[1]."</span></div></td>";
+					if($village->getProd("crop")>0){
+						$time = $technology->calculateAvaliable(12,${'ab'.$i}[$abdata['b'.$j]+1]);
+			            echo "<br><span class=\"none\">Enough resources ".$time[0]." at ".$time[1]."</span></div></td>";
+					} else {
+						echo "<br><span class=\"none\">Crop production is negative so you will never reach the required resources</span></div></td>";
+					}
 		            echo "<td class=\"act\"><div class=\"none\">Too few<br>resources</div></td></tr>";
 				}
 				else if ($building->getTypeLevel(12) <= $abdata['b'.$j]) {

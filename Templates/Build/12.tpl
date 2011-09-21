@@ -8,7 +8,7 @@
 	if ($building->getTypeLevel(12) > 0) {
 		include("12_upgrades.tpl");
 	} else {
-		echo "<p><b>Research can commence when blacksmith is completed.</b><br>\n";
+		echo "<p><b>Upgrades can commence when blacksmith is completed.</b><br>\n";
 	}
 include("upgrade.tpl");
 ?>
