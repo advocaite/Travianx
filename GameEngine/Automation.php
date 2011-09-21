@@ -212,7 +212,13 @@ class Automation {
 	private function pruneResource() {
 		global $database;
 		if(!ALLOW_BURST) {
-			$q = "UPDATE ".TB_PREFIX."vdata set `wood` = `maxstore`, `clay` = `maxstore`, `iron` = `maxstore`, `crop` = `maxcrop` WHERE `wood` > `maxstore`, `clay` > `maxstore`, `iron` > `maxstore`, `crop` > `maxcrop`";
+			$q = "UPDATE ".TB_PREFIX."vdata set `wood` = `maxstore` WHERE `wood` > `maxstore`";
+			$database->query($q);
+			$q = "UPDATE ".TB_PREFIX."vdata set `clay` = `maxstore` WHERE `clay` > `maxstore`";
+			$database->query($q);
+			$q = "UPDATE ".TB_PREFIX."vdata set `iron` = `maxstore` WHERE `iron` > `maxstore`";
+			$database->query($q);
+			$q = "UPDATE ".TB_PREFIX."vdata set `crop` = `maxcrop` WHERE `wood` > `maxcrop`";
 			$database->query($q);
 			$q = "UPDATE ".TB_PREFIX."vdata set `crop` = 100 WHERE `crop` < 0";
 			$database->query($q);
