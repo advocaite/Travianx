@@ -1231,20 +1231,20 @@ class Automation {
 		$this->bountyocounter = $this->bountysortOasis();
 		$this->bountypop = $this->bountyinfoarray['pop'];
 		
-		$unitarray = $database->getUnit($bountywid);
-		if(count($unitarray) > 0) {
-			for($i=1;$i<=50;$i++) {
-				$this->bountyunitall['u'.$i] = $unitarray['u'.$i];
-			}
-		}
-		$enforcearray = $database->getEnforceVillage($bountywid,0);
-		if(count($enforcearray) > 0) {
-			foreach($enforcearray as $enforce) {
-				for($i=1;$i<=50;$i++) {
-					$this->bountyunitall['u'.$i] += $enforce['u'.$i];
-				}
-			}
-		}
+		//$unitarray = $database->getUnit($bountywid);
+		//if(count($unitarray) > 0) {
+		//	for($i=1;$i<=50;$i++) {
+		//		$this->bountyunitall['u'.$i] = $unitarray['u'.$i];
+		//	}
+		//}
+		//$enforcearray = $database->getEnforceVillage($bountywid,0);
+		//if(count($enforcearray) > 0) {
+		//	foreach($enforcearray as $enforce) {
+		//		for($i=1;$i<=50;$i++) {
+		//			$this->bountyunitall['u'.$i] += $enforce['u'.$i];
+		//		}
+		//	}
+		//}
 	}
 	
 	private function bountysortOasis() {
@@ -1292,19 +1292,7 @@ class Automation {
 		$this->bountyproduction['wood'] = $this->bountyGetWoodProd();
 		$this->bountyproduction['clay'] = $this->bountyGetClayProd();
 		$this->bountyproduction['iron'] = $this->bountyGetIronProd();
-		
-		$upkeep = 0;
-		
-		for($i=0;$i<=50;$i++) {
-			$unit = "u".$i;
-			global $$unit;
-			$dataarray = $$unit;
-			if(isset($this->bountyunitall[$unit])) {
-				$upkeep += $this->bountyunitall[$unit] * $dataarray['pop'];
-			}
-		}
-				
-		$this->bountyproduction['crop'] = $this->bountyGetCropProd()-$this->bountypop-$upkeep;
+		$this->bountyproduction['crop'] = $this->bountyGetCropProd()-$this->bountypop-$technology->getUpkeep($technology->getAllUnits($bountywid),0);
 	}
 	
 	private function bountyprocessProduction($bountywid) {
