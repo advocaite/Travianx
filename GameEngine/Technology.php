@@ -137,24 +137,13 @@ class Technology {
 	
 	public function getUnitList() {
 		global $database,$village;
-
-// get unit list of the village
-$unitcheck = $database->getUnit($village->wid);
-
-// check from u1 to u50
-for($i=1;$i<=50;$i++) {
-
-// if unit above 4 milion reset them to 0
-if($unitcheck['u'.$i] >= "4000000") {
-
-// reset command
-mysql_query("UPDATE ".TB_PREFIX."units set u".$i." = '0' where vref = $village->wid");
-
-}
-
-}
-
-		$unitarray = func_num_args() == 1? $database->getUnit(func_get_arg(0)) : $village->unitall;
+		$unitcheck = $database->getUnit($village->wid);
+		for($i=1;$i<=50;$i++) {
+			if($unitcheck['u'.$i] >= "4000000") {
+				mysql_query("UPDATE ".TB_PREFIX."units set u".$i." = '0' where vref = $village->wid");
+			}
+		}
+		$unitarray = func_num_args() == 1? $database->getUnit(func_get_arg(0)) : $village->unitarray;
 		$listArray = array();
 		for($i=1;$i<count($this->unarray);$i++) {
 			$holder = array();
@@ -215,19 +204,21 @@ mysql_query("UPDATE ".TB_PREFIX."units set u".$i." = '0' where vref = $village->
 		return $ownunit;
 	}
 	
-	function getAllUnits($base) { echo"hoi";
-
+	function getAllUnits($base) {
 		global $database;
 		$ownunit = $database->getUnit($base);
 		$enforcementarray = $database->getEnforceVillage($base,0);
 		if(count($enforcementarray) > 0) {
-
 			foreach($enforcementarray as $enforce) {
-
 				for($i=1;$i<=50;$i++) {
-
 					$ownunit['u'.$i] += $enforce['u'.$i];
 				}
+			}
+		}
+		$movement = $database->getVillageMovement($base);
+		if(!empty($movement)) {
+			for($i=1;$i<=50;$i++) {
+				$ownunit['u'.$i] += $movement['u'.$i];
 			}
 		}
 		return $ownunit;

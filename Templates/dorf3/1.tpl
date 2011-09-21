@@ -46,7 +46,7 @@ echo '
 <td class="att">'.$att.'</td>
 <td class="bui">'.$bui.'</td>
 <td class="tro">'.$tro.'</td>
-<td class="tra lc"><a href="build.php?newdid='.$vid.'&amp;gid=17">'.$availmerchants.'/'.$totalmerchants.'</a></td>
+<td class="tra lc">'.($totalmerchants>0?'<a href="build.php?newdid='.$vid.'&amp;gid=17">':'').$availmerchants.'/'.$totalmerchants.'</a></td>
 </tr>';
 
 	}
