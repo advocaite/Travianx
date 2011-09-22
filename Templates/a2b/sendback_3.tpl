@@ -114,7 +114,7 @@ $tocoor = $database->getCoor($enforce['vref']);
 			<th>Arrived:</th>
 
 			<?php
-			$att_tribe = $session->tribe;  
+			$att_tribe = $database->getUserField($to['owner'],'tribe',0);  
             $start = ($att_tribe-1)*10+1;
             $end = ($att_tribe*10);
             $speeds = array();
