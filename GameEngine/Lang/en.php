@@ -299,4 +299,31 @@ define("MASS_ABORT","Aborting right now");
 define("MASS_SENT","Mass IGM was sent");
 
 
+/*
+|--------------------------------------------------------------------------
+|   Index 
+|--------------------------------------------------------------------------
+*/
+
+       $lang['index'][0][1] = "Welcome to " . SERVER_NAME . "";
+       $lang['index'][0][2] = "Manual";
+       $lang['index'][0][3] = "Play now, for free!";
+       $lang['index'][0][4] = "What is " . SERVER_NAME . "";
+       $lang['index'][0][5] = "" . SERVER_NAME . " is a <b>browser game</b> featuring an engaging ancient world with thousands of other real players.</p><p>It`s <strong>free to play</strong> and requires <strong>no downloads</strong>.";
+       $lang['index'][0][6] = "Click here to play " . SERVER_NAME . "";
+       $lang['index'][0][7] = "Total players";
+       $lang['index'][0][8] = "Players active";
+       $lang['index'][0][9] = "Players online";
+       $lang['index'][0][10] = "About the game";
+       $lang['index'][0][11] = "You will begin as the chief of a tiny village and will embark on an exciting quest.";
+       $lang['index'][0][12] = "Build up villages, wage wars or establish trade routes with your neighbours.";
+       $lang['index'][0][13] = "Play with and against thousands of other real players and conquer the the world of Travian.";
+       $lang['index'][0][14] = "News";
+       $lang['index'][0][15] = "FAQ";
+       $lang['index'][0][16] = "Screenshots";
+       $lang['forum'] = "Forum";
+       $lang['register'] = "Register";
+       $lang['login'] = "Login";
+
+
 ?>
