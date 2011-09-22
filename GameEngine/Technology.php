@@ -312,18 +312,9 @@ class Technology {
 	
 	private function procTrain($post,$great=false) {
 		global $session;
-		if ($session->tribe == 1){
-            $start = 1;
-        }else if ($session->tribe == 2){
-            $start = 11;
-        }else if ($session->tribe == 3){
-            $start = 21;
-        }else if ($session->tribe == 4){
-            $start = 31;
-        }else if ($session->tribe == 5){
-            $start = 41;
-        }
-        for($i=$start;$i<=($start+9);$i++) {
+        $start = ($session->tribe-1)*10+1;
+        $end = ($session->tribe*10);
+        for($i=$start;$i<=($end);$i++) {
 			if(isset($post['t'.$i]) && $post['t'.$i] != 0) {
 				$amt = $post['t'.$i];
 				$amt = intval($amt);
