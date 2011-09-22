@@ -9,7 +9,7 @@
 			?>
 			</tr><tr><th>Troops</th>
             <?php
-            for($i=1;$i<=10;$i++) {
+            for($i=$start;$i<=$end;$i++) {
             	if($village->unitarray['u'.$i] == 0) {
                 	echo "<td class=\"none\">";
                 }
