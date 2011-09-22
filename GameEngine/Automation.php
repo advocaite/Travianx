@@ -1292,13 +1292,70 @@ class Automation {
 		}
 		return array($wood,$clay,$iron,$crop);
 	}
+    
+    function getAllUnits($base) {
+        global $database;
+        $ownunit = $database->getUnit($base);
+        $enforcementarray = $database->getEnforceVillage($base,0);
+        if(count($enforcementarray) > 0) {
+            foreach($enforcementarray as $enforce) {
+                for($i=1;$i<=50;$i++) {
+                    $ownunit['u'.$i] += $enforce['u'.$i];
+                }
+            }
+        }
+        $movement = $database->getVillageMovement($base);
+        if(!empty($movement)) {
+            for($i=1;$i<=50;$i++) {
+                $ownunit['u'.$i] += $movement['u'.$i];
+            }
+        }
+        return $ownunit;
+    }    
+    
+    public function getUpkeep($array,$type) {
+        $upkeep = 0;
+        switch($type) {
+            case 0:
+            $start = 1;
+            $end = 50;
+            break;
+            case 1:
+            $start = 1;
+            $end = 10;
+            break;
+            case 2:
+            $start = 11;
+            $end = 20;
+            break;
+            case 3:
+            $start = 21;
+            $end = 30;
+            break;
+            case 4:
+            $start = 31;
+            $end = 40;
+            break;
+            case 5:
+            $start = 41;
+            $end = 50;
+            break;
+        }    
+        for($i=$start;$i<=$end;$i++) {
+            $unit = "u".$i;
+            global $$unit;
+            $dataarray = $$unit;
+            $upkeep += $dataarray['pop'] * $array[$unit];
+        }
+        return $upkeep;
+    }
 	
 	private function bountycalculateProduction($bountywid) { 
 		global $technology,$database;
 		$this->bountyproduction['wood'] = $this->bountyGetWoodProd();
 		$this->bountyproduction['clay'] = $this->bountyGetClayProd();
 		$this->bountyproduction['iron'] = $this->bountyGetIronProd();
-		$this->bountyproduction['crop'] = $this->bountyGetCropProd()-$this->bountypop-$technology->getUpkeep($technology->getAllUnits($bountywid),0);
+		$this->bountyproduction['crop'] = $this->bountyGetCropProd()-$this->bountypop-$this->getUpkeep($this->getAllUnits($bountywid),0);
 	}
 	
 	private function bountyprocessProduction($bountywid) {
