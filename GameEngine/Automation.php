@@ -218,7 +218,7 @@ class Automation {
 			$database->query($q);
 			$q = "UPDATE ".TB_PREFIX."vdata set `iron` = `maxstore` WHERE `iron` > `maxstore`";
 			$database->query($q);
-			$q = "UPDATE ".TB_PREFIX."vdata set `crop` = `maxcrop` WHERE `wood` > `maxcrop`";
+			$q = "UPDATE ".TB_PREFIX."vdata set `crop` = `maxcrop` WHERE `crop` > `maxcrop`";
 			$database->query($q);
 			$q = "UPDATE ".TB_PREFIX."vdata set `crop` = 100 WHERE `crop` < 0";
 			$database->query($q);
