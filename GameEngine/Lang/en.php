@@ -13,7 +13,13 @@
 									/////////////////////////////
 
 //MAIN MENU
-define("HOME","Homepage");
+define("TRIBE1","Romans"); 
+define("TRIBE2","Tuetons");
+define("TRIBE3","Gauls"); 
+define("TRIBE4","Nature"); 
+define("TRIBE5","Natars");
+ 
+define("HOME","Homepage"); 
 define("INSTRUCT","Instructions");
 define("ADMIN_PANEL","Admin Panel");
 define("MASS_MESSAGE","Mass Message");
