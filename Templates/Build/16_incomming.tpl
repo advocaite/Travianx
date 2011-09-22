@@ -19,13 +19,14 @@ if ($units[$y]['sort_type']==3){
                   echo "<a href=\"spieler.php?uid=".$database->getVillageField($units[$y]['from'],"owner")."\">".$database->getUserField($database->getVillageField($units[$y]['from'],"owner"),"username",0)."'s troops</a>";
                   echo "</td></tr></thead><tbody class=\"units\">";
                   $tribe = $database->getUserField($database->getVillageField($units[$y]['from'],"owner"),"tribe",0);
-                  $start = ($tribe == 1)? 1 : (($tribe == 2)? 11 : 21);
+                  $start = ($tribe-1)*10+1;
+                  $end = ($tribe*10);
                   echo "<tr><th>&nbsp;</th>";
-                  for($i=$start;$i<=($start+9);$i++) {
+                  for($i=$start;$i<=($end);$i++) {
                   	echo "<td><img src=\"img/x.gif\" class=\"unit u$i\" title=\"".$technology->getUnitName($i)."\" alt=\"".$technology->getUnitName($i)."\" /></td>";	
                   }
                   echo "</tr><tr><th>Troops</th>";
-                  for($i=$start;$i<=($start+9);$i++) {
+                  for($i=$start;$i<=($end);$i++) {
                  		echo "<td class=\"none\">?</td>";
                   }
                   echo "</tr></tbody>";
@@ -71,9 +72,10 @@ $to = $database->getMInfo($units[$y]['vref']);
 	<tbody class="units">
 			<?php
 				$tribe = $session->tribe;
-                  $start = ($tribe == 1)? 1 : (($tribe == 2)? 11 : 21);
+                  $start = ($tribe-1)*10+1;
+                  $end = ($tribe*10);
                   echo "<tr><th>&nbsp;</th>";
-                  for($i=$start;$i<=($start+9);$i++) {
+                  for($i=$start;$i<=($end);$i++) {
                   	echo "<td><img src=\"img/x.gif\" class=\"unit u$i\" title=\"".$technology->getUnitName($i)."\" alt=\"".$technology->getUnitName($i)."\" /></td>";	
                   }
 			?>
