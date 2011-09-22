@@ -12,15 +12,8 @@
 			                        //      Author: Dzoki      //
 									/////////////////////////////
 
-//SOME BASIC STUFF
-define("TRIBE1","Romans");
-define("TRIBE2","Tuetons");
-define("TRIBE3","Gauls");
-define("TRIBE4","Nature");
-define("TRIBE5","Natars");
-                                    
 //MAIN MENU
-
+define("HOME","Homepage");
 define("INSTRUCT","Instructions");
 define("ADMIN_PANEL","Admin Panel");
 define("MASS_MESSAGE","Mass Message");
@@ -208,7 +201,7 @@ define("U46","Natarian Knight");
 define("U47","War Elephant");
 define("U48","Ballista");
 define("U49","Natarian Emperor");
-define("U49","Natarian Settler");
+
 //INDEX.php
 define("LOGIN","Login");
 define("PLAYERS","Players");

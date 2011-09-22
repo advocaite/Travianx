@@ -1,19 +1,13 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-|   PLEASE DO NOT REMOVE THIS COPYRIGHT NOTICE!
-|--------------------------------------------------------------------------  
-|
-|   Developed by:   Dzoki < dzoki.travian@gmail.com >
-|  
-|   This script is property of TravianX Project. You are allowed to change
-|   its source and release it, but you have no rights to remove copyright
-|   notices.
-|
-|   TravianX All rights reserved
-|
-*/
+/** --------------------------------------------------- **\
+| ********* DO NOT REMOVE THIS COPYRIGHT NOTICE ********* |
++---------------------------------------------------------+
+| Credits:     All the developers including the leaders:  |
+|              Advocaite & Dzoki & Donnchadh              |
+|                                                         |
+| Copyright:   TravianX Project All rights reserved       |
+\** --------------------------------------------------- **/
 
        if(!file_exists('GameEngine/config.php')) {
         header("Location: install/");

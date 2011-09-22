@@ -6,15 +6,6 @@
 -- Generation Time: Jul 21, 2011 at 02:49 AM
 -- Server version: 5.5.8
 -- PHP Version: 5.3.5
--- #################################################################################
--- ##              -= YOU MAY NOT REMOVE OR CHANGE THIS NOTICE =-                 ##
--- ## --------------------------------------------------------------------------- ##
--- ##  Filename       sql.sql                                                     ##
--- ##  Developed by:  Dzoki & Dixie                                               ##
--- ##  License:       TravianX Project                                            ##
--- ##  Copyright:     TravianX (c) 2010-2011. All rights reserved.                ##
--- ##                                                                             ##
--- #################################################################################
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
@@ -1211,8 +1202,7 @@ INSERT INTO `%PREFIX%users` (`id`, `username`, `password`, `email`, `tribe`, `ac
 (0, 'Multihunter', '', 'multihunter@travianx.mail', 0, 9, 0, 0, '0000-00-00', '', '', '', 0, 0, 0, 0, 0, 0, 0, 0, '', '', 0, 0, 0, 0, 0, 0, 0, 'gpack/travian_default/', 1, 0, 0, 0, 0),
 (1, 'Support', '', 'support@travianx.mail', 1, 8, 0, 0, '0000-00-00', '', '', '', 0, 0, 0, 0, 0, 0, 0, 0, '', '', 0, 0, 0, 0, 0, 0, 0, 'gpack/travian_default/', 1, 0, 0, 0, 0),
 (2, 'Nature', '', 'support@travianx.mail', 4, 8, 0, 0, '0000-00-00', '', '', '', 0, 0, 0, 0, 0, 0, 0, 0, '', '', 0, 0, 0, 0, 0, 0, 0, 'gpack/travian_default/', 1, 0, 0, 0, 0),
-(3, 'Nartars', '', 'support@travianx.mail', 5, 8, 0, 0, '0000-00-00', '', '', '', 0, 0, 0, 0, 0, 0, 0, 0, '', '', 0, 0, 0, 0, 0, 0, 0, 'gpack/travian_default/', 1, 0, 0, 0, 0),
-(4, 'Taskmaster', '', 'support@travianx.mail', 1, 8, 0, 0, '0000-00-00', '', '', '', 0, 0, 0, 0, 0, 0, 0, 0, '', '', 0, 0, 0, 0, 0, 0, 0, 'gpack/travian_default/', 1, 0, 0, 0, 0);
+(3, 'Taskmaster', '', 'support@travianx.mail', 1, 8, 0, 0, '0000-00-00', '', '', '', 0, 0, 0, 0, 0, 0, 0, 0, '', '', 0, 0, 0, 0, 0, 0, 0, 'gpack/travian_default/', 1, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
