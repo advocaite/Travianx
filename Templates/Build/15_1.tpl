@@ -75,7 +75,7 @@ if($village->resarray['f'.$id] >= 10)
 		}
 		echo"
 		</select>
-		<input id=\"btn_demolish\" name=\"ok\" class=\"dynamic_img\" type=\"image\" src=\"img/x.gif\" alt=\"åÏã\"/>
+		<input id=\"btn_demolish\" name=\"ok\" class=\"dynamic_img\" type=\"image\" src=\"img/x.gif\" alt=\"???\"/>
 		</form>";
 	}
 }
