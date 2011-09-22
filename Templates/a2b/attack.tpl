@@ -28,8 +28,13 @@ $ckey= $generator->generateRandStr(6);
  if (!isset($process['t9']) || $process['t9'] == ''){  $t9='0'; }else{  $t9=$process['t9']; } 
  if (!isset($process['t10']) || $process['t10'] == ''){  $t10='0'; }else{  $t10=$process['t10']; } 
  if (!isset($process['t11']) || $process['t11'] == ''){  $t11='0'; }else{  $t11=$process['t11']; } 
-$totalunits =$process['t1']+$process['t2']+$process['t3']+$process['t5']+$process['t6']+$process['t7']+$process['t8']+$process['t9']+$process['t10']+$process['t11'];
-     if ($scout==1 && $totalunits==0) {
+ if ($session->tribe == 3){
+ $totalunits =$process['t1']+$process['t2']+$process['t4']+$process['t5']+$process['t6']+$process['t7']+$process['t8']+$process['t9']+$process['t10']+$process['t11'];
+ 
+ }else{
+ $totalunits =$process['t1']+$process['t2']+$process['t3']+$process['t5']+$process['t6']+$process['t7']+$process['t8']+$process['t9']+$process['t10']+$process['t11'];
+ }
+ if ($scout==1 && $totalunits==0) {
 
 $process['c'] = 1;
 
@@ -61,67 +66,67 @@ $start = ($tribe-1)*10+1;
 $end = ($tribe*10);
 ?>
 
-<h1><?php echo $actionType." to ".$process[1]; ?></h1>			
+<h1><?php echo $actionType." to ".$process[1]; ?></h1>            
 
 <form method="post" action="a2b.php">
 
-			<table id="short_info" cellpadding="1" cellspacing="1">
+            <table id="short_info" cellpadding="1" cellspacing="1">
 
-				<tbody>
+                <tbody>
 
-					<tr>
+                    <tr>
 
-						<th>Destination:</th>
+                        <th>Destination:</th>
 
-						<td><a href="karte.php?d=&amp;c="><?php echo $process[1]; ?> (<?php echo $coor['x']; ?>|<?php echo $coor['y']; ?>)</a></td>
+                        <td><a href="karte.php?d=&amp;c="><?php echo $process[1]; ?> (<?php echo $coor['x']; ?>|<?php echo $coor['y']; ?>)</a></td>
 
-					</tr>
+                    </tr>
 
-					<tr>
+                    <tr>
 
-						<th>Owner:</th>
+                        <th>Owner:</th>
 
-						<td><a href="spieler.php?uid=<?php echo $process['2']; ?>"><?php echo $database->getUserField($process['2'],'username',0); ?></a></td>
+                        <td><a href="spieler.php?uid=<?php echo $process['2']; ?>"><?php echo $database->getUserField($process['2'],'username',0); ?></a></td>
 
-					</tr>
+                    </tr>
 
-				</tbody>
+                </tbody>
 
-			</table>
+            </table>
 
 
 
-			<table class="troop_details" cellpadding="1" cellspacing="1">
+            <table class="troop_details" cellpadding="1" cellspacing="1">
 
-				<thead>
+                <thead>
 
-					<tr>
+                    <tr>
 
-						<td><?php echo $process[1]; ?></td>
+                        <td><?php echo $process[1]; ?></td>
 
-						<td colspan="10"><?php echo $actionType." to ".$process['1']; ?></td>
+                        <td colspan="10"><?php echo $actionType." to ".$process['1']; ?></td>
 
-					</tr>
+                    </tr>
 
-				</thead>
+                </thead>
 
-				<tbody class="units">
+                <tbody class="units">
 
-					<tr>
+                    <tr>
 
-						<td></td>
+                        <td></td>
                  <?php 
                 for($i=$start;$i<=($end);$i++) {
                       echo "<td><img src=\"img/x.gif\" class=\"unit u$i\" title=\"".$technology->getUnitName($i)."\" alt=\"".$technology->getUnitName($i)."\" /></td>";    
                   } ?>
                         
-					</tr>
+                    </tr>
 
-					<tr>
+                    <tr>
 
-						<th>Troops</th>
+                        <th>Troops</th>
 
-						<td <?php if (!isset($process['t1']) || $process['t1'] == ''){ echo "class=\"none\">0"; }else{ echo ">".$process['t1'];} ?></td>
+                        <td <?php if (!isset($process['t1']) || $process['t1'] == ''){ echo "class=\"none\">0"; }else{ echo ">".$process['t1'];} ?></td>
 
                         <td <?php if (!isset($process['t2']) || $process['t2'] == ''){ echo "class=\"none\">0"; }else{ echo ">".$process['t2'];} ?></td>
 
@@ -143,7 +148,7 @@ $end = ($tribe*10);
 
                      </tr>
 
-				</tbody>
+                </tbody>
                                          <?php                if ($process['c']==1){
 
 ?>
@@ -297,69 +302,69 @@ $end = ($tribe*10);
 
 
 
-				<tr>
+                <tr>
 
-			<th>Arrived:</th>
+            <th>Arrived:</th>
 
-			
+            
 
-			<?php
-			$speeds = array();
+            <?php
+            $speeds = array();
 
-			$scout = 1;
+            $scout = 1;
 
-				//find slowest unit.
+                //find slowest unit.
 
-				for($i=1;$i<=10;$i++)
+                for($i=1;$i<=10;$i++)
 
-				{
+                {
 
-					if (isset($process['t'.$i]))
+                    if (isset($process['t'.$i]))
 
-					{
+                    {
 
-						if( $process['t'.$i] != '' && $process['t'.$i] > 0)
+                        if( $process['t'.$i] != '' && $process['t'.$i] > 0)
 
-						{
+                        {
 
-							$speeds[] = ${'u'.(($session->tribe-1)*10+$i)}['speed'];
+                            $speeds[] = ${'u'.(($session->tribe-1)*10+$i)}['speed'];
 
-							if($i != 4)
+                            if($i != 4)
 
-								$scout = 0;
+                                $scout = 0;
 
-						}
+                        }
 
-						
+                        
 
-					}
+                    }
 
-				}
+                }
 
-			
+            
 
-			if($scout)
+            if($scout)
 
-				$process['c'] = 1;
+                $process['c'] = 1;
 
-				
-				$time = $generator->procDistanceTime($from,$to,min($speeds),1);
+                
+                $time = $generator->procDistanceTime($from,$to,min($speeds),1);
 
-			?>
+            ?>
 
-			
+            
 
-			<td colspan="10">
+            <td colspan="10">
 
-			<div class="in">in <?php echo $generator->getTimeFormat($time); ?></div>
+            <div class="in">in <?php echo $generator->getTimeFormat($time); ?></div>
 
-			<div class="at">at <span id="tp2"> <?php echo date("H:i:s",time()+$time)?></span><span> hours</span></div>
+            <div class="at">at <span id="tp2"> <?php echo date("H:i:s",time()+$time)?></span><span> hours</span></div>
 
-			</td>
+            </td>
 
-		</tr>
+        </tr>
 
-	</tbody>
+    </tbody>
 
 </table>
 
@@ -375,7 +380,7 @@ $end = ($tribe*10);
 <input name="c" value="3" type="hidden">
 
 
-		<p class="btn"><input value="ok" name="s1" id="btn_ok" 
+        <p class="btn"><input value="ok" name="s1" id="btn_ok" 
 
 class="dynamic_img " src="img/x.gif" alt="OK" type="image" onclick="if (this.disabled==false) {document.getElementsByTagName('form')[0].submit();} this.disabled=true;" onLoad="this.disabled=false;"></p>
 
