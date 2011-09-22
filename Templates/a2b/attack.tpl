@@ -19,8 +19,8 @@ $ckey= $generator->generateRandStr(6);
 
  if (!isset($process['t1']) || $process['t1'] == ''){  $t1='0'; }else{  $t1=$process['t1']; }
  if (!isset($process['t2']) || $process['t2'] == ''){  $t2='0'; }else{  $t2=$process['t2']; } 
- if (!isset($process['t3']) || $process['t3'] == ''){  $t3='0'; }else{  $t3=$process['t3']; } 
- if (!isset($process['t4']) || $process['t4'] == ''){  $t4='0'; }else{  $t4=$process['t4']; $scout=1; } 
+ if (!isset($process['t3']) || $process['t3'] == ''){  $t3='0'; }else{  $t3=$process['t3']; if ($session->tribe == 3){ $scout=1; } } 
+ if (!isset($process['t4']) || $process['t4'] == ''){  $t4='0'; }else{  $t4=$process['t4']; if ($session->tribe == 1 || $session->tribe == 2 || $session->tribe == 4 || $session->tribe == 5){ $scout=1;} } 
  if (!isset($process['t5']) || $process['t5'] == ''){  $t5='0'; }else{  $t5=$process['t5']; } 
  if (!isset($process['t6']) || $process['t6'] == ''){  $t6='0'; }else{  $t6=$process['t6']; } 
  if (!isset($process['t7']) || $process['t7'] == ''){  $t7='0'; }else{  $t7=$process['t7']; } 
@@ -56,6 +56,9 @@ $actionType = "Raid";
 
 }
 
+$tribe = $session->tribe;
+$start = ($tribe-1)*10+1;
+$end = ($tribe*10);
 ?>
 
 <h1><?php echo $actionType." to ".$process[1]; ?></h1>			
@@ -107,27 +110,11 @@ $actionType = "Raid";
 					<tr>
 
 						<td></td>
-
-						<td><img src="img/x.gif" class="unit u1" title="Legionnaire" alt="Legionnaire"></td>
-
-                        <td><img src="img/x.gif" class="unit u2" title="Praetorian" alt="Praetorian"></td>
-
-                        <td><img src="img/x.gif" class="unit u3" title="Imperian" alt="Imperian"></td>
-
-                        <td><img src="img/x.gif" class="unit u4" title="Equites Legati" alt="Equites Legati"></td>
-
-                        <td><img src="img/x.gif" class="unit u5" title="Equites Imperatoris" alt="Equites Imperatoris"></td>
-
-                        <td><img src="img/x.gif" class="unit u6" title="Equites Caesaris" alt="Equites Caesaris"></td>
-
-                        <td><img src="img/x.gif" class="unit u7" title="Battering Ram" alt="Battering Ram"></td>
-
-                        <td><img src="img/x.gif" class="unit u8" title="Fire Catapult" alt="Fire Catapult"></td>
-
-                        <td><img src="img/x.gif" class="unit u9" title="Senator" alt="Senator"></td>
-
-                        <td><img src="img/x.gif" class="unit u10" title="Settler" alt="Settler"></td>
-
+                 <?php 
+                for($i=$start;$i<=($end);$i++) {
+                      echo "<td><img src=\"img/x.gif\" class=\"unit u$i\" title=\"".$technology->getUnitName($i)."\" alt=\"".$technology->getUnitName($i)."\" /></td>";    
+                  } ?>
+                        
 					</tr>
 
 					<tr>
@@ -317,13 +304,6 @@ $actionType = "Raid";
 			
 
 			<?php
-
-			$att_tribe = 1;
-
-			$start = ($att_tribe == 1)? 1 : (($att_tribe == 2)? 11: 21);
-
-			$end = ($att_tribe == 1)? 10 : (($att_tribe == 2)? 20: 30);
-
 			$speeds = array();
 
 			$scout = 1;

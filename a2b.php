@@ -102,7 +102,7 @@ else if (isset($w)){
 } else {
 	if (isset($process['0'])){
 		$coor = $database->getCoor($process['0']);
-		include("Templates/a2b/attack_".$session->tribe.".tpl");
+		include("Templates/a2b/attack.tpl");
 	}else{
 		include("Templates/a2b/units_".$session->tribe.".tpl");
 		include("Templates/a2b/search.tpl");
