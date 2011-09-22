@@ -1186,10 +1186,10 @@ CREATE TABLE IF NOT EXISTS `%PREFIX%users` (
   `gpack` varchar(255) NOT NULL DEFAULT 'gpack/travian_default/',
   `cp` int(10) unsigned NOT NULL DEFAULT '1',
   `lastupdate` int(11) unsigned NOT NULL,
-  `RR` int(255) unsigned NOT NULL DEFAULT '0',
-  `Rc` int(255) unsigned NOT NULL DEFAULT '0',
+  `RR` int(255) NOT NULL DEFAULT '0',
+  `Rc` int(255) NOT NULL DEFAULT '0',
   `ok` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `clp` bigint(255) unsigned NOT NULL DEFAULT '0',
+  `clp` bigint(255) NOT NULL DEFAULT '0',
   `oldrank` bigint(255) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
