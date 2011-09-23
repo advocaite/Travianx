@@ -18,6 +18,7 @@ define("TRIBE2","Tuetons");
 define("TRIBE3","Gauls"); 
 define("TRIBE4","Nature"); 
 define("TRIBE5","Natars");
+define("TRIBE6","Monsters");
  
 define("HOME","Homepage"); 
 define("INSTRUCT","Instructions");
@@ -38,6 +39,7 @@ define("CHAT","Chat");
 define("IMPRINT","Imprint");
 define("MORE_LINKS","More Links");
 define("TOUR","Game Tour");
+
 
 //ERRORS
 define("USRNM_EMPTY","(Username empty)");
@@ -101,6 +103,9 @@ define("WAITING_LOOP","(waiting loop)");
 define("HRS","(hrs.)");
 define("DONE_AT","done at");
 define("CANCEL","cancel");
+define("LOYALTY","Loyalty:"); 
+define("CALCULATED_IN","Calculated in");
+define("SEVER_TIME","Server time:");  
 
 //QUEST
 define("Q_CONTINUE","Continue with the next task.");
@@ -207,6 +212,19 @@ define("U46","Natarian Knight");
 define("U47","War Elephant");
 define("U48","Ballista");
 define("U49","Natarian Emperor");
+define("U50","Natarian Settler");
+
+//MONSTER UNITS
+define("U51","Monster Peon");
+define("U52","Monster Hunter");
+define("U53","Monster Warrior");
+define("U54","Ghost");
+define("U55","Monster Steed");
+define("U56","Monster War Steed");
+define("U57","Monster Ram");
+define("U58","Monster Catapult");
+define("U59","Monster Chief");
+define("U60","Monster Settler");
 
 //INDEX.php
 define("LOGIN","Login");
