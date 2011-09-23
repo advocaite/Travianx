@@ -1,7 +1,7 @@
 <?php 
   
     for ($i=($session->tribe-1)*10+1;$i<=($session->tribe-1)*10+4;$i++) {
-        if ($i <> 4 && $i <> 23 && i <> 24 && ($technology->getTech($i) || $i%10 == 1)) {
+        if ($i <> 4 && $i <> 23 && $i <> 24 && ($technology->getTech($i) || $i%10 == 1)) {
   
 echo "<tr><td class=\"desc\">
 <div class=\"tit\">
@@ -10,7 +10,7 @@ echo "<tr><td class=\"desc\">
 </div>
 <div class=\"details\">
 <img class=\"r1\" src=\"img/x.gif\" alt=\"Wood\" title=\"Wood\" />".(${'u'.$i}['wood'])."|<img class=\"r2\" src=\"img/x.gif\" alt=\"Clay\" title=\"Clay\" />".(${'u'.$i}['clay'])."|<img class=\"r3\" src=\"img/x.gif\" alt=\"Iron\" title=\"Iron\" />".(${'u'.$i}['iron'])."|<img class=\"r4\" src=\"img/x.gif\" alt=\"Crop\" title=\"Crop\" />".(${'u'.$i}['crop'])."|<img class=\"r5\" src=\"img/x.gif\" alt=\"Crop consumption\" title=\"Crop consumption\" />".${'u'.$i}['pop']."|<img class=\"clock\" src=\"img/x.gif\" alt=\"Duration\" title=\"Duration\" />";
-echo $generator->getTimeFormat(round(${'u'.$i}['time'] * ($bid29[$village->resarray['f'.$id]]['attri'] / 100) / SPEED));
+echo $generator->getTimeFormat(round(${'u'.$i}['time'] * ($bid19[$village->resarray['f'.$id]]['attri'] / 100) / SPEED));
 echo "</div>
 </td>
 <td class=\"val\"><input type=\"text\" class=\"text\" name=\"t".$i."\" value=\"0\" maxlength=\"4\"></td>

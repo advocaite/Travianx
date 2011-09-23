@@ -1,7 +1,7 @@
 <?php 
   
     for ($i=($session->tribe-1)*10+1;$i<=($session->tribe-1)*10+4;$i++) {
-        if ($i <> 4 && $i <> 23 && i <> 24 && ($technology->getTech($i) || $i%10 == 1)) {
+        if ($i <> 4 && $i <> 23 && $i <> 24 && ($technology->getTech($i) || $i%10 == 1)) {
   
 echo "<tr><td class=\"desc\">
 <div class=\"tit\">
