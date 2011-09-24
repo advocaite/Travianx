@@ -1037,7 +1037,8 @@
         				$q = "SELECT * FROM " . TB_PREFIX . "mdata WHERE target = $id and send = 0 and archived = 0 ORDER BY time DESC";
         				break;
         			case 2:
-        				$q = "SELECT * FROM " . TB_PREFIX . "mdata WHERE owner = $id AND send = 1 ORDER BY time DESC";
+                        // removed send no longer needed as we dont send 2 messages any more just 1
+        				$q = "SELECT * FROM " . TB_PREFIX . "mdata WHERE owner = $id ORDER BY time DESC";
         				break;
         			case 3:
         				$q = "SELECT * FROM " . TB_PREFIX . "mdata where id = $id";
