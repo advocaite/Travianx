@@ -8,7 +8,7 @@ $resetlevelreq = 3;
     if ( isset($_POST['changename'])) {
 mysql_query("UPDATE ".TB_PREFIX."hero SET `heroname`='".($_POST['changename'])."' where `uid`='".$session->uid."'") or die("ERROR:".mysql_error());
 $see = 0;
-$message = "Heros name has been changed.";
+$infomessage = "Heros name has been changed.";
 
 }
 // revive hero
@@ -348,7 +348,7 @@ echo "<tr class='next'><td><a href='build.php?id=".$id."&revive=1'>Press here to
 
 
 <table id="distribution" cellpadding="1" cellspacing="1">
-    <thead><?php echo $message; ?><tr>
+    <thead><?php echo $infomessage; ?><tr>
     <?php if (isset($_GET['rename'])){?>
     <th colspan="5"><?php if ($see == 1){?><form action="" method="POST">
 <input type=text name=changename value=<?php echo $heroinfo['heroname']; ?>><form><?php }else{ ?><a href="build.php?id=<?php echo "$id"; ?>&rename"><?php echo $heroinfo['heroname']; ?></a><?php } ?><span class="info"> Level <?php echo $level; ?> (<img class="unit u<?php echo $heroinfo['type']; ?>" src="img/x.gif" alt="<?php echo $heronames; ?>" title="<?php echo $heronames; ?>" /><?php echo $heronames; ?>)</span></th>
