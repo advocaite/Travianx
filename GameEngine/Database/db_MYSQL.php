@@ -1013,6 +1013,15 @@
                 }
                 return mysql_query($q, $this->connection);
             }
+             function modifyOasisResource($vid,$wood,$clay,$iron,$crop,$mode) {
+        if(!$mode) {
+            $q = "UPDATE ".TB_PREFIX."odata set wood = wood - $wood, clay = clay - $clay, iron = iron - $iron, crop = crop - $crop where wref = $vid";
+        }
+        else {
+            $q = "UPDATE ".TB_PREFIX."odata set wood = wood + $wood, clay = clay + $clay, iron = iron + $iron, crop = crop + $crop where wref = $vid";
+        }
+        return mysql_query($q, $this->connection);
+    }
 
             function getFieldLevel($vid, $field) {
                 $q = "SELECT f" . $field . " from " . TB_PREFIX . "fdata where vref = $vid";
@@ -1032,6 +1041,11 @@
                 $q = "UPDATE " . TB_PREFIX . "vdata set lastupdate = $time where wref = $vid";
                 return mysql_query($q, $this->connection);
             }
+             function updateOasis($vid) {
+        $time = time();
+        $q = "UPDATE ".TB_PREFIX."odata set lastupdated = $time where wref = $vid";
+        return mysql_query($q, $this->connection);
+    }
 
 
             function setVillageName($vid, $name) {
