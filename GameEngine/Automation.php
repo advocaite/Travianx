@@ -1086,6 +1086,7 @@ class Automation {
                  <div class=\"carry\"><img class=\"car\" src=\"img/x.gif\" alt=\"carry\" title=\"carry\" />Total Resources : ".round($totwood+$totclay+$totiron+$totcrop)."</div>
     ";
                 }else if($data['spy'] == 2){
+                    if ($isoasis == 0){  
                 $basearray = $database->getMInfo($data['to']);
                 $resarray = $database->getResourceLevel($basearray['wref']);
                 
@@ -1114,7 +1115,11 @@ class Automation {
     
                 }
                 }
-                
+                    }else {
+                        $crannylevel =0;
+                        $walllevel =0;
+                        $rplevel =0;
+                    }
                
                 
                                         
