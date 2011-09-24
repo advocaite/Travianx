@@ -145,7 +145,7 @@
                                     <td><?php
 
                                            $users = mysql_num_rows(mysql_query("SELECT * FROM " . TB_PREFIX . "users WHERE id > 0"));
-                                           echo $users;
+                                           echo ($users)-4;
 
                                     ?></td>
                                 </tr>
