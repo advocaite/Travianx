@@ -385,7 +385,12 @@
                 }
                 return mysql_query($q, $this->connection);
             }
-            
+            function isVillageOases($wref) {
+        $q = "SELECT id, oasistype FROM ".TB_PREFIX."wdata where id = $wref";
+        $result = mysql_query($q, $this->connection);
+        $dbarray = mysql_fetch_array($result);
+        return $dbarray['oasistype'];
+    }
             function populateOasis() {
         $q = "SELECT * FROM ".TB_PREFIX."wdata where oasistype != 0 ";
         $result = mysql_query($q, $this->connection);
