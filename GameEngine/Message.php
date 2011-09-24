@@ -39,8 +39,11 @@
         					$this->quoteMessage($post['id']);
         					break;
         				case "m2":
-        					$this->sendMessage($post['an'], $post['be'], $post['message']);
-        					header("Location: nachrichten.php?t=2");
+                        if ($post['an'] == "[ally]"){
+                        $this->sendAMessage($post['an'],$post['be'],$post['message']);
+                        }else{
+                        $this->sendMessage($post['an'],$post['be'],$post['message']);
+                        }header("Location: nachrichten.php?t=2");
         					break;
         				case "m3":
         				case "m4":
@@ -269,7 +272,29 @@
         		}
         		$this->totalMessage = count($this->inbox) + count($this->sent);
         	}
-
+            
+            private function sendAMessage($recieve,$topic,$text) {
+                global $session,$database;
+                $allmembersQ = mysql_query("SELECT id FROM ".TB_PREFIX."users WHERE alliance='".$session->alliance."'");
+                $userally = $database->getUserField($recieve,"alliance",1);
+                $permission=mysql_fetch_array(mysql_query("SELECT opt7 FROM ".TB_PREFIX."ali_permission WHERE uid='".$session->uid."'"));
+       
+                if(WORD_CENSOR) {
+                $topic = $this->wordCensor($topic);
+                $text = $this->wordCensor($text);
+                }
+                if($topic == "") {
+                $topic = "No subject";
+                }
+                if($permission[opt7]==1){  
+                if ($userally != 0) {
+                while ($allmembers = mysql_fetch_array($allmembersQ)) {
+                $database->sendMessage($allmembers[id],$session->uid,$topic,$text,0);
+                }        
+                    }
+                    }
+            }
+            
         	private function sendMessage($recieve, $topic, $text) {
         		global $session, $database;
         		$user = $database->getUserField($recieve, "id", 1);
@@ -284,11 +309,9 @@
         		if($user == "0") {
         			//make mail server
         			$database->sendMessage($user, $session->uid, $topic, $text, 0);
-        			$database->sendMessage($user, $session->uid, $topic, $text, 1);
-        		} else {
+        			} else {
         			$database->sendMessage($user, $session->uid, $topic, $text, 0);
-        			$database->sendMessage($user, $session->uid, $topic, $text, 1);
-        		}
+        			}
         	}
 
         	//7 = village, attacker, att tribe, u1 - u10, lost %, w,c,i,c , cap

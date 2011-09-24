@@ -68,8 +68,9 @@ if($_GET['uid'] == $session->uid) { include("menu.tpl"); } ?>
                 }
 				else if($displayarray['tribe'] == 4) {
                 echo "Nature";
+                
                 }else if($displayarray['tribe'] == 5) {
-                echo "Nartars";
+                echo "Natars";
                 }				?></td>
             </tr>
 
