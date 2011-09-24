@@ -111,7 +111,7 @@ The resources lumber, clay and iron are stored in your warehouse. By increasing 
 
 <img src="img/un/h/gid11.gif" width=166 height=150 border=0 alt="Granary" title="Granary" align="right" />
 
-The crop produced by your farms is stored in the granary. By increasing its level you increase the granary’s capacity.    <br>
+The crop produced by your farms is stored in the granary. By increasing its level you increase the granary?s capacity.    <br>
 
     <br>
 
@@ -513,7 +513,7 @@ New unit types can be developed in the academy. By increasing its level you can 
 
 <img src="img/un/h/gid12.gif" width=166 height=150 border=0 alt="Blacksmith" title="Blacksmith" align="left" />
 
-Your warriors' weapons are enhanced in the blacksmith’s melting furnaces. By increasing its level you can order the fabrication of even better weapons.    <br>
+Your warriors' weapons are enhanced in the blacksmith?s melting furnaces. By increasing its level you can order the fabrication of even better weapons.    <br>
 
     <br>
 

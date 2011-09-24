@@ -96,7 +96,7 @@ Because they are weak at the beginning of the game, they are a bad choice for be
 
 	<td width="25" align="center">
 
-		<a href="#" onClick="return Popup(1,1,'http://s5.travian.com/');"><img src="img/un/u/1.gif" width="16" height="16" border="0" alt=""></a>
+		<a href="#" onClick="return Popup(1,1,'');"><img src="img/un/u/1.gif" width="16" height="16" border="0" alt=""></a>
 
 	</td>
 
@@ -124,7 +124,7 @@ Because they are weak at the beginning of the game, they are a bad choice for be
 
 	<td width="25" align="center">
 
-		<a href="#" onClick="return Popup(1,2,'http://s5.travian.com/');"><img src="img/un/u/2.gif" width="16" height="16" border="0" alt=""></a>
+		<a href="#" onClick="return Popup(1,2,'');"><img src="img/un/u/2.gif" width="16" height="16" border="0" alt=""></a>
 
 	</td>
 
@@ -152,7 +152,7 @@ Because they are weak at the beginning of the game, they are a bad choice for be
 
 	<td width="25" align="center">
 
-		<a href="#" onClick="return Popup(1,3,'http://s5.travian.com/');"><img src="img/un/u/3.gif" width="16" height="16" border="0" alt=""></a>
+		<a href="#" onClick="return Popup(1,3,'');"><img src="img/un/u/3.gif" width="16" height="16" border="0" alt=""></a>
 
 	</td>
 
@@ -180,7 +180,7 @@ Because they are weak at the beginning of the game, they are a bad choice for be
 
 	<td width="25" align="center">
 
-		<a href="#" onClick="return Popup(1,4,'http://s5.travian.com/');"><img src="img/un/u/4.gif" width="16" height="16" border="0" alt=""></a>
+		<a href="#" onClick="return Popup(1,4,'');"><img src="img/un/u/4.gif" width="16" height="16" border="0" alt=""></a>
 
 	</td>
 
@@ -208,7 +208,7 @@ Because they are weak at the beginning of the game, they are a bad choice for be
 
 	<td width="25" align="center">
 
-		<a href="#" onClick="return Popup(1,5,'http://s5.travian.com/');"><img src="img/un/u/5.gif" width="16" height="16" border="0" alt=""></a>
+		<a href="#" onClick="return Popup(1,5,'');"><img src="img/un/u/5.gif" width="16" height="16" border="0" alt=""></a>
 
 	</td>
 
@@ -236,7 +236,7 @@ Because they are weak at the beginning of the game, they are a bad choice for be
 
 	<td width="25" align="center">
 
-		<a href="#" onClick="return Popup(1,6,'http://s5.travian.com/');"><img src="img/un/u/6.gif" width="16" height="16" border="0" alt=""></a>
+		<a href="#" onClick="return Popup(1,6,'');"><img src="img/un/u/6.gif" width="16" height="16" border="0" alt=""></a>
 
 	</td>
 
@@ -264,7 +264,7 @@ Because they are weak at the beginning of the game, they are a bad choice for be
 
 	<td width="25" align="center">
 
-		<a href="#" onClick="return Popup(1,7,'http://s5.travian.com/');"><img src="img/un/u/7.gif" width="16" height="16" border="0" alt=""></a>
+		<a href="#" onClick="return Popup(1,7,'');"><img src="img/un/u/7.gif" width="16" height="16" border="0" alt=""></a>
 
 	</td>
 
@@ -292,7 +292,7 @@ Because they are weak at the beginning of the game, they are a bad choice for be
 
 	<td width="25" align="center">
 
-		<a href="#" onClick="return Popup(1,8,'http://s5.travian.com/');"><img src="img/un/u/8.gif" width="16" height="16" border="0" alt=""></a>
+		<a href="#" onClick="return Popup(1,8,'');"><img src="img/un/u/8.gif" width="16" height="16" border="0" alt=""></a>
 
 	</td>
 
@@ -320,7 +320,7 @@ Because they are weak at the beginning of the game, they are a bad choice for be
 
 	<td width="25" align="center">
 
-		<a href="#" onClick="return Popup(1,9,'http://s5.travian.com/');"><img src="img/un/u/9.gif" width="16" height="16" border="0" alt=""></a>
+		<a href="#" onClick="return Popup(1,9,'');"><img src="img/un/u/9.gif" width="16" height="16" border="0" alt=""></a>
 
 	</td>
 
@@ -348,7 +348,7 @@ Because they are weak at the beginning of the game, they are a bad choice for be
 
 	<td width="25" align="center">
 
-		<a href="#" onClick="return Popup(1,10,'http://s5.travian.com/');"><img src="img/un/u/10.gif" width="16" height="16" border="0" alt=""></a>
+		<a href="#" onClick="return Popup(1,10,'');"><img src="img/un/u/10.gif" width="16" height="16" border="0" alt=""></a>
 
 	</td>
 
@@ -490,7 +490,7 @@ For beginners and those players who don't know exactly what they want to play, t
 
 	<td width="25" align="center">
 
-		<a href="#" onClick="return Popup(1,21,'http://s5.travian.com/');"><img src="img/un/u/21.gif" width="16" height="16" border="0" alt=""></a>
+		<a href="#" onClick="return Popup(1,21,'');"><img src="img/un/u/21.gif" width="16" height="16" border="0" alt=""></a>
 
 	</td>
 
@@ -518,7 +518,7 @@ For beginners and those players who don't know exactly what they want to play, t
 
 	<td width="25" align="center">
 
-		<a href="#" onClick="return Popup(1,22,'http://s5.travian.com/');"><img src="img/un/u/22.gif" width="16" height="16" border="0" alt=""></a>
+		<a href="#" onClick="return Popup(1,22,'');"><img src="img/un/u/22.gif" width="16" height="16" border="0" alt=""></a>
 
 	</td>
 
@@ -546,7 +546,7 @@ For beginners and those players who don't know exactly what they want to play, t
 
 	<td width="25" align="center">
 
-		<a href="#" onClick="return Popup(1,23,'http://s5.travian.com/');"><img src="img/un/u/23.gif" width="16" height="16" border="0" alt=""></a>
+		<a href="#" onClick="return Popup(1,23,'');"><img src="img/un/u/23.gif" width="16" height="16" border="0" alt=""></a>
 
 	</td>
 
@@ -574,7 +574,7 @@ For beginners and those players who don't know exactly what they want to play, t
 
 	<td width="25" align="center">
 
-		<a href="#" onClick="return Popup(1,24,'http://s5.travian.com/');"><img src="img/un/u/24.gif" width="16" height="16" border="0" alt=""></a>
+		<a href="#" onClick="return Popup(1,24,'');"><img src="img/un/u/24.gif" width="16" height="16" border="0" alt=""></a>
 
 	</td>
 
@@ -602,7 +602,7 @@ For beginners and those players who don't know exactly what they want to play, t
 
 	<td width="25" align="center">
 
-		<a href="#" onClick="return Popup(1,25,'http://s5.travian.com/');"><img src="img/un/u/25.gif" width="16" height="16" border="0" alt=""></a>
+		<a href="#" onClick="return Popup(1,25,'');"><img src="img/un/u/25.gif" width="16" height="16" border="0" alt=""></a>
 
 	</td>
 
@@ -630,7 +630,7 @@ For beginners and those players who don't know exactly what they want to play, t
 
 	<td width="25" align="center">
 
-		<a href="#" onClick="return Popup(1,26,'http://s5.travian.com/');"><img src="img/un/u/26.gif" width="16" height="16" border="0" alt=""></a>
+		<a href="#" onClick="return Popup(1,26,'');"><img src="img/un/u/26.gif" width="16" height="16" border="0" alt=""></a>
 
 	</td>
 
@@ -658,7 +658,7 @@ For beginners and those players who don't know exactly what they want to play, t
 
 	<td width="25" align="center">
 
-		<a href="#" onClick="return Popup(1,27,'http://s5.travian.com/');"><img src="img/un/u/27.gif" width="16" height="16" border="0" alt=""></a>
+		<a href="#" onClick="return Popup(1,27,'');"><img src="img/un/u/27.gif" width="16" height="16" border="0" alt=""></a>
 
 	</td>
 
@@ -686,7 +686,7 @@ For beginners and those players who don't know exactly what they want to play, t
 
 	<td width="25" align="center">
 
-		<a href="#" onClick="return Popup(1,28,'http://s5.travian.com/');"><img src="img/un/u/28.gif" width="16" height="16" border="0" alt=""></a>
+		<a href="#" onClick="return Popup(1,28,'');"><img src="img/un/u/28.gif" width="16" height="16" border="0" alt=""></a>
 
 	</td>
 
@@ -714,7 +714,7 @@ For beginners and those players who don't know exactly what they want to play, t
 
 	<td width="25" align="center">
 
-		<a href="#" onClick="return Popup(1,29,'http://s5.travian.com/');"><img src="img/un/u/29.gif" width="16" height="16" border="0" alt=""></a>
+		<a href="#" onClick="return Popup(1,29,'');"><img src="img/un/u/29.gif" width="16" height="16" border="0" alt=""></a>
 
 	</td>
 
@@ -742,7 +742,7 @@ For beginners and those players who don't know exactly what they want to play, t
 
 	<td width="25" align="center">
 
-		<a href="#" onClick="return Popup(1,30,'http://s5.travian.com/');"><img src="img/un/u/30.gif" width="16" height="16" border="0" alt=""></a>
+		<a href="#" onClick="return Popup(1,30,'');"><img src="img/un/u/30.gif" width="16" height="16" border="0" alt=""></a>
 
 	</td>
 
@@ -888,7 +888,7 @@ For aggressive and experienced players the Teutons are an excellent choice!</p>
 
 	<td width="25" align="center">
 
-		<a href="#" onClick="return Popup(1,11,'http://s5.travian.com/');"><img src="img/un/u/11.gif" width="16" height="16" border="0" alt=""></a>
+		<a href="#" onClick="return Popup(1,11,'');"><img src="img/un/u/11.gif" width="16" height="16" border="0" alt=""></a>
 
 	</td>
 
@@ -916,7 +916,7 @@ For aggressive and experienced players the Teutons are an excellent choice!</p>
 
 	<td width="25" align="center">
 
-		<a href="#" onClick="return Popup(1,12,'http://s5.travian.com/');"><img src="img/un/u/12.gif" width="16" height="16" border="0" alt=""></a>
+		<a href="#" onClick="return Popup(1,12,'');"><img src="img/un/u/12.gif" width="16" height="16" border="0" alt=""></a>
 
 	</td>
 
@@ -944,7 +944,7 @@ For aggressive and experienced players the Teutons are an excellent choice!</p>
 
 	<td width="25" align="center">
 
-		<a href="#" onClick="return Popup(1,13,'http://s5.travian.com/');"><img src="img/un/u/13.gif" width="16" height="16" border="0" alt=""></a>
+		<a href="#" onClick="return Popup(1,13,'');"><img src="img/un/u/13.gif" width="16" height="16" border="0" alt=""></a>
 
 	</td>
 
@@ -972,7 +972,7 @@ For aggressive and experienced players the Teutons are an excellent choice!</p>
 
 	<td width="25" align="center">
 
-		<a href="#" onClick="return Popup(1,14,'http://s5.travian.com/');"><img src="img/un/u/14.gif" width="16" height="16" border="0" alt=""></a>
+		<a href="#" onClick="return Popup(1,14,'');"><img src="img/un/u/14.gif" width="16" height="16" border="0" alt=""></a>
 
 	</td>
 
@@ -1000,7 +1000,7 @@ For aggressive and experienced players the Teutons are an excellent choice!</p>
 
 	<td width="25" align="center">
 
-		<a href="#" onClick="return Popup(1,15,'http://s5.travian.com/');"><img src="img/un/u/15.gif" width="16" height="16" border="0" alt=""></a>
+		<a href="#" onClick="return Popup(1,15,'');"><img src="img/un/u/15.gif" width="16" height="16" border="0" alt=""></a>
 
 	</td>
 
@@ -1028,7 +1028,7 @@ For aggressive and experienced players the Teutons are an excellent choice!</p>
 
 	<td width="25" align="center">
 
-		<a href="#" onClick="return Popup(1,16,'http://s5.travian.com/');"><img src="img/un/u/16.gif" width="16" height="16" border="0" alt=""></a>
+		<a href="#" onClick="return Popup(1,16,'');"><img src="img/un/u/16.gif" width="16" height="16" border="0" alt=""></a>
 
 	</td>
 
@@ -1056,7 +1056,7 @@ For aggressive and experienced players the Teutons are an excellent choice!</p>
 
 	<td width="25" align="center">
 
-		<a href="#" onClick="return Popup(1,17,'http://s5.travian.com/');"><img src="img/un/u/17.gif" width="16" height="16" border="0" alt=""></a>
+		<a href="#" onClick="return Popup(1,17,'');"><img src="img/un/u/17.gif" width="16" height="16" border="0" alt=""></a>
 
 	</td>
 
@@ -1084,7 +1084,7 @@ For aggressive and experienced players the Teutons are an excellent choice!</p>
 
 	<td width="25" align="center">
 
-		<a href="#" onClick="return Popup(1,18,'http://s5.travian.com/');"><img src="img/un/u/18.gif" width="16" height="16" border="0" alt=""></a>
+		<a href="#" onClick="return Popup(1,18,'');"><img src="img/un/u/18.gif" width="16" height="16" border="0" alt=""></a>
 
 	</td>
 
@@ -1112,7 +1112,7 @@ For aggressive and experienced players the Teutons are an excellent choice!</p>
 
 	<td width="25" align="center">
 
-		<a href="#" onClick="return Popup(1,19,'http://s5.travian.com/');"><img src="img/un/u/19.gif" width="16" height="16" border="0" alt=""></a>
+		<a href="#" onClick="return Popup(1,19,'');"><img src="img/un/u/19.gif" width="16" height="16" border="0" alt=""></a>
 
 	</td>
 
@@ -1140,7 +1140,7 @@ For aggressive and experienced players the Teutons are an excellent choice!</p>
 
 	<td width="25" align="center">
 
-		<a href="#" onClick="return Popup(1,20,'http://s5.travian.com/');"><img src="img/un/u/20.gif" width="16" height="16" border="0" alt=""></a>
+		<a href="#" onClick="return Popup(1,20,'');"><img src="img/un/u/20.gif" width="16" height="16" border="0" alt=""></a>
 
 	</td>
 
