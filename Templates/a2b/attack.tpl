@@ -302,9 +302,10 @@ $end = ($tribe*10);
 
 
 
-                <tr>
+             <tbody class="infos">
+    <tr>
 
-            <th>Arrived:</th>
+   <th>Arrived:</th>
 
             
 
