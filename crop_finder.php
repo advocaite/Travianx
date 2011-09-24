@@ -139,7 +139,7 @@
    }
 
       function getDistance($coorx1, $coory1, $coorx2, $coory2) {
-   $max = WORLD_MAX * WORLD_MAX;
+   $max = 2 * WORLD_MAX + 1;
    $x1 = intval($coorx1);
    $y1 = intval($coory1);
    $x2 = intval($coorx2);
