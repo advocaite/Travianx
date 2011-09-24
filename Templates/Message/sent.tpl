@@ -1,17 +1,27 @@
-<div id="content"  class="messages">
-<h1>Messages</h1>
-<?php 
-include("menu.tpl");
+<?php
+
+/** --------------------------------------------------- **\
+| ********* DO NOT REMOVE THIS COPYRIGHT NOTICE ********* |
++---------------------------------------------------------+
+| Credits:     All the developers including the leaders:  |
+|              Advocaite & Dzoki & Donnchadh              |
+|                                                         |
+| Copyright:   TravianX Project All rights reserved       |
+\** --------------------------------------------------- **/
+
 ?>
-<form method="post" action="nachrichten.php" name="msg">
-<input type="hidden" name="ft" value="m4" />
-<table cellpadding="1" cellspacing="1" id="overview">
-<thead><tr>
-<th></th>
-<th>Subject</th>
-<th>Recipient</th>
-<th class="sent"><a href="nachrichten.php?s=0&amp;t=2&amp;o=1">Sent</a></th>
-</tr></thead><tfoot><tr><th><?php
+<div id="content"  class="messages">
+    <h1>Messages</h1>
+        <?php include("menu.tpl"); ?>
+    <form method="post" action="nachrichten.php" name="msg">
+    <input type="hidden" name="ft" value="m4" />
+    <table cellpadding="1" cellspacing="1" id="overview">
+        <thead><tr>
+            <th></th>
+            <th>Subject</th>
+            <th>Recipient</th>
+            <th class="sent"><a href="nachrichten.php?s=0&amp;t=2&amp;o=1">Sent</a></th>
+            </tr></thead><tfoot><tr><th><?php
 		$MyGold = mysql_query("SELECT * FROM ".TB_PREFIX."users WHERE `username`='".$session->username."'") or die(mysql_error());
 		$golds = mysql_fetch_array($MyGold);
 		$date2=strtotime("NOW");
