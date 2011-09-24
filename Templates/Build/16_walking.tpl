@@ -17,8 +17,11 @@ if($units[$y]['attack_type'] == 3){
 if($units[$y]['attack_type'] == 4){
 	$attack_type = "Raid to";
 	}
-	
+$isoasis = $database->isVillageOases($units[$y]['to']);
+if ($isoasis ==0){ 	
 $to = $database->getMInfo($units[$y]['to']);
+} else {
+$to = $database->getOMInfo($units[$y]['to']);}
 
 
 ?>
