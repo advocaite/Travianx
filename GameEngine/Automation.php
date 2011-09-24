@@ -19,6 +19,10 @@ class Automation {
 	private $bountyocounter = array();
 	private $bountyunitall = array();
 	private $bountypop;
+    private $bountyOresarray = array();
+    private $bountyOinfoarray = array();
+    private $bountyOproduction = array();
+    private $bountyOpop = 1;
 	
 		public function procResType($ref) {
 		global $session;
@@ -208,7 +212,31 @@ class Automation {
 			 $database->query($q);
 		}
 	}
-	
+	private function pruneOResource() {
+        global $database;
+        if(!ALLOW_BURST) {
+            $q = "UPDATE ".TB_PREFIX."odata set `wood` = `maxstore` WHERE `wood` > `maxstore`";
+            $database->query($q);
+            $q = "UPDATE ".TB_PREFIX."odata set `clay` = `maxstore` WHERE `clay` > `maxstore`";
+            $database->query($q);
+            $q = "UPDATE ".TB_PREFIX."odata set `iron` = `maxstore` WHERE `iron` > `maxstore`";
+            $database->query($q);
+            $q = "UPDATE ".TB_PREFIX."odata set `crop` = `maxcrop` WHERE `crop` > `maxcrop`";
+            $database->query($q);
+            $q = "UPDATE ".TB_PREFIX."odata set `crop` = 100 WHERE `crop` < 0";
+            $database->query($q);
+            $q = "UPDATE ".TB_PREFIX."odata set `wood` = 0 WHERE `wood` < 0";
+            $database->query($q);
+            $q = "UPDATE ".TB_PREFIX."odata set `clay` = 0 WHERE `clay` < 0";
+            $database->query($q);
+            $q = "UPDATE ".TB_PREFIX."odata set `iron` = 0 WHERE `iron` < 0";
+            $database->query($q);
+            $q = "UPDATE ".TB_PREFIX."odata set `maxstore` = 800 WHERE `maxstore` <= 800";
+            $database->query($q);
+            $q = "UPDATE ".TB_PREFIX."odata set `maxcrop` = 800 WHERE `maxcrop` <= 800";
+            $database->query($q);
+        }
+    }
 	private function pruneResource() {
 		global $database;
 		if(!ALLOW_BURST) {
@@ -362,6 +390,9 @@ class Automation {
 			//set base things
 			$tocoor = $database->getCoor($data['from']);
 			$fromcoor = $database->getCoor($data['to']);
+            $isoasis = $database->isVillageOases($data['to']);
+            $AttackArrivalTime = $data['endtime']; 
+            if ($isoasis == 0){
 			$owntribe = $database->getUserField($database->getVillageField($data['from'],"owner"),"tribe",0);
 			$targettribe = $database->getUserField($database->getVillageField($data['to'],"owner"),"tribe",0);
 			$ownally = $database->getUserField($database->getVillageField($data['from'],"owner"),"alliance",0);
@@ -370,8 +401,8 @@ class Automation {
 			$from = $database->getMInfo($data['from']);
 			$toF = $database->getVillage($data['to']);
 			$fromF = $database->getVillage($data['from']);
-			$AttackArrivalTime = $data['endtime'];
-
+			
+           
 			/*--------------------------------
 			// Battle part
 			--------------------------------*/
@@ -543,7 +574,124 @@ class Automation {
 			/*--------------------------------
 			// End Battle part
 			--------------------------------*/
-		
+		    }else{
+            $owntribe = $database->getUserField($database->getVillageField($data['from'],"owner"),"tribe",0);
+            $targettribe = 4;
+            $ownally = $database->getUserField($database->getVillageField($data['from'],"owner"),"alliance",0);
+            $targetally = 0;
+            $to = $database->getOMInfo($data['to']);
+            $from = $database->getMInfo($data['from']);
+            $toF = $database->getOasisV($data['to']);
+            $fromF = $database->getVillage($data['from']);
+            
+            
+                        //get defence units 
+                        $Defender = array();    $rom = $ger = $gal = $nat = $natar = 0;
+                        $Defender = $database->getUnit($data['to']);
+                        $enforcementarray = $database->getEnforceVillage($data['to'],0);
+                        if(count($enforcementarray) > 0) {
+                            foreach($enforcementarray as $enforce) {
+                                for($i=1;$i<=50;$i++) {
+                                    $Defender['u'.$i] += $enforce['u'.$i];
+                                }
+                            }
+                        }
+                            for($i=1;$i<=50;$i++){
+                                if(!isset($Defender['u'.$i])){
+                                    $Defender['u'.$i] = '0';
+                                } else {
+                                 if($Defender['u'.$i]=='' or $Defender['u'.$i]<='0'){
+                                    $Defender['u'.$i] = '0';                                 
+                                 } else {
+                                                if($i<=10){ $rom='1'; } 
+                                            else if($i<=20){ $ger='1'; } 
+                                            else if($i<=30){ $gal='1'; } 
+                                            else if($i<=40){ $nat='1'; } 
+                                            else if($i<=50){ $natar='1'; } 
+                                }
+                                }
+                            }
+                                    //get attack units            
+                                            $Attacker = array();
+                                            $start = ($owntribe-1)*10+1;
+                                            $end = ($owntribe*10);
+                                            $u = (($owntribe-1)*10);                                                            
+                                            $catp =  0;                                
+                                            $catapult = array(8,18,28,38,48);
+                                            $ram = array(7,17,27,37,47);
+                                            $chief = array(9,19,29,39,49);
+                                            $spys = array(4,14,23,34,44);
+                                        for($i=$start;$i<=$end;$i++) {
+                                            $y = $i-$u;
+                                            $Attacker['u'.$i] = $dataarray[0]['t'.$y];
+                                                //there are catas
+                                                if(in_array($i,$catapult)) {
+                                                $catp += $Attacker['u'.$i];
+                                                $catp_pic = $i;
+                                                }
+                                                if(in_array($i,$ram)) {
+                                                $rams += $Attacker['u'.$i];
+                                                $ram_pic = $i;
+                                                }
+                                                if(in_array($i,$chief)) {
+                                                $chiefs += $Attacker['u'.$i];
+                                                $chief_pic = $i;
+                                                }
+                                                if(in_array($i,$spys)) {
+                                                $chiefs += $Attacker['u'.$i];
+                                                $spy_pic = $i;
+                                                }
+                                                }        
+
+                                    //need to set these variables.
+                                    $def_wall = 1;
+                                    $att_tribe = $owntribe;
+                                    $def_tribe = $targettribe;
+                                    $residence = "0";
+                                    $attpop = $fromF['pop'];
+                                    $defpop = 100; 
+              
+                        
+                                    //type of attack
+                                    if($dataarray[0]['attack_type'] == 1){
+                                        $type = 1;
+                                        $scout = 1;
+                                    }
+                                    if($dataarray[0]['attack_type'] == 2){
+                                        $type = 2;
+                                    }
+                                    if($dataarray[0]['attack_type'] == 3){
+                                        $type = 3;
+                                    }
+                                    if($dataarray[0]['attack_type'] == 4){
+                                        $type = 4;
+                                    }
+                                
+                                    $def_ab = Array (
+                                        "b1" => 0, // Blacksmith level
+                                        "b2" => 0, // Blacksmith level
+                                        "b3" => 0, // Blacksmith level
+                                        "b4" => 0, // Blacksmith level
+                                        "b5" => 0, // Blacksmith level
+                                        "b6" => 0, // Blacksmith level
+                                        "b7" => 0, // Blacksmith level
+                                        "b8" => 0); // Blacksmith level
+                                    
+                                    $att_ab = Array ( 
+                                        "a1" => 0, // armoury level
+                                        "a2" => 0, // armoury level
+                                        "a3" => 0, // armoury level
+                                        "a4" => 0, // armoury level
+                                        "a5" => 0, // armoury level
+                                        "a6" => 0, // armoury level
+                                        "a7" => 0, // armoury level
+                                        "a8" => 0); // armoury level
+                                        
+                                        $empty='1'; 
+                                        $tblevel = '0'; 
+                                        $stonemason = "1";
+   
+        }
 			$battlepart = $battle->calculateBattle($Attacker,$Defender,$def_wall,$att_tribe,$def_tribe,$residence,$attpop,$defpop,$type,$def_ab,$att_ab,$tblevel,$stonemason);
 			
 			//units attack string for battleraport
@@ -669,10 +817,11 @@ class Automation {
             $database->modifyPointsAlly($ownally,'ap',$totaldead_def);    
                 	
 				
-			// get toatal cranny value:
-			$buildarray = $database->getResourceLevel($data['to']);
-			$cranny = 0;
-				
+			
+			if ($isoasis == 0){  
+            // get toatal cranny value:
+            $buildarray = $database->getResourceLevel($data['to']);
+            $cranny = 0;	
 			for($i=19;$i<39;$i++){
 				if($buildarray['f'.$i.'t']==23){
 				$cranny += $bid23[$buildarray['f'.$i.'']]['attri'];
@@ -693,7 +842,18 @@ class Automation {
 			$totiron = $database->getVillageField($data['to'],'iron');
 			$totwood = $database->getVillageField($data['to'],'wood');
 			$totcrop = $database->getVillageField($data['to'],'crop');
-						
+			}else{
+            $cranny_eff = 0;
+            
+            // work out available resources.
+            $this->updateORes($data['to']);
+            $this->pruneOResource();
+            
+            $totclay = $database->getOasisField($data['to'],'clay');
+            $totiron = $database->getOasisField($data['to'],'iron');
+            $totwood = $database->getOasisField($data['to'],'wood');
+            $totcrop = $database->getOasisField($data['to'],'crop');    
+            }			
 			$avclay = floor($totclay - $cranny_eff);
 			$aviron = floor($totiron - $cranny_eff);
 			$avwood = floor($totwood - $cranny_eff);
@@ -1038,7 +1198,8 @@ class Automation {
 		
 
 			
-		}
+		
+        }
 			if(file_exists("GameEngine/Prevention/sendunits.txt")) {
 				@unlink("GameEngine/Prevention/sendunits.txt");
 			}
@@ -1228,7 +1389,20 @@ class Automation {
 		$this->bountycalculateProduction($bountywid);
 		$this->bountyprocessProduction($bountywid);
 	}
-	
+    
+    private function updateORes($bountywid) {
+        global $session;
+        $this->bountyLoadOTown($bountywid);
+        $this->bountycalculateOProduction($bountywid);
+        $this->bountyprocessOProduction($bountywid);
+    }
+	private function bountyLoadOTown($bountywid) {
+        global $database,$session,$logging,$technology;
+        $this->bountyinfoarray = $database->getOasisV($bountywid);
+        $this->bountyresarray = $database->getResourceLevel($bountywid);
+        $this->bountypop = 2;
+        
+    }
 	private function bountyLoadTown($bountywid) {
 		global $database,$session,$logging,$technology;
 		$this->bountyinfoarray = $database->getVillage($bountywid);
@@ -1349,7 +1523,13 @@ class Automation {
         }
         return $upkeep;
     }
-	
+	private function bountycalculateOProduction($bountywid) { 
+        global $technology,$database;
+        $this->bountyOproduction['wood'] = $this->bountyGetOWoodProd();
+        $this->bountyOproduction['clay'] = $this->bountyGetOClayProd();
+        $this->bountyOproduction['iron'] = $this->bountyGetOIronProd();
+        $this->bountyOproduction['crop'] = $this->bountyGetOCropProd();
+    }
 	private function bountycalculateProduction($bountywid) { 
 		global $technology,$database;
 		$this->bountyproduction['wood'] = $this->bountyGetWoodProd();
@@ -1368,6 +1548,16 @@ class Automation {
 		$database->modifyResource($bountywid,$nwood,$nclay,$niron,$ncrop,1);
 		$database->updateVillage($bountywid);
 	}
+        private function bountyprocessOProduction($bountywid) {
+        global $database;
+        $timepast = time() - $this->bountyinfoarray['lastupdated'];
+        $nwood = ($this->bountyproduction['wood'] / 3600) * $timepast;
+        $nclay = ($this->bountyproduction['clay'] / 3600) * $timepast;
+        $niron = ($this->bountyproduction['iron'] / 3600) * $timepast;
+        $ncrop = ($this->bountyproduction['crop'] / 3600) * $timepast;
+        $database->modifyOasisResource($bountywid,$nwood,$nclay,$niron,$ncrop,1);
+        $database->updateOasis($bountywid);
+    }
 	
 	private function bountyGetWoodProd() {
 		global $bid1,$bid5,$session;
@@ -1392,7 +1582,34 @@ class Automation {
 		$wood *= SPEED;
 		return round($wood);
 	}
-	
+    private function bountyGetOWoodProd() {
+        global $session;
+        $wood = 0;
+        $wood += 40;
+        $wood *= SPEED;
+        return round($wood);
+    }
+	private function bountyGetOClayProd() {
+        global $session;
+        $clay = 0;
+        $clay += 40;
+        $clay *= SPEED;
+        return round($clay);
+    }private function bountyGetOIronProd() {
+        global $session;
+        $iron = 0;
+        $iron += 40; 
+        $iron *= SPEED;
+        return round($iron);
+    }
+    
+    private function bountyGetOCropProd() {
+        global $session;
+        $crop = 0;
+        $clay += 40;
+        $crop *= SPEED;
+        return round($crop);
+    }
 	private function bountyGetClayProd() {
 		global $bid2,$bid6,$session;
 		$clay = $brick = 0;

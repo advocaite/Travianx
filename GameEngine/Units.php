@@ -114,6 +114,7 @@ class Units {
 						}												
 					}
 				}
+                if ($database->isVillageOases($id) == 0) {
                 //check if has beginners protection
                 $villageOwner = $database->getVillageField($id,'owner');
                 $userprotect = $database->getUserField($villageOwner,'protect',0);
@@ -149,7 +150,23 @@ class Units {
 				array_push($post, "$id", "$villageName", "$villageOwner","$timetaken");
 				return $post;
 				
-			}	
+			}
+                  }else{
+                      
+                      if($form->returnErrors() > 0) {
+                    $_SESSION['errorarray'] = $form->getErrors();
+                    $_SESSION['valuearray'] = $_POST;
+                    header("Location: a2b.php");        
+                }else{                
+
+                $villageName = "Unoccupied Oasis";
+                $speed= 300;
+                $timetaken = $generator->procDistanceTime($coor,$village->coor,INCREASE_SPEED,1);                                
+                array_push($post, "$id", "$villageName", "2","$timetaken");
+                return $post;
+                
+            }
+                  }	
 	
 	}
 	private function sendTroops($post) {
