@@ -411,6 +411,12 @@
         			return false;
         		}
         	}
+                function isVillageOases($wref) {
+        $q = "SELECT id, oasistype FROM ".TB_PREFIX."wdata where id = $wref";
+        $result = mysql_query($q, $this->connection);
+        $dbarray = mysql_fetch_array($result);
+        return $dbarray['oasistype'];
+    }
 
         	function getProfileVillages($uid) {
         		$q = "SELECT capital,wref,name,pop,created from " . TB_PREFIX . "vdata where owner = $uid order by pop desc";
