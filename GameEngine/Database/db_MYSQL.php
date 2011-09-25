@@ -7,7 +7,7 @@
 |              Advocaite & Dzoki & Donnchadh              |
 |                                                         |
 | Copyright:   TravianX Project All rights reserved       |
-\** --------------------------------------------------- **/
+ \** --------------------------------------------------- **/
 
 
         class MYSQL_DB {
@@ -493,7 +493,7 @@
         	}
 
         	function getResourceLevel($vid) {
-        		$q = "SELECT * from " . TB_PREFIX . "fdata where vref = $vid";
+        		$q = "SELECT * FROM " . TB_PREFIX . "fdata where vref = $vid";
         		$result = mysql_query($q, $this->connection);
         		return mysql_fetch_assoc($result);
         	}
@@ -1935,6 +1935,23 @@
         		$slots = array("chiefs" => $chiefslots, "settlers" => $settlerslots);
         		return $slots;
         	}
+
+        	function addArtefact($vref, $owner, $type, $size, $name, $desc, $effect, $img) {
+        		$q = "INSERT INTO `" . TB_PREFIX . "artefacts` (`vref`, `owner`, `type`, `size`, `conquered`, `name`, `desc`, `effect`, `img`) VALUES ('$vref', '$owner', '$type', '$size', '" . time() . "', '$name', '$desc', '$effect', '$img')";
+        		return mysql_query($q, $this->connection);
+        	}
+            
+            function getOwnArtefactInfo($vref){
+                $q = "SELECT * FROM " . TB_PREFIX . "artefacts WHERE vref = $vref";
+                $result = mysql_query($q,$this->connection);
+                return mysql_fetch_array($result);
+            }
+            
+            function getArtefactInfo(){
+                $q = "SELECT * FROM ".TB_PREFIX."artefacts WHERE id > 0";
+                $result = mysql_query($q,$this->connection);
+                return mysql_fetch_array($result);
+            }
 
         }
         ;

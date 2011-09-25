@@ -116,9 +116,9 @@ include("avaliable/stonemason.tpl");
 if($stable == 0 && $blacksmith >= 3 && $academy >= 5 && $id != 39 && $id != 40) {
 include("avaliable/stable.tpl");
 }
-if($treasury == 0 && $mainbuilding >= 10  && $id != 39 && $id != 40) {
-include("avaliable/treasury.tpl");
-}
+//if($treasury == 0 && $mainbuilding >= 10  && $id != 39 && $id != 40) {
+//include("avaliable/treasury.tpl");
+//}
 if($brickyard == 0 && $claypit >= 10 && $mainbuilding >= 5  && $id != 39 && $id != 40 ) {
 include("avaliable/brickyard.tpl");
 }
