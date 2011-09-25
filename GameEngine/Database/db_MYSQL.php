@@ -1955,7 +1955,10 @@
         $result2 = mysql_query($q2, $this->connection);
             while($row=mysql_fetch_array($result2)){
         $wid = $row['id'];
-        
+                $basearray = $this->getOMInfo($wid);
+        //We switch type of oasis and instert record with apropriate infomation.
+         $q = "INSERT into ".TB_PREFIX."odata VALUES ('".$basearray['id']."',".$basearray['oasistype'].",0)";              
+        $result = mysql_query($q, $this->connection);
         }
     }
 
