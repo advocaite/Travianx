@@ -211,7 +211,7 @@
             AND " . TB_PREFIX . "users.id = userid
             )allitag
             FROM " . TB_PREFIX . "users
-            WHERE " . TB_PREFIX . "users.id > 3 AND " . TB_PREFIX . "users.access < " . (INCLUDE_ADMIN ? "10" : "8") . "
+            WHERE " . TB_PREFIX . "users.access < " . (INCLUDE_ADMIN ? "10" : "8") . "
             ORDER BY totalpop DESC, totalvillages DESC, username ASC";
 
 
@@ -266,7 +266,7 @@
             AND " . TB_PREFIX . "users.id = userid
             )allitag
             FROM " . TB_PREFIX . "users
-            WHERE " . TB_PREFIX . "users.tribe = $race AND " . TB_PREFIX . "users.id > 3 AND " . TB_PREFIX . "users.access < " . (INCLUDE_ADMIN ? "10" : "8") . "
+            WHERE " . TB_PREFIX . "users.tribe = $race AND " . TB_PREFIX . "users.access < " . (INCLUDE_ADMIN ? "10" : "8") . "
             ORDER BY totalpop DESC, totalvillages DESC, username ASC";
 
 
@@ -325,7 +325,7 @@
             WHERE " . TB_PREFIX . "vdata.owner = userid
             )pop
             FROM " . TB_PREFIX . "users
-            WHERE " . TB_PREFIX . "users.apall >=0 AND " . TB_PREFIX . "users.id > 3 AND " . TB_PREFIX . "users.access < " . (INCLUDE_ADMIN ? "10" : "8") . " AND " . TB_PREFIX . "users.tribe <= 3
+            WHERE " . TB_PREFIX . "users.apall >=0 AND " . TB_PREFIX . "users.access < " . (INCLUDE_ADMIN ? "10" : "8") . " AND " . TB_PREFIX . "users.tribe <= 3
             ORDER BY " . TB_PREFIX . "users.apall DESC, pop DESC, username ASC";
         		$result = mysql_query($q) or die(mysql_error());
         		while($row = mysql_Fetch_assoc($result)) {
@@ -368,7 +368,7 @@
             WHERE " . TB_PREFIX . "vdata.owner = userid
             )pop
             FROM " . TB_PREFIX . "users
-            WHERE " . TB_PREFIX . "users.dpall >=0 AND " . TB_PREFIX . "users.id > 3 AND " . TB_PREFIX . "users.access < " . (INCLUDE_ADMIN ? "10" : "8") . "
+            WHERE " . TB_PREFIX . "users.dpall >=0 AND " . TB_PREFIX . "users.access < " . (INCLUDE_ADMIN ? "10" : "8") . "
             ORDER BY " . TB_PREFIX . "users.dpall DESC, pop DESC, username ASC";
         		$result = mysql_query($q) or die(mysql_error());
         		while($row = mysql_Fetch_assoc($result)) {
