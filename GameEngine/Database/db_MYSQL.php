@@ -1089,6 +1089,7 @@
             function clearExpansionSlot($id) {
 				for ($i=1;$i<=3;$i++) {
 					$q = "UPDATE ".TB_PREFIX."vdata SET exp".$i."=0 WHERE exp".$i."=".$id;
+					mysql_query($q, $this->connection);
 				}
 			}
 
