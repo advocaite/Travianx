@@ -15,7 +15,7 @@
 
        include ("GameEngine/Database.php");
        include ("GameEngine/config.php");
-       include ("GameEngine/lang/en.php");
+       include ("GameEngine/Lang/en.php");
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
