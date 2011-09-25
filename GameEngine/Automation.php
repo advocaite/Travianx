@@ -1045,6 +1045,7 @@ class Automation {
 						//destroy wall
 						$database->setVillageLevel($data['to'],"f40",0);
 						$database->setVillageLevel($data['to'],"f40t",0);
+						$database->clearExpansionSlot($data['to']);
 						//kill a chief
 						$database->modifyAttack($data['ref'],9,1);
 						
