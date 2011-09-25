@@ -114,6 +114,7 @@ class Units {
 						}												
 					}
 				}
+                if ($database->isVillageOases($id) == 0) {
                 //check if has beginners protection
                 $villageOwner = $database->getVillageField($id,'owner');
                 $userprotect = $database->getUserField($villageOwner,'protect',0);
@@ -149,7 +150,23 @@ class Units {
 				array_push($post, "$id", "$villageName", "$villageOwner","$timetaken");
 				return $post;
 				
-			}	
+			}
+                  }else{
+                      
+                      if($form->returnErrors() > 0) {
+                    $_SESSION['errorarray'] = $form->getErrors();
+                    $_SESSION['valuearray'] = $_POST;
+                    header("Location: a2b.php");        
+                }else{                
+
+                $villageName = "Unoccupied Oasis";
+                $speed= 300;
+                $timetaken = $generator->procDistanceTime($coor,$village->coor,INCREASE_SPEED,1);                                
+                array_push($post, "$id", "$villageName", "2","$timetaken");
+                return $post;
+                
+            }
+                  }	
 	
 	}
 	private function sendTroops($post) {
@@ -315,7 +332,7 @@ class Units {
 					}
 				}
 				$time = $generator->procDistanceTime($fromCor,$toCor,min($speeds),1);
-				$reference = $database->addAttack($enforce['from'],$post['t1'],$post['t2'],$post['t3'],$post['t4'],$post['t5'],$post['t6'],$post['t7'],$post['t8'],$post['t9'],$post['t10'],0,2,0,0,0);
+				$reference = $database->addAttack($enforce['from'],$post['t1'],$post['t2'],$post['t3'],$post['t4'],$post['t5'],$post['t6'],$post['t7'],$post['t8'],$post['t9'],$post['t10'],0,2,0,0,0,0);
 				$database->addMovement(4,$village->wid,$enforce['from'],$reference,($time+time()));
 				$technology->checkReinf($post['ckey']);
 

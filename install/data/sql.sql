@@ -6,6 +6,15 @@
 -- Generation Time: Jul 21, 2011 at 02:49 AM
 -- Server version: 5.5.8
 -- PHP Version: 5.3.5
+-- #################################################################################
+-- ##              -= YOU MAY NOT REMOVE OR CHANGE THIS NOTICE =-                 ##
+-- ## --------------------------------------------------------------------------- ##
+-- ##  Filename       sql.sql                                                     ##
+-- ##  Developed by:  Dzoki & Dixie                                               ##
+-- ##  License:       TravianX Project                                            ##
+-- ##  Copyright:     TravianX (c) 2010-2011. All rights reserved.                ##
+-- ##                                                                             ##
+-- #################################################################################
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
@@ -198,7 +207,7 @@ CREATE TABLE IF NOT EXISTS `%PREFIX%alidata` (
   `ap` bigint(255) unsigned NOT NULL DEFAULT '0',
   `dp` bigint(255) unsigned NOT NULL DEFAULT '0',
   `Rc` bigint(255) unsigned NOT NULL DEFAULT '0',
-  `RR` bigint(255) NOT NULL DEFAULT '0',
+  `RR` bigint(255)  NOT NULL DEFAULT '0',
   `Aap` bigint(255) unsigned NOT NULL DEFAULT '0',
   `Adp` bigint(255) unsigned NOT NULL DEFAULT '0',
   `clp` bigint(255) NOT NULL DEFAULT '0',
@@ -943,6 +952,16 @@ CREATE TABLE IF NOT EXISTS `%PREFIX%odata` (
   `wref` int(10) unsigned NOT NULL,
   `type` tinyint(2) unsigned NOT NULL,
   `conqured` int(10) unsigned NOT NULL,
+  `wood` int(10) unsigned NOT NULL,
+  `iron` int(10) unsigned NOT NULL,
+  `clay` int(10) unsigned NOT NULL,
+  `maxstore` int(10) unsigned NOT NULL,
+  `crop` int(10) unsigned NOT NULL,
+  `maxcrop` int(10) unsigned NOT NULL,
+  `lastupdated` int(10) unsigned NOT NULL,
+  `loyalty` int(10) NOT NULL DEFAULT '100',
+  `owner` int(10) unsigned NOT NULL DEFAULT '2',
+  `name` varchar(32) NOT NULL DEFAULT 'Unoccupied Oasis',
   PRIMARY KEY (`wref`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 

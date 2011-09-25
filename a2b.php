@@ -1,35 +1,46 @@
-<?php
+<?
+#################################################################################
+##              -= YOU MAY NOT REMOVE OR CHANGE THIS NOTICE =-                 ##
+## --------------------------------------------------------------------------- ##
+##  Filename       a2b.php                                                     ##
+##  Developed by:  Dzoki                                                       ##
+##  License:       TravianX Project                                            ##
+##  Copyright:     TravianX (c) 2010-2011. All rights reserved.                ##
+##                                                                             ##
+#################################################################################
 
-/** --------------------------------------------------- **\
-| ********* DO NOT REMOVE THIS COPYRIGHT NOTICE ********* |
-+---------------------------------------------------------+
-| Credits:     All the developers including the leaders:  |
-|              Advocaite & Dzoki & Donnchadh              |
-|                                                         |
-| Copyright:   TravianX Project All rights reserved       |
-\** --------------------------------------------------- **/
+include("GameEngine/Village.php");
+include("GameEngine/Units.php");
 
-        include ("GameEngine/Village.php");
-        include ("GameEngine/Units.php");
+$start = $generator->pageLoadTimeStart();
+if(isset($_GET['newdid'])) {
+	$_SESSION['wid'] = $_GET['newdid'];
+	header("Location: ".$_SERVER['PHP_SELF']);
+}
+else {
+$building->procBuild($_GET);
+}
 
-        $start = $generator->pageLoadTimeStart();
-        if(isset($_GET['newdid'])) {
-        	$_SESSION['wid'] = $_GET['newdid'];
-        	header("Location: " . $_SERVER['PHP_SELF']);
-        } else {
-        	$building->procBuild($_GET);
-        }
-
-        if(isset($_GET['id'])) {
-        	$id = $_GET['id'];
-        }
-        if(isset($_GET['w'])) {
-        	$w = $_GET['w'];
-        }
-        if(isset($_GET['r'])) {
-        	$r = $_GET['r'];
-        }
-        $process = $units->procUnits($_POST);
+if(isset($_GET['id'])) {
+	$id = $_GET['id'];
+}
+if(isset($_GET['w'])) {
+	$w = $_GET['w'];
+}
+if(isset($_GET['r'])) {
+	$r = $_GET['r'];
+}
+if(isset($_GET['o'])) {
+    $o = $_GET['o'];
+    $oid = $_GET['z'];
+    $too = $database->getOasisField($oid,"conqured");
+    if($too['conqured'] == 0){$disabledr ="disabled=disabled";}else{
+    $disabledr ="";
+    }
+    $disabled ="disabled=disabled";
+    $checked  ="checked=checked";
+}
+	$process = $units->procUnits($_POST);	
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">

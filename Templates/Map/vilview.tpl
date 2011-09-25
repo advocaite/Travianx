@@ -230,8 +230,8 @@ else if (!$basearray['occupied']) {
 		"<a href=\"build.php?id=39\">&raquo; Raid $otext oasis. (build a rally point)</a>" : 
 		"&raquo; Raid $otext oasis. (build a rally point)" : 
 		
-		"&raquo; Raid $otext oasis. (Not possible)" :
-		//"<a href=\"a2b.php?z=".$_GET['d']."&o\">&raquo; Raid $otext oasis.</a>" :
+		
+		"<a href=\"a2b.php?z=".$_GET['d']."&o\">&raquo; Raid $otext oasis.</a>" :
 		"$test"
 			?>
 		</tr>
