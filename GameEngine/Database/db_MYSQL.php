@@ -391,19 +391,15 @@
         $dbarray = mysql_fetch_array($result);
         return $dbarray['oasistype'];
     }
-            function populateOasis() {
-        $q = "SELECT * FROM ".TB_PREFIX."wdata where oasistype != 0 ";
+    function populateOasis() {
+        $q = "SELECT * FROM ".TB_PREFIX."wdata where oasistype != 0";
         $result = mysql_query($q, $this->connection);
             while($row=mysql_fetch_array($result)){
         $wid = $row['id'];
 
         $this->addUnits($wid);
-        $basearray = $this->getOMInfo($wid);
-        //We switch type of oasis and instert record with apropriate infomation.
-         $q = "INSERT into ".TB_PREFIX."odata VALUES ('".$basearray['id']."',".$basearray['oasistype'].",0,800,800,800,800,800,800,800,800,2,'Unoccupied Oasis')";              
-        $result = mysql_query($q, $this->connection);
- 
-        }
+        
+        } 
     } 
     
         function poulateOasisUnitsLow() {
@@ -461,6 +457,7 @@
         }
         }
     }
+
 
             /***************************
             Function to retrieve type of village via ID
@@ -1013,6 +1010,7 @@
                 }
                 return mysql_query($q, $this->connection);
             }
+            
              function modifyOasisResource($vid,$wood,$clay,$iron,$crop,$mode) {
         if(!$mode) {
             $q = "UPDATE ".TB_PREFIX."odata set wood = wood - $wood, clay = clay - $clay, iron = iron - $iron, crop = crop - $crop where wref = $vid";
@@ -1952,6 +1950,14 @@
                     return false;
                 }
             }
+                function poulateOasisdata() {
+        $q2 = "SELECT * FROM ".TB_PREFIX."wdata where oasistype != 0";
+        $result2 = mysql_query($q2, $this->connection);
+            while($row=mysql_fetch_array($result2)){
+        $wid = $row['id'];
+        
+        }
+    }
 
             public function getAvailableExpansionTraining() {
                 global $building, $session, $technology, $village;
