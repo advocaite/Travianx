@@ -35,7 +35,7 @@
         	}
         	echo '<td class="icon"><img class="artefact_icon_' . $artefact['type'] . '" src="img/x.gif"></td>';
         	echo '<td class="nam">
-                            <a href="build.php?id=' . $id . '">' . $artefact['name'] . '</a> <span class="bon">' . $artefact['effect'] . '</span>
+                            <a href="build.php?id=' . $id . '&show='.$row['id'].'">' . $artefact['name'] . '</a> <span class="bon">' . $artefact['effect'] . '</span>
                             <div class="info">
                                 Treasury <b>' . $reqlvl . '</b>, Effect <b>' . $effect . '</b>
                             </div>
@@ -105,7 +105,7 @@
         		echo '<tr>';
         		echo '<td class="icon"><img class="artefact_icon_' . $row['type'] . '" src="img/x.gif" alt="" title=""></td>';
         		echo '<td class="nam">';
-        		echo '<a href="build.php?id=' . $id . '">' . $row['name'] . '</a> <span class="bon">' . $row['effect'] . '</span>';
+        		echo '<a href="build.php?id=' . $id . '&show='.$row['id'].'">' . $row['name'] . '</a> <span class="bon">' . $row['effect'] . '</span>';
         		echo '<div class="info">';
         		if($row['size'] == 1) {
         			$reqlvl = 10;
