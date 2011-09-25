@@ -69,7 +69,7 @@ mysql_query("INSERT INTO `".TB_PREFIX."hero` (`uid` ,`heroname` ,`type` ,`health
 if ( $_GET['train'] == 2) {
 mysql_query("INSERT INTO `".TB_PREFIX."hero` (`uid` ,`heroname` ,`type` ,`healthofhero` ,`timetoborn`) VALUES ('".$session->uid."' ,'".$session->username."' ,'22' ,'100' ,'".(time()+${'u22'}['time'])."');") or die("ERROR:".mysql_error());
 }
-if ( $_GET['train'] == 3) {
+if ( $_GET['train'] == 4) {
 mysql_query("INSERT INTO `".TB_PREFIX."hero` (`uid` ,`heroname` ,`type` ,`healthofhero` ,`timetoborn`) VALUES ('".$session->uid."' ,'".$session->username."' ,'24' ,'100' ,'".(time()+${'u24'}['time'])."');") or die("ERROR:".mysql_error());
 }
 if ( $_GET['train'] == 5) {
@@ -233,23 +233,31 @@ if ($session->tribe == 1) {
 <th width='75%'><img class="unit u1" src="img/x.gif"><?php echo $typercheck['1']; ?></th>
 <th width='25%'><a href='build.php?id=<?php echo "$id"; ?>&train=1'>Train</a></th>
 </tr>
+<?php
+if ($database->checkIfResearched($village->wid,'t2')) { ?>
 <tr>
 <th width='75%'><img class="unit u2" src="img/x.gif"><?php echo $typercheck['2']; ?></th>
 <th width='25%'><a href='build.php?id=<?php echo "$id"; ?>&train=2'>Train</a></th>
 </tr>
+<?php }
+if ($database->checkIfResearched($village->wid,'t3')) { ?>
 <tr>
 <th width='75%'><img class="unit u3" src="img/x.gif"><?php echo $typercheck['3']; ?></th>
 <th width='25%'><a href='build.php?id=<?php echo "$id"; ?>&train=3'>Train</a></th>
 </tr>
+<?php }
+if ($database->checkIfResearched($village->wid,'t5')) { ?>
 <tr>
 <th width='75%'><img class="unit u5" src="img/x.gif"><?php echo $typercheck['5']; ?></th>
-<th width='25%'><a href='build.php?id=<?php echo "$id"; ?>&train=4'>Train</a></th>
-</tr>
-<tr>
-<th width='75%'><img class="unit u6" src="img/x.gif"><?php echo $typercheck['6']; ?></th>
 <th width='25%'><a href='build.php?id=<?php echo "$id"; ?>&train=5'>Train</a></th>
 </tr>
-<?php
+<?php }
+if ($database->checkIfResearched($village->wid,'t6')) { ?>
+<tr>
+<th width='75%'><img class="unit u6" src="img/x.gif"><?php echo $typercheck['6']; ?></th>
+<th width='25%'><a href='build.php?id=<?php echo "$id"; ?>&train=6'>Train</a></th>
+</tr>
+<?php }
 }
 if ($session->tribe == 2) {
 ?>
@@ -257,23 +265,31 @@ if ($session->tribe == 2) {
 <th width='75%'><img class="unit u11" src="img/x.gif"><?php echo $typercheck['11']; ?></th>
 <th width='25%'><a href='build.php?id=<?php echo "$id"; ?>&train=1'>Train</a></th>
 </tr>
+<?php
+if ($database->checkIfResearched($village->wid,'t12')) { ?>
 <tr>
 <th width='75%'><img class="unit u12" src="img/x.gif"><?php echo $typercheck['12']; ?></th>
 <th width='25%'><a href='build.php?id=<?php echo "$id"; ?>&train=2'>Train</a></th>
-</tr>
+</tr> 
+<?php }
+if ($database->checkIfResearched($village->wid,'t13')) { ?>
 <tr>
 <th width='75%'><img class="unit u13" src="img/x.gif"><?php echo $typercheck['13']; ?></th>
 <th width='25%'><a href='build.php?id=<?php echo "$id"; ?>&train=3'>Train</a></th>
 </tr>
+<?php }
+if ($database->checkIfResearched($village->wid,'t15')) { ?>
 <tr>
 <th width='75%'><img class="unit u15" src="img/x.gif"><?php echo $typercheck['15']; ?></th>
-<th width='25%'><a href='build.php?id=<?php echo "$id"; ?>&train=4'>Train</a></th>
-</tr>
-<tr>
-<th width='75%'><img class="unit u16" src="img/x.gif"><?php echo $typercheck['16']; ?></th>
 <th width='25%'><a href='build.php?id=<?php echo "$id"; ?>&train=5'>Train</a></th>
 </tr>
-<?php
+<?php }
+if ($database->checkIfResearched($village->wid,'t16')) { ?>
+<tr>
+<th width='75%'><img class="unit u16" src="img/x.gif"><?php echo $typercheck['16']; ?></th>
+<th width='25%'><a href='build.php?id=<?php echo "$id"; ?>&train=6'>Train</a></th>
+</tr>
+<?php }
 }
 if ($session->tribe == 3) {
 ?>
@@ -281,29 +297,32 @@ if ($session->tribe == 3) {
 <th width='75%'><img class="unit u21" src="img/x.gif"><?php echo $typercheck['21']; ?></th>
 <th width='25%'><a href='build.php?id=<?php echo "$id"; ?>&train=1'>Train</a></th>
 </tr>
+<?php
+if ($database->checkIfResearched($village->wid,'t22')) { ?>
 <tr>
 <th width='75%'><img class="unit u22" src="img/x.gif"><?php echo $typercheck['22']; ?></th>
 <th width='25%'><a href='build.php?id=<?php echo "$id"; ?>&train=2'>Train</a></th>
 </tr>
+<?php }
+if ($database->checkIfResearched($village->wid,'t24')) { ?>
 <tr>
 <th width='75%'><img class="unit u24" src="img/x.gif"><?php echo $typercheck['24']; ?></th>
-<th width='25%'><a href='build.php?id=<?php echo "$id"; ?>&train=3'>Train</a></th>
+<th width='25%'><a href='build.php?id=<?php echo "$id"; ?>&train=4'>Train</a></th>
 </tr>
-<?php
+<?php }
 if ($database->checkIfResearched($village->wid,'t25')) { ?>
 <tr>
 <th width='75%'><img class="unit u25" src="img/x.gif"><?php echo $typercheck['25']; ?></th>
-<th width='25%'><a href='build.php?id=<?php echo "$id"; ?>&train=4'>Train</a></th>
+<th width='25%'><a href='build.php?id=<?php echo "$id"; ?>&train=5'>Train</a></th>
 </tr>
 <?php }
 if ($database->checkIfResearched($village->wid,'t26')) { ?>
 <tr>
 <th width='75%'><img class="unit u26" src="img/x.gif"><?php echo $typercheck['26']; ?></th>
-<th width='25%'><a href='build.php?id=<?php echo "$id"; ?>&train=5'>Train</a></th>
+<th width='25%'><a href='build.php?id=<?php echo "$id"; ?>&train=6'>Train</a></th>
 </tr>
 <?php }
-}
-?>
+} ?>
 
 </table>
 
