@@ -398,7 +398,7 @@
         $wid = $row['id'];
 
         $this->addUnits($wid);
-        $basearray = $this->getMInfo($wid);
+        $basearray = $this->getOMInfo($wid);
         //We switch type of oasis and instert record with apropriate infomation.
          $q = "INSERT into ".TB_PREFIX."odata VALUES ('".$basearray['id']."',".$basearray['oasistype'].",0,800,800,800,800,800,800,800,800,2,'Unoccupied Oasis')";              
         $result = mysql_query($q, $this->connection);
