@@ -174,7 +174,7 @@ for($h=0;$h<=6;$h++) {
 				</script>
                 <?php if($session->plus) {
                 //target="_blank"
-				echo "<a id=\"map_makelarge\" href=\"karte2.php?z=$bigmid\"><img class=\"ml\" src=\"img/x.gif\" alt=\"large map\" title=\"large map\"/></a>";
+				echo "<a id=\"map_makelarge\" target=\"_blank\" href=\"karte2.php?z=$bigmid\"><img class=\"ml\" src=\"img/x.gif\" alt=\"large map\" title=\"large map\"/></a>";
                 }
                 ?>
 			<img id="map_navibox" src="img/x.gif" usemap="#map_navibox"/>
