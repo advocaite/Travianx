@@ -752,24 +752,29 @@ CREATE TABLE IF NOT EXISTS `%PREFIX%gold_fin_log` (
 --
 
 CREATE TABLE IF NOT EXISTS `%PREFIX%hero` (
-  `pointgain` text NOT NULL,
-  `uid` text NOT NULL,
-  `heroname` text NOT NULL,
-  `type` text NOT NULL,
-  `healthofhero` text NOT NULL,
-  `timetoborn` text NOT NULL,
-  `hero` text NOT NULL,
-  `attackpower` text NOT NULL,
-  `defpower` text NOT NULL,
-  `attackbonus` text NOT NULL,
-  `defbonus` text NOT NULL,
-  `regspeed` text NOT NULL,
-  `pointused` text NOT NULL
+  `uid` int(10) unsigned NOT NULL,
+  `unit` int(5) NOT NULL,
+  `name` text NOT NULL,
+  `level` int(3) NOT NULL,
+  `points` varchar(25) NOT NULL,
+  `experience` varchar(10) NOT NULL,
+  `dead` int(2) NOT NULL,
+  `health` int(25) NOT NULL,
+  `attack` varchar(25) NOT NULL,
+  `defence` varchar(25) NOT NULL,
+  `attackbonus` varchar(25) NOT NULL,
+  `defencebonus` varchar(25) NOT NULL,
+  `regeneration` int(15) NOT NULL,
+  `autoregen` int(2) NOT NULL,
+  `trainingtime` int(15) NOT NULL,
+  PRIMARY KEY (`uid`),
+  KEY `uid` (`uid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `%prefix%hero`
 --
+
 
 
 -- --------------------------------------------------------

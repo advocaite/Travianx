@@ -71,9 +71,6 @@ if(conf){return true;}else{return false;}
       <a href="?p=ban">Ban</a>
 	  
 	  <a href="?p=gold">Give Gold</a>
-	  <a href="?p=natarstart">Add Natar Villages</a>
-      
-      <a href="?p=natarend">Add World Wonder Villages</a>
 	  <a href="?p=admin_log"><font color="Red"><b>Admin Log</font></b></a>
       <a href="?p=config">Config</a>
 	  

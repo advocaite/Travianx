@@ -1,17 +1,17 @@
 <?php
 
 /** --------------------------------------------------- **\
-| ********* DO NOT REMOVE THIS COPYRIGHT NOTICE ********* |
-+---------------------------------------------------------+
-| Credits:     All the developers including the leaders:  |
-|              Advocaite & Dzoki & Donnchadh              |
-|                                                         |
-| Copyright:   TravianX Project All rights reserved       |
-\** --------------------------------------------------- **/
+ * | ********* DO NOT REMOVE THIS COPYRIGHT NOTICE ********* |
+ * +---------------------------------------------------------+
+ * | Credits:     All the developers including the leaders:  |
+ * |              Advocaite & Dzoki & Donnchadh              |
+ * |                                                         |
+ * | Copyright:   TravianX Project All rights reserved       |
+ * \** --------------------------------------------------- **/
 
 
         class MYSQL_DB {
-            
+
         	var $connection;
         	function MYSQL_DB() {
         		$this->connection = mysql_connect(SQL_SERVER, SQL_USER, SQL_PASS) or die(mysql_error());
@@ -340,7 +340,7 @@
         		}
         		$time = time();
         		$q = "INSERT into " . TB_PREFIX . "vdata (wref, owner, name, capital, pop, cp, celebration, wood, clay, iron, maxstore, crop, maxcrop, lastupdate, created) values 
-		('$wid', '$uid', '$vname', '$capital', 2, 1, 0, 750, 750, 750, 800, 750, 800, '$time', '$time')";
+        ('$wid', '$uid', '$vname', '$capital', 2, 1, 0, 750, 750, 750, 800, 750, 800, '$time', '$time')";
         		return mysql_query($q, $this->connection) or die(mysql_error());
         	}
 
@@ -385,6 +385,79 @@
         		}
         		return mysql_query($q, $this->connection);
         	}
+        	function isVillageOases($wref) {
+        		$q = "SELECT id, oasistype FROM " . TB_PREFIX . "wdata where id = $wref";
+        		$result = mysql_query($q, $this->connection);
+        		$dbarray = mysql_fetch_array($result);
+        		return $dbarray['oasistype'];
+        	}
+        	function populateOasis() {
+        		$q = "SELECT * FROM " . TB_PREFIX . "wdata where oasistype != 0";
+        		$result = mysql_query($q, $this->connection);
+        		while($row = mysql_fetch_array($result)) {
+        			$wid = $row['id'];
+
+        			$this->addUnits($wid);
+
+        		}
+        	}
+
+        	function poulateOasisUnitsLow() {
+        		$q2 = "SELECT * FROM " . TB_PREFIX . "wdata where oasistype != 0";
+        		$result2 = mysql_query($q2, $this->connection);
+        		while($row = mysql_fetch_array($result2)) {
+        			$wid = $row['id'];
+        			$basearray = $this->getMInfo($wid);
+        			//each Troop is a Set for oasis type like mountains have rats spiders and snakes fields tigers elphants clay wolves so on stonger one more not so less
+        			switch($basearray['oasistype']) {
+        				case 1:
+        				case 2:
+        					//+25% lumber per hour
+        					$q = "UPDATE " . TB_PREFIX . "units SET u36 = u36 + '12', u37 = u37 + '8' WHERE vref = '" . $wid . "' AND u36 <= '2' AND u37 <= '2'";
+        					$result = mysql_query($q, $this->connection);
+        					break;
+        				case 3:
+        					//+25% lumber and +25% crop per hour
+        					$q = "UPDATE " . TB_PREFIX . "units SET u36 = u36 + '15', u37 = u37 + '8', u38 = u38 + '5' WHERE vref = '" . $wid . "' AND u36 <= '2' AND u37 <= '2' AND u38 <='2'";
+        					$result = mysql_query($q, $this->connection);
+        					break;
+        				case 4:
+        				case 5:
+        					//+25% clay per hour
+        					$q = "UPDATE " . TB_PREFIX . "units SET u36 = u36 + '12', u37 = u37 + '8' WHERE vref = '" . $wid . "' AND u36 <= '2' AND u37 <= '2'";
+        					$result = mysql_query($q, $this->connection);
+        					break;
+        				case 6:
+        					//+25% clay and +25% crop per hour
+        					$q = "UPDATE " . TB_PREFIX . "units SET u36 = u36 + '15', u37 = u37 + '8', u38 = u38 + '5' WHERE vref = '" . $wid . "' AND u36 <= '2' AND u37 <= '2' AND u38 <='2'";
+        					$result = mysql_query($q, $this->connection);
+        					break;
+        				case 7:
+        				case 8:
+        					//+25% iron per hour
+        					$q = "UPDATE " . TB_PREFIX . "units SET u31 = u31 + '10', u32 = u32 + '3', u34 = u34 + '5' WHERE vref = '" . $wid . "' AND u31 <= '2' AND u32 <= '2'";
+        					$result = mysql_query($q, $this->connection);
+        					break;
+        				case 9:
+        					//+25% iron and +25% crop
+        					$q = "UPDATE " . TB_PREFIX . "units SET u31 = u31 + '15', u32 = u32 + '5', u34 = u34 + '10' WHERE vref = '" . $wid . "' AND u31 <= '2' AND u32 <= '2' AND u34 <='2'";
+        					$result = mysql_query($q, $this->connection);
+        					break;
+        				case 10:
+        				case 11:
+        					//+25% crop per hour
+        					$q = "UPDATE " . TB_PREFIX . "units SET u33 = u33 + '10', u37 = u37 + '5', u38 = u38 + '3' WHERE vref = '" . $wid . "' AND u33 <= '2' AND u37 <= '2' AND u38 <='2'";
+        					$result = mysql_query($q, $this->connection);
+        					break;
+        				case 12:
+        					//+50% crop per hour
+        					$q = "UPDATE " . TB_PREFIX . "units SET u33 = u33 + '15', u37 = u37 + '8', u38 = u38 + '5', u39 = u39 + '2' WHERE vref = '" . $wid . "' AND u33 <= '2' AND u37 <= '2' AND u38 <='2'AND u38 <='2'";
+        					$result = mysql_query($q, $this->connection);
+        					break;
+        			}
+        		}
+        	}
+
 
         	/***************************
         	Function to retrieve type of village via ID
@@ -456,9 +529,20 @@
         		$result = mysql_query($q, $this->connection);
         		return mysql_fetch_array($result);
         	}
+        	function getOasisV($vid) {
+        		$q = "SELECT * FROM " . TB_PREFIX . "odata where wref = $vid";
+        		$result = mysql_query($q, $this->connection);
+        		return mysql_fetch_array($result);
+        	}
 
         	function getMInfo($id) {
         		$q = "SELECT * FROM " . TB_PREFIX . "wdata left JOIN " . TB_PREFIX . "vdata ON " . TB_PREFIX . "vdata.wref = " . TB_PREFIX . "wdata.id where " . TB_PREFIX . "wdata.id = $id";
+        		$result = mysql_query($q, $this->connection);
+        		return mysql_fetch_array($result);
+        	}
+
+        	function getOMInfo($id) {
+        		$q = "SELECT * FROM " . TB_PREFIX . "wdata left JOIN " . TB_PREFIX . "odata ON " . TB_PREFIX . "odata.wref = " . TB_PREFIX . "wdata.id where " . TB_PREFIX . "wdata.id = $id";
         		$result = mysql_query($q, $this->connection);
         		return mysql_fetch_array($result);
         	}
@@ -480,6 +564,14 @@
         		$result = mysql_query($q, $this->connection);
         		$dbarray = mysql_fetch_array($result);
         		return $dbarray[$field];
+
+        	}
+
+        	function getOasisField($ref, $field) {
+        		$q = "SELECT $field FROM " . TB_PREFIX . "odata where wref = $ref";
+        		$result = mysql_query($q, $this->connection);
+        		$dbarray = mysql_fetch_array($result);
+        		return $dbarray[$field];
         	}
 
         	function setVillageField($ref, $field, $value) {
@@ -493,7 +585,7 @@
         	}
 
         	function getResourceLevel($vid) {
-        		$q = "SELECT * FROM " . TB_PREFIX . "fdata where vref = $vid";
+        		$q = "SELECT * from " . TB_PREFIX . "fdata where vref = $vid";
         		$result = mysql_query($q, $this->connection);
         		return mysql_fetch_assoc($result);
         	}
@@ -920,6 +1012,15 @@
         		return mysql_query($q, $this->connection);
         	}
 
+        	function modifyOasisResource($vid, $wood, $clay, $iron, $crop, $mode) {
+        		if(!$mode) {
+        			$q = "UPDATE " . TB_PREFIX . "odata set wood = wood - $wood, clay = clay - $clay, iron = iron - $iron, crop = crop - $crop where wref = $vid";
+        		} else {
+        			$q = "UPDATE " . TB_PREFIX . "odata set wood = wood + $wood, clay = clay + $clay, iron = iron + $iron, crop = crop + $crop where wref = $vid";
+        		}
+        		return mysql_query($q, $this->connection);
+        	}
+
         	function getFieldLevel($vid, $field) {
         		$q = "SELECT f" . $field . " from " . TB_PREFIX . "fdata where vref = $vid";
         		$result = mysql_query($q, $this->connection);
@@ -936,6 +1037,11 @@
         	function updateVillage($vid) {
         		$time = time();
         		$q = "UPDATE " . TB_PREFIX . "vdata set lastupdate = $time where wref = $vid";
+        		return mysql_query($q, $this->connection);
+        	}
+        	function updateOasis($vid) {
+        		$time = time();
+        		$q = "UPDATE " . TB_PREFIX . "odata set lastupdated = $time where wref = $vid";
         		return mysql_query($q, $this->connection);
         	}
 
@@ -980,6 +1086,12 @@
         		return mysql_query($q, $this->connection);
         	}
 
+        	function clearExpansionSlot($id) {
+        		for($i = 1; $i <= 3; $i++) {
+        			$q = "UPDATE " . TB_PREFIX . "vdata SET exp" . $i . "=0 WHERE exp" . $i . "=" . $id;
+        			mysql_query($q, $this->connection);
+        		}
+        	}
 
         	function getInvitation($uid) {
         		$q = "SELECT * FROM " . TB_PREFIX . "ali_invite where uid = $uid";
@@ -1037,7 +1149,8 @@
         				$q = "SELECT * FROM " . TB_PREFIX . "mdata WHERE target = $id and send = 0 and archived = 0 ORDER BY time DESC";
         				break;
         			case 2:
-        				$q = "SELECT * FROM " . TB_PREFIX . "mdata WHERE owner = $id AND send = 1 ORDER BY time DESC";
+        				// removed send no longer needed as we dont send 2 messages any more just 1
+        				$q = "SELECT * FROM " . TB_PREFIX . "mdata WHERE owner = $id ORDER BY time DESC";
         				break;
         			case 3:
         				$q = "SELECT * FROM " . TB_PREFIX . "mdata where id = $id";
@@ -1309,7 +1422,7 @@
         	Type 3: Attack
         	Type 4: Return
         	Type 5: Settler
-        	Type 6: Bounty		Type 7: Reinf.
+        	Type 6: Bounty        Type 7: Reinf.
         	Mode 0: Send/Out
         	Mode 1: Recieve/In
         	References: Type, Village, Mode
@@ -1401,7 +1514,7 @@
         	}
 
         	function getHeroRanking() {
-        		$q = "SELECT * FROM " . TB_PREFIX . "hero";
+        		$q = "SELECT * FROM " . TB_PREFIX . "hero WHERE dead = 0";
         		$result = mysql_query($q, $this->connection);
         		return $this->mysql_fetch_all($result);
         	}
@@ -1843,6 +1956,17 @@
         			return false;
         		}
         	}
+        	function poulateOasisdata() {
+        		$q2 = "SELECT * FROM " . TB_PREFIX . "wdata where oasistype != 0";
+        		$result2 = mysql_query($q2, $this->connection);
+        		while($row = mysql_fetch_array($result2)) {
+        			$wid = $row['id'];
+        			$basearray = $this->getOMInfo($wid);
+        			//We switch type of oasis and instert record with apropriate infomation.
+        			$q = "INSERT into " . TB_PREFIX . "odata VALUES ('" . $basearray['id'] . "'," . $basearray['oasistype'] . ",0,800,800,800,800,800,800," . time() . ",100,2,'Unoccupied Oasis')";
+        			$result = mysql_query($q, $this->connection);
+        		}
+        	}
 
         	public function getAvailableExpansionTraining() {
         		global $building, $session, $technology, $village;
@@ -1940,18 +2064,24 @@
         		$q = "INSERT INTO `" . TB_PREFIX . "artefacts` (`vref`, `owner`, `type`, `size`, `conquered`, `name`, `desc`, `effect`, `img`) VALUES ('$vref', '$owner', '$type', '$size', '" . time() . "', '$name', '$desc', '$effect', '$img')";
         		return mysql_query($q, $this->connection);
         	}
-            
-            function getOwnArtefactInfo($vref){
-                $q = "SELECT * FROM " . TB_PREFIX . "artefacts WHERE vref = $vref";
-                $result = mysql_query($q,$this->connection);
-                return mysql_fetch_array($result);
-            }
-            
-            function getArtefactInfo(){
-                $q = "SELECT * FROM ".TB_PREFIX."artefacts WHERE id > 0";
-                $result = mysql_query($q,$this->connection);
-                return mysql_fetch_array($result);
-            }
+
+        	function getOwnArtefactInfo($vref) {
+        		$q = "SELECT * FROM " . TB_PREFIX . "artefacts WHERE vref = $vref";
+        		$result = mysql_query($q, $this->connection);
+        		return mysql_fetch_array($result);
+        	}
+
+        	function getArtefactInfo() {
+        		$q = "SELECT * FROM " . TB_PREFIX . "artefacts WHERE id > 0";
+        		$result = mysql_query($q, $this->connection);
+        		return mysql_fetch_array($result);
+        	}
+
+        	function getArtefactDetails($id) {
+        		$q = "SELECT * FROM " . TB_PREFIX . "artefacts WHERE id = " . $id . "";
+        		$result = mysql_query($q, $this->connection);
+        		return mysql_fetch_array($result);
+        	}
 
         }
         ;
