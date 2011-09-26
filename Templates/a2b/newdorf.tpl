@@ -29,28 +29,15 @@ echo '</pre>';
 	<tbody class="units">
 		<tr>
 			<th>&nbsp;</th>
-				<td><img src="img/x.gif" class="unit u11" title="Knuppelvechter" alt="Knuppelvechter" /></td>
-				<td><img src="img/x.gif" class="unit u12" title="Speervechter" alt="Speervechter" /></td>
-				<td><img src="img/x.gif" class="unit u13" title="Bijlvechter" alt="Bijlvechter" /></td>
-				<td><img src="img/x.gif" class="unit u14" title="Verkenner" alt="Verkenner" /></td>
-				<td><img src="img/x.gif" class="unit u15" title="Paladijn" alt="Paladijn" /></td>
-				<td><img src="img/x.gif" class="unit u16" title="Germaanse Ridder" alt="Germaanse Ridder" /></td>
-				<td><img src="img/x.gif" class="unit u17" title="Ram" alt="Ram" /></td>
-				<td><img src="img/x.gif" class="unit u18" title="Katapult" alt="Katapult" /></td>
-				<td><img src="img/x.gif" class="unit u19" title="Leider" alt="Leider" /></td>
-				<td><img src="img/x.gif" class="unit u20" title="Kolonist" alt="Kolonist" /></td>
+				<?php for($i=($session->tribe-1)*10+1;$i<=$session->tribe*10;$i++) {
+					echo "<td><img src=\"img/x.gif\" class=\"unit u".$i."\" title=\"".$technology->getUnitName($i)."\" alt=\"".$technology->getUnitName($i)."\" /></td>";
+				} ?>
 		</tr>
 		<tr>
 			<th>Troops</th>
-				<td class="none">0</td>
-				<td class="none">0</td>
-				<td class="none">0</td>
-				<td class="none">0</td>
-				<td class="none">0</td>
-				<td class="none">0</td>
-				<td class="none">0</td>
-				<td class="none">0</td>
-				<td class="none">0</td>
+				<?php for($i=1;$i<=9;$i++) {
+					echo "<td class=\"none\">0</td>";
+				} ?>
 				<td>3</td>
 		</tr>
 	</tbody>
