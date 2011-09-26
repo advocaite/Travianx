@@ -102,13 +102,16 @@ if($units_incomming >= 1){
 
 <?php
 $units_type = $database->getMovement("3",$village->wid,0);
+$settlers = $database->getMovement("5",$village->wid,0);
 $units_incomming = count($units_type);
 for($i=0;$i<$units_incomming;$i++){
 	if($units_type[$i]['vref'] != $village->wid)
 		$units_incomming -= 1;
 }
+$units_incomming += count($settlers);
+
 if($units_incomming >= 1){
-	echo "<h4>Troops on there way</h4>";
+	echo "<h4>Troops on their way</h4>";
 	include("16_walking.tpl"); 
 }
 

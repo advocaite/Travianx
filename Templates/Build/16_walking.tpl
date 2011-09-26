@@ -85,14 +85,14 @@ $to = $database->getOMInfo($units[$y]['to']);}
         $total_for = count($settlers);
 
 for($y=0;$y<$total_for;$y++){
-$timer += $y+1;
+$timer += 1;
     
 ?>
 <table class="troop_details" cellpadding="1" cellspacing="1">            
     <thead>
         <tr>
             <td class="role"><a href="karte.php?d=<?php echo $village->wid."&c=".$generator->getMapCheck($village->wid); ?>"><?php echo $village->vname; ?></a></td>
-            <td colspan="10"><a href="karte.php?d=<?php echo $units[0]['to']."&c=".$generator->getMapCheck($units[0]['to']); ?>"><?php echo $attack_type." ".$to['name']; ?>Found new village.</a></td>
+            <td colspan="10"><a href="karte.php?d=<?php echo $settlers[$y]['to']."&c=".$generator->getMapCheck($settlers[$y]['to']); ?>">Found new village.</a></td>
         </tr>
     </thead>
     <tbody class="units">
@@ -125,8 +125,8 @@ $timer += $y+1;
                 <th>Arrival</th>
                 <td colspan="10">
                 <?php
-                    echo "<div class=\"in small\"><span id=timer$timer>".$generator->getTimeFormat($units[$y]['endtime']-time())."</span> h</div>";
-                    $datetime = $generator->procMtime($units[$y]['endtime']);
+                    echo "<div class=\"in small\"><span id=timer$timer>".$generator->getTimeFormat($settlers[$y]['endtime']-time())."</span> h</div>";
+                    $datetime = $generator->procMtime($settlers[$y]['endtime']);
                     echo "<div class=\"at small\">";
                     if($datetime[0] != "today") {
                     echo "on ".$datetime[0]." ";
