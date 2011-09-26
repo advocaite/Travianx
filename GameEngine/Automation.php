@@ -835,7 +835,7 @@ class Automation {
 			$cranny_eff = ($cranny * $atk_bonus)*$def_bonus;
 			
 			// work out available resources.
-			$this->updateRes($data['to']);
+			$this->updateRes($data['to'],$to['owner']);
 			$this->pruneResource();
 			
 			$totclay = $database->getVillageField($data['to'],'clay');
@@ -1387,12 +1387,12 @@ class Automation {
 		}
 	}
 	
-	private function updateRes($bountywid) {
+	private function updateRes($bountywid,$uid) {
 		global $session;
 				
 
 		$this->bountyLoadTown($bountywid);
-		$this->bountycalculateProduction($bountywid);
+		$this->bountycalculateProduction($bountywid,$uid);
 		$this->bountyprocessProduction($bountywid);
 	}
     
@@ -1536,13 +1536,28 @@ class Automation {
         $this->bountyOproduction['iron'] = $this->bountyGetOIronProd();
         $this->bountyOproduction['crop'] = $this->bountyGetOCropProd();
     }
-	private function bountycalculateProduction($bountywid) { 
+	private function bountycalculateProduction($bountywid,$uid) { 
 		global $technology,$database;
+        $normalA = $database->getOwnArtefactInfoByType($bountywid,4);  
+        $largeA = $database->getOwnUniqueArtefactInfo($uid,4,2);
+        $uniqueA = $database->getOwnUniqueArtefactInfo($uid,4,3);
+        $upkeep = $this->getUpkeep($this->getAllUnits($bountywid),0);
 		$this->bountyproduction['wood'] = $this->bountyGetWoodProd();
 		$this->bountyproduction['clay'] = $this->bountyGetClayProd();
 		$this->bountyproduction['iron'] = $this->bountyGetIronProd();
-		$this->bountyproduction['crop'] = $this->bountyGetCropProd()-$this->bountypop-$this->getUpkeep($this->getAllUnits($bountywid),0);
-	}
+        if ($uniqueA['size']==3 && $uniqueA['owner']==$uid){
+        $this->bountyproduction['crop'] = $this->bountyGetCropProd()-$this->bountypop-(($upkeep)-round($upkeep*0.50));  
+        
+        }else if ($normalA['type']==4 && $normalA['size']==1 && $normalA['owner']==$uid){
+        $this->bountyproduction['crop'] = $this->bountyGetCropProd()-$this->bountypop-(($upkeep)-round($upkeep*0.25));
+        
+        }else if ($largeA['size']==2 && $largeA['owner']==$uid){
+         $this->bountyproduction['crop'] = $this->bountyGetCropProd()-$this->bountypop-(($upkeep)-round($upkeep*0.25));   
+       
+        }else{
+        $this->bountyproduction['crop'] = $this->bountyGetCropProd()-$this->bountypop-$upkeep;  
+    }
+		}
 	
 	private function bountyprocessProduction($bountywid) {
 		global $database;

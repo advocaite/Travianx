@@ -35,7 +35,7 @@
         	}
         	echo '<td class="icon"><img class="artefact_icon_' . $artefact['type'] . '" src="img/x.gif"></td>';
         	echo '<td class="nam">
-                            <a href="build.php?id=' . $id . '&show='.$row['id'].'">' . $artefact['name'] . '</a> <span class="bon">' . $artefact['effect'] . '</span>
+                            <a href="build.php?id=' . $id . '&show='.$artefact['id'].'">' . $artefact['name'] . '</a> <span class="bon">' . $artefact['effect'] . '</span>
                             <div class="info">
                                 Treasury <b>' . $reqlvl . '</b>, Effect <b>' . $effect . '</b>
                             </div>

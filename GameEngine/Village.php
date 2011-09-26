@@ -92,12 +92,27 @@ class Village {
 	}
 	
 	private function calculateProduction() { 
-		global $technology;
-		$this->production['wood'] = $this->getWoodProd();
+		global $technology,$database,$session;
+        $normalA = $database->getOwnArtefactInfoByType($_SESSION['wid'],4);  
+		$largeA = $database->getOwnUniqueArtefactInfo($session->uid,4,2);
+        $uniqueA = $database->getOwnUniqueArtefactInfo($session->uid,4,3);
+        $upkeep = $technology->getUpkeep($this->unitall,0);
+        $this->production['wood'] = $this->getWoodProd();
 		$this->production['clay'] = $this->getClayProd();
 		$this->production['iron'] = $this->getIronProd();
-		$this->production['crop'] = $this->getCropProd()-$this->pop-$technology->getUpkeep($this->unitall,0);
+        if ($uniqueA['size']==3 && $uniqueA['owner']==$session->uid){
+        $this->production['crop'] = $this->getCropProd()-$this->pop-(($upkeep)-round($upkeep*0.50));  
+        
+        }else if ($normalA['type']==4 && $normalA['size']==1 && $normalA['owner']==$session->uid){
+        $this->production['crop'] = $this->getCropProd()-$this->pop-(($upkeep)-round($upkeep*0.25));
+        
+        }else if ($largeA['size']==2 && $largeA['owner']==$session->uid){
+         $this->production['crop'] = $this->getCropProd()-$this->pop-(($upkeep)-round($upkeep*0.25));   
+       
+        }else{
+		$this->production['crop'] = $this->getCropProd()-$this->pop-$upkeep;  
 	}
+    }
 	
 	
 	private function processProduction() {

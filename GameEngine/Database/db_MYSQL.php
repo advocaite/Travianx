@@ -2090,6 +2090,16 @@
                 $result = mysql_query($q,$this->connection);
                 return mysql_fetch_array($result);
             }
+            function getOwnArtefactInfoByType($vref,$type){
+                $q = "SELECT * FROM " . TB_PREFIX . "artefacts WHERE vref = $vref AND type = $type";
+                $result = mysql_query($q,$this->connection);
+                return mysql_fetch_array($result);
+            }
+            function getOwnUniqueArtefactInfo($id,$type,$size){
+                $q = "SELECT * FROM " . TB_PREFIX . "artefacts WHERE owner = $id AND type = $type AND size=$size";
+                $result = mysql_query($q,$this->connection);
+                return mysql_fetch_array($result);
+            }
             
             function getArtefactInfo(){
                 $q = "SELECT * FROM ".TB_PREFIX."artefacts WHERE id > 0";
