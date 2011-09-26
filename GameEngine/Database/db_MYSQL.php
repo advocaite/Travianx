@@ -1265,6 +1265,24 @@
                 return mysql_query($q, $this->connection);
             }
 
+			function addDemolition($wid,$type) {
+				global $building,$village;
+				$uprequire = $building->resourceRequired($type,$village->resarray['f'.$type.'t']);
+				$q = "INSERT INTO ".TB_PREFIX."demolition VALUES (".$wid.",".$type.",".($this->getFieldLevel($wid,$type)-1).",".(time()+floor($uprequire['time']/2)).")";
+				return mysql_query($q, $this->connection);
+			}
+
+			function getDemolition($wid) {
+				$q = "SELECT * FROM ".TB_PREFIX."demolition WHERE vref=".$wid;
+				$result = mysql_query($q, $this->connection);
+				return $this->mysql_fetch_all($result);
+			}
+
+			function delDemolition($wid) {
+				$q = "DELETE FROM ".TB_PREFIX."demolition WHERE vref=".$wid;
+				return mysql_query($q, $this->connection);
+			}
+
             function getJobs($wid) {
                 $q = "SELECT * FROM " . TB_PREFIX . "bdata where wid = $wid order by ID ASC";
                 $result = mysql_query($q, $this->connection);
