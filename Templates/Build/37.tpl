@@ -12,7 +12,7 @@
         $hero_info = mysql_fetch_array($hero);
         
         $define['reset_level'] = 3; // Until which level you are able to reset your points
-
+      
 ?>
 
 

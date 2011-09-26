@@ -450,11 +450,11 @@
         		$holder = array();
         		foreach($array as $value) {
         			$value['owner'] = $database->getUserField($value['uid'], "username", 0);
-        			$value['level'] = round(($value['attackpower'] + $value['defpower'] + $value['attackbonus'] + $value['defbonus'] + $value['regspeed']) / 5);
+        			$value['level'] = round(($value['attack'] + $value['defence'] + $value['attackbonus'] + $value['defencebonus'] + $value['regeneration']) / 5);
 
         			array_push($holder, $value);
         		}
-        		$holder = $multisort->sorte($holder, "'pointused'", false, 2);
+        		$holder = $multisort->sorte($holder, "'experience'", false, 2);
         		$newholder = array("pad");
         		foreach($holder as $key) {
         			array_push($newholder, $key);

@@ -7,7 +7,13 @@
 |                Dzoki < dzoki.travian@gmail.com >        |
 | Copyright:     TravianX Project All rights reserved     |
 \*-------------------------------------------------------*/
-        
+ if ( isset($_POST['name'])) {
+mysql_query("UPDATE ".TB_PREFIX."hero SET `name`='".($_POST['name'])."' where `uid`='".$session->uid."'") or die("ERROR:".mysql_error());
+$hero = mysql_query("SELECT * FROM " . TB_PREFIX . "hero WHERE `uid` = " . $session->uid . "");
+$hero_info = mysql_fetch_array($hero);
+echo "Heros name has been changed";
+
+}       
         if($hero_info['unit'] == 1) {
         	$name = "Legionnaire";
         } else if($hero_info['unit'] == 2) {
@@ -60,7 +66,7 @@
 		<th colspan="5"><?php 
         
         if(isset($_GET['rename'])){
-            echo "<form action=\"build.php\" method=\"POST\"><input type=\"hidden\" name=\"userid\" value=\"".$session->uid."\"><input type=\"hidden\" name=\"hero\" value=\"1\"><input type=\"text\" class=\"text\" name=\"name\" maxlength=\"20\" value=\"".$hero_info['name']."\">";            
+            echo "<form action=\"\" method=\"POST\"><input type=\"hidden\" name=\"userid\" value=\"".$session->uid."\"><input type=\"hidden\" name=\"hero\" value=\"1\"><input type=\"text\" class=\"text\" name=\"name\" maxlength=\"20\" value=\"".$hero_info['name']."\">";            
         }else{
             echo "<a href=\"build.php?id=".$id."&rename\">".$hero_info['name']."</a></form>";
         }

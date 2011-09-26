@@ -39,7 +39,7 @@ $search = $_SESSION['search'];
         if(count($ranking->getRank()) > 0) {
         	$ranking = $ranking->getRank();
             for($i=$start;$i<($start+20);$i++) {
-            	if(isset($ranking[$i]['heroname']) && $ranking[$i] != "pad") {
+            	if(isset($ranking[$i]['name']) && $ranking[$i] != "pad") {
                 	if($ranking[$i]['uid'] == $session->uid) {
                     echo "<tr class=\"hl \"><td class=\"ra  fc\" >";
                     }
@@ -48,10 +48,10 @@ $search = $_SESSION['search'];
                     }
                     echo $i.".</td>
 					<td class=\"hero \">
-					<img class=\"unit u".$ranking[$i]['type']."\" alt=\"\" title=\"\" src=\"img/x.gif\"> ".$ranking[$i]['heroname']."</td>
+					<img class=\"unit u".$ranking[$i]['unit']."\" alt=\"\" title=\"\" src=\"img/x.gif\"> ".$ranking[$i]['name']."</td>
 					<td class=\"pla \"><a href=\"spieler.php?uid=".$ranking[$i]['uid']."\">".$ranking[$i]['owner']."</a></td>
 					<td class=\"lev \">".$ranking[$i]['level']."</td>
-					<td class=\"xp \">".$ranking[$i]['pointused']."</td>
+					<td class=\"xp \">".$ranking[$i]['experience']."</td>
 					</tr>
 					";
                 }
