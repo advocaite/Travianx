@@ -7,11 +7,11 @@
                    }elseif($artefact['size'] == 2 OR $artefact['size'] == 3){
                        $reqlvl = 20;
                        $effect = "account";
-                   }
-                   if ($artefact['conquered']+86400 < $time){
-                   $active = "Active"; 
+                   }  
+                   if ($artefact['conquered'] >= (time()-86400)){
+                   $active = "Inactive"; 
                    }else{
-                    $active = "Inactive"; 
+                    $active = "Active"; 
                    }
 ?>
         
