@@ -1209,6 +1209,8 @@ class Automation {
                     $totalstolentaken=($totalstolentaken-($steal[0]+$steal[1]+$steal[2]+$steal[3]));
                     $database->modifyPoints($from['owner'],'RR',$totalstolengain);
                     $database->modifyPoints($to['owner'],'RR',$totalstolentaken);
+                    $database->modifyPointsAlly($targetally,'RR',$totalstolentaken );
+                    $database->modifyPointsAlly($ownally,'RR',$totalstolengain); 
                 }
 			}
 			else //else they die and don't return or report.
