@@ -1054,8 +1054,12 @@ class Automation {
 						$database->setVillageField($data['to'],loyalty,($toF['loyalty']-$rand));
 					} else {
 					//you took over the village
+                        $artifact = $database->getOwnArtefactInfo($data['to']);
 						$info_chief = "".$chief_pic.",Inhabitants decided to join your empire.";
-						$database->setVillageField($data['to'],loyalty,33);
+						if ($artifact['vref'] == $data['to']){
+                         $database->claimArtefact($data['to'],$data['to'],$database->getVillageField($data['from'],"owner"));
+                        }
+                        $database->setVillageField($data['to'],loyalty,33);
 						$database->setVillageField($data['to'],owner,$database->getVillageField($data['from'],"owner"));
 						//destroy wall
 						$database->setVillageLevel($data['to'],"f40",0);
@@ -1205,8 +1209,6 @@ class Automation {
                     $totalstolentaken=($totalstolentaken-($steal[0]+$steal[1]+$steal[2]+$steal[3]));
                     $database->modifyPoints($from['owner'],'RR',$totalstolengain);
                     $database->modifyPoints($to['owner'],'RR',$totalstolentaken);
-                    $database->modifyPointsAlly($targetally,'RR',$totalstolentaken );
-                    $database->modifyPointsAlly($ownally,'RR',$totalstolengain); 
                 }
 			}
 			else //else they die and don't return or report.

@@ -991,7 +991,76 @@
                 $q = "UPDATE " . TB_PREFIX . "alidata SET `notice` = '$notice', `desc` = '$desc' where id = $aid";
                 return mysql_query($q, $this->connection);
             }
+             function getAllianceDip($id) {
+        $q = "SELECT * from ".TB_PREFIX."diplomacy where alli1 = $id";
+        $result = mysql_query($q, $this->connection);
+        return mysql_fetch_assoc($result); 
+    }
+    function getAllianceDipProfile($aid,$type){
+        $sql="SELECT * from ".TB_PREFIX."diplomacy where alli1 = $aid AND type = '$type'";
+        $query=mysql_query($sql);
+            while($row=mysql_fetch_array($query)){
+            $allianceinfome = $this->getAlliance($row['alli1']);  
+            $allianceinfothem = $this->getAlliance($row['alli2']);
+             if( mysql_num_rows($query) != 0 ){
+                
+             $text.="<a href=allianz.php?aid=".$allianceinfothem['id'].">".$allianceinfothem['tag']."</a><br> 
+                    "; 
+                    } 
+            }
+            return $text;  
+    }
+    function getAllianceDipme($aid,$type){
+        $sql="SELECT * from ".TB_PREFIX."diplomacy where alli1 = $aid AND type = '$type'";
+        $query=mysql_query($sql);
+            while($row=mysql_fetch_array($query)){
+            $allianceinfome = $this->getAlliance($row['alli1']);  
+            $allianceinfothem = $this->getAlliance($row['alli2']);
+             if( mysql_num_rows($query) != 0 ){
+                 switch($type) {
+            case 1:
+            $q = "NAP with";
+            break;
+            case 2:
+            $q = "Confed with ";
+            break;
+            case 3:
+            $q = "WAR on";
+            break;
+                 }
+             $text.="".$allianceinfome['tag']." Offers ".$q." ".$allianceinfothem['tag']."<br> 
+                    "; 
+                    } 
+            }
+            return $text;  
+    }
+            function getAllianceDipforien($aid,$type){
+        $sql="SELECT * from ".TB_PREFIX."diplomacy where alli2 = $aid AND type = '$type'";
+        $query=mysql_query($sql);
+            while($row=mysql_fetch_array($query)){
+            $allianceinfothem = $this->getAlliance($row['alli2']);  
+            $allianceinfome = $this->getAlliance($row['alli1']);
+             if( mysql_num_rows($query) != 0 ){
+                 switch($type) {
+            case 1:
+            $q = "NAP with";
+            break;
+            case 2:
+            $q = "Confed with ";
+            break;
+            case 3:
+            $q = "WAR on";
+            break;
+                 }
+             $text.="".$allianceinfome['tag']." Offers ".$q." ".$allianceinfothem['tag']."<br> 
+                    "; 
+                    } 
+            }          
+            
 
+    return $text;
+
+}
             function getUserAlliance($id) {
                 $q = "SELECT " . TB_PREFIX . "alidata.tag from " . TB_PREFIX . "users join " . TB_PREFIX . "alidata where " . TB_PREFIX . "users.alliance = " . TB_PREFIX . "alidata.id and " . TB_PREFIX . "users.id = $id";
                 $result = mysql_query($q, $this->connection);
@@ -1264,24 +1333,40 @@
                 $q = "DELETE FROM " . TB_PREFIX . "bdata where id = $d";
                 return mysql_query($q, $this->connection);
             }
+            
+         function addDemolition($wid,$type) {
 
-			function addDemolition($wid,$type) {
-				global $building,$village;
-				$uprequire = $building->resourceRequired($type,$village->resarray['f'.$type.'t']);
-				$q = "INSERT INTO ".TB_PREFIX."demolition VALUES (".$wid.",".$type.",".($this->getFieldLevel($wid,$type)-1).",".(time()+floor($uprequire['time']/2)).")";
-				return mysql_query($q, $this->connection);
-			}
+        global $building,$village;
 
-			function getDemolition($wid) {
-				$q = "SELECT * FROM ".TB_PREFIX."demolition WHERE vref=".$wid;
-				$result = mysql_query($q, $this->connection);
-				return $this->mysql_fetch_all($result);
-			}
+        $uprequire = $building->resourceRequired($type,$village->resarray['f'.$type.'t']);
 
-			function delDemolition($wid) {
-				$q = "DELETE FROM ".TB_PREFIX."demolition WHERE vref=".$wid;
-				return mysql_query($q, $this->connection);
-			}
+        $q = "INSERT INTO ".TB_PREFIX."demolition VALUES (".$wid.",".$type.",".($this->getFieldLevel($wid,$type)-1).",".(time()+floor($uprequire['time']/2)).")";
+
+        return mysql_query($q, $this->connection);
+
+      }
+
+
+
+      function getDemolition($wid) {
+
+        $q = "SELECT * FROM ".TB_PREFIX."demolition WHERE vref=".$wid;
+
+        $result = mysql_query($q, $this->connection);
+
+       return $this->mysql_fetch_all($result);
+
+      }
+
+
+
+      function delDemolition($wid) {
+
+        $q = "DELETE FROM ".TB_PREFIX."demolition WHERE vref=".$wid;
+
+        return mysql_query($q, $this->connection);
+
+      }
 
             function getJobs($wid) {
                 $q = "SELECT * FROM " . TB_PREFIX . "bdata where wid = $wid order by ID ASC";
@@ -2106,13 +2191,20 @@
                 $result = mysql_query($q,$this->connection);
                 return mysql_fetch_array($result);
             }
+            function claimArtefact($vref,$ovref,$id){
+                $time = time();
+                $q = "UPDATE ".TB_PREFIX."artefacts SET vref = $vref, owner = $id WHERE vref = $ovref";
+                $result = mysql_query($q,$this->connection);
+                return mysql_fetch_array($result);
+            }
             
              function getArtefactDetails($id){
                 $q = "SELECT * FROM ".TB_PREFIX."artefacts WHERE id = ".$id."";
                 $result = mysql_query($q,$this->connection);
                 return mysql_fetch_array($result);
             }
-
+            
+     
         }
         ;
 
