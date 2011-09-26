@@ -286,7 +286,7 @@ class Automation {
 	}
 	
 	private function buildComplete() {
-		global $database,$bid18,$bid10,$bid11;
+		global $database,$bid18,$bid10,$bid11,$bid38,$bid39;
 		$ourFileHandle = @fopen("GameEngine/Prevention/build.txt", 'w');
 		@fclose($ourFileHandle);
 		$time = time();
@@ -321,7 +321,22 @@ class Automation {
 					  $max-=$bid11[$level-1]['attri'];      
 					  $max+=$bid11[$level]['attri']; 
 					  $database->setVillageField($indi['wid'],"maxcrop",$max);
-					}	
+					}
+                    if($indi['type'] == 38) {
+                    $max=$database->getVillageField($indi['wid'],"maxstore");
+                    if($level=='1' && $max==800){ $max-=800; }
+                    $max-=$bid38[$level-1]['attri'];      
+                    $max+=$bid38[$level]['attri'];  
+                    $database->setVillageField($indi['wid'],"maxstore",$max);
+                    }
+
+                    if($indi['type'] == 39) {
+                    $max=$database->getVillageField($indi['wid'],"maxcrop");
+                    if($level=='1' && $max==800){ $max-=800; }
+                    $max-=$bid39[$level-1]['attri'];      
+                    $max+=$bid39[$level]['attri']; 
+                    $database->setVillageField($indi['wid'],"maxcrop",$max);
+                    }  	
 	      
 				$q4 = "UPDATE ".TB_PREFIX."bdata set loopcon = 0 where loopcon = 1 and wid = ".$indi['wid'];
 				$database->query($q4);

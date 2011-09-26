@@ -1,4 +1,7 @@
 <?php
+$normalA = $database->getOwnArtefactInfoByType($village->wid,6);  
+$largeA = $database->getOwnUniqueArtefactInfo($session->uid,6,2);
+
 $mainbuilding = $building->getTypeLevel(15);
 $cranny = $building->getTypeLevel(23);
 $granary = $building->getTypeLevel(11);
@@ -36,6 +39,8 @@ $greatstable = $building->getTypeLevel(30);
 $brewery = $building->getTypeLevel(35);
 $horsedrinkingtrough = $building->getTypeLevel(41);
 $herosmansion = $building->getTypeLevel(37);
+$greatwarehouse = $building->getTypeLevel(38);
+$greatgranary = $building->getTypeLevel(39);  
 $greatworkshop = $building->getTypeLevel(42);
 
 foreach ($database->getJobs($_SESSION['wid']) as $bdata) {
@@ -74,6 +79,12 @@ if($wall == 0) {
 if(($warehouse == 0 || $warehouse == 20) && $id != 39 && $id != 40) {
 include("avaliable/warehouse.tpl");
 }
+if($mainbuilding >= 10 && $village->capital == 0 && $largeA['owner'] == $session->uid || $normalA['vref'] == $village->wid ) {
+    include("avaliable/greatwarehouse.tpl");
+}
+if($mainbuilding >= 10 && $village->capital == 0 && $largeA['owner'] == $session->uid || $normalA['vref'] == $village->wid ) {
+    include("avaliable/greatgranary.tpl");
+}  
 if(($trapper ==0 || $trapper == 10) && $rallypoint >= 1 && $session->tribe == 3 && $id != 39 && $id != 40) {
 //include("avaliable/trapper.tpl");
 }
@@ -167,6 +178,12 @@ if($id != 39 && $id != 40) {
 if($rallypoint == 0 && $session->tribe == 3 && $trapper == 0 ) {
 //include("soon/trapper.tpl");
 }
+if($mainbuilding < 10 && $village->capital == 0 && $largeA['owner'] == $session->uid || $normalA['vref'] == $village->wid ) {
+    include("soon/greatwarehouse.tpl");
+}
+if($mainbuilding < 10 && $village->capital == 0 && $largeA['owner'] == $session->uid || $normalA['vref'] == $village->wid ) {
+    include("soon/greatgranary.tpl");
+} 
 if($hero == 0 && ($mainbuilding <= 2 || $rallypoint == 0)){
     include("soon/hero.tpl");
 }

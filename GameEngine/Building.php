@@ -477,10 +477,12 @@ class Building {
 			case 37:
 			if($this->getTypeLevel(15) >= 3 && $this->getTypeLevel(16) >= 1) { return true; } else { return false; }
 			break;
-			case 38:
-			case 39:
-			if($this->getTypeLevel(15) >= 10) { return true; } else { return false; }
-			break;
+            case 38:
+            if($this->getTypeLevel(15) >= 10 && $village->capital == 0) { return true; } else { return false; }
+            break;
+            case 39:
+            if($this->getTypeLevel(15) >= 10 && $village->capital == 0) { return true; } else { return false; }
+            break;  
 			case 40:
 			return false; //not implemented
 			break;
@@ -649,7 +651,22 @@ class Building {
 					  $max-=$bid11[$level]['attri'];      
 					  $max+=$bid11[$level+1]['attri']; 
 					  $database->setVillageField($jobs['wid'],"maxcrop",$max);
-					}			
+					}
+                    if($jobs['type'] == 38) {
+                    $max=$database->getVillageField($jobs['wid'],"maxstore");
+                    if($level=='0' && $this->getTypeLevel(38) != 20){ $max-=800; }
+                    $max-=$bid38[$level]['attri'];      
+                    $max+=$bid38[$level+1]['attri'];  
+                    $database->setVillageField($jobs['wid'],"maxstore",$max);
+                    }
+                    
+                    if($jobs['type'] == 39) {
+                    $max=$database->getVillageField($jobs['wid'],"maxcrop");
+                    if($level=='0' && $this->getTypeLevel(39) != 20){ $max-=800; }
+                    $max-=$bid39[$level]['attri'];      
+                    $max+=$bid39[$level+1]['attri']; 
+                    $database->setVillageField($jobs['wid'],"maxcrop",$max);
+                    }  			
         }
 		  }
     }
