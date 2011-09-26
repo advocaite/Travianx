@@ -628,7 +628,8 @@ class Building {
 				
 				  $database->modifyPop($jobs['wid'],$resource['pop'],0);
 				  $database->addCP($jobs['wid'],$resource['cp']);
-				
+				$database->finishDemolition($village->wid);
+
 				  $q = "DELETE FROM ".TB_PREFIX."bdata where id = ".$jobs['id'];
 				  $database->query($q);
 				  if($jobs['type'] == 18) {

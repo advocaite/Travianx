@@ -1358,7 +1358,10 @@
 
       }
 
-
+	function finishDemolition($wid) {
+		$q = "UPDATE ".TB_PREFIX."demolition SET timetofinish=".time()." WHERE vref=".$wid;
+		return mysql_query($q, $this->connection);
+	}
 
       function delDemolition($wid) {
 
