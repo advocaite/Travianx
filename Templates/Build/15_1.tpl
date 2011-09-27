@@ -13,7 +13,7 @@ if(!empty($_REQUEST["demolish"]) && $_REQUEST["c"] == $session->mchecker) {
 	}
 }
 
-if($village->resarray['f'.$id] >= 10) {
+if($village->resarray['f'.$id] >= DEMOLISH_LEVEL_REQ) {
 	echo "<h2>Demolition of the building:</h2><p>If you no longer need a building, you can order the demolition of the building.</p>";
 	$VillageResourceLevels = $database->getResourceLevel($village->wid);
 	$DemolitionProgress = $database->getDemolition($village->wid);
