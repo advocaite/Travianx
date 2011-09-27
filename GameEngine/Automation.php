@@ -542,6 +542,14 @@ class Automation {
 										"a7" => 0, // armoury level
 										"a8" => 0); // armoury level
 
+                        //rams attack
+                        if($rams > 0 and $type=='3'){  
+                        $walllevel = $database->getFieldLevel($basearray['wref'],40);
+                        $wallgid = $database->getFieldLevel($basearray['wref'],"40t");
+                        $wallid = 40;                            
+                        }
+                        
+                        
 							//choose a building to attack
                             if($catp > 0 and $type=='3'){
                                 if($toF['pop']>'1'){
