@@ -14,7 +14,6 @@
 include_once("../../Account.php");
 
 mysql_connect(SQL_SERVER, SQL_USER, SQL_PASS);
-
 mysql_select_db(SQL_DB);
 
 if ($session->access < ADMIN) die("Access Denied: You are not Admin!");
@@ -82,7 +81,7 @@ $u47 = $_POST['u47'];
 $u48 = $_POST['u48'];
 $u49 = $_POST['u49'];
 $u50 = $_POST['u50'];
- 
+
 if($user['tribe'] == 1){
 $q = "UPDATE ".TB_PREFIX."units SET u1 = $u1, u2 = $u2, u3 = $u3, u4 = $u4, u5 = $u5, u6 = $u6, u7 = $u7, u8 = $u8, u9 = $u9, u10 = $u10 WHERE vref = $id";
 mysql_query($q);
@@ -99,8 +98,6 @@ mysql_query($q);
 $q = "UPDATE ".TB_PREFIX."units SET u41 = '$u41', u42 = '$u42', u43 = '$u43', u44 = '$u44', u45 = '$u45', u46 = '$u46', u47 = '$u47', u48 = '$u48', u49 = '$u49', u50 = '$u50' WHERE vref = $id";
 mysql_query($q);
 }
-
-
 
 mysql_query("Insert into ".TB_PREFIX."admin_log values (0,".$_SESSION['id'].",'Changed troop anmount in village <a href=\'admin.php?p=village&did=$id\'>$id</a> ',".time().")");
 

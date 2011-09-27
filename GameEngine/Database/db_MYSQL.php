@@ -1097,6 +1097,12 @@
                 return mysql_result($result, 0);
             }
 
+            function getFieldType($vid, $field) {
+                $q = "SELECT f" . $field . "t from " . TB_PREFIX . "fdata where vref = $vid";
+                $result = mysql_query($q, $this->connection);
+                return mysql_result($result, 0);
+            }
+
             function getVSumField($uid, $field) {
                 $q = "SELECT sum(" . $field . ") FROM " . TB_PREFIX . "vdata where owner = $uid";
                 $result = mysql_query($q, $this->connection);
@@ -1129,7 +1135,6 @@
                 }
                 return mysql_query($q, $this->connection);
             }
-
 
             function addCP($ref, $cp) {
                 $q = "UPDATE " . TB_PREFIX . "vdata set cp = cp + $cp where wref = $ref";
@@ -1348,24 +1353,24 @@
 
 
 
-      function getDemolition($wid) {
+	function getDemolition($wid=0) {
+		if ($wid) {
+			$q = "SELECT * FROM ".TB_PREFIX."demolition WHERE vref=".$wid;
+		} else {
+			$q = "SELECT * FROM ".TB_PREFIX."demolition WHERE timetofinish<=".time();
+		}
+		$result = mysql_query($q, $this->connection);
+		return $this->mysql_fetch_all($result);
+	}
 
-        $q = "SELECT * FROM ".TB_PREFIX."demolition WHERE vref=".$wid;
-
-        $result = mysql_query($q, $this->connection);
-
-       return $this->mysql_fetch_all($result);
-
-      }
-
-
+	function finishDemolition($wid) {
+		$q = "UPDATE ".TB_PREFIX."demolition SET timetofinish=".time()." WHERE vref=".$wid;
+		return mysql_query($q, $this->connection);
+	}
 
       function delDemolition($wid) {
-
         $q = "DELETE FROM ".TB_PREFIX."demolition WHERE vref=".$wid;
-
         return mysql_query($q, $this->connection);
-
       }
 
             function getJobs($wid) {

@@ -144,6 +144,9 @@ class Automation {
         if(!file_exists("GameEngine/Prevention/celebration.txt") or time()-filemtime("GameEngine/Prevention/celebration.txt")>10) {  
             $this->celebrationComplete();    
         }
+        if(!file_exists("GameEngine/Prevention/demolition.txt") or time()-filemtime("GameEngine/Prevention/demolition.txt")>10) {  
+            $this->demolitionComplete();    
+        }
     }  
 	
 	private function clearDeleting() {
@@ -298,7 +301,7 @@ class Automation {
 			if($database->query($q)) {
 				$level = $database->getFieldLevel($indi['wid'],$indi['field']);
 				$pop = $this->getPop($indi['type'],($level-1));
-				$database->modifyPop($indi['wid'],$pop[1],0);
+				$database->modifyPop($indi['wid'],$pop[0],0);
 				$database->addCP($indi['wid'],$pop[1]);
 				if($indi['type'] == 18) {
 					$owner = $database->getVillageField($indi['wid'],"owner");
@@ -354,7 +357,7 @@ class Automation {
 		global $$name,$village;
 		$dataarray = $$name;
 		$pop = $dataarray[($level+1)]['pop'];
-		$cp = $dataarray[($level+1)]['pop'];
+		$cp = $dataarray[($level+1)]['cp'];
 		return array($pop,$cp);
 	}
 	
@@ -1877,8 +1880,43 @@ class Automation {
 		}
 	}
 	
-	};
+	private function demolitionComplete() {
+		global $building,$database;
+		$ourFileHandle = @fopen("GameEngine/Prevention/demolition.txt", 'w');
+		@fclose($ourFileHandle);
 
-	
+		$varray = $database->getDemolition();
+		foreach($varray as $vil) {
+			if ($vil['timetofinish'] <= time()) {
+				$type = $database->getFieldType($vil['vref'],$vil['buildnumber']);
+				$level = $database->getFieldLevel($vil['vref'],$vil['buildnumber']);
+				$buildarray = $GLOBALS["bid".$type];
+				if ($type==10 || $type==38) {
+					$q = "UPDATE ".TB_PREFIX."vdata SET `maxstore`=`maxstore`-".$buildarray[$level]['attri']." WHERE wref=".$vil['vref'];
+					$database->query($q);
+					$q = "UPDATE ".TB_PREFIX."vdata SET `maxstore`=800 WHERE `maxstore`<= 800 AND wref=".$vil['vref'];
+					$database->query($q);
+				}
+				if ($type==11 || $type==39) {
+					$q = "UPDATE ".TB_PREFIX."vdata SET `maxcrop`=`maxcrop`-".$buildarray[$level]['attri']." WHERE wref=".$vil['vref'];
+					$database->query($q);
+					$q = "UPDATE ".TB_PREFIX."vdata SET `maxcrop`=800 WHERE `maxcrop`<=800 AND wref=".$vil['vref'];
+					$database->query($q);
+				}
+				if ($level==1) { $clear=",f".$vil['buildnumber']."t=0"; } else { $clear=""; }
+				$q = "UPDATE ".TB_PREFIX."fdata SET f".$vil['buildnumber']."=".($level-1).$clear." WHERE vref=".$vil['vref'];
+				$database->query($q);
+				$pop=$this->getPop($type,$level-1);
+				$database->modifyPop($vil['vref'],$pop[0],1);
+				$database->delDemolition($vil['vref']);
+			}
+		}
+		if(file_exists("GameEngine/Prevention/demolition.txt")) {
+			@unlink("GameEngine/Prevention/demolition.txt");
+		}
+	}
+
+};
+
 $automation = new Automation;
 ?>
