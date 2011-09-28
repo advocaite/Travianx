@@ -546,10 +546,8 @@ class Automation {
 										"a8" => 0); // armoury level
 
                         //rams attack
-                        if($rams > 0 and $type=='3'){  
-                        $walllevel = $database->getFieldLevel($basearray['wref'],40);
-                        $wallgid = $database->getFieldLevel($basearray['wref'],"40t");
-                        $wallid = 40;                            
+                        if($rams > 0 and $type=='3'){ 
+                        //doo ram code here
                         }
                         
                         
