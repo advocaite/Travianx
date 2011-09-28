@@ -148,7 +148,7 @@ class Battle {
 
 	
 	//1 raid 0 normal
-	function calculateBattle($Attacker,$Defender,$def_wall,$att_tribe,$def_tribe,$residence,$attpop,$defpop,$type,$def_ab,$att_ab,$tblevel,$stonemason) {
+	function calculateBattle($Attacker,$Defender,$def_wall,$att_tribe,$def_tribe,$residence,$attpop,$defpop,$type,$def_ab,$att_ab,$tblevel,$stonemason,$walllevel) {
 		global $bid34;
 		// Definieer de array met de eenheden
 		$calvary = array(4,5,6,15,16,23,24,25,26,35,36,45,46);
@@ -354,7 +354,8 @@ class Battle {
 			$result[1] = $winner ? $holder : 1 - $holder;
 			// Defender
 			$result[2] = $winner ? 1 - $holder : $holder;
-			$catp -= round($catp*$result[1]/100);
+			$ram -= round($ram*$result[1]/100);
+            $catp -= round($catp*$result[1]/100);  
 		}
 		else if($type == 3) {
 			// Attacker
@@ -388,7 +389,9 @@ class Battle {
 				}
 				$result['hero_fealthy'] = $fealthy;
 			}
-			$catp -= ($winner)? round($catp*$result[1]/100) : round($catp*$result[2]/100);
+			$ram -= ($winner)? round($ram*$result[1]/100) : round($ram*$result[2]/100);
+            $catp -= ($winner)? round($catp*$result[1]/100) : round($catp*$result[2]/100);
+        
 		}
 		// Formule voor de berekening van katapulten nodig
 		if($catp > 0 && $tblevel != 0) {
@@ -402,6 +405,18 @@ class Battle {
 			// Aantal Katapulten die handeling
 			$result[4] = $wctp;
 		}
+        if($ram > 0 && $walllevel != 0) {
+            $wctp = pow(($rap/$rdp),1.5);
+            $wctp = ($wctp >= 1)? 1-0.5/$wctp : 0.5*$wctp;
+            $wctp *= $ram;
+
+            $need = round((($moralbonus * (pow($walllevel,2) + $walllevel + 1)) / (8 * (round(200 * pow(1.0205,$att_ab['a7']))/200) / (1 * $bid34[$stonemason]['attri']/100))) + 0.5);
+            // Aantal katapulten om het gebouw neer te halen
+            $result[7] = $need;
+            
+            // Aantal Katapulten die handeling
+            $result[8] = $wctp;
+        }
 		
 		$result[6] = pow($rap/$rdp*$moralbonus,$Mfactor);		
 
