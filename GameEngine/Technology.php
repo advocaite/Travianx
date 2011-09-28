@@ -12,7 +12,7 @@
 
 class Technology {
 	
-	private $unarray = array(1=>"Legionnaire","Praetorian","Imperian","Equites Legati","Equites Imperatoris","Equites Caesaris","Battering Ram","Fire Catapult","Senator","Settler","Clubswinger","Spearman","Axeman","Scout","Paladin","Teutonic Knight","Ram","Catapult","Chief","Settler","Phalanx","Swordsman","Pathfinder","Theutates Thunder","Druidrider","Haeduan","Ram","Trebuchet","Chieftain","Settler","Rat","Spider","Snake","Bat","Wild Boar","Wolf","Bear","Crocodile","Tiger","Elephant","Pikeman","Thorned Warrior","Guardsman","Birds Of Prey","Axerider","Natarian Knight","War Elephant","Ballista","Natarian Emperor","Settler");
+	private $unarray = array(1=>"Legionnaire","Praetorian","Imperian","Equites Legati","Equites Imperatoris","Equites Caesaris","Battering Ram","Fire Catapult","Senator","Settler","Clubswinger","Spearman","Axeman","Scout","Paladin","Teutonic Knight","Ram","Catapult","Chief","Settler","Phalanx","Swordsman","Pathfinder","Theutates Thunder","Druidrider","Haeduan","Ram","Trebuchet","Chieftain","Settler","Rat","Spider","Snake","Bat","Wild Boar","Wolf","Bear","Crocodile","Tiger","Elephant","Pikeman","Thorned Warrior","Guardsman","Birds Of Prey","Axerider","Natarian Knight","War Elephant","Ballista","Natarian Emperor","Settler","Hero");
 	
 	public function grabAcademyRes() {
 		global $village;
@@ -153,7 +153,12 @@ class Technology {
 				$holder['amt'] = $unitarray['u'.$i];
 				array_push($listArray,$holder);
 			}
-		}
+		}if($unitarray['hero'] != 0 && $unitarray['hero'] != "") {
+                $holder['id'] = "hero";
+                $holder['name'] = $this->unarray[$i];
+                $holder['amt'] = $unitarray['hero'];
+                array_push($listArray,$holder);
+            }
 		return $listArray;
 	}
 	
@@ -359,6 +364,10 @@ class Technology {
 			$dataarray = $$unit;
 			$upkeep += $dataarray['pop'] * $array[$unit];
 		}
+            $unit = "hero";
+            global $$unit;
+            $dataarray = $$unit; 
+            $upkeep += $dataarray['pop'] * $array[$unit];
 		return $upkeep;
 	}
 
