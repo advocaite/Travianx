@@ -1646,6 +1646,12 @@
                 return mysql_fetch_assoc($result);
             }
 
+            function getHero($uid) {
+                $q = "SELECT * FROM ".TB_PREFIX."hero WHERE dead=0 AND uid=$uid";
+                $result = mysql_query($q, $this->connection);
+                return mysql_fetch_assoc($result);
+            }
+
             function addTech($vid) {
                 $q = "INSERT into " . TB_PREFIX . "tdata (vref) values ($vid)";
                 return mysql_query($q, $this->connection);

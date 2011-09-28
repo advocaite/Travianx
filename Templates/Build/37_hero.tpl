@@ -15,9 +15,14 @@
 		echo "Heros name has been changed";
 	}
 
-	$h_attack = ${'h'.$hero_info['unit']}['atk'] + 5 * floor($hero_info['attack'] * ${'h'.$hero_info['unit']}['atkp']/ 5);      
-	$h_def1 = ${'h'.$hero_info['unit']}['di'] + 5 * floor($hero_info['defence'] * ${'h'.$hero_info['unit']}['dip']/ 5);      
-	$h_def2 = ${'h'.$hero_info['unit']}['dc'] + 5 * floor($hero_info['defence'] * ${'h'.$hero_info['unit']}['dcp']/ 5);      
+	$hero = $units->Hero($session->uid);
+	$h_attack = $hero['atk'];
+	$hero['di'] = $hero['di'];
+	$hero['dc'] = $hero['dc'];
+
+//	$h_attack = ${'h'.$hero_info['unit']}['atk'] + 5 * floor($hero_info['attack'] * ${'h'.$hero_info['unit']}['atkp']/ 5);      
+//	$hero['di'] = ${'h'.$hero_info['unit']}['di'] + 5 * floor($hero_info['defence'] * ${'h'.$hero_info['unit']}['dip']/ 5);      
+//	$hero['dc'] = ${'h'.$hero_info['unit']}['dc'] + 5 * floor($hero_info['defence'] * ${'h'.$hero_info['unit']}['dcp']/ 5);      
         
 ?>
     <table id="distribution" cellpadding="1" cellspacing="1">
@@ -49,8 +54,8 @@
 	</tr>
 	<tr>
 		<th>Defence</th>
-		<td class="val"><?php echo $h_def1 . "/" . $h_def2; ?></td>
-		<td class="xp"><img class="bar" src="img/x.gif" style="width:<?php echo (2*$hero_info['defence'])+1; ?>px;" alt="<?php echo $h_def1 . "/" . $h_def2; ?>"  title="<?php echo $h_def1 . "/" . $h_def2; ?>" /></td>
+		<td class="val"><?php echo $hero['di'] . "/" . $hero['dc']; ?></td>
+		<td class="xp"><img class="bar" src="img/x.gif" style="width:<?php echo (2*$hero_info['defence'])+1; ?>px;" alt="<?php echo $hero['di'] . "/" . $hero['dc']; ?>"  title="<?php echo $hero['di'] . "/" . $hero['dc']; ?>" /></td>
 		<td class="up"><span class="none">
         <?php
         if($hero_info['points'] > 0){
