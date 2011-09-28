@@ -1647,7 +1647,7 @@
             }
 
             function getHero($uid) {
-                $q = "SELECT * FROM ".TB_PREFIX."hero WHERE dead=0 AND uid=$uid";
+                $q = "SELECT * FROM ".TB_PREFIX."hero WHERE dead=0 AND uid=$uid LIMIT 1";
                 $result = mysql_query($q, $this->connection);
                 return mysql_fetch_assoc($result);
             }
