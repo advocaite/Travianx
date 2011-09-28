@@ -8962,3 +8962,5 @@ div#side_navi img.wm_logo {
 td.wm_getippt {
     background-color: #E2FFB9;
 }
+input.cancel{width:12px;height:12px;background-image:url(../../img/a/del.gif);}
+input.accept{width:12px;height:12px;background-image:url(../../img/a/acc.gif);}

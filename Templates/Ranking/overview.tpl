@@ -47,7 +47,7 @@ $search = $_SESSION['search'];
 						}
 					echo"</td><td class=\"al\" >";
                     if($ranking[$i]['aname'] != "") {
-                    echo "<a href=\"allianz.php?aid=".$ranking[$i]['aname']."\">".$ranking[$i]['aname']."</a>";
+                    echo "<a href=\"allianz.php?aid=".$ranking[$i]['alliance']."\">".$ranking[$i]['aname']."</a>";
                     }
                     else {
                     echo "-";

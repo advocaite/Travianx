@@ -131,12 +131,6 @@ INDELING CATEGORIEEN:
                    <td>[#".$medal['id']."]</td>
                   </tr>";
                  } ?>
-                 <tr>
-                   <td>Peace Dove</td>
-                   <td></td>
-                   <td></td>
-                   <td>[#0]</td>
-                  </tr>
                  </table></p>
 </table>
 

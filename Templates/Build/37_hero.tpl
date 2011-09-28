@@ -7,58 +7,22 @@
 |                Dzoki < dzoki.travian@gmail.com >        |
 | Copyright:     TravianX Project All rights reserved     |
 \*-------------------------------------------------------*/
- if ( isset($_POST['name'])) {
-mysql_query("UPDATE ".TB_PREFIX."hero SET `name`='".($_POST['name'])."' where `uid`='".$session->uid."'") or die("ERROR:".mysql_error());
-$hero = mysql_query("SELECT * FROM " . TB_PREFIX . "hero WHERE `uid` = " . $session->uid . "");
-$hero_info = mysql_fetch_array($hero);
-echo "Heros name has been changed";
 
-}       
-        if($hero_info['unit'] == 1) {
-        	$name = "Legionnaire";
-        } else if($hero_info['unit'] == 2) {
-        	$name = "Praetorian";
-        } else if($hero_info['unit'] == 3) {
-        	$name = "Imperian";
-        } else if($hero_info['unit'] == 5) {
-        	$name = "Equites Imperatoris";
-        } else if($hero_info['unit'] == 6) {
-        	$name = "Equites Caesaris";
-        } else if($hero_info['unit'] == 11) {
-        	$name = "Clubswinger";
-        } else if($hero_info['unit'] == 12) {
-        	$name = "Spearman";
-        } else if($hero_info['unit'] == 13) {
-        	$name = "Axeman";
-        } else if($hero_info['unit'] == 15) {
-        	$name = "Paladin";
-        } else if($hero_info['unit'] == 16) {
-        	$name = "Teutonic Knight";
-        } else if($hero_info['unit'] == 21) {
-        	$name = "Phalanx";
-        } else if($hero_info['unit'] == 22) {
-        	$name = "Swordsman";
-        } else if($hero_info['unit'] == 24) {
-        	$name = "Theutates Thunder";
-        } else if($hero_info['unit'] == 25) {
-        	$name = "Druidrider";
-        } else if($hero_info['unit'] == 26) {
-        	$name = "Haeduan";
-        }
+	if ( isset($_POST['name'])) {
+		mysql_query("UPDATE ".TB_PREFIX."hero SET `name`='".($_POST['name'])."' where `uid`='".$session->uid."'") or die("ERROR:".mysql_error());
+		$hero = mysql_query("SELECT * FROM " . TB_PREFIX . "hero WHERE `uid` = " . $session->uid . "");
+		$hero_info = mysql_fetch_array($hero);
+		echo "Heros name has been changed";
+	}
 
-        if($hero_info['attack'] >= 1) {
-        	$h_attack = round((${'u' . $hero_info['unit']}['atk'] / 50) * (100 + $hero_info['attack']));
-        } else {
-        	$h_attack = round(${'u' . $hero_info['unit']}['atk']);
-        }
-        
-        if($hero_info['defence'] >= 1) {
-        	$h_def1 = round((${'u' . $hero_info['unit']}['di'] / 50) * (100 + $hero_info['defence']));
-        	$h_def2 = round((${'u' . $hero_info['unit']}['dc'] / 50) * (100 + $hero_info['defence']));
-        } else {
-        	$h_def1 = round(${'u' . $hero_info['unit']}['di']);
-        	$h_def2 = round(${'u' . $hero_info['unit']}['dc']);
-        }
+	$hero = $units->Hero($session->uid);
+	$h_attack = $hero['atk'];
+	$hero['di'] = $hero['di'];
+	$hero['dc'] = $hero['dc'];
+
+//	$h_attack = ${'h'.$hero_info['unit']}['atk'] + 5 * floor($hero_info['attack'] * ${'h'.$hero_info['unit']}['atkp']/ 5);      
+//	$hero['di'] = ${'h'.$hero_info['unit']}['di'] + 5 * floor($hero_info['defence'] * ${'h'.$hero_info['unit']}['dip']/ 5);      
+//	$hero['dc'] = ${'h'.$hero_info['unit']}['dc'] + 5 * floor($hero_info['defence'] * ${'h'.$hero_info['unit']}['dcp']/ 5);      
         
 ?>
     <table id="distribution" cellpadding="1" cellspacing="1">
@@ -71,7 +35,7 @@ echo "Heros name has been changed";
             echo "<a href=\"build.php?id=".$id."&rename\">".$hero_info['name']."</a></form>";
         }
         
-        ?> Level <?php echo $hero_info['level']; ?> <span class="info">(<?php echo $name; ?>)</span></th>
+        ?> Level <?php echo $hero_info['level']; ?> <span class="info">(<?php echo $technology->getUnitName($hero_info['unit']); ?>)</span></th>
 	</tr></thead>
 	<tbody><tr>
 		<th>Offence</th>
@@ -90,8 +54,8 @@ echo "Heros name has been changed";
 	</tr>
 	<tr>
 		<th>Defence</th>
-		<td class="val"><?php echo $h_def1 . "/" . $h_def2; ?></td>
-		<td class="xp"><img class="bar" src="img/x.gif" style="width:<?php echo (2*$hero_info['defence'])+1; ?>px;" alt="<?php echo $h_def1 . "/" . $h_def2; ?>"  title="<?php echo $h_def1 . "/" . $h_def2; ?>" /></td>
+		<td class="val"><?php echo $hero['di'] . "/" . $hero['dc']; ?></td>
+		<td class="xp"><img class="bar" src="img/x.gif" style="width:<?php echo (2*$hero_info['defence'])+1; ?>px;" alt="<?php echo $hero['di'] . "/" . $hero['dc']; ?>"  title="<?php echo $hero['di'] . "/" . $hero['dc']; ?>" /></td>
 		<td class="up"><span class="none">
         <?php
         if($hero_info['points'] > 0){
