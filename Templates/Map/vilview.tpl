@@ -204,7 +204,7 @@ else if (!$basearray['occupied']) {
 			<td class="none"><?php 
       $mode = CP; 
       $total = count($database->getProfileVillages($session->uid)); 
-      $need_cps = ${'cp'.$mode}[$total];
+      $need_cps = ${'cp'.$mode}[$total+1]; 
       $cps = $database->getUserField($session->uid, 'cp',0);      
       
       if($cps >= $need_cps) {
