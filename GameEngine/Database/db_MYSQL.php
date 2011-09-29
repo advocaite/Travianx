@@ -1331,16 +1331,13 @@
         		return mysql_query($q, $this->connection);
         	}
 
-        	function addDemolition($wid, $type) {
-
+        	function addDemolition($wid, $field) {
         		global $building, $village;
-
-        		$uprequire = $building->resourceRequired($type, $village->resarray['f' . $type . 't']);
-
-        		$q = "INSERT INTO " . TB_PREFIX . "demolition VALUES (" . $wid . "," . $type . "," . ($this->getFieldLevel($wid, $type) - 1) . "," . (time() + floor($uprequire['time'] / 2)) . ")";
-
+				$q = "DELETE FROM ".TB_PREFIX."bdata WHERE field=$field AND wid=$wid";
+				mysql_query($q, $this->connection);
+        		$uprequire = $building->resourceRequired($field,$village->resarray['f'.$field.'t'],-1);
+        		$q = "INSERT INTO ".TB_PREFIX."demolition VALUES (".$wid.",".$field.",".($this->getFieldLevel($wid,$field)-1).",".(time()+floor($uprequire['time']/2)).")";
         		return mysql_query($q, $this->connection);
-
         	}
 
 
