@@ -4,6 +4,8 @@ if($bindicate == 1) {
 	echo "<p><span class=\"none\">Building already at max level</span></p>";
 } else if($bindicate == 10) {
 	echo "<p><span class=\"none\">Building max level under construction</span></p>";
+} else if($bindicate == 11) {
+	echo "<p><span class=\"none\">Building presently being demolished</span></p>";
 } else {
 	$loopsame = $building->isCurrent($id)?1:0;
 	if ($loopsame>0 && $building->isLoop($id)) {

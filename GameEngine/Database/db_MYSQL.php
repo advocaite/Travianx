@@ -1351,7 +1351,11 @@
         			$q = "SELECT * FROM " . TB_PREFIX . "demolition WHERE timetofinish<=" . time();
         		}
         		$result = mysql_query($q, $this->connection);
-        		return $this->mysql_fetch_all($result);
+				if(!empty($result)) {
+	        		return $this->mysql_fetch_all($result);
+				} else {
+					return NULL;
+				}
         	}
 
         	function finishDemolition($wid) {
