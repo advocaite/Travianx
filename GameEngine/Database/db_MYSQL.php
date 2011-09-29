@@ -1634,7 +1634,11 @@
         	function getUnit($vid) {
         		$q = "SELECT * from " . TB_PREFIX . "units where vref = $vid";
         		$result = mysql_query($q, $this->connection);
-        		return mysql_fetch_assoc($result);
+        		if (!empty($result)) {
+					return mysql_fetch_assoc($result);
+				} else {
+					return NULL;
+				}
         	}
 
         	function getHero($uid) {
