@@ -47,7 +47,7 @@ define("WORLD_MAX", "%MAX%");
 //!!!!!!!!!!!! DO NOT ENABLE !!!!!!!!!!!!
 define("GP_ENABLE",false);
 // Graphic pack location (default: gpack/travian_default/)
-define("GP_LOCATE", "%GP_LOCATE%");
+define("GP_LOCATE", "gpack/travian_default/");
 
 // ***** Troop Speed
 // Values: 1 (normal), 3 (3x speed) etc...
@@ -127,16 +127,6 @@ define("LOG_ILLEGAL",%LOGILLEGAL%);
 define("NEWSBOX1",%BOX1%);
 define("NEWSBOX2",%BOX2%);
 define("NEWSBOX3",%BOX3%);
-
-
-///////////////////////////////////////
-// ****  HOME NEWSBOX SETTINGS  **** //
-///////////////////////////////////////
-//true = enabled
-//false = disabled
-define("HOME1",%HOME1%);
-define("HOME2",%HOME2%);
-define("HOME3",%HOME3%);
 
 
 
@@ -227,7 +217,6 @@ define("MULTIHUNTER",8);
 define("ADMIN",9);
 define("COOKIE_EXPIRE", 60*60*24*7); 
 define("COOKIE_PATH", "/"); 
-define("SUBDOMAIN", %SUBDOM%);
 
 
 ////////////////////////////////////////////
