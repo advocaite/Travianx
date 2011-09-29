@@ -1,38 +1,40 @@
 <?php
 
-#################################################################################
-##              -= YOU MAY NOT REMOVE OR CHANGE THIS NOTICE =-                 ##
-## --------------------------------------------------------------------------- ##
-##  Filename       config.tpl                                                  ##
-##  Developed by:  Dzoki                                                       ##
-##  License:       TravianX Project                                            ##
-##  Copyright:     TravianX (c) 2010-2011. All rights reserved.                ##
-##                                                                             ##
-#################################################################################
-
-
 if(isset($_GET['c']) && $_GET['c'] == 1) {
 echo "<div class=\"headline\"><span class=\"f10 c5\">Error creating constant.php check cmod.</span></div><br>";
 }
 ?>
 <form action="process.php" method="post" id="dataform">
 
+<style>
 
-
+    span.c3 {position: absolute;right:10%}
+    span.c2 {position: absolute;left:10%}
+    
+</style>
+<div id="content" class="login">
 <!-- <LEFT BOX - SERVER RELATED> -->
-<div class="lbox">
-	<span class="f10 c">SERVER RELATED</span>
-	<table><tr>
-	<td><span class="f9 c6">Server name:</span></td><td width="140"><input type="text" name="servername" id="servername" value="TravianX"></td></tr><tr>
-	<td><span class="f9 c6">Server speed:</span></td><td><input name="speed" type="text" id="speed" value="1"></td></tr><tr>
-	<td><span class="f9 c6">Troop speed:</span></td><td width="140"><input type="text" name="incspeed" id="incspeed" value="2"></td></tr><tr>
-	<td><span class="f9 c6">World size:</span></td><td><input name="wmax" type="text" id="wmax" value="25"></td></tr><tr></tr>
-	<td><span class="f9 c6">Domain:</span></td><td><input name="domain" type="text" id="domain" value="http://<?php echo $_SERVER['HTTP_HOST']; ?>/"></td></tr><tr></tr>
-	<td><span class="f9 c6">Homepage:</span></td><td><input name="homepage" type="text" id="homepage" value="http://<?php echo $_SERVER['HTTP_HOST']; ?>/"></td></tr><tr></tr>
-	<td><span class="f9 c6">Language:</span></td><td><select name="lang">
-		<option value="en" selected="selected">English</option></select></td></tr>
-	<td><span class="f9 c6">Beginners protection lenght:</span></td><td><input name="beginner" type="text" id="autodeltime" value="3600*12" size="15"></td></tr><tr>
-	<tr><td><span class="f9 c6">Plus account lenght:</span></td><td><select name="plus_time">
+
+	<span><center><strong>SERVER RELATED</strong></center></span><br />
+    <span class="f9 c6 c2">Server name:</span><span class="c3"><input type="text" name="servername" id="servername" value="TravianX"></span><br /><br />
+    <span class="f9 c6 c2">Server speed:</span><span class="c3"><input name="speed" type="text" id="speed" value="1"></span><br /><br />
+    
+	<span class="f9 c6 c2">Troop speed:</span><span class="c3"><td width="140"><input type="text" name="incspeed" id="incspeed" value="2"></span><br /><br />
+	<span class="f9 c6 c2">World size:</span><span class="c3" style="position: absolute;right:20%;">
+    <select name="wmax">
+		<option value="100" selected="selected">100x100</option>
+        <option value="150">150x150</option>
+        <option value="200">200x200</option>
+        <option value="250">250x250</option>
+        <option value="300">300x300</option>
+        <option value="350">350x350</option>
+        <option value="400">400x400</option></select></span><br /><br />
+    <span class="f9 c6 c2">Homepage:</span><span class="c3"><input name="homepage" type="text" id="homepage" value="http://<?php echo $_SERVER['HTTP_HOST']; ?>/"></span><br /><br />
+	<span class="f9 c6 c2">Language:</span><span class="c3" style="position: absolute;right:20%;"><select name="lang">
+		<option value="en" selected="selected">English</option></select></span><br /><br />
+        
+	<span class="f9 c6 c2">Beginners protection lenght:</span><span class="c3" style="position: absolute;right:15%;"><input name="beginner" type="text" id="autodeltime" value="3600*12" size="15"></span><br /><br />
+	<span class="f9 c6 c2">Plus account lenght:</span><span class="c3" style="position: absolute;right:19%;"><select name="plus_time">
 	  <option value="3600*12">12 hours</option>
 	  <option value="3600*24">1 day</option>
 	  <option value="3600*24*2">2 days</option>
@@ -40,8 +42,9 @@ echo "<div class=\"headline\"><span class=\"f10 c5\">Error creating constant.php
 	  <option value="3600*24*4">4 days</option>
 	  <option value="3600*24*5">5 days</option>
 	  <option value="3600*24*6">6 days</option>
-	  <option value="3600*24*7" selected="selected">7 days</option></select></td></tr>
-	  <tr><td><span class="f9 c6">+25% production lenght:</span></td><td><select name="plus_production">
+	  <option value="3600*24*7" selected="selected">7 days</option></select></span><br /><br />
+      
+	  <span class="f9 c6 c2">+25% production lenght:</span><span class="c3" style="position: absolute;right:19%;"><select name="plus_production">
 	  <option value="3600*12">12 hours</option>
 	  <option value="3600*24">1 day</option>
 	  <option value="3600*24*2">2 days</option>
@@ -49,187 +52,170 @@ echo "<div class=\"headline\"><span class=\"f10 c5\">Error creating constant.php
 	  <option value="3600*24*4">4 days</option>
 	  <option value="3600*24*5">5 days</option>
 	  <option value="3600*24*6">6 days</option>
-	  <option value="3600*24*7" selected="selected">7 days</option></select></td></tr>
+	  <option value="3600*24*7" selected="selected">7 days</option></select></span><br /><br />
 	  </tr>
-      <td><span class="f9 c6">Tourn Threshold:</span></td><td width="140"><input type="text" name="ts_threshold" id="ts_threshold" value="30"></td></tr><tr>
-      <tr><td><span class="f9 c6">Great Workshop:</span></td><td><select name="great_wks">
+      
+      <span class="f9 c6 c2">Turn Threshold:</span><span class="c3"><input type="text" name="ts_threshold" id="ts_threshold" value="30"></span><br /><br />
+      <span class="f9 c6 c2">Great Workshop:</span><span class="c3" style="position: absolute;right:21%;"><select name="great_wks">
       <option value="fale">False</option>
-      <option value="true" selected="selected">True</option></select></td></tr>
+      <option value="true" selected="selected">True</option></select></span><br /><br />
       </tr>
-      <tr><td><span class="f9 c6">WW Statistics:</span></td><td><select name="ww">
+      <span class="f9 c6 c2">WW Statistics:</span><span class="c3" style="position: absolute;right:21%;"><select name="ww">
       <option value="fale">False</option>
-      <option value="true" selected="selected">True</option></select></td></tr>
+      <option value="true" selected="selected">True</option></select></span><br /><br />
       </tr>
-	</table>
-</div>
 <!-- </LEFT BOX - SERVER RELATED> -->
 
 
-
+<br />
 <!-- <RIGHT BOX - SQL RELATED> -->
-<div class="rbox">
-	<span class="f10 c">SQL RELATED</span>
-	<table>
-	<tr><td><span class="f9 c6">Hostname:</span></td><td><input name="sserver" type="text" id="sserver" value="localhost"></td></tr>
-	<tr><td><span class="f9 c6">Username:</span></td><td><input name="suser" type="text" id="suser" value=""></td></tr>
-	<tr><td><span class="f9 c6">Password:</span></td><td><input type="text" name="spass" id="spass"></td></tr>
-	<tr><td><span class="f9 c6">DB name:</span></td><td><input type="text" name="sdb" id="sdb"></td></tr>
-	<tr><td><span class="f9 c6">Prefix:</span></td><td><input type="text" name="prefix" id="prefix" value="s1_"></td>
-	<tr><td><span class="f9 c6">Type:</span></td><td><select name="connectt">
+	<span><center><strong>SQL RELATED</strong></center></span><br />
+	<span class="f9 c6 c2">Hostname:</span><span class="c3"><input name="sserver" type="text" id="sserver" value="localhost"></span><br /><br />
+	<span class="f9 c6 c2">Username:</span><span class="c3"><input name="suser" type="text" id="suser" value=""></span><br /><br />
+	<span class="f9 c6 c2">Password:</span><span class="c3"><input type="text" name="spass" id="spass"></span><br /><br />
+	<span class="f9 c6 c2">DB name:</span><span class="c3"><input type="text" name="sdb" id="sdb"></span><br /><br />
+	<span class="f9 c6 c2">Prefix:</span><span class="c3"><input type="text" name="prefix" id="prefix" value="s1_"></span><br /><br />
+	<span class="f9 c6 c2">Type:</span><span class="c3" style="position: absolute;right:18%;"><select name="connectt">
 	  <option value="0" selected="selected">MYSQL</option>
 	  <option value="1" disabled="disabled">MYSQLi</option>
-	</select></td></tr>
-	</table>
-</div>
+	</select></span><br /><br />
 <!-- </RIGHT BOX - SQL RELATED> -->
 
-
+<br />
 <!-- <LEFT BOX - ADMIN RELATED> -->
-<div class="lbox">
-	<span class="f10 c">ADMIN RELATED</span>
-	<table>
-	<tr><td><span class="f9 c6">Admin Name:</span></td><td width="140"><input type="text" name="aname" id="aname"></td></tr>
-	<tr><td><span class="f9 c6">Admin Email:</span></td><td><input name="aemail" type="text" id="aemail"></td></tr>
-	<tr><td><span class="f9 c6">Admin rank:</span></td><td><select name="admin_rank">
+
+	<span><center><strong>ADMIN RELATED</strong></center></span><br />
+	<span class="f9 c6 c2">Admin Name:</span><span class="c3"><input type="text" name="aname" id="aname"></span><br /><br />
+	<span class="f9 c6 c2">Admin Email:</span><span class="c3"><input name="aemail" type="text" id="aemail"></span><br /><br />
+	<span class="f9 c6 c2">Admin rank:</span><span class="c3" style="position: absolute;right:20%;"><select name="admin_rank">
 	  <option value="false">No</option>
-	  <option value="true" selected="selected">Yes</option></select></td></tr>
-	</table>
-</div>
+	  <option value="true" selected="selected">Yes</option></select></span><br /><br />
+
 <!-- </LEFT BOX - ADMIN RELATED> -->
 
+<br />
+<!-- <RIGHT BOX - GPACK RELATED> 
 
-<!-- <RIGHT BOX - GPACK RELATED> -->
-<div class="rbox">
-	<span class="f10 c">GPACK RELATED</span>
-	<table>
+	<span><center><strong>GPACK RELATED</strong></center></span><br />
+
 	
-	<tr><td><span class="f9 c6">GPack:</span></td><td><select name="gpack">
+	<span class="f9 c6 c2">GPack:</span><span class="c3"><select name="gpack">
 	  <option value="false" selected="selected">No</option>
-	  <option value="true" disabled="disabled">Yes</option></select></td></tr>
-	<tr><td><span class="f9 c6">GPack Design:</span></td><td><select name="gp_locate">
+	  <option value="true" disabled="disabled">Yes</option></select></span><br /><br />
+	<span class="f9 c6 c2">GPack Design:</span><span class="c3"><select name="gp_locate">
 	  <option value="gpack/travian_default/" selected="selected">Travian Default
-	  <option value="gpack/travianx_v1/">TravianX v1 by Dzoki</option></select></td></tr>
+	  <option value="gpack/travianx_v1/">TravianX v1 by Dzoki</option></select></span><br /><br />
 	
-	</table>
-</div>
+-->
 <!-- </RIGHT BOX - GPACK RELATED> -->
 
+<br />
  <!-- <LEFT BOX - NEWSBOX OPTIONS> -->
 	 
-	  <div class="lbox">
-	<span class="f10 c">NEWSBOX OPTIONS</span>
-	<table>
-	<tr><td><span class="f9 c6">Newsbox 1:</span></td><td><select name="box1">
+
+	<span><center><strong>NEWSBOX OPTIONS</strong></center></span><br />
+
+	<span class="f9 c6 c2">Newsbox 1:</span><span class="c3" style="position: absolute;right:18%;"><select name="box1">
 	  <option value="true">Enabled</option>
-	  <option value="false" selected="selected">Disabled</option></select></td></tr>
-	  	<tr><td><span class="f9 c6">Newsbox 2:</span></td><td><select name="box2">
+	  <option value="false" selected="selected">Disabled</option></select></span><br /><br />
+	  	<span class="f9 c6 c2">Newsbox 2:</span><span class="c3" style="position: absolute;right:18%;"><select name="box2">
 	  <option value="true">Enabled</option>
-	  <option value="false" selected="selected">Disabled</option></select></td></tr>
-	  	<tr><td><span class="f9 c6">Newsbox 3:</span></td><td><select name="box3">
+	  <option value="false" selected="selected">Disabled</option></select></span><br /><br />
+	  	<span class="f9 c6 c2">Newsbox 3:</span><span class="c3" style="position: absolute;right:18%;"><select name="box3">
 	  <option value="true">Enabled</option>
-	  <option value="false" selected="selected">Disabled</option></select></td></tr>
-	  	<tr><td><span class="f9 c6">Home 1:</span></td><td><select name="home1">
-	  <option value="true">Enabled</option>
-	  <option value="false" selected="selected">Disabled</option></select></td></tr>
-	  	<tr><td><span class="f9 c6">Home 2:</span></td><td><select name="home2">
-	  <option value="true">Enabled</option>
-	  <option value="false" selected="selected">Disabled</option></select></td></tr>
-	  	<tr><td><span class="f9 c6">Home 3:</span></td><td><select name="home3">
-	  <option value="true">Enabled</option>
-	  <option value="false" selected="selected">Disabled</option></select></td></tr>
-	  </table></div>
+	  <option value="false" selected="selected">Disabled</option></select></span><br /><br />
+
 	  <!-- </LEFT BOX - NEWSBOX OPTIONS> -->
 
-
+<br />
 <!-- <LEFT BOX - LOG RELATED> -->
-<div class="lbox">
-	<span class="f10 c">LOG RELATED</span>
-	<table>
+
+	<span><center><strong>LOG RELATED</strong></center></span><br />
+
 	
-	<tr><td><span class="f9 c6">Log Building:</span></td><td><select name="log_build">
+	<span class="f9 c6 c2">Log Building:</span><span class="c3" style="position: absolute;right:18%;"><select name="log_build">
 	  <option value="false">No</option>
-	  <option value="true" selected="selected">Yes</option></select></td></tr>
-	<tr><td><span class="f9 c6">Log Tech:</span></td><td><select name="log_tech">
+	  <option value="true" selected="selected">Yes</option></select></span><br /><br />
+	<span class="f9 c6 c2">Log Tech:</span><span class="c3" style="position: absolute;right:18%;"><select name="log_tech">
 	  <option value="false">No</option>
-	  <option value="true" selected="selected">Yes</option></select></td></tr>
-	<tr><td><span class="f9 c6">Log Login:</span></td><td><select name="log_login">
+	  <option value="true" selected="selected">Yes</option></select></span><br /><br />
+	<span class="f9 c6 c2">Log Login:</span><span class="c3" style="position: absolute;right:18%;"><select name="log_login">
 	  <option value="false">No</option>
-	  <option value="true" selected="selected">Yes</option></select></td></tr>
-	<tr><td><span class="f9 c6">Log Gold:</span></td><td><select name="log_gold_fin">
+	  <option value="true" selected="selected">Yes</option></select></span><br /><br />
+	<span class="f9 c6 c2">Log Gold:</span><span class="c3" style="position: absolute;right:18%;"><select name="log_gold_fin">
 	  <option value="false">No</option>
-	  <option value="true" selected="selected">Yes</option></select></td></tr>
-	<tr><td><span class="f9 c6">Log Admin:</span></td><td><select name="log_admin">
+	  <option value="true" selected="selected">Yes</option></select></span><br /><br />
+	<span class="f9 c6 c2">Log Admin:</span><span class="c3" style="position: absolute;right:18%;"><select name="log_admin">
 	  <option value="false">No</option>
-	  <option value="true" selected="selected">Yes</option	</select></td></tr>
-	<tr><td><span class="f9 c6">Log War:</span></td><td><select name="log_war">
+	  <option value="true" selected="selected">Yes</option>	</select></span><br /><br />
+	<span class="f9 c6 c2">Log War:</span><span class="c3" style="position: absolute;right:18%;"><select name="log_war">
 	  <option value="false">No</option>
-	  <option value="true" selected="selected">Yes</option></select></td></tr>
-	<tr><td><span class="f9 c6">Log Market:</span></td><td><select name="log_market">
+	  <option value="true" selected="selected">Yes</option></select></span><br /><br />
+	<span class="f9 c6 c2">Log Market:</span><span class="c3" style="position: absolute;right:18%;"><select name="log_market">
 	  <option value="false">No</option>
-	  <option value="true" selected="selected">Yes</option></select></td></tr>
-	<tr><td><span class="f9 c6">Log Illegal:</span></td><td><select name="log_illegal">
+	  <option value="true" selected="selected">Yes</option></select></span><br /><br />
+	<span class="f9 c6 c2">Log Illegal:</span><span class="c3" style="position: absolute;right:18%;"><select name="log_illegal">
 	  <option value="false">No</option>
-	  <option value="true" selected="selected">Yes</option></select></td></tr>
-	  
-	</table>
-</div>
+	  <option value="true" selected="selected">Yes</option></select></span><br /><br />
+ 	 
+
 <!-- </LEFT BOX - LOG RELATED> -->
 
 
-
+<br />
 <!-- <RIGHT BOX - EXTRA OPTIONS> -->
-<div class="rbox">
-	<span class="f10 c">EXTRA OPTIONS</span>
-	<table>
-	<tr><td><span class="f9 c6">Quest:</span></td><td><select name="quest">
+
+	<span><center><strong>EXTRA OPTIONS</strong></center></span><br />
+
+	<span class="f9 c6 c2">Quest:</span><span class="c3" style="position: absolute;right:18%;"><select name="quest">
 	  <option value="false">No</option>
-	  <option value="true" selected="selected">Yes</option></select></td></tr>
-	<tr><td><span class="f9 c6">Activate:</span></td><td><select name="activate">
+	  <option value="true" selected="selected">Yes</option></select></span><br /><br />
+	<span class="f9 c6 c2">Activate:</span><span class="c3" style="position: absolute;right:18%;"><select name="activate">
 	  <option value="false" selected="selected">No</option>
-	  <option value="true">Yes</option></select></td></tr>
-	<tr><td><span class="f9 c6">Subdomain:</span></td><td><select name="subdom">
+	  <option value="true">Yes</option></select></span><br /><br />
+	<!--<span class="f9 c6 c2">Subdomain:</span><span class="c3"><select name="subdom">
 	  <option value="false">No</option>
-	  <option value="true" selected="selected">Yes</option></select></td></tr>
-	<tr><td><span class="f9 c6">Limit Mailbox:</span></td><td><select name="limit_mailbox">
+	  <option value="true" selected="selected">Yes</option></select></span><br /><br />-->
+	<span class="f9 c6 c2">Limit Mailbox:</span><span class="c3" style="position: absolute;right:18%;"><select name="limit_mailbox">
 	  <option value="false">No</option>
-	  <option value="true" selected="selected">Yes</option></select></td></tr>
-	<td><span class="f9 c6">Max mails:</span></td><td><input name="max_mails" type="number" id="max_mails" value="30" size="15"></td></tr><tr></tr>
-	<tr><td><span class="f9 c6">Demolish - lvl required:</span></td><td><select name="demolish">
+	  <option value="true" selected="selected">Yes</option></select></span><br /><br />
+	<span class="f9 c6 c2">Max mails:</span><span class="c3"><input name="max_mails" type="number" id="max_mails" value="30" size="15"></span><br /><br />
+	<span class="f9 c6 c2">Demolish - lvl required:</span><span class="c3" style="position: absolute;right:18%;"><select name="demolish">
 	  <option value="5">5</option>
 	  <option value="10" selected="selected">10</option>
 	  <option value="15">15</option>
-	  <option value="20">20</option></select></td></tr>
-	<tr><td><span class="f9 c6">Village Expand:</span></td><td><select name="village_expand">
+	  <option value="20">20</option></select></span><br /><br />
+	<span class="f9 c6 c2">Village Expand:</span><span class="c3" style="position: absolute;right:18%;"><select name="village_expand">
 	  <option value="1" selected="selected">Slow</option>
-	  <option value="0">Fast</option>
-	<tr><td><span class="f9 c6">Error Reporting:</span></td><td><select name="error">
+	  <option value="0">Fast</option></select></span><br /><br />
+	<span class="f9 c6 c2">Error Reporting:</span><span class="c3" style="position: absolute;right:18%;"><select name="error">
 	  <option value="error_reporting (E_ALL ^ E_NOTICE);" selected="selected">Yes</option>
-	  <option value="error_reporting (0); ">No</option>
+	  <option value="error_reporting (0); ">No</option></select></span><br /><br />
 
-	  <!--<td><span class="f9 c6">Auto del. User:</span></td><td><select name="autodel">
+	  <!--<span class="f9 c6 c2">Auto del. User:</span><span class="c3"><select name="autodel">
 	  <option value="false">No</option>
 	  <option value="true" selected="selected">Yes</option>
 	</select>
-	</td></tr><tr>
-	<td><span class="f9 c6">Auto del. Users (days):</span></td><td><input name="autodeltime" type="text" id="autodeltime" value="3600*24*7" size="15"></td></tr><tr>
+	</span><br /><br /><tr>
+	<span class="f9 c6 c2">Auto del. Users (days):</span><span class="c3"><input name="autodeltime" type="text" id="autodeltime" value="3600*24*7" size="15"></span><br /><br /><tr>
 </tr>
 <tr>
 <tr>
-		<td><span class="f9 c6">Track User:</span></td><td><select name="trackusers">
+		<span class="f9 c6 c2">Track User:</span><span class="c3"><select name="trackusers">
 	  <option value="false" selected="selected">No</option>
 	  <option value="true">Yes</option>
 	</select>
-	</td></tr>
+	</span><br /><br />
 	<tr>
-	<td><span class="f9 c6">User Timeout(min):</span></td><td><input name="timeout" type="text" id="timeout" value="10" size="15"></td></tr><tr>
+	<span class="f9 c6 c2">User Timeout(min):</span><span class="c3"><input name="timeout" type="text" id="timeout" value="10" size="15"></span><br /><br /><tr>
 	-->
-	  </table>	
+
 	  <!-- </RIGHT BOX - EXTRA OPTIONS> -->
 	  
 	  
-	  <br />
+<br />
 	<input type="submit" name="Submit" id="Submit" value="Submit">
 	<input type="hidden" name="subconst" value="1">
 	</form>
-</div>
 
+</div>

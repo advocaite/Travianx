@@ -11,11 +11,13 @@ if(isset($_GET['c']) && $_GET['c'] == 1) {
 echo "<div class=\"headline\"><span class=\"f10 c5\">Error importing database. Check configuration.</span></div><br>";
 }
 ?>
+<div id="content" class="login">
 <form action="process.php" method="post" id="dataform">
 <div class="lbox">
-<table><tr>
-<td><span class="f9 c6">Create SQL Structure:</span></td><td><input type="submit" name="Submit" id="Submit" value="Create.."></td></tr>
-</table>
+<tr>
+<td><span class="f9 c6">Create SQL Structure:</span></td><td> <input type="submit" name="Submit" id="Submit" value="Create.."></td></tr>
+
 </div>
 <input type="hidden" name="substruc" value="1">
 </form>
+</div>
