@@ -1650,7 +1650,7 @@
 				}
         		$result = mysql_query($q, $this->connection);
         		if (!empty($result)) {
-					return mysql_fetch_assoc($result);
+					return $this->mysql_fetch_all($result);
 				} else {
 					return NULL;
 				}

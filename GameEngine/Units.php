@@ -378,13 +378,13 @@ class Units {
 	public function Hero($uid) {
 		global $database;
 		$heroarray = $database->getHero($uid);
-		$herodata = $GLOBALS["h".$heroarray['unit']];
+		$herodata = $GLOBALS["h".$heroarray[0]['unit']];
 		
-		$h_atk = $herodata['atk'] + 5 * floor($heroarray['attack'] * $herodata['atkp']/ 5);
-		$h_di = $herodata['di'] + 5 * floor($heroarray['defence'] * $herodata['dip']/ 5);
-		$h_dc = $herodata['dc'] + 5 * floor($heroarray['defence'] * $herodata['dcp']/ 5);
-		$h_ob = 0.2 * $heroarray['attackbonus'];
-		$h_db = 0.2 * $heroarray['defencebonus'];
+		$h_atk = $herodata['atk'] + 5 * floor($heroarray[0]['attack'] * $herodata['atkp'] / 5);
+		$h_di = $herodata['di'] + 5 * floor($heroarray[0]['defence'] * $herodata['dip'] / 5);
+		$h_dc = $herodata['dc'] + 5 * floor($heroarray[0]['defence'] * $herodata['dcp'] / 5);
+		$h_ob = 0.2 * $heroarray[0]['attackbonus'];
+		$h_db = 0.2 * $heroarray[0]['defencebonus'];
 
 		return array('atk'=>$h_atk,'di'=>$h_di,'dc'=>$h_dc,'ob'=>$h_ob,'db'=>$h_db,'health'=>$heroarray['health']);
 	}	

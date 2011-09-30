@@ -132,7 +132,7 @@
     <?php if($hero_info['level'] <= 3){ ?>
         <p>You can <a href="build.php?id=<?php echo $id; ?>&add=reset">reset</a> your points until you are level <b>3</b> or lower!</p>
     <?php } ?>
-    <p>Your hero has <b><?php echo $hero_info['health']; ?></b>% of his hit points.<br/>
+    <p>Your hero has <b><?php echo floor($hero_info['health']); ?></b>% of his hit points.<br/>
     Your hero has conquered <b>0</b> <a href="build.php?id=<?php echo $id; ?>&land">oases</a>.</p>
     
     

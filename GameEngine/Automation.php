@@ -1963,11 +1963,13 @@ class Automation {
 
         $harray = $database->getHero();
 		if(!empty($harray)) {
-	        foreach($harray as $hero) {
-				if($hero['health']<100) {
-					$database->modifyHero("health",min(100,$hero['health'] + $hero['regeneration'] * 0.05 / (24*60*60)),$hero['heroid']);
+	        foreach($harray as $hdata) {
+				if((time()-$hdata['lastupdate'])>=120) {
+					if($hd['health']<100) {
+						$database->modifyHero("health",min(100,$hdata['health']+$hdata['regeneration']*0.05/(24*60*60)*(time()-$hdata['lastupdate'])),$hdata['heroid']);
+					}
+					$database->modifyHero("lastupdate",time(),$hdata['heroid']);
 				}
-				$database->modifyHero("lastupdate",time(),$hero['heroid']);
 			}
 		}
 		if(file_exists("GameEngine/Prevention/healhero.txt")) {
