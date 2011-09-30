@@ -47,7 +47,7 @@
 /**
  * Creating account & capital village
  */
-        $username = "Natars23232";
+        $username = "Natars";
         $password = md5('013ab00e4' . rand(999999999999, 9999999999999999999999999) . 'f248588ed');
         $email = "natars@travianx.com";
         $tribe = 5;
@@ -99,13 +99,13 @@
         	}
         	if($size == 1) {
         		mysql_query("UPDATE " . TB_PREFIX . "units SET u41 = " . (rand(1000, 2000) * $speed) . ", u42 = " . (rand(1500, 2000) * $speed) . ", u43 = " . (rand(2300, 2800) * $speed) . ", u44 = " . (rand(25, 75) * $speed) . ", u45 = " . (rand(1200, 1900) * $speed) . ", u46 = " . (rand(1500, 2000) * $speed) . ", u47 = " . (rand(500, 900) * $speed) . ", u48 = " . (rand(100, 300) * $speed) . " , u49 = " . (rand(1, 5) * $speed) . ", u50 = " . (rand(1, 5) * $speed) . " WHERE vref = " . $wid . "");
-        		mysql_query("UPDATE " . TB_PREFIX . "fdata SET f22t = 27, f22 = 10 WHERE vref = $wid");
+        		mysql_query("UPDATE " . TB_PREFIX . "fdata SET f22t = 27, f22 = 10, f28t = 25, f28 = 10, f19t = 23, f19 = 10, f32t = 23, f32 = 10 WHERE vref = $wid");
         	} elseif($size == 2) {
         		mysql_query("UPDATE " . TB_PREFIX . "units SET u41 = " . (rand(2000, 4000) * $speed) . ", u42 = " . (rand(3000, 4000) * $speed) . ", u43 = " . (rand(4600, 5600) * $speed) . ", u44 = " . (rand(50, 150) * $speed) . ", u45 = " . (rand(2400, 3800) * $speed) . ", u46 = " . (rand(3000, 4000) * $speed) . ", u47 = " . (rand(1000, 1800) * $speed) . ", u48 = " . (rand(200, 600) * $speed) . " , u49 = " . (rand(2, 10) * $speed) . ", u50 = " . (rand(2, 10) * $speed) . " WHERE vref = " . $wid . "");
-        		mysql_query("UPDATE " . TB_PREFIX . "fdata SET f22t = 27, f22 = 20 WHERE vref = $wid");
+        		mysql_query("UPDATE " . TB_PREFIX . "fdata SET f22t = 27, f22 = 10, f28t = 25, f28 = 20, f19t = 23, f19 = 10, f32t = 23, f32 = 10 WHERE vref = $wid");
         	} elseif($size == 3) {
         		mysql_query("UPDATE " . TB_PREFIX . "units SET u41 = " . (rand(4000, 8000) * $speed) . ", u42 = " . (rand(6000, 8000) * $speed) . ", u43 = " . (rand(9200, 11200) * $speed) . ", u44 = " . (rand(100, 300) * $speed) . ", u45 = " . (rand(4800, 7600) * $speed) . ", u46 = " . (rand(6000, 8000) * $speed) . ", u47 = " . (rand(2000, 3600) * $speed) . ", u48 = " . (rand(400, 1200) * $speed) . " , u49 = " . (rand(4, 20) * $speed) . ", u50 = " . (rand(4, 20) * $speed) . " WHERE vref = " . $wid . "");
-        		mysql_query("UPDATE " . TB_PREFIX . "fdata SET f22t = 27, f22 = 20 WHERE vref = $wid");
+        		mysql_query("UPDATE " . TB_PREFIX . "fdata SET f22t = 27, f22 = 10, f28t = 25, f28 = 20, f19t = 23, f19 = 10, f32t = 23, f32 = 10 WHERE vref = $wid");
         	}
         }
 
@@ -114,23 +114,28 @@
  */
 
         $desc = 'All buildings in the area of effect are stronger. This means that you will need more catapults to damage buildings protected by this artifacts powers.';
-        $effect = '';
-
+        
+        
         $vname = 'Diamond Chisel';
+        $effect = '(4x)';
         for($i > 1; $i < 6; $i++) {
         	Artefact($uid, 1, 1, 'The architects slight secret', '' . $vname . '', '' . $desc . '', '' . $effect . '', 'type1.gif');
         }
 
         unset($i);
         unset($vname);
+        unset($effect);
         $vname = 'Giant Marble Hammer';
+        $effect = '(3x)';
         for($i > 1; $i < 4; $i++) {
         	Artefact($uid, 1, 2, 'The architects great secret', '' . $vname . '', '' . $desc . '', '' . $effect . '', 'type1.gif');
         }
 
         unset($i);
         unset($vname);
+        unset($effect);
         $vname = 'Hemons Scrolls';
+        $effect = '(5x)';
         for($i > 1; $i < 1; $i++) {
         	Artefact($uid, 1, 3, 'The architects unique secret', '' . $vname . '', '' . $desc . '', '' . $effect . '', 'type1.gif');
         }
@@ -144,21 +149,27 @@
 
         unset($i);
         unset($vname);
+        unset($effect);
         $vname = 'Opal Horseshoe';
+        $effect = '(2x)';
         for($i > 1; $i < 6; $i++) {
         	Artefact($uid, 2, 1, 'The slight titan boots', '' . $vname . '', '' . $desc . '', '' . $effect . '', 'type2.gif');
         }
 
         unset($i);
         unset($vname);
+        unset($effect);
         $vname = 'Golden Chariot';
+        $effect = '(1.5x)';
         for($i > 1; $i < 4; $i++) {
         	Artefact($uid, 2, 2, 'The great titan boots', '' . $vname . '', '' . $desc . '', '' . $effect . '', 'type2.gif');
         }
 
         unset($i);
         unset($vname);
+        unset($effect);
         $vname = 'Pheidippides Sandals';
+        $effect = '(3x)';
         for($i > 1; $i < 1; $i++) {
         	Artefact($uid, 2, 3, 'The unique titan boots', '' . $vname . '', '' . $desc . '', '' . $effect . '', 'type2.gif');
         }
@@ -172,21 +183,27 @@
 
         unset($i);
         unset($vname);
+        unset($effect);
         $vname = 'Tale of a Rat';
+        $effect = '(5x)';
         for($i > 1; $i < 6; $i++) {
         	Artefact($uid, 3, 1, 'The eagles slight eyes', '' . $vname . '', '' . $desc . '', '' . $effect . '', 'type3.gif');
         }
 
         unset($i);
         unset($vname);
+        unset($effect);
         $vname = 'Generals Letter';
+        $effect = '(3x)';
         for($i > 1; $i < 4; $i++) {
         	Artefact($uid, 3, 2, 'The eagles great eyes', '' . $vname . '', '' . $desc . '', '' . $effect . '', 'type3.gif');
         }
 
         unset($i);
         unset($vname);
+        unset($effect);
         $vname = 'Diary of Sun Tzu';
+        $effect = '(10x)';
         for($i > 1; $i < 1; $i++) {
         	Artefact($uid, 3, 3, 'The eagles unique eyes', '' . $vname . '', '' . $desc . '', '' . $effect . '', 'type3.gif');
         }
@@ -200,21 +217,27 @@
 
         unset($i);
         unset($vname);
+        unset($effect);
         $vname = 'Silver Platter';
+        $effect = '(50%)';
         for($i > 1; $i < 6; $i++) {
         	Artefact($uid, 4, 1, 'Slight diet control', '' . $vname . '', '' . $desc . '', '' . $effect . '', 'type4.gif');
         }
 
         unset($i);
         unset($vname);
+        unset($effect);
         $vname = 'Sacred Hunting Bow';
+        $effect = '(25%)';
         for($i > 1; $i < 4; $i++) {
         	Artefact($uid, 4, 2, 'Great diet control', '' . $vname . '', '' . $desc . '', '' . $effect . '', 'type4.gif');
         }
 
         unset($i);
         unset($vname);
+        unset($effect);
         $vname = 'King Arthurs Chalice';
+        $effect = '(50%)';
         for($i > 1; $i < 1; $i++) {
         	Artefact($uid, 4, 3, 'Unique diet control', '' . $vname . '', '' . $desc . '', '' . $effect . '', 'type4.gif');
         }
@@ -229,21 +252,27 @@
 
         unset($i);
         unset($vname);
+        unset($effect);
         $vname = 'Scribed Soldiers Oath';
+        $effect = '(50%)';
         for($i > 1; $i < 6; $i++) {
         	Artefact($uid, 5, 1, 'The trainers slight talent', '' . $vname . '', '' . $desc . '', '' . $effect . '', 'type5.gif');
         }
 
         unset($i);
         unset($vname);
+        unset($effect);
         $vname = 'Declaration of War';
+        $effect = '(25%)';
         for($i > 1; $i < 4; $i++) {
         	Artefact($uid, 5, 2, 'The trainers great talent', '' . $vname . '', '' . $desc . '', '' . $effect . '', 'type5.gif');
         }
 
         unset($i);
         unset($vname);
+        unset($effect);
         $vname = 'Memoirs of Alexander the Great';
+        $effect = '(50%)';
         for($i > 1; $i < 1; $i++) {
         	Artefact($uid, 5, 3, 'The trainers unique talent', '' . $vname . '', '' . $desc . '', '' . $effect . '', 'type5.gif');
         }
@@ -258,14 +287,18 @@
 
         unset($i);
         unset($vname);
+        unset($effect);;
         $vname = 'Builders Sketch';
+        $effect = '';
         for($i > 1; $i < 6; $i++) {
         	Artefact($uid, 6, 1, 'Slight storage masterplan', '' . $vname . '', '' . $desc . '', '' . $effect . '', 'type6.gif');
         }
 
         unset($i);
         unset($vname);
+        unset($effect);
         $vname = 'Babylonian Tablet';
+        $effect = '';
         for($i > 1; $i < 4; $i++) {
         	Artefact($uid, 6, 2, 'Great storage masterplan', '' . $vname . '', '' . $desc . '', '' . $effect . '', 'type6.gif');
         }
@@ -280,21 +313,27 @@
 
         unset($i);
         unset($vname);
+        unset($effect);
         $vname = 'Map of the Hidden Caverns';
+        $effect = '(200)';
         for($i > 1; $i < 6; $i++) {
         	Artefact($uid, 7, 1, 'Rivals slight confusion', '' . $vname . '', '' . $desc . '', '' . $effect . '', 'type7.gif');
         }
 
         unset($i);
         unset($vname);
+        unset($effect);
         $vname = 'Bottomless Satchel';
+        $effect = '(100)';
         for($i > 1; $i < 4; $i++) {
         	Artefact($uid, 7, 2, 'Rivals great confusion', '' . $vname . '', '' . $desc . '', '' . $effect . '', 'type7.gif');
         }
 
         unset($i);
         unset($vname);
+        unset($effect);
         $vname = 'Trojan Horse';
+        $effect = '(500)';
         for($i > 1; $i < 1; $i++) {
         	Artefact($uid, 7, 3, 'Rivals unique confusion', '' . $vname . '', '' . $desc . '', '' . $effect . '', 'type7.gif');
         }
