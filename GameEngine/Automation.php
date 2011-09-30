@@ -1965,8 +1965,8 @@ class Automation {
 		if(!empty($harray)) {
 	        foreach($harray as $hdata) {
 				if((time()-$hdata['lastupdate'])>=120) {
-					if($hd['health']<100) {
-						$database->modifyHero("health",min(100,$hdata['health']+$hdata['regeneration']*0.05/(24*60*60)*(time()-$hdata['lastupdate'])),$hdata['heroid']);
+					if($hdata['health']<100) {
+						$database->modifyHero("health",min(100,$hdata['health']+$hdata['regeneration']*0.05/(24*60*60)*(time()-$hdata['lastupdate'])*SPEED),$hdata['heroid']);
 					}
 					$database->modifyHero("lastupdate",time(),$hdata['heroid']);
 				}

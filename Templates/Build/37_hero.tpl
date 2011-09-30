@@ -16,14 +16,7 @@
 	}
 
 	$hero = $units->Hero($session->uid);
-	$h_attack = $hero['atk'];
-	$hero['di'] = $hero['di'];
-	$hero['dc'] = $hero['dc'];
 
-//	$h_attack = ${'h'.$hero_info['unit']}['atk'] + 5 * floor($hero_info['attack'] * ${'h'.$hero_info['unit']}['atkp']/ 5);      
-//	$hero['di'] = ${'h'.$hero_info['unit']}['di'] + 5 * floor($hero_info['defence'] * ${'h'.$hero_info['unit']}['dip']/ 5);      
-//	$hero['dc'] = ${'h'.$hero_info['unit']}['dc'] + 5 * floor($hero_info['defence'] * ${'h'.$hero_info['unit']}['dcp']/ 5);      
-        
 ?>
     <table id="distribution" cellpadding="1" cellspacing="1">
 	<thead><tr>
@@ -39,8 +32,8 @@
 	</tr></thead>
 	<tbody><tr>
 		<th>Offence</th>
-		<td class="val"><?php echo $h_attack; ?></td>
-		<td class="xp"><img class="bar" src="img/x.gif" style="width:<?php echo (2*$hero_info['attack'])+1; ?>px;" alt="<?php echo $h_attack; ?>" title="<?php echo $h_attack; ?>" /></td>
+		<td class="val"><?php echo $hero['atk']; ?></td>
+		<td class="xp"><img class="bar" src="img/x.gif" style="width:<?php echo (2*$hero_info['attack'])+1; ?>px;" alt="<?php echo $hero['atk']; ?>" title="<?php echo $hero['atk']; ?>" /></td>
 		<td class="up"><span class="none">
         <?php
         if($hero_info['points'] > 0){
@@ -69,8 +62,8 @@
 	</tr>
 		<tr>
 		<th>Off-Bonus</th>
-		<td class="val"><?php echo ($hero_info['attackbonus'] * 0.2); ?>%</td>
-		<td class="xp"><img class="bar" src="img/x.gif" style="width:<?php echo ($hero_info['attackbonus'] * 2)+1; ?>px;" alt="<?php echo ($hero_info['attackbonus'] * 0.2); ?>%" title="<?php echo ($hero_info['attackbonus'] * 0.2); ?>%" /></td>
+		<td class="val"><?php echo ($hero['ob']-1)*100; ?>%</td>
+		<td class="xp"><img class="bar" src="img/x.gif" style="width:<?php echo ($hero['ob']-1)*1000+1; ?>px;" alt="<?php echo ($hero['ob']-1)*100; ?>%" title="<?php echo ($hero['ob']-1)*100; ?>%" /></td>
 		<td class="up"><span class="none">
         <?php
         if($hero_info['points'] > 0){
@@ -84,8 +77,8 @@
 	</tr>
 	<tr>
 		<th>Def-Bonus</th>
-		<td class="val"><?php echo ($hero_info['defencebonus'] * 0.2); ?>%</td>
-		<td class="xp"><img class="bar" src="img/x.gif" style="width:<?php echo ($hero_info['defencebonus'] * 2)+1; ?>px;" alt="<?php echo ($hero_info['defencebonus'] * 0.2); ?>%" title="<?php echo ($hero_info['defencebonus'] * 0.2); ?>%" /></td>
+		<td class="val"><?php echo ($hero['db']-1)*100; ?>%</td>
+		<td class="xp"><img class="bar" src="img/x.gif" style="width:<?php echo ($hero['db']-1)*1000+1; ?>px;" alt="<?php echo ($hero['db']-1)*100; ?>%" title="<?php echo ($hero['db']-1)*100; ?>%" /></td>
 		<td class="up"><span class="none">
         <?php
         if($hero_info['points'] > 0){
@@ -99,8 +92,8 @@
 	</tr>
 	<tr>
 		<th>Regeneration</th>
-		<td class="val"><?php echo ($hero_info['regeneration']*100*.05); ?>%/Day</td>
-		<td class="xp"><img class="bar" src="img/x.gif" style="width:<?php echo ($hero_info['regeneration']*2)+1; ?>px;" alt="<?php echo ($hero_info['regeneration']*100*.05); ?>%/Day" title="<?php echo ($hero_info['regeneration']*100*.05); ?>%/Day" /></td>
+		<td class="val"><?php echo ($hero_info['regeneration']*100*.05*SPEED); ?>%/Day</td>
+		<td class="xp"><img class="bar" src="img/x.gif" style="width:<?php echo ($hero_info['regeneration']*2)+1; ?>px;" alt="<?php echo ($hero_info['regeneration']*100*.05*SPEED); ?>%/Day" title="<?php echo ($hero_info['regeneration']*100*.05*SPEED); ?>%/Day" /></td>
 		<td class="up"><span class="none">
         <?php
         if($hero_info['points'] > 0){

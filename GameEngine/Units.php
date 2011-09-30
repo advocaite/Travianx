@@ -383,8 +383,8 @@ class Units {
 		$h_atk = $herodata['atk'] + 5 * floor($heroarray[0]['attack'] * $herodata['atkp'] / 5);
 		$h_di = $herodata['di'] + 5 * floor($heroarray[0]['defence'] * $herodata['dip'] / 5);
 		$h_dc = $herodata['dc'] + 5 * floor($heroarray[0]['defence'] * $herodata['dcp'] / 5);
-		$h_ob = 0.2 * $heroarray[0]['attackbonus'];
-		$h_db = 0.2 * $heroarray[0]['defencebonus'];
+		$h_ob = 1 + 0.002 * $heroarray[0]['attackbonus'];
+		$h_db = 1 + 0.002 * $heroarray[0]['defencebonus'];
 
 		return array('atk'=>$h_atk,'di'=>$h_di,'dc'=>$h_dc,'ob'=>$h_ob,'db'=>$h_db,'health'=>$heroarray['health']);
 	}	
