@@ -2,7 +2,7 @@
 
 if($_REQUEST["cancel"] == "1") {
 	$database->delDemolition($village->wid);
-	header("Location: build.php?gid=15&amp;cancel=0");
+	header("Location: build.php?gid=15&amp;cancel=0&amp;demolish=0");
 }
 
 if(!empty($_REQUEST["demolish"]) && $_REQUEST["c"] == $session->mchecker) {
@@ -10,6 +10,7 @@ if(!empty($_REQUEST["demolish"]) && $_REQUEST["c"] == $session->mchecker) {
 		$type = $_REQUEST['type'];
 		$database->addDemolition($village->wid,$type);
 		$session->changeChecker();
+		header("Location: build.php?gid=15&amp;cancel=0&amp;demolish=0");
 	}
 }
 
