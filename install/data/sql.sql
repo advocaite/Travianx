@@ -6,15 +6,6 @@
 -- Generation Time: Jul 21, 2011 at 02:49 AM
 -- Server version: 5.5.8
 -- PHP Version: 5.3.5
--- #################################################################################
--- ##              -= YOU MAY NOT REMOVE OR CHANGE THIS NOTICE =-                 ##
--- ## --------------------------------------------------------------------------- ##
--- ##  Filename       sql.sql                                                     ##
--- ##  Developed by:  Dzoki & Dixie                                               ##
--- ##  License:       TravianX Project                                            ##
--- ##  Copyright:     TravianX (c) 2010-2011. All rights reserved.                ##
--- ##                                                                             ##
--- #################################################################################
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
@@ -167,10 +158,10 @@ CREATE TABLE IF NOT EXISTS `%PREFIX%allimedal` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `s1_artefacts`
+-- Table structure for table `%PREFIX%artefacts`
 --
 
-CREATE TABLE IF NOT EXISTS `s1_artefacts` (
+CREATE TABLE IF NOT EXISTS `%PREFIX%artefacts` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `vref` int(10) unsigned NOT NULL,
   `owner` int(10) unsigned NOT NULL,
