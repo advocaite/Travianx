@@ -68,10 +68,10 @@
                 <td>Romans</td>
 
                 <td><?php
-                   echo $tribes[0]; ?></td>
+                   echo $tribes[0] - 2; ?></td>
 
                 <td><?php
-                   $percents = 100 * ($tribes[0] / $users);
+                   $percents = 100 * (($tribes[0]-2) / $users);
                    echo $percents = intval($percents);
                    echo "%"; ?></td>
             </tr>
