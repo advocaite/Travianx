@@ -752,24 +752,25 @@ CREATE TABLE IF NOT EXISTS `%PREFIX%gold_fin_log` (
 --
 
 CREATE TABLE IF NOT EXISTS `%PREFIX%hero` (
-  `uid` int(10) unsigned NOT NULL,
-  `unit` int(5) NOT NULL,
-  `name` text NOT NULL,
-  `level` int(3) NOT NULL,
-  `points` varchar(25) NOT NULL,
-  `experience` varchar(10) NOT NULL,
-  `dead` int(2) NOT NULL,
-  `health` int(25) NOT NULL,
-  `attack` varchar(25) NOT NULL,
-  `defence` varchar(25) NOT NULL,
-  `attackbonus` varchar(25) NOT NULL,
-  `defencebonus` varchar(25) NOT NULL,
-  `regeneration` int(15) NOT NULL,
+  `heroid` smallint(2) unsigned NOT NULL AUTO_INCREMENT,
+  `uid` smallint(2) unsigned NOT NULL,
+  `unit` smallint(2) unsigned NOT NULL,
+  `name` tinytext NOT NULL,
+  `wref` mediumint(3) unsigned NOT NULL,
+  `level` tinyint(1) unsigned NOT NULL,
+  `points` smallint(2) unsigned NOT NULL,
+  `experience` mediumint(3) NOT NULL,
+  `dead` bit(1) NOT NULL,
+  `health` float(12,9) unsigned NOT NULL,
+  `attack` tinyint(1) unsigned NOT NULL,
+  `defence` tinyint(1) unsigned NOT NULL,
+  `attackbonus` tinyint(1) unsigned NOT NULL,
+  `defencebonus` tinyint(1) unsigned NOT NULL,
+  `regeneration` tinyint(1) unsigned NOT NULL,
   `autoregen` int(2) NOT NULL,
-  `trainingtime` int(15) NOT NULL,
-  PRIMARY KEY (`uid`),
-  KEY `uid` (`uid`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `trainingtime` mediumint(3) unsigned NOT NULL,
+  PRIMARY KEY (`heroid`),
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
 
 --
 -- Dumping data for table `%prefix%hero`

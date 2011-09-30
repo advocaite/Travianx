@@ -1642,11 +1642,24 @@
 				}
         	}
 
-        	function getHero($uid) {
-        		$q = "SELECT * FROM " . TB_PREFIX . "hero WHERE dead=0 AND uid=$uid LIMIT 1";
+        	function getHero($uid=0) {
+				if (!$uid) {
+					$q = "SELECT * FROM ".TB_PREFIX."hero";
+				} else {
+	        		$q = "SELECT * FROM ".TB_PREFIX."hero WHERE dead=0 AND uid=$uid LIMIT 1";
+				}
         		$result = mysql_query($q, $this->connection);
-        		return mysql_fetch_assoc($result);
+        		if (!empty($result)) {
+					return mysql_fetch_assoc($result);
+				} else {
+					return NULL;
+				}
         	}
+
+			function modifyHero($column,$value,$heroid) {
+				$q = "UPDATE ".TB_PREFIX."hero SET $column=$value WHERE heroid=$heroid";
+				return mysql_query($q, $this->connection);
+			}
 
         	function addTech($vid) {
         		$q = "INSERT into " . TB_PREFIX . "tdata (vref) values ($vid)";

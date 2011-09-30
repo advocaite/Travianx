@@ -99,8 +99,8 @@
 	</tr>
 	<tr>
 		<th>Regeneration</th>
-		<td class="val"><?php echo ($hero_info['autoregen'] + ($hero_info['regeneration']*15)); ?>/Day</td>
-		<td class="xp"><img class="bar" src="img/x.gif" style="width:<?php echo ($hero_info['regeneration']*2)+1; ?>px;" alt="<?php echo ($hero_info['autoregen'] + ($hero_info['regeneration']*15)); ?>/Day" title="<?php echo ($hero_info['autoregen'] + ($hero_info['regeneration']*15)); ?>/Day" /></td>
+		<td class="val"><?php echo ($hero_info['regeneration']*100*.05); ?>%/Day</td>
+		<td class="xp"><img class="bar" src="img/x.gif" style="width:<?php echo ($hero_info['regeneration']*2)+1; ?>px;" alt="<?php echo ($hero_info['regeneration']*100*.05); ?>%/Day" title="<?php echo ($hero_info['regeneration']*100*.05); ?>%/Day" /></td>
 		<td class="up"><span class="none">
         <?php
         if($hero_info['points'] > 0){

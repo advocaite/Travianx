@@ -147,6 +147,9 @@ class Automation {
         if(!file_exists("GameEngine/Prevention/demolition.txt") or time()-filemtime("GameEngine/Prevention/demolition.txt")>10) {  
             $this->demolitionComplete();    
         }
+        if(!file_exists("GameEngine/Prevention/healhero.txt") or time()-filemtime("GameEngine/Prevention/healhero.txt")>10) {  
+            $this->healHero();    
+        }
     }  
     
     private function clearDeleting() {
@@ -1953,7 +1956,25 @@ class Automation {
         }
     }
 
-};
+    private function healHero() {
+        global $database;
+        $ourFileHandle = @fopen("GameEngine/Prevention/healhero.txt", 'w');
+        @fclose($ourFileHandle);
+
+        $harray = $database->getHero();
+		if(!empty($harray)) {
+	        foreach($harray as $hero) {
+				if($hero['health']<100) {
+					$database->modifyHero("health",min(100,$hero['health'] + $hero['regeneration'] * 0.05 / (24*60*60)),$hero['heroid']);
+				}
+				$database->modifyHero("lastupdate",time(),$hero['heroid']);
+			}
+		}
+		if(file_exists("GameEngine/Prevention/healhero.txt")) {
+			@unlink("GameEngine/Prevention/healhero.txt");
+		}
+	}
+}
 
 $automation = new Automation;
 ?>
