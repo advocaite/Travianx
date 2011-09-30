@@ -30,7 +30,7 @@
         		if($hero_info['trainingtime'] != 0) {
         			if($hero_info['dead'] == 0) {
         				mysql_query("UPDATE " . TB_PREFIX . "hero SET trainingtime = '0' WHERE uid = " . $session->uid . "");
-                        mysql_query("UPDATE " . TB_PREFIX . "units SET uhero = 1 WHERE vref = ".$village->wid."");
+                        mysql_query("UPDATE " . TB_PREFIX . "units SET hero = 1 WHERE vref = ".$village->wid."");
  			       }
         		}
         	}  
