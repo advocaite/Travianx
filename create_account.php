@@ -348,6 +348,7 @@
 
         unset($i);
         unset($vname);
+        unset($effect);
         $vname = 'Pendant of Mischief';
         for($i > 1; $i < 5; $i++) {
         	Artefact($uid, 8, 1, 'Artefact of the slight fool', '' . $vname . '', '' . $desc . '', '' . $effect . '', 'type8.gif');
@@ -355,6 +356,7 @@
 
         unset($i);
         unset($vname);
+        unset($effect);
         $vname = 'Pendant of Mischief';
         for($i > 1; $i < 5; $i++) {
         	Artefact($uid, 8, 2, 'Artefact of the slight fool', '' . $vname . '', '' . $desc . '', '' . $effect . '', 'type8.gif');
@@ -362,6 +364,7 @@
 
         unset($i);
         unset($vname);
+        unset($effect);
         $vname = 'Forbidden Manuscript';
         for($i > 1; $i < 1; $i++) {
         	Artefact($uid, 8, 3, 'Artefact of the unique fool', '' . $vname . '', '' . $desc . '', '' . $effect . '', 'type8.gif');
