@@ -11,7 +11,9 @@
 if(isset($_GET['c'])){
 ?>
 
-<p><b>NPC completed.</b> Cost 3<img src="img/x.gif" class="gold" alt="Gold" title="Gold" /></p> <?php } else { ?>
+<p><b>NPC completed.</b> Cost 3<img src="img/x.gif" class="gold" alt="Gold" title="Gold" /></p> 
+<a href="javascript: history.go(-2)">Back to building</a> 
+<?php } else { ?>
 
 <p>With the NPC merchant you can distribute the resources in your warehouse as you desire. <br /><br />
 The first line shows the current stock. In the second line you can choose another distribution. The third line shows the difference between the old and new stock.</p>
@@ -252,5 +254,6 @@ function testSum() {
 		<script> 
 			testSum();
 		</script> 
+        
 		<?php } ?>
 	</div>
