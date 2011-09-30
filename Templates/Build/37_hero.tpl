@@ -8,6 +8,8 @@
 | Copyright:     TravianX Project All rights reserved     |
 \*-------------------------------------------------------*/
 
+include_once("GameEngine/Data/hero_full.php");
+
 	if ( isset($_POST['name'])) {
 		mysql_query("UPDATE ".TB_PREFIX."hero SET `name`='".($_POST['name'])."' where `uid`='".$session->uid."'") or die("ERROR:".mysql_error());
 		$hero = mysql_query("SELECT * FROM " . TB_PREFIX . "hero WHERE `uid` = " . $session->uid . "");
@@ -28,7 +30,7 @@
             echo "<a href=\"build.php?id=".$id."&rename\">".$hero_info['name']."</a></form>";
         }
         
-        ?> Level <?php echo $hero_info['level']; ?> <span class="info">(<?php echo $technology->getUnitName($hero_info['unit']); ?>)</span></th>
+        ?> Level <?php echo $hero_info['level']; ?> <span class="info">( <?php echo"<img class=\"unit u".$hero_info['unit']."\" src=\"img/x.gif\" alt=\"".$technology->getUnitName($hero_info['unit'])."\" title=\"".$technology->getUnitName($hero_info['unit'])."\" /> ".$technology->getUnitName($hero_info['unit']); ?> )</span></th>
 	</tr></thead>
 	<tbody><tr>
 		<th>Offence</th>

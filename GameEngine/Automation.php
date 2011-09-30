@@ -1966,7 +1966,7 @@ class Automation {
 	        foreach($harray as $hdata) {
 				if((time()-$hdata['lastupdate'])>=120) {
 					if($hdata['health']<100) {
-						$database->modifyHero("health",min(100,$hdata['health']+$hdata['regeneration']*0.05/(24*60*60)*(time()-$hdata['lastupdate'])*SPEED),$hdata['heroid']);
+						$database->modifyHero("health",min(100,$hdata['health']+$hdata['regeneration']*5/(24*60*60)*(time()-$hdata['lastupdate'])*SPEED),$hdata['heroid']);
 					}
 					$database->modifyHero("lastupdate",time(),$hdata['heroid']);
 				}
