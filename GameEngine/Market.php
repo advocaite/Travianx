@@ -89,13 +89,8 @@ class Market {
         if($availableWood >= $post['r1'] AND $availableClay >= $post['r2'] AND $availableIron >= $post['r3'] AND $availableCrop >= $post['r4']){ 
          
         $resource = array($wtrans,$ctrans,$itrans,$crtrans); 
-        $reqMerc = 1; 
-        if(array_sum($resource) > $this->maxcarry) { 
-            $reqMerc = round(array_sum($resource)/$this->maxcarry); 
-            if(array_sum($resource) > $this->maxcarry*$reqMerc) { 
-                $reqMerc += 1; 
-            } 
-        } 
+        $reqMerc = ceil((array_sum($resource)-0.1)/$this->maxcarry); 
+
         if($this->merchantAvail() != 0 && $reqMerc <= $this->merchantAvail()) { 
                 if(isset($post['dname']) && $post['dname'] != "") { 
                     $id = $database->getVillageByName($post['dname']); 

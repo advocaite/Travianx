@@ -331,6 +331,7 @@ class Technology {
 	}
 	
 	public function getUpkeep($array,$type) {
+		global $building,$session;
 		$upkeep = 0;
 		switch($type) {
 			case 0:
@@ -359,10 +360,14 @@ class Technology {
             break;
 		}	
 		for($i=$start;$i<=$end;$i++) {
+			$hdt = 0;
+			if($session->tribe == 1 && $i>=4 && $i<=6) {
+				//if($building->getTypeLevel(41)>=1) { $hdt = 1; }
+			}
 			$unit = "u".$i;
 			global $$unit;
 			$dataarray = $$unit;
-			$upkeep += $dataarray['pop'] * $array[$unit];
+			$upkeep += ($dataarray['pop'] - $hdt) * $array[$unit];
 		}
             $unit = "hero";
             global $$unit;
@@ -372,7 +377,7 @@ class Technology {
 	}
 
 private function trainUnit($unit,$amt,$great=false) {
-        global $session,$database,${'u'.$unit},$building,$village,$bid19,$bid20,$bid21,$bid25,$bid26,$bid29,$bid30,$bid42;        
+        global $session,$database,${'u'.$unit},$building,$village,$bid19,$bid20,$bid21,$bid25,$bid26,$bid29,$bid30,$bid41,$bid42;        
         
         if($this->getTech($unit) || $unit%10 <= 1) {
             $footies = array(1,2,3,11,12,13,14,21,22,31,32,33,34,41,42,43,44);
@@ -388,14 +393,28 @@ private function trainUnit($unit,$amt,$great=false) {
             }
             if(in_array($unit,$calvary)) {
 				if($great) {
-					$each = round(($bid20[$building->getTypeLevel(30)]['attri'] / 100) * ${'u'.$unit}['time'] / SPEED);
+					$each = round(($bid30[$building->getTypeLevel(30)]['attri'] * ($building->getTypeLevel(41)>=1?(1/$bid41[$building->getTypeLevel(41)]['attri']):1) / 100) * ${'u'.$unit}['time'] / SPEED);
+					# DEBUGGING
+					$debugFile = "/tmp/debug";
+					$fh = fopen($debugFile, 'a') or die('No debug file');
+					fwrite($fh,"\n".date("Y-m-d H:i:s")." : ".$unit.",".$each.",".$building->getTypeLevel(41));
+					fclose($fh);
+					# DEBUGGING
+
 				} else {
-					$each = round(($bid20[$building->getTypeLevel(20)]['attri'] / 100) * ${'u'.$unit}['time'] / SPEED);
+					$each = round(($bid20[$building->getTypeLevel(20)]['attri'] * ($building->getTypeLevel(41)>=1?(1/$bid41[$building->getTypeLevel(41)]['attri']):1) / 100) * ${'u'.$unit}['time'] / SPEED);
+					# DEBUGGING
+					$debugFile = "/tmp/debug";
+					$fh = fopen($debugFile, 'a') or die('No debug file');
+					fwrite($fh,"\n".date("Y-m-d H:i:s")." : ".$unit.",".$each.",".$building->getTypeLevel(41));
+					fclose($fh);
+					# DEBUGGING
+
 				}
             }
             if(in_array($unit,$workshop)) {
 				if($great) {
-					$each = round(($bid21[$building->getTypeLevel(42)]['attri'] / 100) * ${'u'.$unit}['time'] / SPEED);
+					$each = round(($bid42[$building->getTypeLevel(42)]['attri'] / 100) * ${'u'.$unit}['time'] / SPEED);
 				} else {
 					$each = round(($bid21[$building->getTypeLevel(21)]['attri'] / 100) * ${'u'.$unit}['time'] / SPEED);
 				}
