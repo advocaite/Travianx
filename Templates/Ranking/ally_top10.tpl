@@ -58,7 +58,7 @@
 		echo "<tr class=\"none\">"; } else { echo "<tr class=\"own hl\">"; }
       echo "<td class=\"ra fc\">?&nbsp;</td>";
 	  	if($row['id'] == $session->alliance) {
-		echo "<td class=\"pla\">".$row['name']."</td>"; } else { echo "<td class=\"pla\"><a href='allianz.php?aid=".$row['id']."'>".$row['tag']."</a></td>"; }
+		echo "<td class=\"pla\">".$row['tag']."</td>"; } else { echo "<td class=\"pla\"><a href='allianz.php?aid=".$row['id']."'>".$row['tag']."</a></td>"; }
       echo "<td class=\"val lc\">".$row['ap']."</td>";
       echo "</tr>";
       }
@@ -110,7 +110,7 @@
 		echo "<tr class=\"none\">"; } else { echo "<tr class=\"own hl\">"; }
       echo "<td class=\"ra fc\">?&nbsp;</td>";
      if($row['id'] == $session->alliance) {
-		echo "<td class=\"pla\">".$row['name']."</td>"; } else { echo "<td class=\"pla\"><a href='allianz.php?aid=".$row['id']."'>".$row['tag']."</a></td>"; }
+		echo "<td class=\"pla\">".$row['tag']."</td>"; } else { echo "<td class=\"pla\"><a href='allianz.php?aid=".$row['id']."'>".$row['tag']."</a></td>"; }
       echo "<td class=\"val lc\">".$row['dp']."</td>";
       echo "</tr>";
       }
@@ -161,7 +161,7 @@
 		echo "<tr class=\"none\">"; } else { echo "<tr class=\"own hl\">"; }
       echo "<td class=\"ra fc\">?&nbsp;</td>";
 		if($row['id'] == $session->alliance) {
-		echo "<td class=\"pla\">".$row['name']."</td>"; } else { echo "<td class=\"pla\"><a href='allianz.php?aid=".$row['id']."'>".$row['tag']."</a></td>"; }    
+		echo "<td class=\"pla\">".$row['tag']."</td>"; } else { echo "<td class=\"pla\"><a href='allianz.php?aid=".$row['id']."'>".$row['tag']."</a></td>"; }    
           echo "<td class=\"val lc\">".$row['clp']."</td>";
       echo "</tr>";
       }
@@ -210,7 +210,7 @@
 		echo "<tr class=\"none\">"; } else { echo "<tr class=\"own hl\">"; }
       echo "<td class=\"ra fc\">?&nbsp;</td>";
       if($row['id'] == $session->alliance) {
-		echo "<td class=\"pla\">".$row['name']."</td>"; } else { echo "<td class=\"pla\"><a href='allianz.php?aid=".$row['id']."'>".$row['tag']."</a></td>"; }
+		echo "<td class=\"pla\">".$row['tag']."</td>"; } else { echo "<td class=\"pla\"><a href='allianz.php?aid=".$row['id']."'>".$row['tag']."</a></td>"; }
       echo "<td class=\"val lc\">".$row['RR']."</td>";
       echo "</tr>";
       }
