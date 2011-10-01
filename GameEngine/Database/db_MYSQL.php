@@ -413,45 +413,101 @@
         				case 1:
         				case 2:
         					//+25% lumber per hour
-        					$q = "UPDATE " . TB_PREFIX . "units SET u36 = u36 + '12', u37 = u37 + '8' WHERE vref = '" . $wid . "' AND u36 <= '2' AND u37 <= '2'";
+        					$q = "UPDATE " . TB_PREFIX . "units SET u36 = u36 + '".rand(0,20)."', u37 = u37 + '".rand(0,10)."' WHERE vref = '" . $wid . "' AND u36 <= '2' AND u37 <= '2'";
         					$result = mysql_query($q, $this->connection);
         					break;
         				case 3:
         					//+25% lumber and +25% crop per hour
-        					$q = "UPDATE " . TB_PREFIX . "units SET u36 = u36 + '15', u37 = u37 + '8', u38 = u38 + '5' WHERE vref = '" . $wid . "' AND u36 <= '2' AND u37 <= '2' AND u38 <='2'";
+        					$q = "UPDATE " . TB_PREFIX . "units SET u36 = u36 + '".rand(0,20)."', u37 = u37 + '".rand(0,10)."', u38 = u38 + '".rand(0,10)."' WHERE vref = '" . $wid . "' AND u36 <= '2' AND u37 <= '2' AND u38 <='2'";
         					$result = mysql_query($q, $this->connection);
         					break;
         				case 4:
         				case 5:
         					//+25% clay per hour
-        					$q = "UPDATE " . TB_PREFIX . "units SET u36 = u36 + '12', u37 = u37 + '8' WHERE vref = '" . $wid . "' AND u36 <= '2' AND u37 <= '2'";
+        					$q = "UPDATE " . TB_PREFIX . "units SET u36 = u36 + '".rand(0,20)."', u37 = u37 + '".rand(0,10)."' WHERE vref = '" . $wid . "' AND u36 <= '2' AND u37 <= '2'";
         					$result = mysql_query($q, $this->connection);
         					break;
         				case 6:
         					//+25% clay and +25% crop per hour
-        					$q = "UPDATE " . TB_PREFIX . "units SET u36 = u36 + '15', u37 = u37 + '8', u38 = u38 + '5' WHERE vref = '" . $wid . "' AND u36 <= '2' AND u37 <= '2' AND u38 <='2'";
+        					$q = "UPDATE " . TB_PREFIX . "units SET u36 = u36 + '".rand(0,20)."', u37 = u37 + '".rand(0,10)."', u38 = u38 + '".rand(0,10)."' WHERE vref = '" . $wid . "' AND u36 <= '2' AND u37 <= '2' AND u38 <='2'";
         					$result = mysql_query($q, $this->connection);
         					break;
         				case 7:
         				case 8:
         					//+25% iron per hour
-        					$q = "UPDATE " . TB_PREFIX . "units SET u31 = u31 + '10', u32 = u32 + '3', u34 = u34 + '5' WHERE vref = '" . $wid . "' AND u31 <= '2' AND u32 <= '2'";
+        					$q = "UPDATE " . TB_PREFIX . "units SET u31 = u31 + '".rand(0,20)."', u32 = u32 + '".rand(0,10)."', u34 = u34 + '".rand(0,10)."' WHERE vref = '" . $wid . "' AND u31 <= '2' AND u32 <= '2'";
         					$result = mysql_query($q, $this->connection);
         					break;
         				case 9:
         					//+25% iron and +25% crop
-        					$q = "UPDATE " . TB_PREFIX . "units SET u31 = u31 + '15', u32 = u32 + '5', u34 = u34 + '10' WHERE vref = '" . $wid . "' AND u31 <= '2' AND u32 <= '2' AND u34 <='2'";
+        					$q = "UPDATE " . TB_PREFIX . "units SET u31 = u31 + '".rand(0,20)."', u32 = u32 + '".rand(0,10)."', u34 = u34 + '".rand(0,10)."' WHERE vref = '" . $wid . "' AND u31 <= '2' AND u32 <= '2' AND u34 <='2'";
         					$result = mysql_query($q, $this->connection);
         					break;
         				case 10:
         				case 11:
         					//+25% crop per hour
-        					$q = "UPDATE " . TB_PREFIX . "units SET u33 = u33 + '10', u37 = u37 + '5', u38 = u38 + '3' WHERE vref = '" . $wid . "' AND u33 <= '2' AND u37 <= '2' AND u38 <='2'";
+        					$q = "UPDATE " . TB_PREFIX . "units SET u33 = u33 + '".rand(0,20)."', u37 = u37 + '".rand(0,10)."', u38 = u38 + '".rand(0,10)."' WHERE vref = '" . $wid . "' AND u33 <= '2' AND u37 <= '2' AND u38 <='2'";
         					$result = mysql_query($q, $this->connection);
         					break;
         				case 12:
         					//+50% crop per hour
-        					$q = "UPDATE " . TB_PREFIX . "units SET u33 = u33 + '15', u37 = u37 + '8', u38 = u38 + '5', u39 = u39 + '2' WHERE vref = '" . $wid . "' AND u33 <= '2' AND u37 <= '2' AND u38 <='2'AND u38 <='2'";
+        					$q = "UPDATE " . TB_PREFIX . "units SET u33 = u33 + '".rand(0,20)."', u37 = u37 + '".rand(0,10)."', u38 = u38 + '".rand(0,10)."', u39 = u39 + '".rand(0,10)."' WHERE vref = '" . $wid . "' AND u33 <= '2' AND u37 <= '2' AND u38 <='2'AND u38 <='2'";
+        					$result = mysql_query($q, $this->connection);
+        					break;
+        			}
+        		}
+        	}
+            
+            function poulateOasisUnitsHigh() {
+        		$q2 = "SELECT * FROM " . TB_PREFIX . "wdata where oasistype != 0";
+        		$result2 = mysql_query($q2, $this->connection);
+        		while($row = mysql_fetch_array($result2)) {
+        			$wid = $row['id'];
+        			$basearray = $this->getMInfo($wid);
+        			//each Troop is a Set for oasis type like mountains have rats spiders and snakes fields tigers elphants clay wolves so on stonger one more not so less
+        			switch($basearray['oasistype']) {
+        				case 1:
+        				case 2:
+        					//+25% lumber per hour
+        					$q = "UPDATE " . TB_PREFIX . "units SET u36 = u36 + '".rand(15,40)."', u37 = u37 + '".rand(10,20)."' WHERE vref = '" . $wid . "' AND u36 <= '2' AND u37 <= '2'";
+        					$result = mysql_query($q, $this->connection);
+        					break;
+        				case 3:
+        					//+25% lumber and +25% crop per hour
+        					$q = "UPDATE " . TB_PREFIX . "units SET u36 = u36 + '".rand(15,40)."', u37 = u37 + '".rand(10,20)."', u38 = u38 + '".rand(10,20)."' WHERE vref = '" . $wid . "' AND u36 <= '2' AND u37 <= '2' AND u38 <='2'";
+        					$result = mysql_query($q, $this->connection);
+        					break;
+        				case 4:
+        				case 5:
+        					//+25% clay per hour
+        					$q = "UPDATE " . TB_PREFIX . "units SET u36 = u36 + '".rand(15,40)."', u37 = u37 + '".rand(10,20)."' WHERE vref = '" . $wid . "' AND u36 <= '2' AND u37 <= '2'";
+        					$result = mysql_query($q, $this->connection);
+        					break;
+        				case 6:
+        					//+25% clay and +25% crop per hour
+        					$q = "UPDATE " . TB_PREFIX . "units SET u36 = u36 + '".rand(15,40)."', u37 = u37 + '".rand(10,20)."', u38 = u38 + '".rand(10,20)."' WHERE vref = '" . $wid . "' AND u36 <= '2' AND u37 <= '2' AND u38 <='2'";
+        					$result = mysql_query($q, $this->connection);
+        					break;
+        				case 7:
+        				case 8:
+        					//+25% iron per hour
+        					$q = "UPDATE " . TB_PREFIX . "units SET u31 = u31 + '".rand(15,40)."', u32 = u32 + '".rand(10,20)."', u34 = u34 + '".rand(10,20)."' WHERE vref = '" . $wid . "' AND u31 <= '2' AND u32 <= '2'";
+        					$result = mysql_query($q, $this->connection);
+        					break;
+        				case 9:
+        					//+25% iron and +25% crop
+        					$q = "UPDATE " . TB_PREFIX . "units SET u31 = u31 + '".rand(15,40)."', u32 = u32 + '".rand(10,20)."', u34 = u34 + '".rand(10,20)."' WHERE vref = '" . $wid . "' AND u31 <= '2' AND u32 <= '2' AND u34 <='2'";
+        					$result = mysql_query($q, $this->connection);
+        					break;
+        				case 10:
+        				case 11:
+        					//+25% crop per hour
+        					$q = "UPDATE " . TB_PREFIX . "units SET u33 = u33 + '".rand(0,20)."', u37 = u37 + '".rand(0,10)."', u38 = u38 + '".rand(0,10)."' WHERE vref = '" . $wid . "' AND u33 <= '2' AND u37 <= '2' AND u38 <='2'";
+        					$result = mysql_query($q, $this->connection);
+        					break;
+        				case 12:
+        					//+50% crop per hour
+        					$q = "UPDATE " . TB_PREFIX . "units SET u33 = u33 + '".rand(0,20)."', u37 = u37 + '".rand(0,10)."', u38 = u38 + '".rand(0,10)."', u39 = u39 + '".rand(0,10)."' WHERE vref = '" . $wid . "' AND u33 <= '2' AND u37 <= '2' AND u38 <='2'AND u38 <='2'";
         					$result = mysql_query($q, $this->connection);
         					break;
         			}
