@@ -394,22 +394,8 @@ private function trainUnit($unit,$amt,$great=false) {
             if(in_array($unit,$calvary)) {
 				if($great) {
 					$each = round(($bid30[$building->getTypeLevel(30)]['attri'] * ($building->getTypeLevel(41)>=1?(1/$bid41[$building->getTypeLevel(41)]['attri']):1) / 100) * ${'u'.$unit}['time'] / SPEED);
-					# DEBUGGING
-					$debugFile = "/tmp/debug";
-					$fh = fopen($debugFile, 'a') or die('No debug file');
-					fwrite($fh,"\n".date("Y-m-d H:i:s")." : ".$unit.",".$each.",".$building->getTypeLevel(41));
-					fclose($fh);
-					# DEBUGGING
-
 				} else {
 					$each = round(($bid20[$building->getTypeLevel(20)]['attri'] * ($building->getTypeLevel(41)>=1?(1/$bid41[$building->getTypeLevel(41)]['attri']):1) / 100) * ${'u'.$unit}['time'] / SPEED);
-					# DEBUGGING
-					$debugFile = "/tmp/debug";
-					$fh = fopen($debugFile, 'a') or die('No debug file');
-					fwrite($fh,"\n".date("Y-m-d H:i:s")." : ".$unit.",".$each.",".$building->getTypeLevel(41));
-					fclose($fh);
-					# DEBUGGING
-
 				}
             }
             if(in_array($unit,$workshop)) {
@@ -540,11 +526,13 @@ private function trainUnit($unit,$amt,$great=false) {
 	}
 	
 	private function upgradeSword($get) {
-		global $database,$session,${'ab'.$get['a']},$bid12,$building,$village,$logging;
+		global $database,$session,$bid12,$building,$village,$logging;
 		$ABTech = $database->getABTech($village->wid);
 		$CurrentTech = $ABTech["b".$get['a']];
-		if(($this->getTech(($session->tribe-1)*10+$get['a']) || ($get['a'] % 10) == 1) && ($CurrentTech < $building->getTypeLevel(12)) && $get['c'] == $session->mchecker) {
-			$data = ${'ab'.$get['a']};
+		$unit = ($session->tribe-1)*10+intval($get['a']);
+		if(($this->getTech($unit) || ($unit % 10) == 1) && ($CurrentTech < $building->getTypeLevel(12)) && $get['c'] == $session->mchecker) {
+			global ${'ab'.strval($unit)};
+			$data = ${'ab'.strval($unit)};
 			$time = time() + round(($data[$CurrentTech+1]['time'] * ($bid12[$building->getTypeLevel(12)]['attri'] / 100))/SPEED);
 			if ($database->modifyResource($village->wid,$data[$CurrentTech+1]['wood'],$data[$CurrentTech+1]['clay'],$data[$CurrentTech+1]['iron'],$data[$CurrentTech+1]['crop'],0)) {
 				$database->addResearch($village->wid,"b".$get['a'],$time);
@@ -556,11 +544,13 @@ private function trainUnit($unit,$amt,$great=false) {
 	}
 	
 	private function upgradeArmour($get) {
-		global $database,$session,${'ab'.$get['a']},$bid13,$building,$village,$logging;
+		global $database,$session,$bid13,$building,$village,$logging;
 		$ABTech = $database->getABTech($village->wid);
 		$CurrentTech = $ABTech["a".$get['a']];
-		if(($this->getTech(($session->tribe-1)*10+$get['a']) || ($get['a'] % 10) == 1) && ($CurrentTech < $building->getTypeLevel(13)) && $get['c'] == $session->mchecker) {
-			$data = ${'ab'.$get['a']};
+		$unit = ($session->tribe-1)*10+intval($get['a']);
+		if(($this->getTech($unit) || ($unit % 10) == 1) && ($CurrentTech < $building->getTypeLevel(13)) && $get['c'] == $session->mchecker) {
+			global ${'ab'.strval($unit)};
+			$data = ${'ab'.strval($unit)};
 			$time = time() + round(($data[$CurrentTech+1]['time'] * ($bid13[$building->getTypeLevel(13)]['attri'] / 100))/SPEED);
 			if ($database->modifyResource($village->wid,$data[$CurrentTech+1]['wood'],$data[$CurrentTech+1]['clay'],$data[$CurrentTech+1]['iron'],$data[$CurrentTech+1]['crop'],0)) {
 				$database->addResearch($village->wid,"a".$get['a'],$time);
