@@ -9,7 +9,7 @@
 	
 //de bird
 if($displayarray['protect'] > time()){
-$uurover=date('H:i:s', ($displayarray['protect']-time()));
+$uurover=date('H:i:s', ($displayarray['protect']-time())-3600);
 $profiel = preg_replace("/\[#0]/is",'<img src="'.$gpack.'img/t/tn.gif" border="0" onmouseout="med_closeDescription()" onmousemove="med_mouseMoveHandler(arguments[0],\'<table><tr><td>This player has '.$uurover.' hours of beginners protection left.</td></tr></table>\')">', $profiel, 1);
 } else {
 $geregistreerd=date('d-m-Y', ($displayarray['timestamp']));
