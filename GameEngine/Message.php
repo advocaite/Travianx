@@ -66,23 +66,26 @@
         	}
 
         	public function noticeType($get) {
-        		global $session;
+        		global $session, $database;
         		if(isset($get['t'])) {
-        			if($get['t'] == 5 && !$session->plus) {
-        				header("Location: berichte.php");
-        			}
+					if($get['t'] == 1) {
+						$type = array(8, 15);
+					}
+					if($get['t'] == 2) {
+						$type = array(10, 11, 12, 13);
+					}
         			if($get['t'] == 3) {
-        				$atttype = array(6, 7);
-        				$this->noticearray = $this->filter_by_value($this->allnotice, "ntype", $atttype);
-        			} else {
-        				if($get['t'] == 1) {
-        					$type = 8;
-        				} else
-        					if($get['t'] == 5) {
-        						$type = 9;
-        					}
-        				$this->noticearray = $this->filter_by_value($this->allnotice, "ntype", array($type));
+        				$type = array(1, 2, 3, 4, 5, 6, 7);
         			}
+        			if($get['t'] == 5) {
+						if(!$session->plus){
+							header("Location: berichte.php");
+						} else {
+							$type = 9;
+						}
+        			}
+					if (!is_array($type)) { $type = array($type); }
+					$this->noticearray = $this->filter_by_value($database->getNotice($session->uid), "ntype", $type);
         		}
         		if(isset($get['id'])) {
         			$this->readingNotice = $this->getReadNotice($get['id']);
