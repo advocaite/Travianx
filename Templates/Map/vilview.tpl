@@ -165,7 +165,7 @@ else if (!$basearray['occupied']) {
 			<?php if($uinfo['alliance'] == 0){
 			echo '<td>-</td>';
 			} else echo '
-			<td><a href="allianz.php?aid='.$uinfo['alliance'].' ?>">'.$database->getUserAlliance($basearray['owner']).'</a></td>'; ?>
+			<td><a href="allianz.php?aid='.$uinfo['alliance'].' ">'.$database->getUserAlliance($basearray['owner']).'</a></td>'; ?>
 		</tr>
 		<tr>
 			<th>Owner</th>
