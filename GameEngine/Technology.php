@@ -220,12 +220,12 @@ class Technology {
 				}
 			}
 		}
-		$movement = $database->getVillageMovement($base);
-		if(!empty($movement)) {
-			for($i=1;$i<=50;$i++) {
-				$ownunit['u'.$i] += $movement['u'.$i];
-			}
-		}
+		//$movement = $database->getVillageMovement($base);
+		//if(!empty($movement)) {
+		//	for($i=1;$i<=50;$i++) {
+		//		$ownunit['u'.$i] += $movement['u'.$i];
+		//	}
+		//}
 		return $ownunit;
 	}	
 	
