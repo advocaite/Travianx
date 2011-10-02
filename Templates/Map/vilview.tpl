@@ -158,7 +158,7 @@ else if (!$basearray['occupied']) {
         $uinfo = $database->getUserArray($basearray['owner'],1); ?>
 		<tbody><tr>
 			<th>Tribe</th>
-			<td><?php switch($uinfo['tribe']) { case 1: echo "Romans"; break; case 2: echo "Teutons"; break; case 3: echo "Gauls"; break; } ?></td>
+			<td><?php switch($uinfo['tribe']) { case 1: echo TRIBE1; break; case 2: echo TRIBE2; break; case 3: echo TRIBE3; break; case 4: echo TRIBE4; break; case 5: echo TRIBE5; break;} ?></td>
 		</tr>
 		<tr>
 			<th>Alliance</th>
