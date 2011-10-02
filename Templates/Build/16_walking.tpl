@@ -41,6 +41,9 @@ $to = $database->getOMInfo($units[$y]['to']);}
                   for($i=$start;$i<=($end);$i++) {
                   	echo "<td><img src=\"img/x.gif\" class=\"unit u$i\" title=\"".$technology->getUnitName($i)."\" alt=\"".$technology->getUnitName($i)."\" /></td>";	
                   }
+                  if($units[$y]['t11'] != 0) {
+                   echo "<td><img src=\"img/x.gif\" class=\"unit uhero\" title=\"Hero\" alt=\"Hero\" /></td>";    
+                  }
 			?>
 			</tr>
  <tr><th>Troops</th>

@@ -149,7 +149,7 @@ $end = ($tribe*10);
 
                         <td <?php if (!isset($process['t10']) || $process['t10'] == ''){ echo "class=\"none\">0"; }else{ echo ">".$process['t10'];} ?></td>
 
-                        <?php if (!isset($process['t11']) || $process['t11'] == ''){  }else{ echo "<td>".$process['t11']."</td>";} ?>
+                        <?php if (!isset($process['t11']) ){ echo "<td class=\"none\">0</td>"; }else{ echo "<td>".$process['t11']."</td>";} ?>
 
                      </tr>
 

@@ -100,6 +100,7 @@ class Units {
 					{
 						if(isset($post['t'.$i]))
 						{
+                            
 							if ($post['t'.$i] > $village->unitarray['u'.$Gtribe.$i])
 							{
 								$form->addError("error","You can't send more units than you have");
@@ -111,8 +112,20 @@ class Units {
 								$form->addError("error","You can't send negative units.");
 								break;
 							}
+
 						}												
 					}
+                    if ($post['t11'] > $village->unitarray['hero'])
+                            {
+                                $form->addError("error","You can't send more units than you have");
+                                break;
+                            }
+                            
+                            if($post['t11']<0)
+                            {
+                                $form->addError("error","You can't send negative units.");
+                                break;
+                            }
 				}
                 if ($database->isVillageOases($id) == 0) {
                 //check if has beginners protection
@@ -180,7 +193,8 @@ class Units {
 		if ($session->tribe == '2'){ $Gtribe = "1"; } else if ($session->tribe == '3'){ $Gtribe = "2"; }else if ($session->tribe == '4'){ $Gtribe = "3"; }else if ($session->tribe == '5'){ $Gtribe = "4"; }
 				for($i=1; $i<10; $i++){
 						if(isset($data['u'.$i])){
-							if ($data['u'.$i] > $village->unitarray['u'.$Gtribe.$i])
+							
+                            if ($data['u'.$i] > $village->unitarray['u'.$Gtribe.$i])
 							{
 								$form->addError("error","You can't send more units than you have");
 								break;
@@ -191,8 +205,20 @@ class Units {
 								$form->addError("error","You can't send negative units.");
 								break;
 							}
+
 						}												
 					}
+                    if ($data['u11'] > $village->unitarray['hero'])
+                            {
+                                $form->addError("error","You can't send more units than you have");
+                                break;
+                            }
+                            
+                            if($data['u11']<0)
+                            {
+                                $form->addError("error","You can't send negative units.");
+                                break;
+                            }
 				if($form->returnErrors() > 0) {
 					$_SESSION['errorarray'] = $form->getErrors();
 					$_SESSION['valuearray'] = $_POST;
@@ -213,7 +239,7 @@ class Units {
 		$database->modifyUnit($village->wid,$u."8",$data['u8'],0);
 		$database->modifyUnit($village->wid,$u."9",$data['u9'],0);
 		$database->modifyUnit($village->wid,$u.$session->tribe."0",$data['u10'],0);
-		$database->modifyUnit($village->wid,$u.$session->tribe."1",$data['u11'],0);
+		$database->modifyUnit($village->wid,"hero",$data['u11'],0);
 		
     $query1 = mysql_query('SELECT * FROM `' . TB_PREFIX . 'vdata` WHERE `wref` = ' . mysql_escape_string($data['to_vid']));
     $data1 = mysql_fetch_assoc($query1);
@@ -237,12 +263,17 @@ class Units {
 			$scout = 1;
 
 				//find slowest unit.
-				for($i=1;$i<=10;$i++){
+				for($i=1;$i<=11;$i++){
 					if (isset($data['u'.$i])){
+                       
 						if( $data['u'.$i] != '' && $data['u'.$i] > 0){
                         if($unitarray) { reset($unitarray); }
                         $unitarray = $GLOBALS["u".(($session->tribe-1)*10+$i)];
                         $speeds[] = $unitarray['speed'];
+                        }
+                        
+                        if( $data['u11'] != '' && $data['u11'] > 0){
+                       $speeds[] = 14;
                         }
 					}
 				}

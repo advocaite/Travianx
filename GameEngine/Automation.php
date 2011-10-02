@@ -514,8 +514,9 @@ class Automation {
                                                 $chiefs += $Attacker['u'.$i];
                                                 $spy_pic = $i;
                                                 }
-                                                }        
-
+                                                } 
+                                                $Attacker['uhero'] = $dataarray[0]['t11'];       
+                                                $hero_pic = "hero";
                                     //need to set these variables.
                                     $def_wall = $database->getFieldLevel($data['to'],40);
                                     $att_tribe = $owntribe;
@@ -699,7 +700,8 @@ class Automation {
                                                 $spy_pic = $i;
                                                 }
                                                 }        
-
+                                                $Attacker['uhero'] = $dataarray[0]['t11'];       
+                                                $hero_pic = "hero";
                                     //need to set these variables.
                                     $def_wall = 1;
                                     $att_tribe = $owntribe;
@@ -1163,6 +1165,11 @@ class Automation {
             }
         }
         
+        if($data['t11']>0){
+            $info_chief = "".$hero_pic.",The hero came along to watch this fight.Soon he will be capable to join in";
+                        
+            }
+        
             
             
                 if($scout){
@@ -1362,7 +1369,7 @@ class Automation {
         $database->modifyUnit($data['to'],$u."8",$data['t8'],1);
         $database->modifyUnit($data['to'],$u."9",$data['t9'],1);
         $database->modifyUnit($data['to'],$tribe."0",$data['t10'],1);
-        
+        $database->modifyUnit($data['to'],"hero",$data['t11'],1); 
         $database->setMovementProc($data['moveid']);
         }
         

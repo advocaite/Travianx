@@ -402,7 +402,7 @@
         		}
         	}
 
-        	function poulateOasisUnitsLow() {
+        	function populateOasisUnitsLow() {
         		$q2 = "SELECT * FROM " . TB_PREFIX . "wdata where oasistype != 0";
         		$result2 = mysql_query($q2, $this->connection);
         		while($row = mysql_fetch_array($result2)) {
@@ -458,7 +458,7 @@
         		}
         	}
             
-            function poulateOasisUnitsHigh() {
+            function populateOasisUnitsHigh() {
         		$q2 = "SELECT * FROM " . TB_PREFIX . "wdata where oasistype != 0";
         		$result2 = mysql_query($q2, $this->connection);
         		while($row = mysql_fetch_array($result2)) {
@@ -1842,7 +1842,10 @@
         		if($unit == 121) {
         			$unit = 21;
         		}
-        		$unit = 'u' . $unit;
+                if ($unit =="hero"){
+                $unit = 'hero';    
+                } else {$unit = 'u' . $unit;}
+        		
         		if(!$mode) {
         			$q = "UPDATE " . TB_PREFIX . "units set $unit = $unit - $amt where vref = $vref";
         		} else {
@@ -2161,14 +2164,14 @@
         			return false;
         		}
         	}
-        	function poulateOasisdata() {
+        	function populateOasisdata() {
         		$q2 = "SELECT * FROM " . TB_PREFIX . "wdata where oasistype != 0";
         		$result2 = mysql_query($q2, $this->connection);
         		while($row = mysql_fetch_array($result2)) {
         			$wid = $row['id'];
         			$basearray = $this->getOMInfo($wid);
         			//We switch type of oasis and instert record with apropriate infomation.
-        			$q = "INSERT into " . TB_PREFIX . "odata VALUES ('" . $basearray['id'] . "'," . $basearray['oasistype'] . ",0,800,800,800,800,800,800," . time() . ",100,2,'Unoccupied Oasis')";
+        			$q = "INSERT into " . TB_PREFIX . "odata VALUES ('" . $basearray['id'] . "'," . $basearray['oasistype'] . ",0,400,400,400,400,400,400," . time() . ",100,2,'Unoccupied Oasis')";
         			$result = mysql_query($q, $this->connection);
         		}
         	}
