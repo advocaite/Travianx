@@ -751,7 +751,7 @@ CREATE TABLE IF NOT EXISTS `%PREFIX%hero` (
   `level` tinyint(1) unsigned NOT NULL,
   `points` smallint(2) unsigned NOT NULL,
   `experience` mediumint(3) NOT NULL,
-  `dead` bit(1) NOT NULL,
+  `dead` tinyint(1) unsigned NOT NULL,
   `health` float(12,9) unsigned NOT NULL,
   `attack` tinyint(1) unsigned NOT NULL,
   `defence` tinyint(1) unsigned NOT NULL,
