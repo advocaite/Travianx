@@ -178,7 +178,7 @@ class Units {
 		
 		 $Gtribe = "";
 		if ($session->tribe == '2'){ $Gtribe = "1"; } else if ($session->tribe == '3'){ $Gtribe = "2"; }else if ($session->tribe == '4'){ $Gtribe = "3"; }else if ($session->tribe == '5'){ $Gtribe = "4"; }
-				for($i=1; $i<9; $i++){
+				for($i=1; $i<10; $i++){
 						if(isset($data['u'.$i])){
 							if ($data['u'.$i] > $village->unitarray['u'.$Gtribe.$i])
 							{
