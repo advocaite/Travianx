@@ -104,7 +104,7 @@ $end = ($tribe*10);
 
                         <td><?php echo $process[1]; ?></td>
 
-                        <td colspan="10"><?php echo $actionType." to ".$process['1']; ?></td>
+                        <td colspan="<?php if($process['t11'] != ''){ echo"11"; }else{ echo"10"; } ?>"><?php echo $actionType." to ".$process['1']; ?></td>
 
                     </tr>
 
@@ -118,7 +118,7 @@ $end = ($tribe*10);
                  <?php 
                 for($i=$start;$i<=($end);$i++) {
                       echo "<td><img src=\"img/x.gif\" class=\"unit u$i\" title=\"".$technology->getUnitName($i)."\" alt=\"".$technology->getUnitName($i)."\" /></td>";    
-                  } if (isset($process['t11'])){
+                  } if ($process['t11'] != ''){
                   echo "<td><img src=\"img/x.gif\" class=\"unit uhero\" title=\"Hero\" alt=\"Hero\" /></td>";    
                   
                   }?>
@@ -149,7 +149,7 @@ $end = ($tribe*10);
 
                         <td <?php if (!isset($process['t10']) || $process['t10'] == ''){ echo "class=\"none\">0"; }else{ echo ">".$process['t10'];} ?></td>
 
-                        <?php if (!isset($process['t11']) ){ echo "<td class=\"none\">0</td>"; }else{ echo "<td>".$process['t11']."</td>";} ?>
+                        <?php if (!isset($process['t11']) || $process['t11'] == ''){ echo ""; }else{ echo "<td>".$process['t11']."</td>";} ?>
 
                      </tr>
 
@@ -358,7 +358,7 @@ $end = ($tribe*10);
 
             
 
-            <td colspan="10">
+            <td colspan="<?php if($process['t11'] != ''){ echo"11"; }else{ echo"10"; } ?>">
 
             <div class="in">in <?php echo $generator->getTimeFormat($time); ?></div>
 

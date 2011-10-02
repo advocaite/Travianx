@@ -29,7 +29,7 @@ $to = $database->getOMInfo($units[$y]['to']);}
 	<thead>
 		<tr>
 			<td class="role"><a href="karte.php?d=<?php echo $village->wid."&c=".$generator->getMapCheck($village->wid); ?>"><?php echo $village->vname; ?></a></td>
-			<td colspan="10"><a href="karte.php?d=<?php echo $to['wref']."&c=".$generator->getMapCheck($to['wref']); ?>"><?php echo $attack_type." ".$to['name']; ?></a></td>
+			<td colspan="<?php if($units[$y]['t11'] == 0) {echo"10";}else{echo"11";}?>"><a href="karte.php?d=<?php echo $to['wref']."&c=".$generator->getMapCheck($to['wref']); ?>"><?php echo $attack_type." ".$to['name']; ?></a></td>
 		</tr>
 	</thead>
 	<tbody class="units">
@@ -48,7 +48,7 @@ $to = $database->getOMInfo($units[$y]['to']);}
 			</tr>
  <tr><th>Troops</th>
             <?php
-            for($i=1;$i<11;$i++) {
+            for($i=1;$i<12;$i++) {
             	if($units[$y]['t'.$i] == 0) {
                 	echo "<td class=\"none\">";
                 }
@@ -62,7 +62,7 @@ $to = $database->getOMInfo($units[$y]['to']);}
 		<tbody class="infos">
 			<tr>
 				<th>Arrival</th>
-				<td colspan="10">
+				<td colspan="<?php if($units[$y]['t11'] == 0) {echo"10";}else{echo"11";}?>">
 				<?php
 				    echo "<div class=\"in small\"><span id=timer$timer>".$generator->getTimeFormat($units[$y]['endtime']-time())."</span> h</div>";
 				    $datetime = $generator->procMtime($units[$y]['endtime']);
@@ -95,7 +95,7 @@ $timer += 1;
     <thead>
         <tr>
             <td class="role"><a href="karte.php?d=<?php echo $village->wid."&c=".$generator->getMapCheck($village->wid); ?>"><?php echo $village->vname; ?></a></td>
-            <td colspan="10"><a href="karte.php?d=<?php echo $settlers[$y]['to']."&c=".$generator->getMapCheck($settlers[$y]['to']); ?>">Found new village.</a></td>
+            <td colspan="<?php if($units[$y]['t11'] == 0) {echo"10";}else{echo"11";}?>"><a href="karte.php?d=<?php echo $settlers[$y]['to']."&c=".$generator->getMapCheck($settlers[$y]['to']); ?>">Found new village.</a></td>
         </tr>
     </thead>
     <tbody class="units">
@@ -112,7 +112,7 @@ $timer += 1;
  <tr><th>Troops</th>
             <?php
             $units[$y]['t10']=3;
-            for($i=1;$i<11;$i++) {
+            for($i=1;$i<12;$i++) {
                 if($units[$y]['t'.$i] == 0) {
                     echo "<td class=\"none\">";
                 }
@@ -126,7 +126,7 @@ $timer += 1;
         <tbody class="infos">
             <tr>
                 <th>Arrival</th>
-                <td colspan="10">
+                <td colspan="<?php if($units[$y]['t11'] == 0) {echo"10";}else{echo"11";}?>">
                 <?php
                     echo "<div class=\"in small\"><span id=timer$timer>".$generator->getTimeFormat($settlers[$y]['endtime']-time())."</span> h</div>";
                     $datetime = $generator->procMtime($settlers[$y]['endtime']);
@@ -146,4 +146,3 @@ $timer += 1;
         }
         }
         ?>
-

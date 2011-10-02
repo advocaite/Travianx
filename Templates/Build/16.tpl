@@ -28,7 +28,7 @@ if($units_incomming >= 1){
         <table class="troop_details" cellpadding="1" cellspacing="1">
 	<thead>
 		<tr>
-			<td class="role"><a href="karte.php?d=<?php echo $village->wid."&c=".$generator->getMapCheck($village->wid); ?>"><?php echo $village->vname; ?></a></td><td colspan="10">
+			<td class="role"><a href="karte.php?d=<?php echo $village->wid."&c=".$generator->getMapCheck($village->wid); ?>"><?php echo $village->vname; ?></a></td><td colspan="<?php if($village->unitarray['hero'] == 0) {echo"10";}else{echo"11";}?>">
             <a href="spieler.php?uid=<?php echo $session->uid; ?>">Own troops</a></td></tr></thead>
             <tbody class="units">
            <?php include("16_troops.tpl"); 
