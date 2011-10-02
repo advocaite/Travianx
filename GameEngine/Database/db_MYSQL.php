@@ -1094,10 +1094,10 @@
         	}
                 
             function getAllianceDipProfile($aid, $type){
-                $q = "SELECT * FROM ".TB_PREFIX."diplomacy WHERE alli1 = '$aid' AND type = '$type'";
+                $q = "SELECT * FROM ".TB_PREFIX."diplomacy WHERE alli1 = '$aid' AND type = '$type' AND accepted = '1'";
                 $result = mysql_query($q, $this->connection);
                 if(mysql_num_rows($result) == 0){
-                    $q2 = "SELECT * FROM ".TB_PREFIX."diplomacy WHERE alli2 = '$aid' AND type = '$type'";
+                    $q2 = "SELECT * FROM ".TB_PREFIX."diplomacy WHERE alli2 = '$aid' AND type = '$type' AND accepted = '1'";
                     $result2 = mysql_query($q2, $this->connection);
                     while($row = mysql_fetch_array($result2)){
                         $alliance = $this->getAlliance($row['alli1']);
