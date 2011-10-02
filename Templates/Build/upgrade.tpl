@@ -7,10 +7,8 @@ if($bindicate == 1) {
 } else if($bindicate == 11) {
 	echo "<p><span class=\"none\">Building presently being demolished</span></p>";
 } else {
-	$loopsame = $building->isCurrent($id)?1:0;
-	if ($loopsame>0 && $building->isLoop($id)) {
-		$doublebuild = 1;
-	}
+	$loopsame = ($building->isCurrent($id) || $building->isLoop($id))?1:0;
+	$doublebuild = ($building->isCurrent($id) && $building->isLoop($id))?1:0;
 	$uprequire = $building->resourceRequired($id,$village->resarray['f'.$id.'t'],($loopsame > 0 ? 2:1)+$doublebuild);
 ?>
 <p id="contract"><b>Costs</b> for upgrading to level <?php echo $village->resarray['f'.$id]+($loopsame > 0 ? 2:1)+$doublebuild; ?>:<br />
