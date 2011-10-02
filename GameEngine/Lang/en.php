@@ -14,7 +14,7 @@
 
 //MAIN MENU
 define("TRIBE1","Romans"); 
-define("TRIBE2","Tuetons");
+define("TRIBE2","Teutons");
 define("TRIBE3","Gauls"); 
 define("TRIBE4","Nature"); 
 define("TRIBE5","Natars");
