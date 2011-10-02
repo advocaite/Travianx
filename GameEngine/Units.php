@@ -96,7 +96,7 @@ class Units {
 						$form->addError("error","Coordinates do not exist");
 					}
 					if ($session->tribe == 1){$Gtribe = "";}elseif ($session->tribe == 2){$Gtribe = "1";}elseif ($session->tribe == 3){$Gtribe = "2";}elseif ($session->tribe == 4){$Gtribe = "3";}elseif ($session->tribe == 5){$Gtribe = "4";}
-					for($i=1; $i<11; $i++)
+					for($i=1; $i<10; $i++)
 					{
 						if(isset($post['t'.$i]))
 						{

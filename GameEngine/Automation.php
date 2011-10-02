@@ -111,6 +111,7 @@ class Automation {
         $this->ClearUser();
         $this->ClearInactive();
         $this->pruneResource();
+        $this->loyaltyRegeneration();
 		$this->culturePoints();
 		$this->researchComplete();$this->clearDeleting();
 		$this->buildComplete();
@@ -123,8 +124,73 @@ class Automation {
         $this->celebrationComplete();
         $this->demolitionComplete();
         $this->healHero();
+        
     }  
-    
+     public function getTypeLevel($tid,$vid) {
+        global $village,$database;
+        $keyholder = array();
+       
+            $resourcearray = $database->getResourceLevel($vid);
+        
+        foreach(array_keys($resourcearray,$tid) as $key) {
+            if(strpos($key,'t')) {
+                $key = preg_replace("/[^0-9]/", '', $key);
+                array_push($keyholder, $key);
+            }     
+        }
+        $element = count($keyholder);
+        if($element >= 2) {
+            if($tid <= 4) {
+                $temparray = array();
+                for($i=0;$i<=$element-1;$i++) {
+                    array_push($temparray,$resourcearray['f'.$keyholder[$i]]);
+                }
+                foreach ($temparray as $key => $val) {
+                    if ($val == max($temparray)) 
+                    $target = $key; 
+                }
+            }
+            else {
+                $target = 0;
+                for($i=1;$i<=$element-1;$i++) {
+                    if($resourcearray['f'.$keyholder[$i]] > $resourcearray['f'.$keyholder[$target]]) {
+                        $target = $i;
+                    }
+                }
+            }
+        }
+        else if($element == 1) {
+            $target = 0;
+        }
+        else {
+            return 0;
+        }
+        if($keyholder[$target] != "") {
+            return $resourcearray['f'.$keyholder[$target]];
+        }
+        else {
+            return 0;
+        }
+    }  
+    private function loyaltyRegeneration() {
+        global $database;
+        $time = time()-3600;
+        $array = array();
+        $q = "SELECT * FROM ".TB_PREFIX."vdata where lastupdate < $time";
+        $array = $database->query_return($q);
+        
+        foreach($array as $loyalty) {
+            if($loyalty['lastupdate'] < $time){
+                if($this->getTypeLevel(25,$loyalty['wref']) >= 1){
+                    $value = $this->getTypeLevel(25,$loyalty['wref']);
+                }elseif($this->getTypeLevel(26,$loyalty['wref']) >= 1){
+                    $value = $this->getTypeLevel(26,$loyalty['wref']);
+                }
+                $q = "UPDATE ".TB_PREFIX."vdata SET loyalty = loyalty + $value WHERE wref = '".$loyalty['wref']."'";
+                $database->query($q);
+            }
+        }
+    }
     private function clearDeleting() {
         global $database;
         $needDelete = $database->getNeedDelete();
@@ -239,7 +305,7 @@ class Automation {
     
     private function culturePoints() {
         global $database;
-        $time = time()-3600;
+        $time = time()-84600;
         $array = array();
         $q = "SELECT id, lastupdate FROM ".TB_PREFIX."users where lastupdate < $time";
         $array = $database->query_return($q);
@@ -247,7 +313,6 @@ class Automation {
         foreach($array as $indi) {
             if($indi['lastupdate'] < $time){
                 $cp = $database->getVSumField($indi['id'], 'cp');
-                $cp = ($cp)/24;
                 $newupdate = time();
                 $q = "UPDATE ".TB_PREFIX."users set cp = cp + $cp, lastupdate = $newupdate where id = '".$indi['id']."'";
                 $database->query($q);
