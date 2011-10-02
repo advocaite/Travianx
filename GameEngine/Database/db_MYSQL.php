@@ -1092,7 +1092,31 @@
         		$result = mysql_query($q, $this->connection);
         		return $this->mysql_fetch_all($result);
         	}
-
+                
+            function getAllianceDipProfile($aid, $type){
+                $q = "SELECT * FROM ".TB_PREFIX."diplomacy WHERE alli1 = '$aid' AND type = '$type'";
+                $result = mysql_query($q, $this->connection);
+                if(mysql_num_rows($result) == 0){
+                    $q2 = "SELECT * FROM ".TB_PREFIX."diplomacy WHERE alli2 = '$aid' AND type = '$type'";
+                    $result2 = mysql_query($q2, $this->connection);
+                    while($row = mysql_fetch_array($result2)){
+                        $alliance = $this->getAlliance($row['alli1']);
+                        $text = "";
+                        $text .= "<a href=allianz.php?aid=".$alliance['id'].">".$alliance['tag']."</a><br> ";
+                    }
+                }else{
+                    while($row = mysql_fetch_array($result)){
+                        $alliance = $this->getAlliance($row['alli2']);
+                        $text = "";
+                        $text .= "<a href=allianz.php?aid=".$alliance['id'].">".$alliance['tag']."</a><br> ";
+                    }
+                }
+                if(strlen($text) == 0){
+                    $text = "-<br>";
+                }
+                return $text;
+            }
+            
         	function diplomacyExistingRelationships($session_alliance) {
         		$q = "SELECT * FROM " . TB_PREFIX . "diplomacy WHERE alli2 = $session_alliance AND accepted = 1";
         		$result = mysql_query($q, $this->connection);
