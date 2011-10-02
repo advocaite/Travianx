@@ -48,7 +48,12 @@ $to = $database->getOMInfo($units[$y]['to']);}
 			</tr>
  <tr><th>Troops</th>
             <?php
-            for($i=1;$i<12;$i++) {
+			if($units[$y]['t11'] != 0) {
+				$end = 12;
+			}else{
+				$end = 11;
+			}
+            for($i=1;$i<$end;$i++) {
             	if($units[$y]['t'.$i] == 0) {
                 	echo "<td class=\"none\">";
                 }
