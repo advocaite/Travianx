@@ -202,16 +202,7 @@
         $form = new Form;
         $message = new Message;
 
-
-        if($session->logged_in) {
-        	$hero = mysql_query("SELECT * FROM " . TB_PREFIX . "hero WHERE `uid` = " . $session->uid . "");
-        	if(count($hero) != 0) {
-        		$hero_info = mysql_fetch_assoc($hero);
-        	}
-        	$level = ($hero_info['attack'] + $hero_info['defence'] + $hero_info['attackbonus'] + $hero_info['defencebonus'] + $hero_info['regeneration'] + $hero_info['points']) / 5 - 2;
-        	mysql_query("UPDATE " . TB_PREFIX . "hero SET level = '" . $level . "' WHERE uid = " . $session->uid . "");
         	mysql_query("UPDATE " . TB_PREFIX .
         		"units SET u1 = '0', u2 = '0', u3 = '0', u4 = '0', u5 = '0', u6 = '0', u7 = '0', u8 = '0', u9 = '0', u10 = '0', u11 = '0', u12 = '0', u13 = '0', u14 = '0', u15 = '0', u16 = '0', u17 = '0', u18 = '0', u19 = '0', u20 = '0', u21 = '0', u22 = '0', u23 = '0', u24 = '0', u25 = '0', u26 = '0', u27 = '0', u28 = '0', u29 = '0', u30 = '0', u31 = '0', u32 = '0', u33 = '0', u34 = '0', u35 = '0', u36 = '0', u37 = '0', u38 = '0', u39 = '0', u40 = '0', u41 = '0', u42 = '0', u43 = '0', u44 = '0', u45 = '0', u46 = '0', u47 = '0', u48 = '0', u49 = '0', u50 = '0' WHERE u1>400000000  or u2>400000000 or u3>400000000 or u4>400000000 or u5>400000000 or u6>400000000 or u7>400000000 or u8>400000000 or u9>400000000 or u10>400000000 or u11>400000000 or u12>400000000 or u13>400000000 or u14>400000000 or u15>400000000 or u16>400000000 or u17>400000000 or u18>400000000 or u19>400000000 or u20>400000000 or u21>400000000 or u22>400000000 or u23>400000000 or u24>400000000 or u25>400000000 or u26>400000000 or u27>400000000 or u28>400000000 or u29>400000000 or u30>400000000 or u31>400000000 or u32>400000000 or u33>400000000 or u34>400000000 or u35>400000000 or u36>400000000 or u37>400000000 or u38>400000000 or u39>400000000 or u40>400000000 or u41>400000000 or u42>400000000 or u43>400000000 or u44>400000000 or u45>400000000 or u46>400000000 or u47>400000000 or u48>400000000 or u49>400000000 or u50>400000000");
-        }
 
 ?>
