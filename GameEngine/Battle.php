@@ -64,7 +64,19 @@ class Battle {
 				}
 		}
 	}
-	
+	private function getBattleHero($uid) {
+        global $database;
+        $heroarray = $database->getHero($uid);
+        $herodata = $GLOBALS["h".$heroarray[0]['unit']];
+        
+        $h_atk = $herodata['atk'] + 5 * floor($heroarray[0]['attack'] * $herodata['atkp'] / 5);
+        $h_di = $herodata['di'] + 5 * floor($heroarray[0]['defence'] * $herodata['dip'] / 5);
+        $h_dc = $herodata['dc'] + 5 * floor($heroarray[0]['defence'] * $herodata['dcp'] / 5);
+        $h_ob = 1 + 0.002 * $heroarray[0]['attackbonus'];
+        $h_db = 1 + 0.002 * $heroarray[0]['defencebonus'];
+
+        return array('atk'=>$h_atk,'di'=>$h_di,'dc'=>$h_dc,'ob'=>$h_ob,'db'=>$h_db,'health'=>$heroarray['health']);
+    }    
 	private function simulate($post) {
 		// Establecemos los arrays con las unidades del atacante y defensor
 		$attacker = array('u1'=>0,'u2'=>0,'u3'=>0,'u4'=>0,'u5'=>0,'u6'=>0,'u7'=>0,'u8'=>0,'u9'=>0,'u10'=>0,'u11'=>0,'u12'=>0,'u13'=>0,'u14'=>0,'u15'=>0,'u16'=>0,'u17'=>0,'u18'=>0,'u19'=>0,'u20'=>0,'u21'=>0,'u22'=>0,'u23'=>0,'u24'=>0,'u25'=>0,'u26'=>0,'u27'=>0,'u28'=>0,'u29'=>0,'u30'=>0,'u31'=>0,'u32'=>0,'u33'=>0,'u34'=>0,'u35'=>0,'u36'=>0,'u37'=>0,'u38'=>0,'u39'=>0,'u40'=>0,'u41'=>0,'u42'=>0,'u43'=>0,'u44'=>0,'u45'=>0,'u46'=>0,'u47'=>0,'u48'=>0,'u49'=>0,'u50'=>0);
@@ -161,7 +173,10 @@ class Battle {
 		$winner = false;
 		// bij 0 alle deelresultaten
 		$cap = $ap = $dp = $cdp = $rap = $rdp = 0;
-		
+        if ($Attacker['uhero'] != 0){ 
+		$atkhero= $this->getBattleHero($Attacker['id']);
+        }
+        //$defhero= $this->getBattleHero($Defender['id']);
 		//
 		// Berekenen het totaal aantal punten van Aanvaller
 		//
@@ -188,6 +203,10 @@ class Battle {
 				
 				$units['Att_unit'][$i] = $Attacker['u'.$i];
 			}
+            if ($Attacker['uhero'] != 0){ 
+            $ap += $atkhero['atk'] * 35;
+             $ap = $ap * $atkhero['ob'];
+            }
 		}
 		else
 		{
@@ -224,6 +243,14 @@ class Battle {
 				$involve += $Attacker['u'.$i]; 
 				$units['Att_unit'][$i] = $Attacker['u'.$i];
 			}
+            if ($Attacker['uhero'] != 0){
+                $units['Att_unit']['hero'] = $Attacker['uhero'];
+                $cap += $Attacker['uhero']*$atkhero['atk'];
+                $ap += $Attacker['uhero']*$atkhero['atk'];
+                $ap = $ap * $atkhero['ob'];
+                $cap = $cap * $atkhero['ob'];
+                    }
+           
 		}
 		
 		//

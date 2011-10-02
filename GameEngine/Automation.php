@@ -125,7 +125,20 @@ class Automation {
         $this->demolitionComplete();
         $this->healHero();
         
-    }  
+    } 
+    
+   private function getfieldDistance($coorx1, $coory1, $coorx2, $coory2) {
+   $max = 2 * WORLD_MAX + 1;
+   $x1 = intval($coorx1);
+   $y1 = intval($coory1);
+   $x2 = intval($coorx2);
+   $y2 = intval($coory2);
+   $distanceX = min(abs($x2 - $x1), abs($max - abs($x2 - $x1)));
+   $distanceY = min(abs($y2 - $y1), abs($max - abs($y2 - $y1)));
+   $dist = sqrt(pow($distanceX, 2) + pow($distanceY, 2));
+   return round($dist, 1);
+   } 
+   
      public function getTypeLevel($tid,$vid) {
         global $village,$database;
         $keyholder = array();
@@ -431,6 +444,9 @@ class Automation {
             $isoasis = $database->isVillageOases($data['to']);
             $AttackArrivalTime = $data['endtime']; 
             if ($isoasis == 0){
+            $Attacker['id'] = $database->getUserField($database->getVillageField($data['from'],"owner"),"id",0);
+            $Defender['id'] = $database->getUserField($database->getVillageField($data['to'],"owner"),"id",0);
+                
             $owntribe = $database->getUserField($database->getVillageField($data['from'],"owner"),"tribe",0);
             $targettribe = $database->getUserField($database->getVillageField($data['to'],"owner"),"tribe",0);
             $ownally = $database->getUserField($database->getVillageField($data['from'],"owner"),"alliance",0);
@@ -633,6 +649,9 @@ class Automation {
             // End Battle part
             --------------------------------*/
             }else{
+            $Attacker['id'] = $database->getUserField($database->getVillageField($data['from'],"owner"),"id",0);
+            $Defender['id'] = 3;
+                
             $owntribe = $database->getUserField($database->getVillageField($data['from'],"owner"),"tribe",0);
             $targettribe = 4;
             $ownally = $database->getUserField($database->getVillageField($data['from'],"owner"),"alliance",0);
@@ -865,6 +884,10 @@ class Automation {
             $totaldead_att = $dead1+$dead2+$dead3+$dead4+$dead5+$dead6+$dead7+$dead8+$dead9+$dead10;
             for($i=1;$i<=50;$i++) {
             $totaldead_def += $dead[''.$i.''];
+            }
+            if ($Attacker['uhero'] != 0){ 
+             $heroxp = $totaldead_def; 
+             $database->modifyHeroXp("experience",$heroxp,$from['owner']);  
             }
             $database->modifyPoints($toF['owner'],'dpall',$totaldead_att );
             $database->modifyPoints($from['owner'],'apall',$totaldead_def);
@@ -1166,8 +1189,14 @@ class Automation {
         }
         
         if($data['t11']>0){
-            $info_chief = "".$hero_pic.",The hero came along to watch this fight.Soon he will be capable to join in";
-                        
+            if ($isoasis != 0){
+            $farmdistance = $this->getfieldDistance($tocoor['x'],$tocoor['y'],$fromcoor['x'],$fromcoor['y']);
+            
+                $info_chief = "".$hero_pic.",The hero came along to watch this fight.He has also noticed that this oases is ".$farmdistance." distance from your village. Hero gained ".$heroxp." XP";
+                
+            }else{
+            $info_chief = "".$hero_pic.",The hero came along to watch this fight.Soon he will be capable to join in. Hero gained ".$heroxp." XP";
+            }
             }
         
             

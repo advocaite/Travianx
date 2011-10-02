@@ -1740,6 +1740,10 @@
 				$q = "UPDATE ".TB_PREFIX."hero SET $column=$value WHERE heroid=$heroid";
 				return mysql_query($q, $this->connection);
 			}
+            function modifyHeroXp($column,$value,$heroid) {
+                $q = "UPDATE ".TB_PREFIX."hero SET $column=$column+$value WHERE uid=$heroid";
+                return mysql_query($q, $this->connection);
+            }
 
         	function addTech($vid) {
         		$q = "INSERT into " . TB_PREFIX . "tdata (vref) values ($vid)";
