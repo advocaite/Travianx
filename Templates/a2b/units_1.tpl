@@ -93,7 +93,12 @@
        		echo  "<span class=\"none\">(0)</span></td>";
 		}
         ?>
-		<td class="line-last regular"></td>
+		<td class="line-last regular"><?php 
+        if ($village->unitarray['hero']>0){
+        echo "<img class=\"unit uhero\" src=\"img/x.gif\" title=\"Hero\" alt=\"Hero\"> <input class=\"text\" name=\"t11\" value=\"\" maxlength=\"6\" type=\"text\">   ";
+            echo "<a href=\"#\" onclick=\"document.snd.t11.value=".$village->unitarray['hero']."; return false;\">(".$village->unitarray['hero'].")</a></td>";
+        }
+        ?></td>
 			<td class="line-last column-last"></td>		</tr>
 </tbody></table>
 
