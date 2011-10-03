@@ -123,12 +123,9 @@
     <?php
     
     if($_GET['revive'] == 1){
-        if($village->awood >= $wood AND $village->aclay >= $clay AND $village->airon >= $iron AND $village->acrop < $crop) {
             mysql_query("UPDATE ".TB_PREFIX."hero SET `dead` = '0', `health` = '100', `trainingtime` = '".$training_time2."' WHERE `uid` = '".$session->uid."'");
+            mysql_query("UPDATE " . TB_PREFIX . "units SET hero = 1 WHERE vref = ".$village->wid."");
             header("Location: build.php?id=".$id."");
-        }else{
-            header("Location: build.php?id=".$id."");
-        }
     }
     
     if($hero_info['trainingtime'] <= time()) {
