@@ -455,7 +455,7 @@
 
         			array_push($holder, $value);
         		}
-        		$holder = $multisort->sorte($holder, "'level'", false, 2);
+        		$holder = $multisort->sorte($holder, "'experience'", false, 2);
         		$newholder = array("pad");
         		foreach($holder as $key) {
         			array_push($newholder, $key);
