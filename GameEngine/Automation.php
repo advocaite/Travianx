@@ -111,6 +111,7 @@ class Automation {
         $this->ClearUser();
         $this->ClearInactive();
         $this->pruneResource();
+        $this->HeroLevel();
         $this->loyaltyRegeneration();
         $this->healHero();
         $this->celebrationComplete();
@@ -124,6 +125,7 @@ class Automation {
         $this->returnunitsComplete();
         $this->sendSettlersComplete();
         $this->sendunitsComplete();
+
     } 
     
    private function getfieldDistance($coorx1, $coory1, $coorx2, $coory2) {
@@ -204,6 +206,21 @@ class Automation {
 			}
         }
     }
+    
+    
+    private function HeroLevel(){
+        global $database,$hero_levels;
+        $hero_exp = $database->getHeroField($session->uid,'experience');
+        $hid = $database->getHeroField($session->uid,'heroid');
+        for($i=0;$i<=99;$i++){
+            if($hero_exp < $hero_levels[$i+1]){
+                $level = $i;
+                $database->modifyHero('level',$level,$hid);
+            }
+        }
+    }
+    
+    
     private function clearDeleting() {
         global $database;
         $needDelete = $database->getNeedDelete();

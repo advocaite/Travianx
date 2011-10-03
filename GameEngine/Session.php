@@ -18,6 +18,7 @@
         include ("Data/cel.php");
         include ("Data/resdata.php");
         include ("Data/unitdata.php");
+        include ("Data/hero_full.php");
         include ("config.php");
         include ("Database.php");
         include ("Mailer.php");

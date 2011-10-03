@@ -1736,12 +1736,19 @@
 				}
         	}
 
+            function getHeroField($uid,$field){
+                    $q = "SELECT * FROM ".TB_PREFIX."hero WHERE uid = $uid";
+                    $result = mysql_query($q,$this->connection);
+                    return $this->mysql_fetch_all($result);
+            }
+            
 			function modifyHero($column,$value,$heroid) {
-				$q = "UPDATE ".TB_PREFIX."hero SET $column=$value WHERE heroid=$heroid";
+				$q = "UPDATE ".TB_PREFIX."hero SET $column = $value WHERE heroid = $heroid";
 				return mysql_query($q, $this->connection);
 			}
+            
             function modifyHeroXp($column,$value,$heroid) {
-                $q = "UPDATE ".TB_PREFIX."hero SET $column=$column+$value WHERE uid=$heroid";
+                $q = "UPDATE ".TB_PREFIX."hero SET $column = $column + $value WHERE uid=$heroid";
                 return mysql_query($q, $this->connection);
             }
 
