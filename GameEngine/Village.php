@@ -96,7 +96,8 @@ class Village {
         $normalA = $database->getOwnArtefactInfoByType($_SESSION['wid'],4);  
 		$largeA = $database->getOwnUniqueArtefactInfo($session->uid,4,2);
         $uniqueA = $database->getOwnUniqueArtefactInfo($session->uid,4,3);
-        $upkeep = $technology->getUpkeep($this->unitall,0);
+        $upkeep = $technology->getUpkeep($this->unitall,0,$this->wid);
+        //$upkeep = $technology->getUpkeep($technology->getAllUnits($this->wid),0);
         $this->production['wood'] = $this->getWoodProd();
 		$this->production['clay'] = $this->getClayProd();
 		$this->production['iron'] = $this->getIronProd();
@@ -110,7 +111,13 @@ class Village {
          $this->production['crop'] = $this->getCropProd()-$this->pop-(($upkeep)-round($upkeep*0.25));   
        
         }else{
-		$this->production['crop'] = $this->getCropProd()-$this->pop-$upkeep;  
+		$this->production['crop'] = $this->getCropProd()-$this->pop-$upkeep;
+		# DEBUGGING
+		$debugFile = "/tmp/debug";
+		$fh = fopen($debugFile, 'a') or die('No debug file');
+		fwrite($fh,"\n".date("Y-m-d H:i:s")." : ".$this->production['crop'].",".$this->getCropProd().",".$this->pop.",".$upkeep);
+		fclose($fh);
+		# DEBUGGING
 	}
     }
 	

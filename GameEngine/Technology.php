@@ -330,8 +330,11 @@ class Technology {
 		header("Location: build.php?id=".$post['id']);
 	}
 	
-	public function getUpkeep($array,$type) {
-		global $building,$session;
+	public function getUpkeep($array,$type,$vid=0) {
+		global $database,$session,$village;
+		if($vid==0) { $vid=$village->wid; }
+		$buildarray = array();
+		$buildarray = $database->getResourceLevel($vid);
 		$upkeep = 0;
 		switch($type) {
 			case 0:
@@ -361,8 +364,19 @@ class Technology {
 		}	
 		for($i=$start;$i<=$end;$i++) {
 			$hdt = 0;
-			if($session->tribe == 1 && $i>=4 && $i<=6) {
-				//if($building->getTypeLevel(41)>=1) { $hdt = 1; }
+			//if($session->tribe == 1 && $i>=4 && $i<=6) {
+			if($i>=4 && $i<=6) {
+			# DEBUGGING
+			$debugFile = "/tmp/debug";
+			$fh = fopen($debugFile, 'a') or die('No debug file');
+			fwrite($fh,"\n".date("Y-m-d H:i:s")." : 4,5,6,".$vid.",".$buildarray['f27t']);
+			fclose($fh);
+			# DEBUGGING
+				for($j=19;$j<=38;$j++) {
+					if($buildarray['f'.$j.'t'] == 41) { 
+						$hdt = 1;
+					}
+				}
 			}
 			$unit = "u".$i;
 			global $$unit;
@@ -373,6 +387,13 @@ class Technology {
             global $$unit;
             $dataarray = $$unit; 
             $upkeep += $dataarray['pop'] * $array[$unit];
+			# DEBUGGING
+			$debugFile = "/tmp/debug";
+			$fh = fopen($debugFile, 'a') or die('No debug file');
+			fwrite($fh,"\n".date("Y-m-d H:i:s")." : ".$type.",".$upkeep);
+			fclose($fh);
+			# DEBUGGING
+
 		return $upkeep;
 	}
 
