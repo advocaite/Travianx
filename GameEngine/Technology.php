@@ -364,14 +364,7 @@ class Technology {
 		}	
 		for($i=$start;$i<=$end;$i++) {
 			$hdt = 0;
-			//if($session->tribe == 1 && $i>=4 && $i<=6) {
 			if($i>=4 && $i<=6) {
-			# DEBUGGING
-			$debugFile = "/tmp/debug";
-			$fh = fopen($debugFile, 'a') or die('No debug file');
-			fwrite($fh,"\n".date("Y-m-d H:i:s")." : 4,5,6,".$vid.",".$buildarray['f27t']);
-			fclose($fh);
-			# DEBUGGING
 				for($j=19;$j<=38;$j++) {
 					if($buildarray['f'.$j.'t'] == 41) { 
 						$hdt = 1;
@@ -387,13 +380,6 @@ class Technology {
             global $$unit;
             $dataarray = $$unit; 
             $upkeep += $dataarray['pop'] * $array[$unit];
-			# DEBUGGING
-			$debugFile = "/tmp/debug";
-			$fh = fopen($debugFile, 'a') or die('No debug file');
-			fwrite($fh,"\n".date("Y-m-d H:i:s")." : ".$type.",".$upkeep);
-			fclose($fh);
-			# DEBUGGING
-
 		return $upkeep;
 	}
 

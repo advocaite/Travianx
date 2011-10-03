@@ -112,12 +112,6 @@ class Village {
        
         }else{
 		$this->production['crop'] = $this->getCropProd()-$this->pop-$upkeep;
-		# DEBUGGING
-		$debugFile = "/tmp/debug";
-		$fh = fopen($debugFile, 'a') or die('No debug file');
-		fwrite($fh,"\n".date("Y-m-d H:i:s")." : ".$this->production['crop'].",".$this->getCropProd().",".$this->pop.",".$upkeep);
-		fclose($fh);
-		# DEBUGGING
 	}
     }
 	
