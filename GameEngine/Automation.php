@@ -112,19 +112,18 @@ class Automation {
         $this->ClearInactive();
         $this->pruneResource();
         $this->loyaltyRegeneration();
+        $this->healHero();
+        $this->celebrationComplete();
+        $this->demolitionComplete();
 		$this->culturePoints();
 		$this->researchComplete();$this->clearDeleting();
 		$this->buildComplete();
         $this->marketComplete();
         $this->trainingComplete();
-        $this->sendunitsComplete();
         $this->sendreinfunitsComplete();
         $this->returnunitsComplete();
         $this->sendSettlersComplete();
-        $this->celebrationComplete();
-        $this->demolitionComplete();
-        $this->healHero();
-        
+        $this->sendunitsComplete();
     } 
     
    private function getfieldDistance($coorx1, $coory1, $coorx2, $coory2) {
@@ -187,21 +186,22 @@ class Automation {
     }  
     private function loyaltyRegeneration() {
         global $database;
-        $time = time()-3600;
         $array = array();
-        $q = "SELECT * FROM ".TB_PREFIX."vdata where lastupdate < $time";
+        $q = "SELECT * FROM ".TB_PREFIX."vdata WHERE loyalty<>100";
         $array = $database->query_return($q);
-        
-        foreach($array as $loyalty) {
-            if($loyalty['lastupdate'] < $time){
+		if(!empty($array)) { 
+	        foreach($array as $loyalty) {
                 if($this->getTypeLevel(25,$loyalty['wref']) >= 1){
                     $value = $this->getTypeLevel(25,$loyalty['wref']);
                 }elseif($this->getTypeLevel(26,$loyalty['wref']) >= 1){
                     $value = $this->getTypeLevel(26,$loyalty['wref']);
-                }
-                $q = "UPDATE ".TB_PREFIX."vdata SET loyalty = loyalty + $value WHERE wref = '".$loyalty['wref']."'";
+                } else {
+					$value = 0;
+				}
+				$newloyalty = min(100,$loyalty['loyalty']+$value*(time()-$loyalty['lastupdate'])*SPEED/(60*60));
+                $q = "UPDATE ".TB_PREFIX."vdata SET loyalty = $newloyalty WHERE wref = '".$loyalty['wref']."'";
                 $database->query($q);
-            }
+			}
         }
     }
     private function clearDeleting() {
