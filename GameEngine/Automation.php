@@ -110,15 +110,15 @@ class Automation {
      
         $this->ClearUser();
         $this->ClearInactive();
+		$this->clearDeleting();
         $this->pruneResource();
-        $this->HeroLevel();
         $this->loyaltyRegeneration();
-        $this->healHero();
+        $this->updateHero();
         $this->celebrationComplete();
         $this->demolitionComplete();
-		$this->culturePoints();
-		$this->researchComplete();$this->clearDeleting();
+		$this->researchComplete();
 		$this->buildComplete();
+		$this->culturePoints();
         $this->marketComplete();
         $this->trainingComplete();
         $this->sendreinfunitsComplete();
@@ -206,22 +206,8 @@ class Automation {
 			}
         }
     }
-    
-    
-    private function HeroLevel(){
-        global $database,$hero_levels;
-        $hero_exp = $database->getHeroField($session->uid,'experience');
-        $hid = $database->getHeroField($session->uid,'heroid');
-        for($i=0;$i<=99;$i++){
-            if($hero_exp < $hero_levels[$i+1]){
-                $level = $i;
-                $database->modifyHero('level',$level,$hid);
-            }
-        }
-    }
-    
-    
-    private function clearDeleting() {
+
+	private function clearDeleting() {
         global $database;
         $needDelete = $database->getNeedDelete();
         if(count($needDelete) > 0) {
@@ -1985,14 +1971,23 @@ class Automation {
         }
     }
 
-    private function healHero() {
-        global $database;
+    private function updateHero() {
+        global $database,$hero_levels;
         $harray = $database->getHero();
 		if(!empty($harray)) {
 	        foreach($harray as $hdata) {
 				if((time()-$hdata['lastupdate'])>=120) {
 					if($hdata['health']<100) {
 						$database->modifyHero("health",min(100,$hdata['health']+$hdata['regeneration']*5/(24*60*60)*(time()-$hdata['lastupdate'])*SPEED),$hdata['heroid']);
+					}
+					for($i=0;$i<=99;$i++) {
+						if($hdata['experience'] < $hero_levels[$i+1]) {
+							break;
+						}
+					}
+					if($hdata['level'] != $i) {
+						$database->modifyHero("level",$i,$hdata['heroid']);
+						$database->modifyHero("points",($hdata['points']+($i-$hdata['level'])*5),$hdata['heroid']);
 					}
 					$database->modifyHero("lastupdate",time(),$hdata['heroid']);
 				}
