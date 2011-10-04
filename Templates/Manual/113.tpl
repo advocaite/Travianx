@@ -1,3 +1,4 @@
+<h1><img class="unit u13" src="img/x.gif" alt="Axeman" title="Axeman" /> Axeman <span class="tribe">(Teutons)</span></h1>
 <table id="troop_info" cellpadding="1" cellspacing="1">
 <thead><tr>
 	<th><img class="att_all" src="img/x.gif" alt="attack value" title="attack value" /></th>
