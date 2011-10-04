@@ -383,11 +383,16 @@ $end = ($tribe*10);
 <input name="a" value="533374" type="hidden">
 <input name="c" value="3" type="hidden">
 
-
+<?php
+	if($database->hasBeginnerProtection($process['0'])==1) { 
+		echo"<b>User presently has beginners protection</b>";
+	} else {
+?>
         <p class="btn"><input value="ok" name="s1" id="btn_ok" 
 
 class="dynamic_img " src="img/x.gif" alt="OK" type="image" onclick="if (this.disabled==false) {document.getElementsByTagName('form')[0].submit();} this.disabled=true;" onLoad="this.disabled=false;"></p>
 
+<?php } ?>
 </form>
 
 </div>
