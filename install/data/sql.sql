@@ -302,6 +302,14 @@ CREATE TABLE IF NOT EXISTS `%PREFIX%attacks` (
   `ctar1` int(11) unsigned NOT NULL, 
   `ctar2` int(11) unsigned NOT NULL,
   `spy` int(11) unsigned NOT NULL, 
+  `b1` tinyint(1) unsigned NOT NULL, 
+  `b2` tinyint(1) unsigned NOT NULL, 
+  `b3` tinyint(1) unsigned NOT NULL, 
+  `b4` tinyint(1) unsigned NOT NULL, 
+  `b5` tinyint(1) unsigned NOT NULL, 
+  `b6` tinyint(1) unsigned NOT NULL, 
+  `b7` tinyint(1) unsigned NOT NULL, 
+  `b8` tinyint(1) unsigned NOT NULL, 
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
@@ -524,6 +532,14 @@ CREATE TABLE IF NOT EXISTS `%PREFIX%enforcement` (
   `u48` int(11) unsigned NOT NULL DEFAULT '0',
   `u49` int(11) unsigned NOT NULL DEFAULT '0',
   `u50` int(11) unsigned NOT NULL DEFAULT '0',
+  `a1` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `a2` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `a3` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `a4` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `a5` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `a6` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `a7` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `a8` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `from` int(10) unsigned NOT NULL DEFAULT '0',
   `vref` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
