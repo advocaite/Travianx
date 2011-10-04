@@ -71,7 +71,7 @@ class Units {
 				// Busqueda por nombre de pueblo
 				// Confirmamos y buscamos las coordenadas por nombre de pueblo
 				if(	!$post['t1'] && !$post['t2'] && !$post['t3'] && !$post['t4'] && !$post['t5'] && 
-					!$post['t6'] && !$post['t7'] && !$post['t8'] && !$post['t9'] && !$post['t10']){
+					!$post['t6'] && !$post['t7'] && !$post['t8'] && !$post['t9'] && !$post['t10'] && !$post['t11']){
 				$form->addError("error","You need to mark min. one troop");				
 				}				
 				
@@ -128,12 +128,8 @@ class Units {
                             }
 				}
                 if ($database->isVillageOases($id) == 0) {
-                //check if has beginners protection
-                $villageOwner = $database->getVillageField($id,'owner');
-                $userprotect = $database->getUserField($villageOwner,'protect',0);
-                if($data2['protect'] > time()) {
-                $form->addError("error","Player is under beginners protection. You can't attack him");
-                                
+				if($database->hasBeginnerProtection($id)==1) {
+	                $form->addError("error","Player is under beginners protection. You can't attack him");
                 }    
                 
 				//check if banned:
