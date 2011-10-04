@@ -9,7 +9,7 @@
         mysql_connect(SQL_SERVER, SQL_USER, SQL_PASS);
         mysql_select_db(SQL_DB);
 
-        $database->poulateOasisdata();  
+        $database->populateOasisdata();  
         $database->populateOasis();
         
         
