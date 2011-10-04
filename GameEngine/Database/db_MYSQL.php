@@ -83,6 +83,22 @@
         			return false;
         		}
         	}
+
+			public function hasBeginnerProtection($vid) {
+				$q = "SELECT u.protect FROM ".TB_PREFIX."users u,".TB_PREFIX."vdata v WHERE u.id=v.owner AND v.wref=".$vid;
+				$result = mysql_query($q, $this->connection);
+				$dbarray = mysql_fetch_array($result);
+				if(!empty($dbarray)) {
+					if(time()<$dbarray[0]) {
+						return true;
+					} else {
+						return false;
+					}
+				} else {
+					return false;
+				}
+			}
+
         	function updateUserField($ref, $field, $value, $switch) {
         		if(!$switch) {
         			$q = "UPDATE " . TB_PREFIX . "users set $field = '$value' where username = '$ref'";
