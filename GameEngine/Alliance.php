@@ -315,6 +315,7 @@
        		} else {
        			$database->updateUserField($post['a_user'], 'alliance', 0, 1);
        			$database->deleteAlliPermissions($post['a_user']);
+       			$database->deleteAlliance($session->alliance);
        			// log the notice
        			$database->insertAlliNotice($session->alliance, '<a href="spieler.php?uid=' . $session->uid . '">' . $session->username . '</a> kicked <a href="spieler.php?uid=' . $post['a_user'] . '">' . $UserData['username'] . '</a>.');
        			//header("Location: build.php?id=".$post['id']);
