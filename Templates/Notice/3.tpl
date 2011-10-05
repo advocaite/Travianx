@@ -37,6 +37,7 @@ $start = $dataarray[2] == 1? 1 : (($dataarray[2] == 2)? 11 : (($dataarray[2] == 
 for($i=$start;$i<=($start+9);$i++) {
 	echo "<td><img src=\"img/x.gif\" class=\"unit u$i\" title=\"".$technology->getUnitName($i)."\" alt=\"".$technology->getUnitName($i)."\" /></td>";
 }
+echo "<td><img src=]"img/x.gif]" class=\"unit hero\" title=\"Hero\" /></td>";
 echo "</tr><tr><th>Troops</th>";
 for($i=3;$i<=12;$i++) {
 	if($dataarray[$i] == 0) {

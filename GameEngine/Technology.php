@@ -376,10 +376,10 @@ class Technology {
 			$dataarray = $$unit;
 			$upkeep += ($dataarray['pop'] - $hdt) * $array[$unit];
 		}
-            $unit = "hero";
-            global $$unit;
-            $dataarray = $$unit; 
-            $upkeep += $dataarray['pop'] * $array[$unit];
+         //   $unit = "hero";
+         //   global $$unit;
+         //   $dataarray = $$unit; 
+            $upkeep += $array['hero'] * 6;
 		return $upkeep;
 	}
 
