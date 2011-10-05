@@ -255,24 +255,26 @@ class Units {
         $start = ($data21['tribe']-1)*10+1;
         $end = ($data21['tribe']*10);
         
-			$speeds = array();
-			$scout = 1;
+		$speeds = array();
+		$scout = 1;
 
-				//find slowest unit.
-				for($i=1;$i<=11;$i++){
-					if (isset($data['u'.$i])){
-                       
-						if( $data['u'.$i] != '' && $data['u'.$i] > 0){
-                        if($unitarray) { reset($unitarray); }
-                        $unitarray = $GLOBALS["u".(($session->tribe-1)*10+$i)];
-                        $speeds[] = $unitarray['speed'];
-                        }
-                        
-                        if( $data['u11'] != '' && $data['u11'] > 0){
-                       $speeds[] = 14;
-                        }
-					}
-				}
+		//find slowest unit.
+		for($i=1;$i<=10;$i++){
+			if (isset($data['u'.$i])){
+				if($data['u'.$i] != '' && $data['u'.$i] > 0){
+					if($unitarray) { reset($unitarray); }
+					$unitarray = $GLOBALS["u".(($session->tribe-1)*10+$i)];
+					$speeds[] = $unitarray['speed'];
+                }
+			}
+		}
+		if (isset($data['u11'])) {
+			if($data['u11'] != '' && $data['u11'] > 0){
+				$heroarray = $database->getHero($uid);
+				$herodata = $GLOBALS["u".$heroarray[0]['unit']];
+				$speeds[] = $herodata['speed'];
+			}
+		}
 				
 		$time = $generator->procDistanceTime($from,$to,min($speeds),1);
         if (isset($post['ctar1'])){$post['ctar1'] = $post['ctar1'];}else{ $post['ctar1'] = 0;}
@@ -282,8 +284,6 @@ class Units {
 		$reference = $database->addAttack(($village->wid),$data['u1'],$data['u2'],$data['u3'],$data['u4'],$data['u5'],$data['u6'],$data['u7'],$data['u8'],$data['u9'],$data['u10'],$data['u11'],$data['type'],$post['ctar1'],$post['ctar2'],$post['spy'],$abdata['b1'],$abdata['b2'],$abdata['b3'],$abdata['b4'],$abdata['b5'],$abdata['b6'],$abdata['b7'],$abdata['b8']);
   		$database->addMovement(3,$village->wid,$data['to_vid'],$reference,($time+time()));
    
-			
-		
 		if($form->returnErrors() > 0) {
 			$_SESSION['errorarray'] = $form->getErrors();
 			$_SESSION['valuearray'] = $_POST;
