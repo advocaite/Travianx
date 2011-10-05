@@ -97,7 +97,6 @@ class Village {
 		$largeA = $database->getOwnUniqueArtefactInfo($session->uid,4,2);
         $uniqueA = $database->getOwnUniqueArtefactInfo($session->uid,4,3);
         $upkeep = $technology->getUpkeep($this->unitall,0,$this->wid);
-        //$upkeep = $technology->getUpkeep($technology->getAllUnits($this->wid),0);
         $this->production['wood'] = $this->getWoodProd();
 		$this->production['clay'] = $this->getClayProd();
 		$this->production['iron'] = $this->getIronProd();

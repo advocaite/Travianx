@@ -1944,6 +1944,7 @@
         				for($i = 1; $i <= 10; $i++) {
         					$movingunits['u' . (($vtribe - 1) * 10 + $i)] += $out['t' . $i];
         				}
+						$movingunits['hero'] += $out['t11'];
         			}
         		}
         		$returningarray = $this->getMovement(4, $id, 1);
@@ -1953,6 +1954,7 @@
         					for($i = 1; $i <= 10; $i++) {
         						$movingunits['u' . (($vtribe - 1) * 10 + $i)] += $ret['t' . $i];
         					}
+							$movingunits['hero'] += $ret['t11'];
         				}
         			}
         		}
