@@ -270,7 +270,7 @@ class Units {
 		}
 		if (isset($data['u11'])) {
 			if($data['u11'] != '' && $data['u11'] > 0){
-				$heroarray = $database->getHero($uid);
+				$heroarray = $database->getHero($session->uid);
 				$herodata = $GLOBALS["u".$heroarray[0]['unit']];
 				$speeds[] = $herodata['speed'];
 			}
