@@ -2,7 +2,7 @@
   
     for ($i=($session->tribe-1)*10+3;$i<=($session->tribe-1)*10+6;$i++) {
         if ($i <> 3 && $i <> 13 && i <> 14 && $technology->getTech($i)) {
-  
+            if ($i <> 14){
 echo "<tr><td class=\"desc\">
 <div class=\"tit\">
 <img class=\"unit u".$i."\" src=\"img/x.gif\" alt=\"".$technology->getUnitName($i)."\" title=\"".$technology->getUnitName($i)."\" />
@@ -15,6 +15,7 @@ echo "</div>
 </td>
 <td class=\"val\"><input type=\"text\" class=\"text\" name=\"t".$i."\" value=\"0\" maxlength=\"4\"></td>
 <td class=\"max\"><a href=\"#\" onClick=\"document.snd.t".$i.".value=".$technology->maxUnit($i,true)."; return false;\">(".$technology->maxUnit($i,true).")</a></td></tr></tbody>";
+            }
         }
     }
 ?>
