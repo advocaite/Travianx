@@ -1900,11 +1900,12 @@
         			$this->modifyEnforce($id, $i, $data['t' . $j . ''], 1);
         			$j++;
         		}
+				$this->modifyEnforce($id,'hero',$data['t11'],1);
         		return mysql_insert_id($this->connection);
         	}
 
         	function modifyEnforce($id, $unit, $amt, $mode) {
-        		$unit = 'u' . $unit;
+        		if($unit != 'hero') { $unit = 'u' . $unit; }
         		if(!$mode) {
         			$q = "UPDATE " . TB_PREFIX . "enforcement set $unit = $unit - $amt where id = $id";
         		} else {

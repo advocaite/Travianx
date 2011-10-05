@@ -1350,25 +1350,35 @@ class Automation {
             $from = $database->getMInfo($data['from']);
             $toF = $database->getVillage($data['to']);
             $fromF = $database->getVillage($data['from']);
+			$HeroTransfer = $NonHeroPresent = 0;
 
-            //check if there is defence from town in to town
-            $check=$database->getEnforce($data['to'],$data['from']);
-            if (!isset($check['id'])){
-                //no: 
-                $database->addEnforce($data);
-                } else{
-                //yes
-                $start = ($owntribe-1)*10+1;
-                $end = ($owntribe*10);
-                
-    
-                //add unit.
-                $j='1';
-                for($i=$start;$i<=$end;$i++){
-                    $database->modifyEnforce($check['id'],$i,$data['t'.$j.''],1); $j++;
-                }
+			//check to see if we're only sending a hero between own villages and there's a Mansion at target village
+			if($data['t11'] != 0) {
+				if($database->getVillageField($data['from'],"owner") == $database->getVillageField($data['to'],"owner")) {
+					for($i=1;$i<=10;$i++) { if($data['t'.$i]>0) { $NonHeroPresent = 1; break; } }
+					if($NonHeroPresent == 0 && $this->getTypeLevel(37,$data['to']) > 0) {
+						//don't reinforce, addunit instead
+						$database->modifyUnit($data['to'],"hero",1,1);
+						$HeroTransfer = 1;
+					}
+				}
+			} if(!$HeroTransfer) {	
+	            //check if there is defence from town in to town
+		        $check=$database->getEnforce($data['to'],$data['from']);
+			    if (!isset($check['id'])){
+				    //no: 
+					$database->addEnforce($data);
+				} else{
+				 //yes
+					 $start = ($owntribe-1)*10+1;
+					 $end = ($owntribe*10);
+				 //add unit.
+					 $j='1';
+					 for($i=$start;$i<=$end;$i++){
+				        $database->modifyEnforce($check['id'],$i,$data['t'.$j.''],1); $j++;
+					}
+				}	
             }
-            
             //send rapport
             $unitssend_att = ''.$data['t1'].','.$data['t2'].','.$data['t3'].','.$data['t4'].','.$data['t5'].','.$data['t6'].','.$data['t7'].','.$data['t8'].','.$data['t9'].','.$data['t10'].'';
             $data_fail = ''.$from['wref'].','.$from['owner'].','.$owntribe.','.$unitssend_att.'';

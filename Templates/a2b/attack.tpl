@@ -314,46 +314,28 @@ $end = ($tribe*10);
 
             <?php
             $speeds = array();
-
             $scout = 1;
-
-                //find slowest unit.
-
-                for($i=1;$i<=10;$i++)
-
+            //find slowest unit.
+            for($i=1;$i<=10;$i++)
+            {
+                if (isset($process['t'.$i]))
                 {
-
-                    if (isset($process['t'.$i]))
-
+                    if( $process['t'.$i] != '' && $process['t'.$i] > 0)
                     {
-
-                        if( $process['t'.$i] != '' && $process['t'.$i] > 0)
-
-                        {
-
-                            $speeds[] = ${'u'.(($session->tribe-1)*10+$i)}['speed'];
-
-                            if($i != 4)
-
-                                $scout = 0;
-
-                        }
-
-                        
-
+                        $speeds[] = ${'u'.(($session->tribe-1)*10+$i)}['speed'];
+                        if(($i != 4 && $session->tribe != 3) || ($i != 3 && $session->tribe == 3)) { $scout = 0; }
                     }
-
                 }
-
-            
-
-            if($scout)
-
-                $process['c'] = 1;
-
-                
-                $time = $generator->procDistanceTime($from,$to,min($speeds),1);
-
+            }
+			if (isset($process['t11'])) {
+				if( $process['t11'] != '' && $process['t11'] > 0) {
+					$heroarray = $database->getHero($session->uid);
+					$speeds[] = ${'u'.($heroarray[0]['unit'])}['speed'];
+					$scout = 0;
+				}
+			}
+            if($scout) { $process['c'] = 1; }
+            $time = $generator->procDistanceTime($from,$to,min($speeds),1);
             ?>
 
             
@@ -383,16 +365,10 @@ $end = ($tribe*10);
 <input name="a" value="533374" type="hidden">
 <input name="c" value="3" type="hidden">
 
-<?php
-	if($database->hasBeginnerProtection($process['0'])==1) { 
-		echo"<b>User presently has beginners protection</b>";
-	} else {
-?>
         <p class="btn"><input value="ok" name="s1" id="btn_ok" 
 
 class="dynamic_img " src="img/x.gif" alt="OK" type="image" onclick="if (this.disabled==false) {document.getElementsByTagName('form')[0].submit();} this.disabled=true;" onLoad="this.disabled=false;"></p>
 
-<?php } ?>
 </form>
 
 </div>
