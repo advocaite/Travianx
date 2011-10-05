@@ -1,11 +1,11 @@
 <h1><img class="unit ugeb" src="img/x.gif"> Trapper</h1><img class="building g36" src="img/x.gif" alt="Trapper" title="Trapper" />The trapper protects your village with well hidden traps. This means that unwary enemies can be imprisoned and won't be able to harm your village anymore.
 <br /><br />
 One trap costs 
-<img src="img/un/r/1.gif" width="18" height="12">20|
-<img src="img/un/r/2.gif" width="18" height="12">30|
-<img src="img/un/r/3.gif" width="18" height="12">10|
-<img src="img/un/r/4.gif" width="18" height="12">20 
-<img src="img/un/r/5.gif" width="18" height="12">0
+<img src="img/un/res/1.gif" width="18" height="12">20|
+<img src="img/un/res/2.gif" width="18" height="12">30|
+<img src="img/un/res/3.gif" width="18" height="12">10|
+<img src="img/un/res/4.gif" width="18" height="12">20 
+<img src="img/un/res/5.gif" width="18" height="12">0
 <br /><br />
 Troops cannot be freed with a raid. When the troops get freed with a successful normal attack, 1/3 of the traps are automatically repaired. If the owner of the traps release the captives all of the traps can be repaired. 
 <br /><br />
