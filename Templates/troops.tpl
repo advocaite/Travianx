@@ -14,7 +14,7 @@
 	<th colspan="3"><?php echo TROOPS_DORF; ?></th>
 </tr></thead><tbody>
 <?php
-$units = $technology->getUnitList();
+$units = $technology->getUnitList($village->wid);
 if(count($units) == 0) {
 	echo "<tr><td>none</td></tr>";
 }
