@@ -667,7 +667,7 @@ class Building {
 						$database->setVillageField($jobs['wid'],"maxcrop",$max);
                     }  			
 				}
-				if($jobs['field'] >= 19) { $innertimestamp = $jobs['timestamp']; }
+				if(($jobs['field'] >= 19 && ($session->tribe == 1 || ALLOW_ALL_TRIBE)) || (!ALLOW_ALL_TRIBE && $session->tribe != 1)) { $innertimestamp = $jobs['timestamp']; }
 			}
 		}
 		$technology->finishTech();
@@ -675,8 +675,8 @@ class Building {
 		$database->modifyGold($session->uid,0,0);
 		$stillbuildingarray = $database->getJobs($village->wid);
 		if(count($stillbuildingarray) == 1) {
-			if($stillbuildarray[0]['loopcon'] == 1) {
-				$q = "UPDATE ".TB_PREFIX."bdata SET loopcon=0,timestamp=".(time()+$jobs[0]['timestamp']-$innertimestamp)." WHERE id=".$jobs[0]['id'];
+			if($stillbuildingarray[0]['loopcon'] == 1) {
+				$q = "UPDATE ".TB_PREFIX."bdata SET loopcon=0,timestamp=".(time()+$stillbuildingarray[0]['timestamp']-$innertimestamp)." WHERE id=".$stillbuildingarray[0]['id'];
 				$database->query($q);
 			}
 		}
