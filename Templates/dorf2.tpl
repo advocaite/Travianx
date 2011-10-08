@@ -110,7 +110,7 @@ echo '<img class="ww g40_5" src="img/x.gif" alt="Worldwonder">'; }
     <div id="levels" <?php if(isset($_COOKIE['t3l'])) { echo "class=\"on\""; } ?> >
 <?php
 for($i=1;$i<=20;$i++) {
-if ($village->resarray['f'.($i+18)] != 0) {
+if ($village->resarray['f'.($i+18).'t'] != 0) {
 echo "<div class=\"d$i\">".$village->resarray['f'.($i+18)]."</div>";
 }
 }
