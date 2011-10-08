@@ -10,4 +10,4 @@
 
 <?php include("26_menu.tpl"); ?>
 
-By attacking with senators, chiefs or chieftains a village's loyalty can be brought down. If it reaches zero, the village joins the realm of the attacker. The loyalty of this village is currently at <b><?php echo $database->getVillageField($village->wid, 'loyalty'); ?></b> percent.</div>
+By attacking with senators, chiefs or chieftains a village's loyalty can be brought down. If it reaches zero, the village joins the realm of the attacker. The loyalty of this village is currently at <b><?php echo floor($database->getVillageField($village->wid,'loyalty')); ?></b> percent.</div>
