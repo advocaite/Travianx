@@ -11,6 +11,8 @@
 ##                                                                             ##
 #################################################################################
 
+//include_once("GameEngine/Units.php");
+
 class Battle {
 	
 	public function procSim($post) {
@@ -475,7 +477,36 @@ class Battle {
 		return $result;
 	}
 
-	
+	public function resolveConflict($data) {
+		global $database,$Unit,$unitsbytype;
+		$attack_infantry = $attack_cavalry = $defence_infantry = $defence_cavarly = 0;
+
+		$AttackerTribe = $database->getVillageTribe($data['from']);
+		$Blacksmith = $database->getABTech($data['from']);
+		for($i=1;$i<=10;$i++) {
+			if($data['t'.$i] > 0) {
+				$unit = ($AttackerTribe['tribe']-1)*10+$i;
+				$unitdata = $GLOBALS['u'.$unit];
+				if(in_array($unit,$unitsbytype['cavalry'])) {
+					$attack_cavalry += $data['t'.$i] * $unitdata['atk'] * pow(1.015,$Blacksmith['b'.$i]);
+				} else {
+					$attack_infantry += $data['t'.$i] * $unitdata['atk'] * pow(1.015,$Blacksmith['b'.$i]);
+				}
+			}
+		}
+		if($data['t11'] == 1) {
+			$heroarray = $Unit->Hero($database->getUserField($database->getVillageField($data['from'], "owner")));
+			if(in_array($heroarray['unit'],$unitsbytype['cavalry'])) {
+				$attack_cavalry += $heroarray['atk'];
+			} else {
+				$attack_infantry += $heroarray['atk'];
+			}
+			$attack_infantry *= $heroarray['ob'];
+			$attack_cavalry *= $heroarray['ob'];
+		}
+		$total_attack = floor($attack_infantry) + floor($attack_cavalry);
+	}
+
 };
 
 $battle = new Battle;

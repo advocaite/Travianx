@@ -414,7 +414,7 @@ class Units {
 		$h_ob = 1 + 0.002 * $heroarray[0]['attackbonus'];
 		$h_db = 1 + 0.002 * $heroarray[0]['defencebonus'];
 
-		return array('atk'=>$h_atk,'di'=>$h_di,'dc'=>$h_dc,'ob'=>$h_ob,'db'=>$h_db,'health'=>$heroarray['health']);
+		return array('unit'=>$heroarray[0]['unit'],'atk'=>$h_atk,'di'=>$h_di,'dc'=>$h_dc,'ob'=>$h_ob,'db'=>$h_db,'health'=>$heroarray[0]['health']);
 	}	
 };
 

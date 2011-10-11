@@ -442,6 +442,7 @@ class Automation {
         
         foreach($dataarray as $data) {
             //set base things
+			//$battle->resolveConflict($data);
             $tocoor = $database->getCoor($data['from']);
             $fromcoor = $database->getCoor($data['to']);
             $isoasis = $database->isVillageOases($data['to']);

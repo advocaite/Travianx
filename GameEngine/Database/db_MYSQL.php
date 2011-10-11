@@ -601,6 +601,13 @@
         		$result = mysql_query($q, $this->connection);
         		return mysql_fetch_array($result);
         	}
+
+			public function getVillageTribe($vid) {
+				$q = "SELECT u.tribe FROM ".TB_PREFIX."users u, ".TB_PREFIX."vdata v WHERE u.id=v.owner AND v.wref=".$vid;
+				$result = mysql_query($q, $this->connection);
+				return mysql_fetch_array($result);
+			}
+
         	function getOasisV($vid) {
         		$q = "SELECT * FROM " . TB_PREFIX . "odata where wref = $vid";
         		$result = mysql_query($q, $this->connection);
