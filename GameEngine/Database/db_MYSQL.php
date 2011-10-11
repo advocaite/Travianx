@@ -602,10 +602,17 @@
         		return mysql_fetch_array($result);
         	}
 
-			public function getVillageTribe($vid) {
-				$q = "SELECT u.tribe FROM ".TB_PREFIX."users u, ".TB_PREFIX."vdata v WHERE u.id=v.owner AND v.wref=".$vid;
+			public function getVillageBattleData($vid) {
+				$q = "SELECT u.id,u.tribe FROM ".TB_PREFIX."users u, ".TB_PREFIX."vdata v WHERE u.id=v.owner AND v.wref=".$vid;
 				$result = mysql_query($q, $this->connection);
 				return mysql_fetch_array($result);
+			}
+			
+			public function getPopulation($uid) {
+				$q = "SELECT sum(pop) AS pop FROM ".TB_PREFIX."vdata WHERE owner=".$uid;
+        		$result = mysql_query($q, $this->connection);
+        		$dbarray = mysql_fetch_array($result);
+        		return $dbarray['pop'];
 			}
 
         	function getOasisV($vid) {

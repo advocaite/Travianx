@@ -11,8 +11,6 @@
 ##                                                                             ##
 #################################################################################
 
-//include_once("GameEngine/Units.php");
-
 class Battle {
 	
 	public function procSim($post) {
@@ -478,14 +476,15 @@ class Battle {
 	}
 
 	public function resolveConflict($data) {
-		global $database,$Unit,$unitsbytype;
-		$attack_infantry = $attack_cavalry = $defence_infantry = $defence_cavarly = 0;
+		global $database,$units,$unitsbytype;
+		$attack_infantry = $attack_cavalry = $defense_infantry = $defense_cavalry = 0;
 
-		$AttackerTribe = $database->getVillageTribe($data['from']);
+		$AttackerData = $database->getVillageBattleData($data['from']);
+		$AttackerData['pop'] = $database->getPopulation($AttackerData['id']);
 		$Blacksmith = $database->getABTech($data['from']);
 		for($i=1;$i<=10;$i++) {
 			if($data['t'.$i] > 0) {
-				$unit = ($AttackerTribe['tribe']-1)*10+$i;
+				$unit = ($AttackerData['tribe']-1)*10+$i;
 				$unitdata = $GLOBALS['u'.$unit];
 				if(in_array($unit,$unitsbytype['cavalry'])) {
 					$attack_cavalry += $data['t'.$i] * $unitdata['atk'] * pow(1.015,$Blacksmith['b'.$i]);
@@ -495,7 +494,7 @@ class Battle {
 			}
 		}
 		if($data['t11'] == 1) {
-			$heroarray = $Unit->Hero($database->getUserField($database->getVillageField($data['from'], "owner")));
+			$heroarray = $this->getBattleHero($AttackerData['id']);
 			if(in_array($heroarray['unit'],$unitsbytype['cavalry'])) {
 				$attack_cavalry += $heroarray['atk'];
 			} else {
@@ -504,7 +503,43 @@ class Battle {
 			$attack_infantry *= $heroarray['ob'];
 			$attack_cavalry *= $heroarray['ob'];
 		}
-		$total_attack = floor($attack_infantry) + floor($attack_cavalry);
+		$attack_total = round($attack_infantry + $attack_cavalry);
+
+		$DefenderData = $database->getVillageBattleData($data['to']);
+		$DefenderData['pop'] = $database->getPopulation($DefenderData['id']);
+		$Armoury = $database->getABTech($data['to']);
+		$DefenderUnits = $database->getUnit($data['to']);
+		for($i=1;$i<=50;$i++) {
+			if($DefenderUnits['u'.$i] > 0) {
+				if(!empty($unitdata)) { reset($unitdata); }
+				$unitdata = $GLOBALS['u'.$i];
+				$defense_infantry += $DefenderUnits['u'.$i] * $unitdata['di'] * pow(1.015,$Armoury['b'.($i%10)]);
+				$defense_cavalry += $DefenderUnits['u'.$i] * $unitdata['dc'] * pow(1.015,$Armoury['b'.($i%10)]);
+			}
+		}
+		if($DefenderUnits['hero'] > 0) {
+			if(!empty($heroarray)) { reset($heroarray); }
+			$heroarray = $this->getBattleHero($DefenderData['id']);
+			$defense_infantry = ($defense_infantry + $heroarray['di']) * $heroarray['db'];
+			$defense_cavalry = ($defense_cavalry + $heroarray['dc']) * $heroarray['db'];
+		}
+		if($defense_infantry == $defense_cavalry) {
+			$defense_total = $defense_infantry;
+		} elseif($defense_infantry > $defense_cavalry) {
+			$defense_total = $attack_infantry / ($attack_infantry + $attack_cavalry) * ($defense_infantry - $defense_cavalry) + $defense_cavalry;
+		} else {
+			$defense_total = $attack_cavalry / ($attack_infantry + $attack_cavalry) * ($defense_cavalry - $defense_infantry) + $defense_infantry;
+		}
+		// get reinforcements and add to defense totals
+
+		$attack_casualties = $defense_casualties = 1;
+		if($attack_total > $defense_total) {
+			$attack_casualties = pow(($defense_total / $attack_total),1.475);
+			if($data['type'] == 4) { $defense_casualties = 1 - $attack_casualties; }
+		} else {
+			$defense_casualties = pow(($attack_total / $defense_total),1.475);
+			if($data['type'] == 4) { $attack_casualties = 1 - $defense_casualties; }
+		}	
 	}
 
 };
