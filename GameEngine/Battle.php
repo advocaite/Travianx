@@ -492,7 +492,7 @@ class Battle {
 					$attack_infantry += $data['t'.$i] * $unitdata['atk'] * pow(1.015,$Blacksmith['b'.$i]);
 				}
 				if(in_array($unit,$unitsbytype['scout'])) {
-					$attack_scout += $data['t'.$i] * 35 * pow(1.015,$Blacksmith['b'.$i]);
+					$attack_scout += $data['t'.$i] * 35 * pow(1.021,$Blacksmith['b'.$i]);
 				}
 			}
 		}
@@ -529,7 +529,7 @@ class Battle {
 					$defcav += $defenders['u'.$i] * $unitdata['dc'] * pow(1.015,$Armoury['a'.($i%10)]);
 				}
 				if(in_array($i,$unitsbytype['scout'])) {
-					$defense_scout += $defenders['u'.$i] * 20 * pow(1.015,$Armoury['a'.($i%10)]);
+					$defense_scout += $defenders['u'.$i] * 20 * pow(1.03,$Armoury['a'.($i%10)]);
 				}
 			}
 			if($defenders['hero'] == 1 && $data['type'] != 1) {
@@ -549,8 +549,13 @@ class Battle {
 		}
 
 		if($data['type'] == 1) {
-			// do some scout stuff
-			$attack_scout_casualties = 0;
+			if($attack_scout > $defense_scout) {
+				$attack_scout_casualties = pow(1.475,($defense_scout / $attack_scout));
+				// generate scout report and process casualties
+			} else {
+				$attack_scout_casualties = 1;
+				// kill all scouts
+			}
 		} else {
 			if($defense_infantry == $defense_cavalry) {
 				$defense_total = $defense_infantry;
