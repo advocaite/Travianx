@@ -477,7 +477,8 @@ class Battle {
 
 	public function resolveConflict($data) {
 		global $database,$units,$unitsbytype;
-		$attack_infantry = $attack_cavalry = $attack_scout = $defense_infantry = $defense_cavalry = $defense_scout = $defense_heros = 0;
+		$attack_infantry = $attack_cavalry = $attack_scout = $rams = $catapults = 0;
+		$defense_infantry = $defense_cavalry = $defense_scout = $defense_heros = $PalResBonus = $StoneMasonBonus = 0;
 
 		$AttackerData = $database->getVillageBattleData($data['from']);
 		$AttackerData['pop'] = $database->getPopulation($AttackerData['id']);
@@ -492,7 +493,13 @@ class Battle {
 					$attack_infantry += $data['t'.$i] * $unitdata['atk'] * pow(1.015,$Blacksmith['b'.$i]);
 				}
 				if(in_array($unit,$unitsbytype['scout'])) {
-					$attack_scout += $data['t'.$i] * 35 * pow(1.021,$Blacksmith['b'.$i]);
+					$attack_scout = $data['t'.$i] * 35 * pow(1.021,$Blacksmith['b'.$i]);
+				}
+				if(in_array($unit,$unitsbytype['ram'])) {
+					$rams = $data['t'.$i] * pow(1.015,$Blacksmith['b'.$i]);
+				}
+				if(in_array($unit,$unitsbytype['catapult'])) {
+					$catapults = $data['t'.$i] * pow(1.015,$Blacksmith['b'.$i]);
 				}
 			}
 		}
@@ -550,7 +557,7 @@ class Battle {
 
 		if($data['type'] == 1) {
 			if($attack_scout > $defense_scout) {
-				$attack_scout_casualties = pow(1.475,($defense_scout / $attack_scout));
+				$attack_scout_casualties = pow(($defense_scout / $attack_scout),1.475);
 				// generate scout report and process casualties
 			} else {
 				$attack_scout_casualties = 1;
@@ -564,6 +571,17 @@ class Battle {
 			} else {
 				$defense_total = $attack_cavalry / ($attack_infantry + $attack_cavalry) * ($defense_cavalry - $defense_infantry) + $defense_infantry;
 			}
+
+			$DefenderFields = $database->getResourceLevel($data['to']);
+			for($i=19;$i<=38;$i++) {
+				if($DefenderFields['f'.$i.'t'] == 25 || $DefenderFields['f'.$i.'t'] == 26) {
+					$PalResBonus = 2 * pow($DefenderFields['f'.$i],2);
+				}
+				if($DefenderFields['f'.$i.'t'] == 34) {
+					$StoneMasonBonus = $DefenderFields['f'.$i] / 10 + 1;
+				}
+			}
+			$defense_total += $PalResBonus;
 
 			$WallBonus = $DefenderData['tribe'] == 1 ? 1.03 : ($DefenderData['tribe'] == 2 ? 1.02 : 1.025);
 			$defense_total *= pow($WallBonus,$DefenderData['wall']);
@@ -581,6 +599,12 @@ class Battle {
 			} else {
 				$defense_casualties = pow(($attack_total / $defense_total),1.475);
 				if($data['type'] == 4) { $attack_casualties = 1 - $defense_casualties; }
+			}
+			if($rams > 0) {
+				$RamsRequired=array(1=>array(1,2,2,3,4,6,7,10,12,14,17,20,23,27,31,35,39,43,48,53),array(1,4,8,13,19,27,36,46,57,69,83,98,114,132,151,171,192,214,238,263),array(1,2,4,6,8,11,15,19,23,28,34,40,46,53,61,69,77,86,96,106));
+			}
+			if($catapults > 0) {
+				$BuildStrength=array(1=>1,2,2,3,4,6,8,10,12,14,17,20,23,27,31,35,39,43,48,53);
 			}
 		}
 	}
