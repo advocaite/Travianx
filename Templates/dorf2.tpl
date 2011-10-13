@@ -114,10 +114,10 @@ if ($village->resarray['f'.($i+18).'t'] != 0) {
 echo "<div class=\"d$i\">".$village->resarray['f'.($i+18)]."</div>";
 }
 }
-if($village->resarray['f39'] != 0) {
+if($village->resarray['f39t'] != 0) {
 echo "<div class=\"l39\">".$village->resarray['f39']."</div>";
 }
-if($village->resarray['f40'] != 0) {
+if($village->resarray['f40t'] != 0) {
 echo "<div class=\"l40\">".$village->resarray['f40']."</div>";
 
 }

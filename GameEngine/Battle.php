@@ -477,12 +477,18 @@ class Battle {
 
 	public function resolveConflict($data) {
 		global $database,$units,$unitsbytype;
-		$attack_infantry = $attack_cavalry = $attack_scout = $rams = $catapults = 0;
+		$attacker_count = $attack_infantry = $attack_cavalry = $attack_scout = $rams = $catapults = 0;
 		$defense_infantry = $defense_cavalry = $defense_scout = $defense_heros = $PalResBonus = $StoneMasonBonus = 0;
 
 		$AttackerData = $database->getVillageBattleData($data['from']);
 		$AttackerData['pop'] = $database->getPopulation($AttackerData['id']);
 		$Blacksmith = $database->getABTech($data['from']);
+
+		for($i=1;$i<=11;$i++) {	$attacker_count += $data['t'.$i]; }
+		if($data['type'] != 1) {
+			// Trap attacking troops if this is not a scouting mission
+		}
+
 		for($i=1;$i<=10;$i++) {
 			if($data['t'.$i] > 0) {
 				$unit = ($AttackerData['tribe']-1)*10+$i;
@@ -515,11 +521,14 @@ class Battle {
 		}
 		$attack_total = $attack_infantry + $attack_cavalry;
 
-		$DefenderData = $database->getVillageBattleData($data['to']);
 		if ($database->isVillageOases($id) == 0) {
+			$DefenderData = $database->getVillageBattleData($data['to']);
 			$DefenderData['pop'] = $database->getPopulation($DefenderData['id']);
 		} else {
-			 $DefenderData['pop'] = 500;
+			//check if it's occupied to correctly set pop
+			$DefenderData['tribe'] = 4;
+			$DefenderData['pop'] = 500;
+			$DefenderData['wall'] = 0;
 		}
 		$DefenderUnits = $database->getUnit($data['to']);
 		$DefendersAll = $database->getEnforceVillage($data['to'],0);
@@ -600,7 +609,7 @@ class Battle {
 				$defense_casualties = pow(($attack_total / $defense_total),1.475);
 				if($data['type'] == 4) { $attack_casualties = 1 - $defense_casualties; }
 			}
-			if($rams > 0) {
+			if($rams > 0 && $DefenderData['wall'] > 0) {
 				$RamsRequired=array(1=>array(1,2,2,3,4,6,7,10,12,14,17,20,23,27,31,35,39,43,48,53),array(1,4,8,13,19,27,36,46,57,69,83,98,114,132,151,171,192,214,238,263),array(1,2,4,6,8,11,15,19,23,28,34,40,46,53,61,69,77,86,96,106));
 			}
 			if($catapults > 0) {

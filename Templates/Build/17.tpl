@@ -111,7 +111,7 @@ echo "<h4>Merchants coming:</h4>";
        echo "<table class=\"traders\" cellpadding=\"1\" cellspacing=\"1\">";
 	$villageowner = $database->getVillageField($recieve['from'],"owner");
 	echo "<thead><tr><td><a href=\"spieler.php?uid=$villageowner\">".$database->getUserField($villageowner,"username",0)."</a></td>";
-    echo "<td><a href=\"karte.php?d=".$recieve['from']."&c=".$generator->getMapCheck($recieve['from'])."\">Transport to village</a></td>";
+    echo "<td><a href=\"karte.php?d=".$recieve['from']."&c=".$generator->getMapCheck($recieve['from'])."\">Transport from ".$database->getVillageField($recieve['from'],"name")."</a></td>";
     echo "</tr></thead><tbody><tr><th>Arrival in</th><td>";
     echo "<div class=\"in\"><span id=timer$timer>".$generator->getTimeFormat($recieve['endtime']-time())."</span> h</div>";
     $datetime = $generator->procMtime($recieve['endtime']);
@@ -133,7 +133,7 @@ if(count($market->sending) > 0) {
         $ownername = $database->getUserField($villageowner,"username",0);
         echo "<table class=\"traders\" cellpadding=\"1\" cellspacing=\"1\">";
         echo "<thead><tr> <td><a href=\"spieler.php?uid=$villageowner\">$ownername</a></td>";
-        echo "<td><a href=\"karte.php?d=".$send['to']."&c=".$generator->getMapCheck($send['to'])."\">Transport from village</a></td>";
+        echo "<td><a href=\"karte.php?d=".$send['to']."&c=".$generator->getMapCheck($send['to'])."\">Transport to ".$database->getVillageField($send['to'],"name")."</a></td>";
         echo "</tr></thead> <tbody><tr> <th>Arrival in</th> <td>";
         echo "<div class=\"in\"><span id=timer".$timer.">".$generator->getTimeFormat($send['endtime']-time())."</span> h</div>";
         $datetime = $generator->procMtime($send['endtime']);
@@ -155,7 +155,7 @@ if(count($market->return) > 0) {
         $ownername = $database->getUserField($villageowner,"username",0);
         echo "<table class=\"traders\" cellpadding=\"1\" cellspacing=\"1\">";
         echo "<thead><tr> <td><a href=\"spieler.php?uid=$villageowner\">$ownername</a></td>";
-        echo "<td><a href=\"karte.php?d=".$return['from']."&c=".$generator->getMapCheck($return['from'])."\">Return from village</a></td>";
+        echo "<td><a href=\"karte.php?d=".$return['from']."&c=".$generator->getMapCheck($return['from'])."\">Return from ".$database->getVillageField($return['from'],"name")."</a></td>";
         echo "</tr></thead> <tbody><tr> <th>Arrival in</th> <td>";
         echo "<div class=\"in\"><span id=timer".$timer.">".$generator->getTimeFormat($return['endtime']-time())."</span> h</div>";
         $datetime = $generator->procMtime($return['endtime']);
