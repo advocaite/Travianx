@@ -35,7 +35,6 @@
 					} else {
 						echo "<br><span class=\"none\">Crop production is negative so you will never reach the required resources</span></div></td>";
 					}
-		            echo "<br><span class=\"none\">Enough resources ".$time[0]." at ".$time[1]."</span></div></td>";
 		            echo "<td class=\"act\"><div class=\"none\">Too few<br>resources</div></td></tr>";
 				}
 				else if ($building->getTypeLevel(13) <= $abdata['a'.$j]) {
