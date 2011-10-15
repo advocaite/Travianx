@@ -10,8 +10,9 @@
 ##                                                                             ##
 #################################################################################
 
-include("GameEngine/Village.php");
-include("GameEngine/Units.php");
+ob_start();
+include_once("GameEngine/Village.php");
+include_once("GameEngine/Units.php");
 if(isset($_GET['newdid'])) {
 	$_SESSION['wid'] = $_GET['newdid'];
 	header("Location: ".$_SERVER['PHP_SELF'].(isset($_GET['id'])?'?id='.$_GET['id']:(isset($_GET['gid'])?'?gid='.$_GET['gid']:'')));

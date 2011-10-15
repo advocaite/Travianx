@@ -634,22 +634,22 @@ class Battle {
 				$RecountReqd = True;
 			}
 			if($catapults > 0) {
-				//$BuildStrength=array(1=>1,2,2,3,4,6,8,10,12,14,17,20,23,27,31,35,39,43,48,53);
-				if($data['ctar1'] == 0) {
-					do {
-						$data['ctar1'] = rand(1,39);
-					} while ($DefenderField['f'.$data['ctar1']] == 0);
-				}
+				$BuildStrength=array(1=>1,2,2,3,4,6,8,10,12,14,17,20,23,27,31,35,39,43,48,53);
 				if(!empty($RequiredCatapults)) { reset($RequiredCatapults); }
-				$RequiredCatapults[1] = round((($DefenderData['pop'] < $AttackerData['pop'] ? min(3,pow($AttackerData['pop']/$DefenderData['pop'],0.3)) : 1) * (pow($DefenderField['f'.$data['ctar1']],2) + $DefenderField['f'.$data['ctar1']] + 1) / (8 * (round(200 * pow(1.0205,$Blacksmith['b'.$UnitCatapult])) / 200) / ($BonusStoneMason + $BonusArtefactDurability))) + 0.5);
-				if($data['ctar2'] > 0) {
-					$RequiredCatapults[2] = round((($DefenderData['pop'] < $AttackerData['pop'] ? min(3,pow($AttackerData['pop']/$DefenderData['pop'],0.3)) : 1) * (pow($DefenderField['f'.$data['ctar2']],2) + $DefenderField['f'.$data['ctar2']] + 1) / (8 * (round(200 * pow(1.0205,$Blacksmith['b'.$UnitCatapult])) / 200) / ($BonusStoneMason + $BonusArtefactDurability))) + 0.5);
+				for($i=1;$i<=2;$i++) {
+					if($data['ctar'.$i] == 0) {
+						do {
+							$data['ctar'.$i] = rand(1,39);
+						} while ($DefenderField['f'.$data['ctar'.$i]] == 0);
+						if($data['ctar2'] == 0 && $i == 1) { $data['ctar2'] = $data['ctar1']; }
+					}
+					$RequiredCatapults[$i] = round((($DefenderData['pop'] < $AttackerData['pop'] ? min(3,pow($AttackerData['pop'] / $DefenderData['pop'],0.3)) : 1) * (pow($DefenderField['f'.$data['ctar'.$i]],2) + $DefenderField['f'.$data['ctar'.$i]] + 1) / (8 * (round(200 * pow(1.0205,$Blacksmith['b'.$UnitCatapult])) / 200) / ($BonusStoneMason + $BonusArtefactDurability))) + 0.5);
 				}
 				$CatapultsFiring = pow($attack_total / $defense_total,1.5);
 				if($CatapultsFiring > 1) {
 					$CatapultsFiring = 1 - 0.5 / $CatapultsFiring;
 				} else {
-					$CatapultsFiring = 0.5 - $CatapultsFiring;
+					$CatapultsFiring = 0.5 * $CatapultsFiring;
 				}
 				$CatapultsFiring *= $data['t'.$UnitCatapult];
 				//damage buildings - halve surviving catapults per building if ctar2 - set RecountReqd to true if damage done

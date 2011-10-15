@@ -34,11 +34,8 @@ $to = $database->getOMInfo($units[$y]['to']);}
 	</thead>
 	<tbody class="units">
 			<?php
-				$tribe = $session->tribe;
-                  $start = ($tribe == 1)? 1 : (($tribe == 2)? 11 : 21);
-                  $start = ($tribe-1)*10+1;
                   echo "<tr><th>&nbsp;</th>";
-                  for($i=$start;$i<=($end);$i++) {
+                  for($i=($session->tribe-1)*10+1;$i<=$session->tribe*10;$i++) {
                   	echo "<td><img src=\"img/x.gif\" class=\"unit u$i\" title=\"".$technology->getUnitName($i)."\" alt=\"".$technology->getUnitName($i)."\" /></td>";	
                   }
                   if($units[$y]['t11'] != 0) {
