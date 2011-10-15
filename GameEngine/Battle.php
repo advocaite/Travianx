@@ -75,7 +75,7 @@ class Battle {
         $h_ob = 1 + 0.002 * $heroarray[0]['attackbonus'];
         $h_db = 1 + 0.002 * $heroarray[0]['defencebonus'];
 
-        return array('atk'=>$h_atk,'di'=>$h_di,'dc'=>$h_dc,'ob'=>$h_ob,'db'=>$h_db,'health'=>$heroarray['health']);
+        return array('heroid'=>$heroarray[0]['heroid'],'unit'=>$heroarray[0]['unit'],'atk'=>$h_atk,'di'=>$h_di,'dc'=>$h_dc,'ob'=>$h_ob,'db'=>$h_db,'health'=>$heroarray['health']);
     }    
 	private function simulate($post) {
 		// Establecemos los arrays con las unidades del atacante y defensor
@@ -482,8 +482,9 @@ class Battle {
 		$defender_count = $defense_infantry = $defense_cavalry = $defense_scout = $defense_heros = 0;
 		$BonusPalRes = $BonusStoneMason = $BonusArtefactDurability = 0;
 		$ExperienceAttacker = $ExperienceDefender = 0;
-		$RecountReqd = False;
+		$RecountReqd = $AllDefendersDead = False;
 
+		$AttackArrivalTime = $data['endtime'];
 		$AttackerData = $database->getVillageBattleData($data['from']);
 		$AttackerData['pop'] = $database->getPopulation($AttackerData['id']);
 		$Blacksmith = $database->getABTech($data['from']);
@@ -511,14 +512,14 @@ class Battle {
 			}
 		}
 		if($data['t11'] == 1 && $data['type'] != 1) {
-			$heroarray = $this->getBattleHero($AttackerData['id']);
-			if(in_array($heroarray['unit'],$unitsbytype['cavalry'])) {
-				$attack_cavalry += $heroarray['atk'];
+			$heroarrayAttacker = $this->getBattleHero($AttackerData['id']);
+			if(in_array($heroarrayAttacker['unit'],$unitsbytype['cavalry'])) {
+				$attack_cavalry += $heroarrayAttacker['atk'];
 			} else {
-				$attack_infantry += $heroarray['atk'];
+				$attack_infantry += $heroarrayAttacker['atk'];
 			}
-			$attack_infantry *= $heroarray['ob'];
-			$attack_cavalry *= $heroarray['ob'];
+			$attack_infantry *= $heroarrayAttacker['ob'];
+			$attack_cavalry *= $heroarrayAttacker['ob'];
 		}
 		$attack_total = $attack_infantry + $attack_cavalry;
 		if($attacker_count == 1 && $attack_total < 83 && $data['type'] != 1) {
@@ -528,9 +529,10 @@ class Battle {
 		if ($database->isVillageOases($id) == 0) {
 			$DefenderData = $database->getVillageBattleData($data['to']);
 			$DefenderData['pop'] = $database->getPopulation($DefenderData['id']);
+			$IsOasis = False;
 		} else {
-			//check if it's occupied to correctly set pop
 			$OasisData = $database->getOMInfo($data['to']);
+			$IsOasis = True;
 			if($OasisData['conqured'] == 0) {
 				$DefenderData['pop'] = 500;
 			} else {
@@ -633,7 +635,7 @@ class Battle {
 				}
 				$RecountReqd = True;
 			}
-			if($catapults > 0) {
+			if($catapults > 0 && !$IsOasis) {
 				$BuildStrength=array(1=>1,2,2,3,4,6,8,10,12,14,17,20,23,27,31,35,39,43,48,53);
 				if(!empty($RequiredCatapults)) { reset($RequiredCatapults); }
 				for($i=1;$i<=2;$i++) {
@@ -655,8 +657,6 @@ class Battle {
 				//damage buildings - halve surviving catapults per building if ctar2 - set RecountReqd to true if damage done
 			}
 
-			// Oasis capture logic
-
 			// Chiefing logic including wall and tribal specific building removal
 
 			for($i=1;$i<=10;$i++) {
@@ -665,15 +665,30 @@ class Battle {
 				$unitdata = $GLOBALS['u'.(($AttackerData['tribe']-1)*10+$i)];
 				$ExperienceDefender += $attack_casualties_array[$i] * $unitdata['pop']; 
 			}
-			if($data['t11'] > 0) {
+			if($data['t11'] == 1) {
 				if($attack_casualties < 0.9) {
-					//modify hero health
+					if($heroarrayAttacker['health']-100*$attack_casualties > 0) {
+						$database->modifyHero('health',(100*$attack_casualties),$heroarrayAttacker['heroid'],2);
+						$database->modifyHero('lastupdate',time(),$heroarrayAttacker['heroid'],0);
+					} else {
+						$database->modifyHero('health',0,$heroarrayAttacker['heroid'],0);
+						$database->modifyHero('dead',1,$heroarrayAttacker['heroid'],0);
+						$database->modifyHero('lastupdate',time(),$heroarrayAttacker['heroid'],0);
+					}
 				} else {
-					//kill hero
+					$database->modifyHero('health',0,$heroarrayAttacker['heroid'],0);
+					$database->modifyHero('dead',1,$heroarrayAttacker['heroid'],0);
+					$database->modifyHero('lastupdate',time(),$heroarrayAttacker['heroid'],0);
 				}
 			}
 			// send surviving attackers and hero home, report.
-			// calculate defensive casualties, hero damage and experience, modify units and reinforcements, report.
+			// calculate defensive casualties, hero damage and experience (all heroes), modify units and reinforcements, report.
+
+			if($IsOasis && $data['t11'] == 1 && $AllDefendersDead) {
+				if($database->canConquerOasis($data['from'],$data['to'])) {
+					$database->conquerOasis($data['to'],$data['from'],$AttackerData['id']);
+				}
+			}
 
 			if($RecountReqd) { $automation->recountPop($data['to']); }
 		}

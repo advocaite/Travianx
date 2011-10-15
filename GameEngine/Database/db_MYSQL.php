@@ -407,6 +407,42 @@
         		$dbarray = mysql_fetch_array($result);
         		return $dbarray['oasistype'];
         	}
+
+			public function VillageOasisCount($vref) {
+				$q = "SELECT count(*) FROM `".TB_PREFIX."odata` WHERE conqured=$vref";
+				$result = mysql_query($q, $this->connection);
+				$row = mysql_fetch_row($result);
+				return $row[0];
+			}
+
+			public function canConquerOasis($vref,$wref) {
+				$AttackerFields = $this->getResourceLevel($vref);
+				for($i=19;$i<=38;$i++) {
+					if($AttackerFields['f'.$i.'t'] == 37) { $HeroMansionLevel = $AttackerFields['f'.$i]; }
+				}
+				if($this->VillageOasisCount($vref) < floor(($HeroMansionLevel-5)/5)) {
+					$OasisInfo = $this->getOasisInfo($wref);
+					if($OasisInfo['conqured'] == 0 || $OasisInfo['conqured'] != 0 && $OasisInfo['loyalty'] < 99 / min(3,(4-$this->VillageOasisCount($OasisInfo['conqured'])))) {
+						$CoordsVillage = $database->getCoor($vref);
+						$CoordsOasis = $database->getCoor($wref);
+						if(abs($CoordsOasis['x']-$CoordsVillage['x'])<=3 && abs($CoordsOasis['y']-$CoordsVillage['y'])<=3) {
+							return True;
+						} else {
+							return False;
+						}
+					} else {
+						return False;
+					}
+				} else {
+					return False;
+				}
+			}
+
+			public function conquerOasis($wref,$vref,$uid) {
+				$q = "UPDATE `".TB_PREFIX."odata` SET conqured=$vref,loyalty=100,lastupdated=".time().",$owner=$uid,name='Occupied Oasis' WHERE wref=$wref";
+        		return mysql_query($q, $this->connection);
+			}
+
         	function populateOasis() {
         		$q = "SELECT * FROM " . TB_PREFIX . "wdata where oasistype != 0";
         		$result = mysql_query($q, $this->connection);
@@ -1772,8 +1808,14 @@
                     return $this->mysql_fetch_all($result);
             }
             
-			function modifyHero($column,$value,$heroid) {
-				$q = "UPDATE ".TB_PREFIX."hero SET $column = $value WHERE heroid = $heroid";
+			function modifyHero($column,$value,$heroid,$mode=0) {
+				if(!$mode) {
+					$q = "UPDATE `".TB_PREFIX."hero` SET $column = $value WHERE heroid = $heroid";
+				} elseif($mode=1) {
+					$q = "UPDATE `".TB_PREFIX."hero` SET $column = $column + $value WHERE heroid = $heroid";
+				} else {
+					$q = "UPDATE `".TB_PREFIX."hero` SET $column = $column - $value WHERE heroid = $heroid";
+				}
 				return mysql_query($q, $this->connection);
 			}
             
