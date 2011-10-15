@@ -444,11 +444,13 @@
 			}
 
 			public function modifyOasisLoyalty($wref) {
-				$OasisInfo = $this->getOasisInfo($wref);
-				if($OasisInfo['conqured'] != 0) {
-					$LoyaltyAmendment = floor(100 / min(3,(4-$this->VillageOasisCount($OasisInfo['conqured']))));
-					$q = "UPDATE `".TB_PREFIX."odata` SET loyalty=loyalty-$LoyaltyAmendment WHERE wref=$wref";
-					return mysql_query($q, $this->connection);
+				if($this->isVillageOases($wref) != 0) {
+					$OasisInfo = $this->getOasisInfo($wref);
+					if($OasisInfo['conqured'] != 0) {
+						$LoyaltyAmendment = floor(100 / min(3,(4-$this->VillageOasisCount($OasisInfo['conqured']))));
+						$q = "UPDATE `".TB_PREFIX."odata` SET loyalty=loyalty-$LoyaltyAmendment WHERE wref=$wref";
+						return mysql_query($q, $this->connection);
+					}
 				}
 			}
 

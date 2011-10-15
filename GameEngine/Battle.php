@@ -684,8 +684,10 @@ class Battle {
 			// send surviving attackers and hero home, report.
 			// calculate defensive casualties, hero damage and experience (all heroes), modify units and reinforcements, report.
 
+			// Chiefing logic including wall and tribal specific building removal
+
 			if($IsOasis && $data['t11'] == 1 && $AllDefendersDead) {
-				$database->modifyOasisLoyalty;
+				$database->modifyOasisLoyalty($data['to']);
 				if($database->canConquerOasis($data['from'],$data['to'])) {
 					$database->conquerOasis($data['to'],$data['from'],$AttackerData['id']);
 				}
