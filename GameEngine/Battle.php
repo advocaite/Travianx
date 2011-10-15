@@ -480,7 +480,8 @@ class Battle {
 		$UnitChief = $UnitRam = $UnitCatapult = 0;
 		$attacker_count = $attack_infantry = $attack_cavalry = $attack_scout = $rams = $catapults = 0;
 		$defender_count = $defense_infantry = $defense_cavalry = $defense_scout = $defense_heros = 0;
-		$BonusPalRes = $BonusStoneMason = $BonusArtefactDurability = 0;
+		$DefenderFieldsArray = array();
+		$FieldPalRes = $BonusPalRes = $BonusStoneMason = $BonusArtefactDurability = 0;
 		$ExperienceAttacker = $ExperienceDefender = 0;
 		$RecountReqd = $AllDefendersDead = False;
 
@@ -592,12 +593,22 @@ class Battle {
 			}
 
 			$DefenderFields = $database->getResourceLevel($data['to']);
-			for($i=19;$i<=38;$i++) {
+			for($i=1;$i<=38;$i++) {
+				if($DefenderFields['f'.$i] > 0) { $DefenderFieldsArray[] = $i; }
 				if($DefenderFields['f'.$i.'t'] == 25 || $DefenderFields['f'.$i.'t'] == 26) {
 					$BonusPalRes = 2 * pow($DefenderFields['f'.$i],2);
+					$FieldPalRes = $i;
 				}
 				if($DefenderFields['f'.$i.'t'] == 34) {
 					$BonusStoneMason = $DefenderFields['f'.$i] / 10 + 1;
+				}
+				if(!empty($ResourceImprovementArray)) { reset($ResourceImprovementArray); }
+				if($DefenderFields['f'.$i.'t'] >= 5 && $DefenderFields['f'.$i.'t'] <= 9) {
+					$ResourceImprovementArray[] = $i;
+				}
+				if(!empty($TrapperArray)) { reset($TrapperArray); }
+				if($DefenderFields['f'.$i.'t'] == 36) {
+					$TrapperArray[] = $i;
 				}
 			}
 			$defense_total += $BonusPalRes;
@@ -636,16 +647,19 @@ class Battle {
 				$RecountReqd = True;
 			}
 			if($catapults > 0 && !$IsOasis) {
-				$BuildStrength=array(1=>1,2,2,3,4,6,8,10,12,14,17,20,23,27,31,35,39,43,48,53);
+				$BuildLevelStrength=array(1=>1,2,2,3,4,6,8,10,12,14,17,20,23,27,31,35,39,43,48,53);
+				$RequiredCatapults = $RequiredCatapults = $BuildingLevelMax = array();
 				if(!empty($RequiredCatapults)) { reset($RequiredCatapults); }
 				for($i=1;$i<=2;$i++) {
 					if($data['ctar'.$i] == 0) {
-						do {
-							$data['ctar'.$i] = rand(1,39);
-						} while ($DefenderField['f'.$data['ctar'.$i]] == 0);
+						$data['ctar'.$i] = $DefenderFieldsArray[rand(0,count($DefenderFieldsArray)-1)];
 						if($data['ctar2'] == 0 && $i == 1) { $data['ctar2'] = $data['ctar1']; }
 					}
-					$RequiredCatapults[$i] = round((($DefenderData['pop'] < $AttackerData['pop'] ? min(3,pow($AttackerData['pop'] / $DefenderData['pop'],0.3)) : 1) * (pow($DefenderField['f'.$data['ctar'.$i]],2) + $DefenderField['f'.$data['ctar'.$i]] + 1) / (8 * (round(200 * pow(1.0205,$Blacksmith['b'.$UnitCatapult])) / 200) / ($BonusStoneMason + $BonusArtefactDurability))) + 0.5);
+					$RequiredCatapults[$i] = round((($DefenderData['pop'] < $AttackerData['pop'] ? min(3,pow($AttackerData['pop'] / $DefenderData['pop'],0.3)) : 1) * (pow($DefenderField['f'.$data['ctar'.$i]],2) + $DefenderField['f'.$data['ctar'.$i]] + 1) / (8 * (round(200 * pow(1.0205,$Blacksmith['b'.$UnitCatapult])) / 200) / max(1,($data['ctar'.$i]>=18?max(1,$BonusStoneMason + $BonusArtefactDurability):1)))) + 0.5);
+					$BuildingLevelMax[$i] = 20;
+					if($DefenderData['capital'] != 1 && $data['ctar'.$i] <= 18 || in_array($data['ctar'.$i],$TrapperArray)) { $BuildingLevelMax[$i] = 10; }
+					if(in_array($data['ctar'.$i],$ResourceImprovementArray)) { $BuildingLevelMax[$i] = 5; }
+					$RequiredCatapultsMax[$i] = round((($DefenderData['pop'] < $AttackerData['pop'] ? min(3,pow($AttackerData['pop'] / $DefenderData['pop'],0.3)) : 1) * (pow($BuildingLevelMax[$i],2) + $BuildingLevelMax[$i] + 1) / (8 * (round(200 * pow(1.0205,$Blacksmith['b'.$UnitCatapult])) / 200) / max(1,($data['ctar'.$i]>=18?max(1,$BonusStoneMason + $BonusArtefactDurability):1)))) + 0.5);
 				}
 				$CatapultsFiring = pow($attack_total / $defense_total,1.5);
 				if($CatapultsFiring > 1) {
@@ -654,10 +668,29 @@ class Battle {
 					$CatapultsFiring = 0.5 * $CatapultsFiring;
 				}
 				$CatapultsFiring *= $data['t'.$UnitCatapult];
-				//damage buildings - halve surviving catapults per building if ctar2 - set RecountReqd to true if damage done
+				for($i=1;$i=($data['ctar1']==$data['ctar2']?1:2);$i++) {
+					$BuildingLevelOld[$i] = $DefenderField['f'.$data['ctar'.$i]];
+					if($data['ctar1']!=$data['ctar2'] && $i==1) { $CatapultsFiring /= 2; }
+					if($CatapultsFiring >= $RequiredCatapults[$i]) {
+						if($DefenderField['f'.$data['ctar'.$i]] == $FieldPalRes) { $DestroyedPalRes = True; }
+						if($data['ctar'.$i] >= 19) { $database->setVillageLevel($data['to'],'f'.$data['ctar'.$i].'t',0); }
+						$database->setVillageLevel($data['to'],'f'.$data['ctar'.$i],0);
+						$BuildingLevelNow[$i] = 0;
+						$RecountReqd = True;
+					} else {
+						$BuildLevelCount = 0;
+						for($j=$DefenderField['f'.$data['ctar'.$i]];$j=1;$j--) {
+							$BuildLevelCount += ($BuildLevelStrength[$j] - $BuildLevelStrength[$j-1]) * $RequiredCatapultsMax[$i] / $BuildLevelStrength[$BuildingLevelMax[$i]];
+							if($CatapultsFiring < $BuildLevelCount) {
+								$BuildingLevelNow[$i] = $j;
+								break;
+							}
+							$database->setVillageLevel($data['to'],'f'.$data['ctar'.$i],$BuildingLevelNow[$i]);
+							$RecountReqd = True;
+						}
+					}
+				}
 			}
-
-			// Chiefing logic including wall and tribal specific building removal
 
 			for($i=1;$i<=10;$i++) {
 				$attack_casualties_array[$i] = round($data['t'.$i] * $attack_casualties);
@@ -683,6 +716,7 @@ class Battle {
 			}
 			// send surviving attackers and hero home, report.
 			// calculate defensive casualties, hero damage and experience (all heroes), modify units and reinforcements, report.
+			// damage buildings report
 
 			// Chiefing logic including wall and tribal specific building removal
 

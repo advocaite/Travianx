@@ -650,7 +650,7 @@
         	}
 
 			public function getVillageBattleData($vid) {
-				$q = "SELECT u.id,u.tribe,f.f40 AS wall FROM ".TB_PREFIX."users u,".TB_PREFIX."fdata f,".TB_PREFIX."vdata v WHERE u.id=v.owner AND f.vref=v.wref AND v.wref=".$vid;
+				$q = "SELECT u.id,u.tribe,v.capital,f.f40 AS wall FROM ".TB_PREFIX."users u,".TB_PREFIX."fdata f,".TB_PREFIX."vdata v WHERE u.id=v.owner AND f.vref=v.wref AND v.wref=".$vid;
 				$result = mysql_query($q, $this->connection);
 				return mysql_fetch_array($result);
 			}
