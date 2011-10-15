@@ -480,7 +480,7 @@ class Battle {
 		$UnitChief = $UnitRam = $UnitCatapult = 0;
 		$attacker_count = $attack_infantry = $attack_cavalry = $attack_scout = $rams = $catapults = 0;
 		$defender_count = $defense_infantry = $defense_cavalry = $defense_scout = $defense_heros = 0;
-		$DefenderFieldsArray = array();
+		$DefenderFieldsArray = $ResourceImprovementArray = $TrapperArray = array();
 		$FieldPalRes = $BonusPalRes = $BonusStoneMason = $BonusArtefactDurability = 0;
 		$ExperienceAttacker = $ExperienceDefender = 0;
 		$RecountReqd = $AllDefendersDead = False;
@@ -602,11 +602,9 @@ class Battle {
 				if($DefenderFields['f'.$i.'t'] == 34) {
 					$BonusStoneMason = $DefenderFields['f'.$i] / 10 + 1;
 				}
-				if(!empty($ResourceImprovementArray)) { reset($ResourceImprovementArray); }
 				if($DefenderFields['f'.$i.'t'] >= 5 && $DefenderFields['f'.$i.'t'] <= 9) {
 					$ResourceImprovementArray[] = $i;
 				}
-				if(!empty($TrapperArray)) { reset($TrapperArray); }
 				if($DefenderFields['f'.$i.'t'] == 36) {
 					$TrapperArray[] = $i;
 				}
@@ -648,7 +646,7 @@ class Battle {
 			}
 			if($catapults > 0 && !$IsOasis) {
 				$BuildLevelStrength=array(1=>1,2,2,3,4,6,8,10,12,14,17,20,23,27,31,35,39,43,48,53);
-				$RequiredCatapults = $RequiredCatapults = $BuildingLevelMax = array();
+				$RequiredCatapults = $RequiredCatapultsMax = $BuildingLevelMax = array();
 				if(!empty($RequiredCatapults)) { reset($RequiredCatapults); }
 				for($i=1;$i<=2;$i++) {
 					if($data['ctar'.$i] == 0) {
