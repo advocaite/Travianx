@@ -685,6 +685,7 @@ class Battle {
 			// calculate defensive casualties, hero damage and experience (all heroes), modify units and reinforcements, report.
 
 			if($IsOasis && $data['t11'] == 1 && $AllDefendersDead) {
+				$database->modifyOasisLoyalty;
 				if($database->canConquerOasis($data['from'],$data['to'])) {
 					$database->conquerOasis($data['to'],$data['from'],$AttackerData['id']);
 				}
