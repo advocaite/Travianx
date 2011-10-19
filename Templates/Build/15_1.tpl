@@ -29,7 +29,7 @@ if($village->resarray['f'.$id] >= DEMOLISH_LEVEL_REQ) {
 		<form action=\"build.php?gid=15&amp;demolish=1&amp;cancel=0&amp;c=".$session->mchecker."\" method=\"POST\" style=\"display:inline\">
 		<select name=\"type\" class=\"dropdown\">";
 		for ($i=19; $i<=41; $i++) {
-			if ($VillageResourceLevels['f'.$i.'t'] >= 1) {
+			if ($VillageResourceLevels['f'.$i] >= 1 && !$building->isCurrent($i) && !isLoop($i)) {
 				echo "<option value=".$i.">".$i.". ".$building->procResType($VillageResourceLevels['f'.$i.'t'])." (lvl ".$VillageResourceLevels['f'.$i].")</option>";
 			}
 		}
