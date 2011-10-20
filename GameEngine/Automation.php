@@ -1969,7 +1969,7 @@ class Automation {
                     $database->query($q);
                 }
                 if ($type==11 || $type==39) {
-                    $q = "UPDATE `".TB_PREFIX."vdata` SET `maxcrop`=maxcrop-".$buildarray[$level]['attri']."+".$buildarray[$level-1]['attri']." WHERE wref=".$vil['vref'];
+                    $q = "UPDATE `".TB_PREFIX."vdata` SET `maxcrop`=`maxcrop`-".$buildarray[$level]['attri']."+".$buildarray[$level-1]['attri']." WHERE wref=".$vil['vref'];
                     $database->query($q);
                     $q = "UPDATE ".TB_PREFIX."vdata SET `maxcrop`=800 WHERE `maxcrop`<=800 AND wref=".$vil['vref'];
                     $database->query($q);
