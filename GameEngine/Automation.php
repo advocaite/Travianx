@@ -287,9 +287,9 @@ class Automation {
             $database->query($q);
             $q = "UPDATE ".TB_PREFIX."odata set `iron` = 0 WHERE `iron` < 0";
             $database->query($q);
-            $q = "UPDATE ".TB_PREFIX."odata set `maxstore` = 800 WHERE `maxstore` <= 800";
+            $q = "UPDATE ".TB_PREFIX."odata set `maxstore` = ".(STORAGE_BASE/2)." WHERE `maxstore` <= ".(STORAGE_BASE/2);
             $database->query($q);
-            $q = "UPDATE ".TB_PREFIX."odata set `maxcrop` = 800 WHERE `maxcrop` <= 800";
+            $q = "UPDATE ".TB_PREFIX."odata set `maxcrop` = ".(STORAGE_BASE/2)." WHERE `maxcrop` <= ".(STORAGE_BASE/2);
             $database->query($q);
         }
     }
@@ -312,9 +312,9 @@ class Automation {
             $database->query($q);
             $q = "UPDATE ".TB_PREFIX."vdata set `iron` = 0 WHERE `iron` < 0";
             $database->query($q);
-            $q = "UPDATE ".TB_PREFIX."vdata set `maxstore` = 800 WHERE `maxstore` <= 800";
+            $q = "UPDATE ".TB_PREFIX."vdata set `maxstore` = ".STORAGE_BASE." WHERE `maxstore` <= ".STORAGE_BASE;
             $database->query($q);
-            $q = "UPDATE ".TB_PREFIX."vdata set `maxcrop` = 800 WHERE `maxcrop` <= 800";
+            $q = "UPDATE ".TB_PREFIX."vdata set `maxcrop` = ".STORAGE_BASE." WHERE `maxcrop` <= ".STORAGE_BASE;
             $database->query($q);
         }
     }
@@ -358,34 +358,34 @@ class Automation {
 
                     if($indi['type'] == 10) {
                       $max=$database->getVillageField($indi['wid'],"maxstore");
-                      if($level=='1' && $max==800){ $max-=800; }
-                      $max-=$bid10[$level-1]['attri'];      
-                      $max+=$bid10[$level]['attri'];  
+                      if($level=='1' && $max==STORAGE_BASE){ $max-=STORAGE_BASE; }
+                      $max-=$bid10[$level-1]['attri']*STORAGE_MULTIPLIER;      
+                      $max+=$bid10[$level]['attri']*STORAGE_MULTIPLIER;  
                       $database->setVillageField($indi['wid'],"maxstore",$max);
                     }
                     
                     if($indi['type'] == 11) {
                       $max=$database->getVillageField($indi['wid'],"maxcrop");
-                      if($level=='1' && $max==800){ $max-=800; }
-                      $max-=$bid11[$level-1]['attri'];      
-                      $max+=$bid11[$level]['attri']; 
+                      if($level=='1' && $max==STORAGE_BASE){ $max-=STORAGE_BASE; }
+                      $max-=$bid11[$level-1]['attri']*STORAGE_MULTIPLIER;
+					  $max+=$bid11[$level]['attri']*STORAGE_MULTIPLIER;
                       $database->setVillageField($indi['wid'],"maxcrop",$max);
                     }
                     if($indi['type'] == 38) {
                     $max=$database->getVillageField($indi['wid'],"maxstore");
-                    if($level=='1' && $max==800){ $max-=800; }
-                    $max-=$bid38[$level-1]['attri'];      
-                    $max+=$bid38[$level]['attri'];  
+                    if($level=='1' && $max==STORAGE_BASE){ $max-=STORAGE_BASE; }
+                    $max-=$bid38[$level-1]['attri']*STORAGE_MULTIPLIER;
+                    $max+=$bid38[$level]['attri']*STORAGE_MULTIPLIER;
                     $database->setVillageField($indi['wid'],"maxstore",$max);
                     }
 
                     if($indi['type'] == 39) {
-                    $max=$database->getVillageField($indi['wid'],"maxcrop");
-                    if($level=='1' && $max==800){ $max-=800; }
-                    $max-=$bid39[$level-1]['attri'];      
-                    $max+=$bid39[$level]['attri']; 
+					$max=$database->getVillageField($indi['wid'],"maxcrop");
+                    if($level=='1' && $max==STORAGE_BASE){ $max-=STORAGE_BASE; }
+                    $max-=$bid39[$level-1]['attri']*STORAGE_MULTIPLIER;
+                    $max+=$bid39[$level]['attri']*STORAGE_MULTIPLIER;
                     $database->setVillageField($indi['wid'],"maxcrop",$max);
-                    }      
+                    }
           
                 $q4 = "UPDATE ".TB_PREFIX."bdata set loopcon = 0 where loopcon = 1 and wid = ".$indi['wid'];
                 $database->query($q4);
@@ -1963,15 +1963,15 @@ class Automation {
                 $level = $database->getFieldLevel($vil['vref'],$vil['buildnumber']);
                 $buildarray = $GLOBALS["bid".$type];
                 if ($type==10 || $type==38) {
-                    $q = "UPDATE `".TB_PREFIX."vdata` SET `maxstore`=`maxstore`-".$buildarray[$level]['attri']."+".$buildarray[$level-1]['attri']." WHERE wref=".$vil['vref'];
+                    $q = "UPDATE `".TB_PREFIX."vdata` SET `maxstore`=`maxstore`-".$buildarray[$level]['attri']."+".max(0,$buildarray[$level-1]['attri'])." WHERE wref=".$vil['vref'];
                     $database->query($q);
-                    $q = "UPDATE ".TB_PREFIX."vdata SET `maxstore`=800 WHERE `maxstore`<= 800 AND wref=".$vil['vref'];
+                    $q = "UPDATE ".TB_PREFIX."vdata SET `maxstore`=".STORAGE_BASE." WHERE `maxstore`<= ".STORAGE_BASE." AND wref=".$vil['vref'];
                     $database->query($q);
                 }
                 if ($type==11 || $type==39) {
-                    $q = "UPDATE `".TB_PREFIX."vdata` SET `maxcrop`=`maxcrop`-".$buildarray[$level]['attri']."+".$buildarray[$level-1]['attri']." WHERE wref=".$vil['vref'];
+                    $q = "UPDATE `".TB_PREFIX."vdata` SET `maxcrop`=`maxcrop`-".$buildarray[$level]['attri']."+".max(0,$buildarray[$level-1]['attri'])." WHERE wref=".$vil['vref'];
                     $database->query($q);
-                    $q = "UPDATE ".TB_PREFIX."vdata SET `maxcrop`=800 WHERE `maxcrop`<=800 AND wref=".$vil['vref'];
+                    $q = "UPDATE ".TB_PREFIX."vdata SET `maxcrop`=".STORAGE_BASE." WHERE `maxcrop`<=".STORAGE_BASE." AND wref=".$vil['vref'];
                     $database->query($q);
                 }
                 if ($level==1) { $clear=",f".$vil['buildnumber']."t=0"; } else { $clear=""; }

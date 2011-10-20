@@ -355,8 +355,7 @@
         			$vname = $username . "\'s village";
         		}
         		$time = time();
-        		$q = "INSERT into " . TB_PREFIX . "vdata (wref, owner, name, capital, pop, cp, celebration, wood, clay, iron, maxstore, crop, maxcrop, lastupdate, created) values 
-        ('$wid', '$uid', '$vname', '$capital', 2, 1, 0, 750, 750, 750, 800, 750, 800, '$time', '$time')";
+        		$q = "INSERT into " . TB_PREFIX . "vdata (wref, owner, name, capital, pop, cp, celebration, wood, clay, iron, maxstore, crop, maxcrop, lastupdate, created) values ('$wid', '$uid', '$vname', '$capital', 2, 1, 0, 750, 750, 750, ".STORAGE_BASE.", 750, ".STORAGE_BASE.", '$time', '$time')";
         		return mysql_query($q, $this->connection) or die(mysql_error());
         	}
 
