@@ -437,7 +437,7 @@ class Automation {
     private function sendunitsComplete() {
         global $bid23,$database,$battle,$village,$technology,$logging;
         $time = time();
-        $q = "SELECT * FROM ".TB_PREFIX."movement, ".TB_PREFIX."attacks where ".TB_PREFIX."movement.ref = ".TB_PREFIX."attacks.id and ".TB_PREFIX."movement.proc = '0' and ".TB_PREFIX."movement.sort_type = '3' and ".TB_PREFIX."attacks.attack_type != '2' and endtime < $time";
+        $q = "SELECT * FROM ".TB_PREFIX."movement, ".TB_PREFIX."attacks where ".TB_PREFIX."movement.ref = ".TB_PREFIX."attacks.id and ".TB_PREFIX."movement.proc = '0' and ".TB_PREFIX."movement.sort_type = '3' and ".TB_PREFIX."attacks.attack_type != '2' and endtime < $time ORDER BY endtime ASC";
         $dataarray = $database->query_return($q);
         
         foreach($dataarray as $data) {
@@ -1963,13 +1963,13 @@ class Automation {
                 $level = $database->getFieldLevel($vil['vref'],$vil['buildnumber']);
                 $buildarray = $GLOBALS["bid".$type];
                 if ($type==10 || $type==38) {
-                    $q = "UPDATE ".TB_PREFIX."vdata SET `maxstore`=`maxstore`-".$buildarray[$level]['attri']." WHERE wref=".$vil['vref'];
+                    $q = "UPDATE `".TB_PREFIX."vdata` SET `maxstore`=`maxstore`-".$buildarray[$level]['attri']."+".$buildarray[$level-1]['attri']." WHERE wref=".$vil['vref'];
                     $database->query($q);
                     $q = "UPDATE ".TB_PREFIX."vdata SET `maxstore`=800 WHERE `maxstore`<= 800 AND wref=".$vil['vref'];
                     $database->query($q);
                 }
                 if ($type==11 || $type==39) {
-                    $q = "UPDATE ".TB_PREFIX."vdata SET `maxcrop`=`maxcrop`-".$buildarray[$level]['attri']." WHERE wref=".$vil['vref'];
+                    $q = "UPDATE `".TB_PREFIX."vdata` SET `maxcrop`=maxcrop-".$buildarray[$level]['attri']."+".$buildarray[$level-1]['attri']." WHERE wref=".$vil['vref'];
                     $database->query($q);
                     $q = "UPDATE ".TB_PREFIX."vdata SET `maxcrop`=800 WHERE `maxcrop`<=800 AND wref=".$vil['vref'];
                     $database->query($q);
