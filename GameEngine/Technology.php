@@ -209,7 +209,7 @@ class Technology {
 		return $ownunit;
 	}
 	
-	function getAllUnits($base) {
+	function getAllUnits($base,$InVillageOnly=False) {
 		global $database;
 		$ownunit = $database->getUnit($base);
 		$enforcementarray = $database->getEnforceVillage($base,0);
@@ -221,12 +221,14 @@ class Technology {
 				$ownunit['hero'] += $enforce['hero'];
 			}
 		}
-		$movement = $database->getVillageMovement($base);
-		if(!empty($movement)) {
-			for($i=1;$i<=50;$i++) {
-				$ownunit['u'.$i] += $movement['u'.$i];
+		if(!$InVillageOnly) {
+			$movement = $database->getVillageMovement($base);
+			if(!empty($movement)) {
+				for($i=1;$i<=50;$i++) {
+					$ownunit['u'.$i] += $movement['u'.$i];
+				}
+				$ownunit['hero'] += $movement['hero'];
 			}
-			$ownunit['hero'] += $movement['hero'];
 		}
 		return $ownunit;
 	}	

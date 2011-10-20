@@ -14,7 +14,7 @@
 	<th colspan="3"><?php echo TROOPS_DORF; ?></th>
 </tr></thead><tbody>
 <?php
-$troops = $technology->getAllUnits($village->wid);
+$troops = $technology->getAllUnits($village->wid,True);
 $TroopsPresent = False;
 for($i=1;$i<=50;$i++) {
 	if($troops['u'.$i] > 0) {
