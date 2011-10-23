@@ -64,6 +64,9 @@ define("CP", %VILLAGE_EXPAND%);
 // Default: 10
 define("DEMOLISH_LEVEL_REQ","%DEMOLISH%");
 
+// Storage when registering
+define("STORAGE_BASE","800");
+
 // ***** Quest
 // Ingame quest enabled/disabled.
 define("QUEST",%QUEST%);
