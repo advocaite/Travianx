@@ -58,7 +58,7 @@ define("INCREASE_SPEED","%INCSPEED%");
 define("STORAGE_MULTIPLIER",%STORAGE_MULTIPLIER%);
 define("STORAGE_BASE",800*STORAGE_MULTIPLIER);
  
-***** Village Expand
+// ***** Village Expand
 // 1 = slow village expanding - more Cultural Points needed for every new village
 // 0 = fast village expanding - less Cultural Points needed for every new village
 define("CP", %VILLAGE_EXPAND%);
