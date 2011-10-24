@@ -33,8 +33,8 @@ echo "<div class=\"headline\"><span class=\"f10 c5\">Error creating constant.php
 	<span class="f9 c6 c2">Language:</span><span class="c3" style="position: absolute;right:20%;"><select name="lang">
 		<option value="en" selected="selected">English</option></select></span><br /><br />
         
-	<span class="f9 c6 c2">Beginners protection lenght:</span><span class="c3" style="position: absolute;right:15%;"><input name="beginner" type="text" id="autodeltime" value="3600*12" size="15"></span><br /><br />
-	<span class="f9 c6 c2">Plus account lenght:</span><span class="c3" style="position: absolute;right:19%;"><select name="plus_time">
+	<span class="f9 c6 c2">Beginners protection length:</span><span class="c3" style="position: absolute;right:15%;"><input name="beginner" type="text" id="autodeltime" value="3600*12" size="15"></span><br /><br />
+	<span class="f9 c6 c2">Plus account length:</span><span class="c3" style="position: absolute;right:19%;"><select name="plus_time">
 	  <option value="3600*12">12 hours</option>
 	  <option value="3600*24">1 day</option>
 	  <option value="3600*24*2">2 days</option>
@@ -44,7 +44,7 @@ echo "<div class=\"headline\"><span class=\"f10 c5\">Error creating constant.php
 	  <option value="3600*24*6">6 days</option>
 	  <option value="3600*24*7" selected="selected">7 days</option></select></span><br /><br />
       
-	  <span class="f9 c6 c2">+25% production lenght:</span><span class="c3" style="position: absolute;right:19%;"><select name="plus_production">
+	  <span class="f9 c6 c2">+25% production length:</span><span class="c3" style="position: absolute;right:19%;"><select name="plus_production">
 	  <option value="3600*12">12 hours</option>
 	  <option value="3600*24">1 day</option>
 	  <option value="3600*24*2">2 days</option>
@@ -55,7 +55,8 @@ echo "<div class=\"headline\"><span class=\"f10 c5\">Error creating constant.php
 	  <option value="3600*24*7" selected="selected">7 days</option></select></span><br /><br />
 	  </tr>
       
-      <span class="f9 c6 c2">Turn Threshold:</span><span class="c3"><input type="text" name="ts_threshold" id="ts_threshold" value="30"></span><br /><br />
+	  <span class="f9 c6 c2">Storage Multipler:</span><span class="c3"><td width="140"><input type="text" name="storage_multiplier" id="storage_multiplier" value="1"></span><br /><br />
+      <span class="f9 c6 c2">Tourn Threshold:</span><span class="c3"><input type="text" name="ts_threshold" id="ts_threshold" value="30"></span><br /><br />
       <span class="f9 c6 c2">Great Workshop:</span><span class="c3" style="position: absolute;right:21%;"><select name="great_wks">
       <option value="fale">False</option>
       <option value="true" selected="selected">True</option></select></span><br /><br />

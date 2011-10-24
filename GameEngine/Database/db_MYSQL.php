@@ -632,7 +632,7 @@
 
 
         	function getVillagesID($uid) {
-        		$q = "SELECT wref from " . TB_PREFIX . "vdata where owner = $uid order by capital DESC";
+        		$q = "SELECT wref from " . TB_PREFIX . "vdata where owner = $uid order by capital DESC,pop DESC";
         		$result = mysql_query($q, $this->connection);
         		$array = $this->mysql_fetch_all($result);
         		$newarray = array();
