@@ -369,3 +369,8 @@
         for($i > 1; $i < 1; $i++) {
         	Artefact($uid, 8, 3, 'Artefact of the unique fool', '' . $vname . '', '' . $desc . '', '' . $effect . '', 'type8.gif');
         }
+
+/**
+ * Done?
+ */
+        echo "Done"; 
