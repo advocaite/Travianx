@@ -372,7 +372,7 @@ class Building {
 			if($loop == 1) {
 				foreach($this->buildArray as $build) {
 					if($build['field'] >= 19 || ($session->tribe <> 1 && !ALLOW_ALL_TRIBE)) {
-						$time = $build['timestamp'] + 60 + $uprequire['time'];
+						$time = $build['timestamp'] + ceil(60/SPEED) + $uprequire['time'];
 					}
 				}
 			}

@@ -608,6 +608,12 @@ class Battle {
 				if($DefenderFields['f'.$i.'t'] == 36) {
 					$TrapperArray[] = $i;
 				}
+				if($DefenderFields['f'.$i.'t'] == $data['ctar1'] && $data['ctar1'] != 0) {
+					$ctarf[1] = $i;
+				}
+				if($DefenderFields['f'.$i.'t'] == $data['ctar2'] && $data['ctar2'] != 0 && ($data['ctar1'] != $data['ctar2'] || $data['ctar2'] <= 18)) {
+					$ctarf[2]= $i;
+				}
 			}
 			$defense_total += $BonusPalRes;
 
@@ -640,6 +646,10 @@ class Battle {
 					$database->setVillageLevel($data['to'],'f40',0);
 				} else {
 					$RequiredRams=array(1=>array(1,2,2,3,4,6,7,10,12,14,17,20,23,27,31,35,39,43,48,53),array(1,4,8,13,19,27,36,46,57,69,83,98,114,132,151,171,192,214,238,263),array(1,2,4,6,8,11,15,19,23,28,34,40,46,53,61,69,77,86,96,106));
+					$DC = max(1,$BonusStoneMason) * max(1,$BonusPalRes) / (pow(1.015,$Blacksmith['b'.$UnitRam])) ;
+					$L = $DefenderData['wall'];
+					$L2 = round(($DefenderData['wall'] - 1) /2);
+					$DDR = $DC / ( $L*($L+1)/8 + 5 + (24.875 + 0.625*$L2)*$L2/2 );
 					//calculate damage to wall based on surviving rams
 				}
 				$RecountReqd = True;
@@ -649,11 +659,11 @@ class Battle {
 				$RequiredCatapults = $RequiredCatapultsMax = $BuildingLevelMax = array();
 				if(!empty($RequiredCatapults)) { reset($RequiredCatapults); }
 				for($i=1;$i<=2;$i++) {
-					if($data['ctar'.$i] == 0) {
+					if($data['ctar'.$i] == 0 || $ctarf[$i] == 0) {
 						$data['ctar'.$i] = $DefenderFieldsArray[rand(0,count($DefenderFieldsArray)-1)];
 						if($data['ctar2'] == 0 && $i == 1) { $data['ctar2'] = $data['ctar1']; }
 					}
-					$RequiredCatapults[$i] = round((($DefenderData['pop'] < $AttackerData['pop'] ? min(3,pow($AttackerData['pop'] / $DefenderData['pop'],0.3)) : 1) * (pow($DefenderField['f'.$data['ctar'.$i]],2) + $DefenderField['f'.$data['ctar'.$i]] + 1) / (8 * (round(200 * pow(1.0205,$Blacksmith['b'.$UnitCatapult])) / 200) / max(1,($data['ctar'.$i]>=18?max(1,$BonusStoneMason + $BonusArtefactDurability):1)))) + 0.5);
+					$RequiredCatapults[$i] = round((($DefenderData['pop'] < $AttackerData['pop'] ? min(3,pow($AttackerData['pop'] / $DefenderData['pop'],0.3)) : 1) * (pow($DefenderField['f'.$ctarf[$i]],2) + $DefenderField['f'.$ctarf[$i]] + 1) / (8 * (round(200 * pow(1.0205,$Blacksmith['b'.$UnitCatapult])) / 200) / max(1,($data['ctar'.$i]>=18?max(1,$BonusStoneMason + $BonusArtefactDurability):1)))) + 0.5);
 					$BuildingLevelMax[$i] = 20;
 					if($DefenderData['capital'] != 1 && $data['ctar'.$i] <= 18 || in_array($data['ctar'.$i],$TrapperArray)) { $BuildingLevelMax[$i] = 10; }
 					if(in_array($data['ctar'.$i],$ResourceImprovementArray)) { $BuildingLevelMax[$i] = 5; }
