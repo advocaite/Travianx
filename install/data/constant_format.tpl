@@ -53,11 +53,6 @@ define("GP_LOCATE", "gpack/travian_default/");
 // Values: 1 (normal), 3 (3x speed) etc...
 define("INCREASE_SPEED","%INCSPEED%");
 
-// ***** Storage Multiplier
-// Values: 1 (normal), 3 (3x speed) etc...
-define("STORAGE_MULTIPLIER",%STORAGE_MULTIPLIER%);
-define("STORAGE_BASE",800*STORAGE_MULTIPLIER);
- 
 // ***** Village Expand
 // 1 = slow village expanding - more Cultural Points needed for every new village
 // 0 = fast village expanding - less Cultural Points needed for every new village
@@ -68,6 +63,10 @@ define("CP", %VILLAGE_EXPAND%);
 // demolish. Min value = 1, max value = 20
 // Default: 10
 define("DEMOLISH_LEVEL_REQ","%DEMOLISH%");
+
+// ***** Change storage capacity
+define("STORAGE_MULTIPLIER",1);
+define("STORAGE_BASE",800*STORAGE_MULTIPLIER);
 
 // ***** Quest
 // Ingame quest enabled/disabled.
