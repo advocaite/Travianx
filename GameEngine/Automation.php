@@ -1195,7 +1195,9 @@ class Automation {
         if($data['t11']>0){
             if ($isoasis != 0){
             $farmdistance = $this->getfieldDistance($tocoor['x'],$tocoor['y'],$fromcoor['x'],$fromcoor['y']);
-            
+            if ($farmdistance < 4){
+                //do some take over code here make sure oasis has 0 troops before takeover
+            }
                 $info_chief = "".$hero_pic.",The hero came along to watch this fight.He has also noticed that this oases is ".$farmdistance." distance from your village. Hero gained ".$heroxp." XP";
                 
             }else{
