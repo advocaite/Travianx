@@ -27,6 +27,14 @@ if($vdata['capital'] == 1){$class = 'hl';}else{$class = '';}
   echo '<tr class="'.$class.'"><td class="vil fc"><a href="dorf1.php?newdid='.$vid.'">'.$vil['name'].'</a></td>';
   for ($i = $t; $i <= $t+9; $i++) {
     $uni[$i] += $unit['u'.$i];
+     while($row = $database->getEnforceArray($vid,1)) {
+            for($j = $t; $j <= $t+9; ++$j) {               
+                if($row['u' . $j] > 0) {
+                    $uni[$i] += $row['u' . $i];
+                    $unit['u' . $i] += $row['u' . $i]; 
+                }
+            }
+        }  
     if($unit['u'.$i] !=0){$cl = '';}else{$cl = 'none';}
     echo '<td class="'.$cl.'">'.$unit['u'.$i].'</td>';
   }
