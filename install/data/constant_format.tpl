@@ -70,7 +70,7 @@ define("CP", %VILLAGE_EXPAND%);
 define("DEMOLISH_LEVEL_REQ","%DEMOLISH%");
 
 // ***** Change storage capacity
-define("STORAGE_MULTIPLIER",1);
+define("STORAGE_MULTIPLIER","%STORAGE_MULTIPLIER%");
 define("STORAGE_BASE",800*STORAGE_MULTIPLIER);
 
 // ***** Quest
