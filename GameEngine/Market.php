@@ -67,6 +67,7 @@ class Market {
         $this->used = $database->totalMerchantUsed($village->wid); 
         $this->onmarket = $database->getMarket($village->wid,0); 
         $this->maxcarry = ($session->tribe == 1)? 500 : (($session->tribe == 2)? 1000 : 750); 
+	$this->maxcarry *= TRADER_CAPACITY;
         if($building->getTypeLevel(28) != 0) { 
             $this->maxcarry *= $bid28[$building->getTypeLevel(28)]['attri'] / 100; 
         } 

@@ -53,6 +53,11 @@ define("GP_LOCATE", "gpack/travian_default/");
 // Values: 1 (normal), 3 (3x speed) etc...
 define("INCREASE_SPEED","%INCSPEED%");
 
+// ***** Trader capacity
+// Values: 1 (normal), 3 (3x speed) etc...
+define("TRADER_CAPACITY","%TRADERCAP%");
+
+
 // ***** Village Expand
 // 1 = slow village expanding - more Cultural Points needed for every new village
 // 0 = fast village expanding - less Cultural Points needed for every new village
