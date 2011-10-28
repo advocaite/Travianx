@@ -20,7 +20,7 @@ echo "<div class=\"headline\"><span class=\"f10 c5\">Error creating constant.php
     <span class="f9 c6 c2">Server speed:</span><span class="c3"><input name="speed" type="text" id="speed" value="1"></span><br /><br />
     
 	<span class="f9 c6 c2">Troop speed:</span><span class="c3"><td width="140"><input type="text" name="incspeed" id="incspeed" value="2"></span><br /><br />
-	<span class="f9 c6 c2">Trader capacity:</span><span class="c3"><td width="140"><input type="text" name="tradercap" id="tradercap" value="1"></span><br /><br />
+	<span class="f9 c6 c2">Trader capacity (1 = 1x...):</span><span class="c3"><td width="140"><input type="text" name="tradercap" id="tradercap" value="1"></span><br /><br />
 	<span class="f9 c6 c2">World size:</span><span class="c3" style="position: absolute;right:20%;">
     <select name="wmax">
 		<option value="100" selected="selected">100x100</option>
