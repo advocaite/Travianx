@@ -154,6 +154,8 @@ define("Q5_RESP","As you noticed, building orders take rather long. The world of
 //======================================================//
 //================ UNITS - DO NOT EDIT! ================//
 //======================================================//
+define("U0","Hero");
+
 //ROMAN UNITS
 define("U1","Legionnaire");
 define("U2","Praetorian");
