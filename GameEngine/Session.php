@@ -101,10 +101,8 @@
         		$this->PopulateVar();
 
         		$logging->addLoginLog($this->uid, $_SERVER['REMOTE_ADDR']);
-        		$database->addActiveUser($_SESSION['username'], $this->time);
-                $user = $database->getUserArray($_SESSION['username'], 0);
-                $sessidtoadd = "".$user['sessid']." + ".$_SESSION['sessid']."";
-        		$database->updateUserField($_SESSION['username'], "sessid", $sessidtoadd, 0);
+        		$database->addActiveUser($_SESSION['username'], $this->time); 
+        		$database->updateUserField($_SESSION['username'], "sessid", $_SESSION['sessid'], 0);
 
         		header("Location: dorf1.php");
         	}

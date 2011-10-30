@@ -261,11 +261,10 @@
         		}
         	}
 
-        	function checkactiveSession($username,$sessid) {
-                $user = $this->getUserArray($username, 0);
-                $sessidarray = explode("+", $user['sessid']);
-                
-        		if(in_array($sessid, $sessidarray) ) {
+        	function checkactiveSession($username, $sessid) {
+        		$q = "SELECT username FROM " . TB_PREFIX . "users where username = '$username' and sessid = '$sessid' LIMIT 1";
+        		$result = mysql_query($q, $this->connection);   
+        		if(mysql_num_rows($result) != 0) {
         			return true;
         		} else {
         			return false;
