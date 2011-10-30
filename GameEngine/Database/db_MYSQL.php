@@ -263,7 +263,7 @@
 
         	function checkactiveSession($username,$sessid) {
                 $user = $this->getUserArray($username, 0);
-                $sessidarray = $expl = explode("+", $user['sessid']);
+                $sessidarray = explode("+", $user['sessid']);
                 
         		if(in_array($sessid, $sessidarray) ) {
         			return true;
