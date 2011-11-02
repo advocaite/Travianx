@@ -6,19 +6,15 @@
 //                              - TravianX = Travian Clone Project -                                //
 //                                 DO NOT REMOVE COPYRIGHT NOTICE!                                  //
 //////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
 ?>
-<div id="content" class="login">
-<div class="headline"><span class="f16 c5">TravianX Installation Script Ended</span></div><br>
-<br>
-&nbsp;&nbsp;Thanks for installing TravianX.
-    <h4>&nbsp;&nbsp;Please remove/rename the installation folder. <br/><br/>
-    &nbsp;&nbsp;The config.php is automaticly placed.</h4>
-  
+<p>
+Thanks for installing TravianX.
+<h4>Please remove/rename the installation folder.</h4>
+All the files are placed. The database is created, so you can now start playing on your own Travian.
+</p>
     
 <?php include("../GameEngine/config.php"); ?>
-<br /><br />
-
-<div align="center"><font size="4"><a href="<?php echo HOMEPAGE; ?>"> HOME</font></a>
-</div></div>
+<p>
+<center><font size="4"><a href="<?php echo HOMEPAGE; ?>">> My TravianX homepage <</font></a></center>
+</p>
+</div>

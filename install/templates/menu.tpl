@@ -1,6 +1,9 @@
+<div class="menu">
 <?php
-	if(isset($_GET['s'])) {
 	switch($_GET['s']) {
+		case 0:
+		echo "<li class=\"c2 f9\">Intro</li><li class=\"c1 f9\">Configuration</li><li class=\"c1 f9\">Database</li><li class= \"c1 f9\">Field</li><li class=\"c1 f9\">Multihunter</li><li class=\"c1 f9\">Oasis</li><li class=\"c1 f9\">End</li>";
+		break;
 		case 1:
 		echo "<li class=\"c3 f9\">Intro</li><li class=\"c2 f9\">Configuration</li><li class=\"c1 f9\">Database</li><li class= \"c1 f9\">Field</li><li class=\"c1 f9\">Multihunter</li><li class=\"c1 f9\">Oasis</li><li class=\"c1 f9\">End</li>";
 		break;
@@ -20,9 +23,5 @@
         echo "<li class=\"c3 f9\">Intro</li><li class=\"c3 f9\">Configuration</li><li class=\"c3 f9\">Database</li><li class= \"c3 f9\">Field</li><li class=\"c3 f9\">Multihunter</li><li class=\"c3 f9\">Oasis</li><li class=\"c2 f9\">End</li>";
         break;
 	}
-    
-}
-else {
-	echo "<li class=\"c2 f9\">Intro</li><li class=\"c1 f9\">Configuration</li><li class=\"c1 f9\">Database</li><li class= \"c1 f9\">Field</li><li class=\"c1 f9\">Multihunter</li><li class=\"c1 f9\">Oasis</li><li class=\"c1 f9\">End</li>";
-}
-?>
+
+?></div>

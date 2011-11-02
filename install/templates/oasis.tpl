@@ -1,18 +1,18 @@
-<?php
-
+<?
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                             TRAVIANX                                             //
+//            Only for advanced users, do not edit if you dont know what are you doing!             //
+//                                Made by: Dzoki & Dixie (TravianX)                                 //
+//                              - TravianX = Travian Clone Project -                                //
+//                                 DO NOT REMOVE COPYRIGHT NOTICE!                                  //
+//////////////////////////////////////////////////////////////////////////////////////////////////////
 ?>
-<div id="content" class="login">
-
-<style>
-
-    span.c3 {position: absolute;right:10%}
-    span.c2 {position: absolute;left:10%}
-    
-</style>
 <form action="include/oasis.php" method="post" id="dataform">
-    <span class="f9 c6 c2">Populate Oasis:</span>
-    <center>
-    <input type="submit" name="Submit" id="Submit" value="Submit"></center>
+<p>
+	<span class="f10 c">Populate Oasis</span>
+		<table>
+			<tr><td><b>Warning</b>: This can take some time. Do not click, just wait till the next page has been loaded!</td></tr>
+			<tr><td><center><input type="submit" name="Submit" id="Submit" value="Create.."></center></td></tr>
+		</table>
+</p>
 </form>
-    
-</div>

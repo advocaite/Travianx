@@ -1,8 +1,4 @@
-	    <div id="content" class="login">
 
-    <div class="headline"><center>
-	<span class="f16 c5">TravianX Installation Script</span>
-    </center></div>
     <br>
 
     <h4>&nbsp;&nbsp;Disclaimer</h4>
@@ -28,9 +24,10 @@
     </div>
     <br>
 
-    <div class="rbox">
+	<center>
 	<form>
 	    <input type="button" name="next" value="Next" onclick="location.href='?s=1'">
 	</form>
-    </div>
+	</center>
+
 </div>
