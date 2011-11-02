@@ -12,14 +12,14 @@
 <?php
 $units_type = $database->getMovement("34",$village->wid,1);
 
-$units_incomming = count($units_type);
-for($i=0;$i<$units_incomming;$i++){
+$units_incoming = count($units_type);
+for($i=0;$i<$units_incoming;$i++){
 	if($units_type[$i]['attack_type'] == 1)
-		$units_incomming -= 1;
+		$units_incoming -= 1;
 }
-if($units_incomming >= 1){
+if($units_incoming >= 1){
 ?>
-<h4>Incomming troops (<?php echo $units_incomming; ?>)</h4>
+<h4>Incoming troops (<?php echo $units_incoming; ?>)</h4>
 	<?php include("16_incomming.tpl"); 
 	} 
 ?>
@@ -103,14 +103,14 @@ if($units_incomming >= 1){
 <?php
 $units_type = $database->getMovement("3",$village->wid,0);
 $settlers = $database->getMovement("5",$village->wid,0);
-$units_incomming = count($units_type);
-for($i=0;$i<$units_incomming;$i++){
+$units_incoming = count($units_type);
+for($i=0;$i<$units_incoming;$i++){
 	if($units_type[$i]['vref'] != $village->wid)
-		$units_incomming -= 1;
+		$units_incoming -= 1;
 }
-$units_incomming += count($settlers);
+$units_incoming += count($settlers);
 
-if($units_incomming >= 1){
+if($units_incoming >= 1){
 	echo "<h4>Troops on their way</h4>";
 	include("16_walking.tpl"); 
 }

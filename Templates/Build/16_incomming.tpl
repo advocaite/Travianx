@@ -69,7 +69,7 @@ $to = $database->getMInfo($units[$y]['vref']);
 	<thead>
 		<tr>
 			<td class="role"><a href="karte.php?d=<?php echo $village->wid."&c=".$generator->getMapCheck($village->wid); ?>"><?php echo $village->vname; ?></a></td>
-			<td colspan="<?php if($units[$y]['t11'] != 0) {echo"10";}else{echo"11";}?>"><a href="karte.php?d=<?php echo $to['wref']."&c=".$generator->getMapCheck($to['wref']); ?>"><?php echo "Returning to ".$to['name']; ?></a></td>
+			<td colspan="<?php if($units[$y]['t11'] != 0) {echo"11";}else{echo"10";}?>"><a href="karte.php?d=<?php echo $to['wref']."&c=".$generator->getMapCheck($to['wref']); ?>"><?php echo "Returning to ".$to['name']; ?></a></td>
 		</tr>
 	</thead>
 	<tbody class="units">
@@ -88,7 +88,7 @@ $to = $database->getMInfo($units[$y]['vref']);
 			</tr>
  <tr><th>Troops</th>
             <?php
-            for($i=1;$i<12;$i++) {
+            for($i=1;$i<($units[$y]['t11'] != 0?12:11);$i++) {
             	if($units[$y]['t'.$i] == 0) {
                 	echo "<td class=\"none\">";
                 }
