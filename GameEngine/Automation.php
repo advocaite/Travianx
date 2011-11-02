@@ -110,22 +110,43 @@ class Automation {
      
         $this->ClearUser();
         $this->ClearInactive();
-		$this->clearDeleting();
         $this->pruneResource();
         $this->loyaltyRegeneration();
         $this->updateHero();
         $this->celebrationComplete();
-        $this->demolitionComplete();
-		$this->researchComplete();
-		$this->buildComplete();
-		$this->culturePoints();
-        $this->marketComplete();
-        $this->trainingComplete();
-        $this->sendreinfunitsComplete();
-        $this->returnunitsComplete();
-        $this->sendSettlersComplete();
-        $this->sendunitsComplete();
-
+        if(!file_exists("GameEngine/Prevention/culturepoints.txt") or time()-filemtime("GameEngine/Prevention/culturepoints.txt")>10) {
+            $this->culturePoints();
+        }
+        if(!file_exists("GameEngine/Prevention/research.txt") or time()-filemtime("GameEngine/Prevention/research.txt")>10) {
+            $this->researchComplete();
+        }
+        if(!file_exists("GameEngine/Prevention/cleardeleting.txt") or time()-filemtime("GameEngine/Prevention/cleardeleting.txt")>10) {
+            $this->clearDeleting();
+        }
+        if(!file_exists("GameEngine/Prevention/build.txt") or time()-filemtime("GameEngine/Prevention/build.txt")>10) {
+            $this->buildComplete();
+        }
+        if(!file_exists("GameEngine/Prevention/market.txt") or time()-filemtime("GameEngine/Prevention/market.txt")>10) {
+            $this->marketComplete();
+        }
+        if(!file_exists("GameEngine/Prevention/training.txt") or time()-filemtime("GameEngine/Prevention/training.txt")>10) {
+            $this->trainingComplete();
+        }
+        if(!file_exists("GameEngine/Prevention/sendunits.txt") or time()-filemtime("GameEngine/Prevention/sendunits.txt")>10) {
+            $this->sendunitsComplete();
+        }
+        if(!file_exists("GameEngine/Prevention/sendreinfunits.txt") or time()-filemtime("GameEngine/Prevention/sendreinfunits.txt")>10) {
+            $this->sendreinfunitsComplete();
+        }
+        if(!file_exists("GameEngine/Prevention/returnunits.txt") or time()-filemtime("GameEngine/Prevention/returnunits.txt")>10) {
+            $this->returnunitsComplete();
+        }
+        if(!file_exists("GameEngine/Prevention/settlers.txt") or time()-filemtime("GameEngine/Prevention/settlers.txt")>10) {
+            $this->sendSettlersComplete();
+        }    
+        if(!file_exists("GameEngine/Prevention/demolition.txt") or time()-filemtime("GameEngine/Prevention/demolition.txt")>10) {  
+            $this->demolitionComplete();    
+        }
     } 
     
    private function getfieldDistance($coorx1, $coory1, $coorx2, $coory2) {
@@ -249,6 +270,9 @@ class Automation {
                 $database->query($q);
             }
         }
+		if(file_exists("GameEngine/Prevention/cleardeleting.txt")) {
+            @unlink("GameEngine/Prevention/cleardeleting.txt");
+        }
     }
     
     private function ClearUser() {
@@ -334,6 +358,9 @@ class Automation {
                 $database->query($q);
             }
         }
+		if(file_exists("GameEngine/Prevention/culturepoints.txt")) {
+            @unlink("GameEngine/Prevention/culturepoints.txt");
+        }
     }
     
     private function buildComplete() {
@@ -393,6 +420,9 @@ class Automation {
                 $database->query($q);
             }
         }
+		if(file_exists("GameEngine/Prevention/build.txt")) {
+            @unlink("GameEngine/Prevention/build.txt");
+        }
     }
     
     private function getPop($tid,$level) {
@@ -432,6 +462,9 @@ class Automation {
         }
         $q = "UPDATE ".TB_PREFIX."movement set proc = 1 where endtime < $time and sort_type = 2";
         $database->query($q);
+		if(file_exists("GameEngine/Prevention/market.txt")) {
+            @unlink("GameEngine/Prevention/market.txt");
+        }
     }
     
     private function sendunitsComplete() {
@@ -1332,11 +1365,10 @@ class Automation {
                     $database->addNotice($from['owner'],3,''.addslashes($from['name']).' attacks '.addslashes($to['name']).'',$data_fail,$AttackArrivalTime);
                     }
             }
-        
-
-            
-        
         }
+			if(file_exists("GameEngine/Prevention/sendunits.txt")) {
+                @unlink("GameEngine/Prevention/sendunits.txt");
+            }
     }
     
     private function sendreinfunitsComplete() {
@@ -1393,6 +1425,9 @@ class Automation {
             $database->setMovementProc($data['moveid']); 
 
         }
+		if(file_exists("GameEngine/Prevention/sendreinfunits.txt")) {
+                @unlink("GameEngine/Prevention/sendreinfunits.txt");
+            }
     }
     
     private function returnunitsComplete() {
@@ -1438,7 +1473,9 @@ class Automation {
             $database->setMovementProc($data['moveid']);
         }
         $this->pruneResource();
-        
+		if(file_exists("GameEngine/Prevention/returnunits.txt")) {
+            @unlink("GameEngine/Prevention/returnunits.txt");
+        }
     }        
     
     private function sendSettlersComplete() {
@@ -1482,6 +1519,9 @@ class Automation {
                         $database->setMovementProc($data['moveid']);
                     }
             }
+			if(file_exists("GameEngine/Prevention/settlers.txt")) {
+                @unlink("GameEngine/Prevention/settlers.txt");
+            }
     }
     
     private function researchComplete() {
@@ -1503,6 +1543,9 @@ class Automation {
             $database->query($q);
             $q = "DELETE FROM ".TB_PREFIX."research where id = ".$data['id'];
             $database->query($q);
+        }
+		if(file_exists("GameEngine/Prevention/research.txt")) {
+            @unlink("GameEngine/Prevention/research.txt");
         }
     }
     
@@ -1855,6 +1898,9 @@ class Automation {
                 }
             }
         }
+		if(file_exists("GameEngine/Prevention/training.txt")) {
+            @unlink("GameEngine/Prevention/training.txt");
+        }
     }
     
     private function procDistanceTime($coor,$thiscoor,$ref,$mode) {
@@ -1983,6 +2029,9 @@ class Automation {
                 $database->modifyPop($vil['vref'],$pop[0],1);
                 $database->delDemolition($vil['vref']);
             }
+        }
+		if(file_exists("GameEngine/Prevention/demolition.txt")) {
+            @unlink("GameEngine/Prevention/demolition.txt");
         }
     }
 
