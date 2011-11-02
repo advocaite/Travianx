@@ -66,19 +66,13 @@ class Generator {
 		else {
 			$speed = $ref;
 			if($building->getTypeLevel(14) != 0) {
-				$speed = $distance <= TS_THRESHOLD ? $speed : $speed * ( ( TS_THRESHOLD + ( $distance - TS_THRESHOLD ) * $bid14[$this->getsort_typeLevel(14,$resarray)]['attri'] / 100 ) / $distance ) ;
+				$speed = $distance <= TS_THRESHOLD ? $speed : $speed * ( ( TS_THRESHOLD + ( $distance - TS_THRESHOLD ) * $bid14[$building->gettypeLevel(14)]['attri'] / 100 ) / $distance ) ;
 			}
 		}
 		return round(($distance/$speed) * 3600 / INCREASE_SPEED);
 	}
    
    public function getTimeFormat($time) {
-	   /*if ($time%10 < 5) {
-			$time = $time-($time%10);
-		}
-		else {
-			$time = $time + (10 - $time%10);
-		}*/
 	   $min = 0;
 	   $hr = 0;
 	   $days = 0;

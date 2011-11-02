@@ -1491,7 +1491,7 @@
         		global $building, $village;
 				$q = "DELETE FROM ".TB_PREFIX."bdata WHERE field=$field AND wid=$wid";
 				mysql_query($q, $this->connection);
-        		$uprequire = $building->resourceRequired($field,$village->resarray['f'.$field.'t']);
+        		$uprequire = $building->resourceRequired($field,$village->resarray['f'.$field.'t'],0);
         		$q = "INSERT INTO ".TB_PREFIX."demolition VALUES (".$wid.",".$field.",".($this->getFieldLevel($wid,$field)-1).",".(time()+floor($uprequire['time']/2)).")";
 				return mysql_query($q, $this->connection);
         	}

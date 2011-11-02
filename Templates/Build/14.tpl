@@ -2,7 +2,7 @@
 	<img class="building g14" src="img/x.gif" alt="Tournament Square" title="Tournament Square" />
 </a>
 <h1>Tournament Square <span class="level">Level <?php echo $village->resarray['f'.$id]; ?></span></h1>
-<p class="build_desc">At the Tournament Square your troops can train their stamina. The further the building is upgraded the faster your troops are beyond a minimum distance of 30 squares.</p>
+<p class="build_desc">At the Tournament Square your troops can train their stamina. The further the building is upgraded the faster your troops are beyond a minimum distance of <?php echo TS_THRESHOLD ?> squares.</p>
 
 
 	<table cellpadding="1" cellspacing="1" id="build_value">
