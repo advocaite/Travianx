@@ -143,3 +143,4 @@ if($aantal > 0){
 }
 ?>
 </tbody></table>
+*/
