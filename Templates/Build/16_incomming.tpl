@@ -38,7 +38,7 @@ if ($units[$y]['sort_type']==3){
 									<tr>
 										<th>Arrival</th>
 										<td colspan="10">
-										<div class="in small"><span id=timer$timer>'.$generator->getTimeFormat($units[$y]['endtime']-time()).'</span> h</div>';
+										<div class="in small"><span id=timer'.$timer.'>'.$generator->getTimeFormat($units[$y]['endtime']-time()).'</span> h</div>';
 										    $datetime = $generator->procMtime($units[$y]['endtime']);
 										    echo "<div class=\"at small\">";
 										    if($datetime[0] != "today") {
@@ -104,7 +104,7 @@ $to = $database->getMInfo($units[$y]['vref']);
 				<th>Arrival</th>
 				<td colspan="<?php if($units[$y]['t11'] == 0) {echo"10";}else{echo"11";}?>">
 				<?php
-				    echo "<div class=\"in small\"><span id=timer$timer>".$generator->getTimeFormat($units[$y]['endtime']-time())."</span> h</div>";
+				    echo "<div class=\"in small\"><span id=timer".$timer.">".$generator->getTimeFormat($units[$y]['endtime']-time())."</span> h</div>";
 				    $datetime = $generator->procMtime($units[$y]['endtime']);
 				    echo "<div class=\"at small\">";
 				    if($datetime[0] != "today") {
