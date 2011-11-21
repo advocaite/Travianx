@@ -826,6 +826,9 @@ class Automation {
                 $unitssend_deff[3] = '?,?,?,?,?,?,?,?,?,?,'; 
                 $unitssend_deff[4] = '?,?,?,?,?,?,?,?,?,?,'; 
                 $unitssend_deff[5] = '?,?,?,?,?,?,?,?,?,?,'; 
+                for($i=1;$i<=50;$i++) {
+            $total_def += $dead['u'.$i];
+            }
             //how many troops died? for battleraport
             if($battlepart['casualties_attacker'][1] == 0) { $dead1 = 0; } else { $dead1 = $battlepart['casualties_attacker'][1]; }
             if($battlepart['casualties_attacker'][2] == 0) { $dead2 = 0; } else { $dead2 = $battlepart['casualties_attacker'][2]; }
@@ -1641,13 +1644,22 @@ class Automation {
         if($data['t11']>0){
             if ($isoasis != 0){
             $farmdistance = $this->getfieldDistance($tocoor['x'],$tocoor['y'],$fromcoor['x'],$fromcoor['y']);
-            if ($farmdistance < 4){
-                //do some take over code here make sure oasis has 0 troops before takeover
-            }
-                $info_chief = "".$hero_pic.",The hero came along to watch this fight.He has also noticed that this oases is ".$farmdistance." distance from your village. Hero gained ".$heroxp." XP";
+            if ($farmdistance < 4 && $database->canConquerOasis($data['from'],$data['to']) && $total_def == 0){
+                $OasisInfo = $this->getOasisInfo($data['to']);
+                $Oloyaltybefore =  $OasisInfo['loyalty'];
+                $database->modifyOasisLoyalty($data['to']);
+                $Oloyaltynow =  $OasisInfo['loyalty'];
+                $info_chief = "".$hero_pic.",The hero has has reduced oasis loyalty to ".$Oloyaltynow."  from ".$Oloyaltybefore.". Hero gained ".$heroxp." XP";
+                    if($OasisInfo['loyalty'] <= 0 )
+                    {
+                        $database->conquerOasis($data['to'],$data['from'],$database->getUserField($database->getVillageField($data['from'],"owner"),"id",0));
+                        $info_chief = "".$hero_pic.",The hero has conquered the oasis. Hero gained ".$heroxp." XP";
+                
+                    }
+                }
                 
             }else{
-            $info_chief = "".$hero_pic.",The hero came along to watch this fight.Soon he will be capable to join in. Hero gained ".$heroxp." XP";
+            $info_chief = "".$hero_pic.", Hero gained ".$heroxp." XP";
             }
             }
         
