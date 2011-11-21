@@ -2402,6 +2402,11 @@
         		return mysql_fetch_array($result);
         	}
 
+            function getLinks($id){
+                $q = 'SELECT * FROM `' . TB_PREFIX . 'links` WHERE `userid` = ' . $id . ' ORDER BY `pos` ASC';
+                return mysql_query($q, $this->connection);                
+                            
+            }  
 
         }
         ;

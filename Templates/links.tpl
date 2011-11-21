@@ -10,7 +10,7 @@
 #################################################################################
 
 // Fetch all links
-$query = mysql_query('SELECT * FROM `' . TB_PREFIX . 'links` WHERE `userid` = ' . $session->uid . ' ORDER BY `pos` ASC') or die(mysql_error());
+$query = $database->getLinks($session->uid);  
 if (mysql_num_rows($query) > 0){
 $links = array();
 while($data = mysql_fetch_assoc($query)) {
