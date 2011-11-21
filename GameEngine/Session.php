@@ -158,6 +158,7 @@
         		$this->alliance = $this->userarray['alliance'];
         		$this->checker = $_SESSION['checker'];
         		$this->mchecker = $_SESSION['mchecker'];
+                        $this->cp = $this->userarray['cp'];
         		$this->gold = $this->userarray['gold'];
         		$this->oldrank = $this->userarray['oldrank'];
         		$_SESSION['ok'] = $this->userarray['ok'];
