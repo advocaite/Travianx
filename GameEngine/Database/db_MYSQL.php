@@ -464,8 +464,10 @@
 
            
             
-			public function conquerOasis($wref,$vref,$uid) {
-				$q = "UPDATE `".TB_PREFIX."odata` SET conqured=$vref,loyalty=100,lastupdated=".time().",$owner=$uid,name='Occupied Oasis' WHERE wref=$wref";
+			public function conquerOasis($vref,$wref) {
+				$vinfo = $this->getVillage($vref);
+				$uid = $vinfo['owner'];
+				$q = "UPDATE `".TB_PREFIX."odata` SET conqured=$vref,loyalty=100,lastupdated=".time().",owner=$uid,name='Occupied Oasis' WHERE wref=$wref";
         		return mysql_query($q, $this->connection);
 			}
 
