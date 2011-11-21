@@ -1655,12 +1655,18 @@ class Automation {
                         $database->conquerOasis($data['to'],$data['from'],$database->getUserField($database->getVillageField($data['from'],"owner"),"id",0));
                         $info_chief = "".$hero_pic.",The hero has conquered the oasis. Hero gained ".$heroxp." XP";
                 
-                    }
+                    } 
                 }
                 
             }else{
+                if($heroxp == 0){
+                 $info_chief = "".$hero_pic.", Hero has nothing to kill therfore gains no XP at all";    
+                }
+                else
+                {
             $info_chief = "".$hero_pic.", Hero gained ".$heroxp." XP";
-            }
+                }
+              }
             }
         
             
