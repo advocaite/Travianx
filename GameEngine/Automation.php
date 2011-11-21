@@ -1642,7 +1642,7 @@ class Automation {
         if($data['t11']>0){
             if ($isoasis != 0){
             if ($database->canConquerOasis($data['from'],$data['to'])){
-                $OasisInfo = $this->getOasisInfo($data['to']);
+                $OasisInfo = $database->getOasisInfo($data['to']);
                 $Oloyaltybefore =  $OasisInfo['loyalty'];
                 $database->modifyOasisLoyalty($data['to']);
                 $Oloyaltynow =  $OasisInfo['loyalty'];
