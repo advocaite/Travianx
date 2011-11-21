@@ -414,6 +414,30 @@
 				return $row[0];
 			}
 
+             public function countOasisTroops($vref){
+                //count oasis troops: $troops_o
+            $troops_o=0;
+            $o_unit2=mysql_query("select * from ".TB_PREFIX."units where `vref`='".$vref."'");
+            $o_unit=mysql_fetch_array($o_unit2);
+            
+            for ($i=1;$i<51;$i++)
+            {
+                $troops_o+=$o_unit[$i];
+            }                        
+            $troops_o+=$o_unit['hero'];   
+            
+            $o_unit2=mysql_query("select * from ".TB_PREFIX."enforcement where `vref`='".$vref."'");
+            while ($o_unit=@mysql_fetch_array($o_unit2))
+            {
+                for ($i=1;$i<51;$i++)
+                {
+                    $troops_o+=$o_unit[$i];
+                }                        
+                $troops_o+=$o_unit['hero'];
+            }
+            return $troops_o;  
+            }
+            
 			public function canConquerOasis($vref,$wref) {
 				$AttackerFields = $this->getResourceLevel($vref);
 				for($i=19;$i<=38;$i++) {
@@ -421,7 +445,8 @@
 				}
 				if($this->VillageOasisCount($vref) < floor(($HeroMansionLevel-5)/5)) {
 					$OasisInfo = $this->getOasisInfo($wref);
-					if($OasisInfo['conqured'] == 0 || $OasisInfo['conqured'] != 0 && $OasisInfo['loyalty'] < 99 / min(3,(4-$this->VillageOasisCount($OasisInfo['conqured'])))) {
+                    $troopcount = $this->countOasisTroops($wref);
+					if($OasisInfo['conqured'] == 0 || $OasisInfo['conqured'] != 0 && $OasisInfo['loyalty'] < 99 / min(3,(4-$this->VillageOasisCount($OasisInfo['conqured']))) && $troopcount == 0) {
 						$CoordsVillage = $database->getCoor($vref);
 						$CoordsOasis = $database->getCoor($wref);
 						if(abs($CoordsOasis['x']-$CoordsVillage['x'])<=3 && abs($CoordsOasis['y']-$CoordsVillage['y'])<=3) {
@@ -437,6 +462,8 @@
 				}
 			}
 
+           
+            
 			public function conquerOasis($wref,$vref,$uid) {
 				$q = "UPDATE `".TB_PREFIX."odata` SET conqured=$vref,loyalty=100,lastupdated=".time().",$owner=$uid,name='Occupied Oasis' WHERE wref=$wref";
         		return mysql_query($q, $this->connection);

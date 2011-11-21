@@ -826,9 +826,7 @@ class Automation {
                 $unitssend_deff[3] = '?,?,?,?,?,?,?,?,?,?,'; 
                 $unitssend_deff[4] = '?,?,?,?,?,?,?,?,?,?,'; 
                 $unitssend_deff[5] = '?,?,?,?,?,?,?,?,?,?,'; 
-                for($i=1;$i<=50;$i++) {
-            $total_def += $dead['u'.$i];
-            }
+              
             //how many troops died? for battleraport
             if($battlepart['casualties_attacker'][1] == 0) { $dead1 = 0; } else { $dead1 = $battlepart['casualties_attacker'][1]; }
             if($battlepart['casualties_attacker'][2] == 0) { $dead2 = 0; } else { $dead2 = $battlepart['casualties_attacker'][2]; }
@@ -1643,8 +1641,7 @@ class Automation {
         
         if($data['t11']>0){
             if ($isoasis != 0){
-            $farmdistance = $this->getfieldDistance($tocoor['x'],$tocoor['y'],$fromcoor['x'],$fromcoor['y']);
-            if ($farmdistance < 4 && $database->canConquerOasis($data['from'],$data['to']) && $total_def == 0){
+            if ($database->canConquerOasis($data['from'],$data['to'])){
                 $OasisInfo = $this->getOasisInfo($data['to']);
                 $Oloyaltybefore =  $OasisInfo['loyalty'];
                 $database->modifyOasisLoyalty($data['to']);
