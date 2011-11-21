@@ -93,19 +93,22 @@ class Generator {
 		return $hr.":".$min.":".$time;
    }
 
-	public function procMtime($time) {
+	public function procMtime($time, $pref = 3) {
 		/*$timezone = 7;
 		switch($timezone) {
 			case 7:
 			$time -= 3600;
 			break;
 		}*/
+        
+        $time=3600*7;
+        
 		if (date('Ymd',time()) == date('Ymd',$time)) {
 		//if ((time()-$time) < 24*60*60 && (time()-$time) > 0) {
 			$day = "today";
 		}
 		else {
-			$pref = 3;
+			
 			switch($pref) {
 			case 1:
 			$day = date("m/j/y",$time);
@@ -122,7 +125,11 @@ class Generator {
 			}
 		}
 		$new = date("H:i",$time);
-		return array($day,$new);
+        if ($pref=="9"||$pref==9) 
+            return $new;
+        else
+            return array($day,$new);
+		
 	}
    
 	public function getBaseID($x,$y) {

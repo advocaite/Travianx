@@ -1,7 +1,4 @@
 <?php
-
-
-
 // Temp
 
 $eigen = $database->getCoor($village->wid);
@@ -60,6 +57,8 @@ $actionType = "Normal attack";
 $actionType = "Raid";
 
 }
+
+$uid = $session->uid;
 
 $tribe = $session->tribe;
 $start = ($tribe-1)*10+1;
@@ -173,15 +172,70 @@ $end = ($tribe*10);
                 <tr>
                     <th>Destination:</th>
                     <td colspan="10">
-                    <?php if($building->getTypeLevel(16) == 20) { ?>
-                     <select name="ctar2" class="dropdown">
+                    
+                        <select name="ctar1" class="dropdown">
                             <option value="0">Random</option>
                             <?php if($building->getTypeLevel(16) >= 5) { ?>
+                <optgroup label="Resources">
+                <option value="1">Woodcutter</option>
+                                <option value="2">Clay Pit</option>
+                                <option value="3">Iron Mine</option>
+                                <option value="4">Cropland</option>
+                                <option value="5">Sawmill</option>
+                                <option value="6">Brickyard</option>
+                            
+                                <option value="7">Iron Foundry</option>
+                                <option value="8">Grain Mill</option>
+                                <option value="9">Bakery</option>
+                            </optgroup>
+                            <?php } ?>
+                            <?php if($building->getTypeLevel(16) >= 3) { ?>
+                            <optgroup label="Infrastructure">
+                                <option value="10">Warehouse</option>
+                                <option value="11">Granary</option>
+                                <?php if($building->getTypeLevel(16) >= 10) { ?>
+                                <option value="15">Main building</option>
+                                <option value="17">Marketplace</option>
+                                <option value="18">Embassy</option>
+                                <option value="24">Townhall</option>
+                                <option value="25">Residence</option>
+                                <option value="26">Palace</option>
+                                
+                                <option value="27">Treasury</option>
+                                <option value="28">Trade office</option>
+                                <?php } ?>
+                                <option value="38">Great warehouse</option>
+                                <option value="39">Great granary</option>
+                            </optgroup>
+                            <?php } ?>
+                            <?php if($building->getTypeLevel(16) >= 10) { ?>
+                            <optgroup label="Military">
+                                <option value="12">Blacksmith</option>
+                                <option value="13">Armoury</option>
+                                <option value="14">Tournament square</option>
+                                <option value="16">Rally point</option>
+                                <option value="19">Barracks</option>
+                                <option value="20">Stable</option>
+                                <option value="21">Workshop</option>
+                                
+                                <option value="22">Academy</option>
+                                <option value="29">Great barracks</option>
+                                <option value="30">Great stable</option>
+                                <option value="37">Hero's mansion</option>
+                            </optgroup>
+                            <?php } ?>
+                        </select>
+
+            <?php if($building->getTypeLevel(16) == 20) { ?>
+                     <select name="ctar2" class="dropdown">
+                <option value="0">-</option>
+                <option value="99">Random</option>
+                            <?php if($building->getTypeLevel(16) >= 5) { ?>
                             <optgroup label="Resources">
-                                <option value="0">Woodcutter</option>
-                                <option value="0">Clay Pit</option>
-                                <option value="0">Iron Mine</option>
-                                <option value="0">Cropland</option>
+                                <option value="1">Woodcutter</option>
+                                <option value="2">Clay Pit</option>
+                                <option value="3">Iron Mine</option>
+                                <option value="4">Cropland</option>
                                 <option value="5">Sawmill</option>
                                 <option value="6">Brickyard</option>
                             
@@ -227,58 +281,7 @@ $end = ($tribe*10);
                             <?php } ?>
                         </select>
                     <?php }?>
-                        <select name="ctar1" class="dropdown">
-                            <option value="0">Random</option>
-                            <?php if($building->getTypeLevel(16) >= 5) { ?>
-                            <optgroup label="Resources">
-                            <option value="0">Woodcutter</option>
-                                <option value="0">Clay Pit</option>
-                                <option value="0">Iron Mine</option>
-                                <option value="0">Cropland</option>
-                                <option value="5">Sawmill</option>
-                                <option value="6">Brickyard</option>
-                            
-                                <option value="7">Iron Foundry</option>
-                                <option value="8">Grain Mill</option>
-                                <option value="9">Bakery</option>
-                            </optgroup>
-                            <?php } ?>
-                            <?php if($building->getTypeLevel(16) >= 3) { ?>
-                            <optgroup label="Infrastructure">
-                                <option value="10">Warehouse</option>
-                                <option value="11">Granary</option>
-                                <?php if($building->getTypeLevel(16) >= 10) { ?>
-                                <option value="15">Main building</option>
-                                <option value="17">Marketplace</option>
-                                <option value="18">Embassy</option>
-                                <option value="24">Townhall</option>
-                                <option value="25">Residence</option>
-                                <option value="26">Palace</option>
-                                
-                                <option value="27">Treasury</option>
-                                <option value="28">Trade office</option>
-                                <?php } ?>
-                                <option value="38">Great warehouse</option>
-                                <option value="39">Great granary</option>
-                            </optgroup>
-                            <?php } ?>
-                            <?php if($building->getTypeLevel(16) >= 10) { ?>
-                            <optgroup label="Military">
-                                <option value="12">Blacksmith</option>
-                                <option value="13">Armoury</option>
-                                <option value="14">Tournament square</option>
-                                <option value="16">Rally point</option>
-                                <option value="19">Barracks</option>
-                                <option value="20">Stable</option>
-                                <option value="21">Workshop</option>
-                                
-                                <option value="22">Academy</option>
-                                <option value="29">Great barracks</option>
-                                <option value="30">Great stable</option>
-                                <option value="37">Hero's mansion</option>
-                            </optgroup>
-                            <?php } ?>
-                        </select>
+
                     <span class="info">(will be attacked by catapult(s))</span>
                      </td>
                 </tr>
@@ -314,28 +317,58 @@ $end = ($tribe*10);
 
             <?php
             $speeds = array();
+
             $scout = 1;
-            //find slowest unit.
-            for($i=1;$i<=10;$i++)
-            {
-                if (isset($process['t'.$i]))
+
+                //find slowest unit.
+
+                for($i=1;$i<=11;$i++)
+
                 {
-                    if( $process['t'.$i] != '' && $process['t'.$i] > 0)
+
+                    if (isset($process['t'.$i]))
+
                     {
-                        $speeds[] = ${'u'.(($session->tribe-1)*10+$i)}['speed'];
-                        if(($i != 4 && $session->tribe != 3) || ($i != 3 && $session->tribe == 3)) { $scout = 0; }
-                    }
+
+                        if( $process['t'.$i] != '' && $process['t'.$i] > 0)
+
+                        {
+
+                            if ($i<11) 
+                $speeds[] = ${'u'.(($session->tribe-1)*10+$i)}['speed'];
+                else
+                {
+                //$uid
+                $q = "SELECT * FROM ".TB_PREFIX."hero WHERE uid = $uid";
+                $result = mysql_query($q);
+                $hero_f=mysql_fetch_array($result);
+                $hero_unit=$hero_f['unit'];
+                $speeds[] = ${'u'.$hero_unit}['speed'];
                 }
-            }
-			if (isset($process['t11'])) {
-				if( $process['t11'] != '' && $process['t11'] > 0) {
-					$heroarray = $database->getHero($session->uid);
-					$speeds[] = ${'u'.($heroarray[0]['unit'])}['speed'];
-					$scout = 0;
-				}
-			}
-            if($scout) { $process['c'] = 1; }
-            $time = $generator->procDistanceTime($from,$to,min($speeds),1);
+
+                            if($i != 4)
+
+                                $scout = 0;
+
+                        }
+
+                        
+
+                    }
+
+                }
+
+
+
+            
+
+            if($scout)
+
+                $process['c'] = 1;
+
+                
+                $time = $generator->procDistanceTime($from,$to,min($speeds),1);
+
             ?>
 
             
@@ -344,7 +377,7 @@ $end = ($tribe*10);
 
             <div class="in">in <?php echo $generator->getTimeFormat($time); ?></div>
 
-            <div class="at">at <span id="tp2"> <?php echo date("H:i:s",time()+$time)?></span><span> hours</span></div>
+            <div class="at">at <span id="tp2"> <?php echo $generator->procMtime(date('U')+$time,9)?></span><span> hours</span></div>
 
             </td>
 
@@ -365,10 +398,16 @@ $end = ($tribe*10);
 <input name="a" value="533374" type="hidden">
 <input name="c" value="3" type="hidden">
 
+<?php
+    if($database->hasBeginnerProtection($process['0'])==1) { 
+        echo"<b>User presently has beginners protection</b>";
+    } else {
+?>
         <p class="btn"><input value="ok" name="s1" id="btn_ok" 
 
 class="dynamic_img " src="img/x.gif" alt="OK" type="image" onclick="if (this.disabled==false) {document.getElementsByTagName('form')[0].submit();} this.disabled=true;" onLoad="this.disabled=false;"></p>
 
+<?php } ?>
 </form>
 
 </div>
