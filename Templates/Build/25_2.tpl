@@ -20,5 +20,5 @@
 	<th>Production of all villages:</th>
 	<td><b><?php echo $database->getVSumField($session->uid, 'cp'); ?></b> Culture points per day</td>
 </tr>
-</table><p>Your villages have produced <b><?php echo $database->getUserField($session->uid, 'cp',0); ?></b> points in total. To found or conquer a new village you need <b><?php $mode = CP; $total = count($database->getProfileVillages($session->uid)); echo ${'cp'.$mode}[$total+1]; ?></b> points.</p>
+</table><p>Your villages have produced <b><?php echo $session->cp; ?></b> points in total. To found or conquer a new village you need <b><?php $mode = CP; $total = count($database->getProfileVillages($session->uid)); echo ${'cp'.$mode}[$total+1]; ?></b> points.</p>
 </div>
