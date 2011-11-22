@@ -112,8 +112,8 @@ include_once("GameEngine/Data/hero_full.php");
 	</tr>
 	<tr>
 		<th title="until the next level">Experience:</th>
-		<td class="val">0%</td>
-		<td class="xp"><img class="bar" src="img/x.gif" style="width:1px;" alt="0%" title="0%" /></td>
+		<td class="val"><?php echo floor(($hero_info['experience']-$hero_levels[1])/($hero_levels[$hero_info['level']+1]-$hero_levels[$hero_info['level']])*100)."%"; ?></td>
+		<td class="xp"><img class="bar" src="img/x.gif" style="width:<?php echo floor(($hero_info['experience']-$hero_levels[1])/($hero_levels[$hero_info['level']+1]-$hero_levels[$hero_info['level']])*100)*2; ?>px;" alt="<?php echo floor(($hero_info['experience']-$hero_levels[1])/($hero_levels[$hero_info['level']+1]-$hero_levels[$hero_info['level']])*100); ?>%" title="<?php echo floor(($hero_info['experience']-$hero_levels[1])/($hero_levels[$hero_info['level']+1]-$hero_levels[$hero_info['level']])*100); ?>%" /></td>
 		<td class="up"></td>
 		<td class="rem"><?php echo $hero_info['points']; ?></td>
 	</tr>
@@ -128,7 +128,7 @@ include_once("GameEngine/Data/hero_full.php");
         <p>You can <a href="build.php?id=<?php echo $id; ?>&add=reset">reset</a> your points until you are level <b>3</b> or lower!</p>
     <?php } ?>
     <p>Your hero has <b><?php echo floor($hero_info['health']); ?></b>% of his hit points.<br/>
-    Your hero has conquered <b>0</b> <a href="build.php?id=<?php echo $id; ?>&land">oases</a>.</p>
+    Your hero has conquered <b><?php echo $database->VillageOasisCount($village->wid); ?></b> <a href="build.php?id=<?php echo $id; ?>&land">oases</a>.</p>
     
     
     
