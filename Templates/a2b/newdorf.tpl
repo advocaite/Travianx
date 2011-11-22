@@ -63,7 +63,7 @@ echo '</pre>';
 $mode = CP; 
 $total = count($database->getProfileVillages($session->uid)); 
 $need_cps = ${'cp'.$mode}[$total];
-$cps = $database->getUserField($session->uid, 'cp',0);
+$cps = $session->cp;
 
 if($cps >= $need_cps) {
 ?>
