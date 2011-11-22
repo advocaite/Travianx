@@ -447,8 +447,8 @@
 					$OasisInfo = $this->getOasisInfo($wref);
                     $troopcount = $this->countOasisTroops($wref);
 					if($OasisInfo['conqured'] == 0 || $OasisInfo['conqured'] != 0 && $OasisInfo['loyalty'] < 99 / min(3,(4-$this->VillageOasisCount($OasisInfo['conqured']))) && $troopcount == 0) {
-						$CoordsVillage = $database->getCoor($vref);
-						$CoordsOasis = $database->getCoor($wref);
+						$CoordsVillage = $this->getCoor($vref);
+						$CoordsOasis = $this->getCoor($wref);
 						if(abs($CoordsOasis['x']-$CoordsVillage['x'])<=3 && abs($CoordsOasis['y']-$CoordsVillage['y'])<=3) {
 							return True;
 						} else {
@@ -464,8 +464,10 @@
 
            
             
-			public function conquerOasis($wref,$vref,$uid) {
-				$q = "UPDATE `".TB_PREFIX."odata` SET conqured=$vref,loyalty=100,lastupdated=".time().",$owner=$uid,name='Occupied Oasis' WHERE wref=$wref";
+			public function conquerOasis($vref,$wref) {
+				$vinfo = $this->getVillage($vref);
+				$uid = $vinfo['owner'];
+				$q = "UPDATE `".TB_PREFIX."odata` SET conqured=$vref,loyalty=100,lastupdated=".time().",owner=$uid,name='Occupied Oasis' WHERE wref=$wref";
         		return mysql_query($q, $this->connection);
 			}
 

@@ -94,6 +94,7 @@ class Generator {
    }
 
 	public function procMtime($time, $pref = 3) {
+<<<<<<< HEAD
         /*
         $timezone = 7;
         switch($timezone) {
@@ -127,10 +128,50 @@ class Generator {
         }
         $new = date("H:i:s",$time);
         if ($pref=="9"||$pref==9) 
+=======
+		/*$timezone = 7;
+		switch($timezone) {
+			case 7:
+			$time -= 3600;
+			break;
+		}*/
+        
+        //$time=3600*7;
+        
+		if (date('Ymd',time()) == date('Ymd',$time)) {
+		//if ((time()-$time) < 24*60*60 && (time()-$time) > 0) {
+			$day = "today";
+		}
+		else {
+			
+			switch($pref) {
+			case 1:
+			$day = date("m/j/y",$time);
+			break;
+			case 2:
+			$day = date("j/m/y",$time);
+			break;
+			case 3:
+			$day = date("j.m.y",$time);
+			break;
+			default:
+			$day = date("y/m/j",$time);
+			break;
+			}
+		}
+		$new = date("H:i",$time);
+
+        if ($pref=="9"||$pref==9) {
+>>>>>>> 924221ea825055ae8ab7fc42f1b8c6c90424e7d8
             return $new;
-        else
+        } else {
             return array($day,$new);
+<<<<<<< HEAD
     }  
+=======
+		}
+	}
+>>>>>>> 924221ea825055ae8ab7fc42f1b8c6c90424e7d8
    
 	public function getBaseID($x,$y) {
 	return ((WORLD_MAX-$y) * (WORLD_MAX*2+1)) + (WORLD_MAX +$x + 1);
