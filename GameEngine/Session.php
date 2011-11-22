@@ -159,7 +159,7 @@
         		$this->checker = $_SESSION['checker'];
         		$this->mchecker = $_SESSION['mchecker'];
                 	$this->sit1 = $this->userarray['sit1'];
-                        $this->sit2 = $this->userarray['sit22'];
+                        $this->sit2 = $this->userarray['sit2'];
                         $this->cp = $this->userarray['cp'];
         		$this->gold = $this->userarray['gold'];
         		$this->oldrank = $this->userarray['oldrank'];
