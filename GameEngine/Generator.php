@@ -94,43 +94,43 @@ class Generator {
    }
 
 	public function procMtime($time, $pref = 3) {
-		/*$timezone = 7;
-		switch($timezone) {
-			case 7:
-			$time -= 3600;
-			break;
-		}*/
-        
-        $time=3600*7;
-        
-		if (date('Ymd',time()) == date('Ymd',$time)) {
-		//if ((time()-$time) < 24*60*60 && (time()-$time) > 0) {
-			$day = "today";
-		}
-		else {
-			
-			switch($pref) {
-			case 1:
-			$day = date("m/j/y",$time);
-			break;
-			case 2:
-			$day = date("j/m/y",$time);
-			break;
-			case 3:
-			$day = date("j.m.y",$time);
-			break;
-			default:
-			$day = date("y/m/j",$time);
-			break;
-			}
-		}
-		$new = date("H:i",$time);
+        /*
+        $timezone = 7;
+        switch($timezone) {
+            case 7:
+            $time -= 3600;
+            break;
+        }
+        */
+        $time += 3600*7; //Edit this yourself
+
+
+        if (date('Ymd',time()) == date('Ymd',$time)) {
+        //if ((time()-$time) < 24*60*60 && (time()-$time) > 0) {
+            $day = "today";
+        }
+        else {            
+            switch($pref) {
+            case 1:
+            $day = date("m/j/y",$time);
+            break;
+            case 2:
+            $day = date("j/m/y",$time);
+            break;
+            case 3:
+            $day = date("j.m.y",$time);
+            break;
+            default:
+            $day = date("y/m/j",$time);
+            break;
+            }
+        }
+        $new = date("H:i:s",$time);
         if ($pref=="9"||$pref==9) 
             return $new;
         else
             return array($day,$new);
-		
-	}
+    }  
    
 	public function getBaseID($x,$y) {
 	return ((WORLD_MAX-$y) * (WORLD_MAX*2+1)) + (WORLD_MAX +$x + 1);
