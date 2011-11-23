@@ -6,32 +6,25 @@
 ##     Project : TravianX                                 ##
 ##                                                        ##
 ############################################################
-function addSub($subName, $sub)
-{
+function addSub($subName, $sub){
 	$GLOBALS['subs']["{".$subName."}"] = $sub;
 }
 
-function template($filepath, $subs)
-{
+function template($filepath, $subs){
 	global $s;
-	if(file_exists($filepath))
-	{
-		$text = file_get_contents($filepath);
-	} else {
+	if(file_exists($filepath)){$text = file_get_contents($filepath);}
+	else {
 		print "File '$filepath' not found";
 		return false;
 	}
-	
-	foreach($subs as $sub => $repl)
-	{
+
+	foreach($subs as $sub => $repl){
 		$text = str_replace($sub, $repl, $text);
 	}
-	
+
 	ob_start();
 		eval("?>".$text);
 		$text = ob_get_contents();
 	ob_end_clean();
 	return $text;
 }
-
-?>

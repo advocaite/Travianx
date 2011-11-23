@@ -1,4 +1,4 @@
-<?php
+<?php
 $pattern= array();
 $pattern[0] = "/\[b\](.*?)\[\/b\]/is";
 $pattern[1] = "/\[i\](.*?)\[\/i\]/is";
@@ -88,7 +88,8 @@ $pattern[84] = "/\*smile\*/";
 $pattern[85] = "/\*tongue\*/";
 $pattern[86] = "/\*veryangry\*/";
 $pattern[87] = "/\*veryhappy\*/";
-$pattern[88] = "/\;\)/";
+$pattern[88] = "/\;\)/";
+
 $replace= array();
 $replace[0] = "<b>$1</b>";
 $replace[1] = "<i>$1</i>";
@@ -180,4 +181,3 @@ $replace[86] = "<img class='smiley veryangry' src='img/x.gif' alt='*veryangry*' 
 $replace[87] = "<img class='smiley veryhappy' src='img/x.gif' alt='*veryhappy*' title='*veryhappy*'>";
 $replace[88] = "<img class='smiley wink' src='img/x.gif' alt=';)' title=';)'>";
 $bbcoded = preg_replace($pattern, $replace, $input);
-?>

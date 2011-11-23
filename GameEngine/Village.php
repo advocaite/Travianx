@@ -1,5 +1,4 @@
 <?php
-
 #################################################################################
 ##              -= YOU MAY NOT REMOVE OR CHANGE THIS NOTICE =-                 ##
 ## --------------------------------------------------------------------------- ##
@@ -8,7 +7,6 @@
 ##  Copyright:     TravianX (c) 2010-2011. All rights reserved.                ##
 ##                                                                             ##
 #################################################################################
-
 include("Session.php");
 include("Building.php");
 include("Market.php");
@@ -130,7 +128,7 @@ class Village {
 	
 	private function getWoodProd() {
 		global $bid1,$bid5,$session;
-		$wood = $sawmill = 0;
+		$basewood = $sawmill = 0;
 		$woodholder = array();
 		for($i=1;$i<=38;$i++) {
 			if($this->resarray['f'.$i.'t'] == 1) {
@@ -140,24 +138,21 @@ class Village {
 				$sawmill = $this->resarray['f'.$i];
 			}
 		}
-		for($i=0;$i<=count($woodholder)-1;$i++) { $wood+= $bid1[$this->resarray[$woodholder[$i]]]['prod']; }
+		for($i=0;$i<=count($woodholder)-1;$i++) { $basewood+= $bid1[$this->resarray[$woodholder[$i]]]['prod']; }
+		$wood = $basewood + $basewood * 0.25 * $this->ocounter[0];
 		if($sawmill >= 1) {
-			$wood += $wood /100 * $bid5[$sawmill]['attri'];
-		}
-		if($this->ocounter[0] != 0) {
-			$wood += $wood*0.25*$this->ocounter[0];
+			$wood += $basewood / 100 * $bid5[$sawmill]['attri'];
 		}
 		if($session->bonus1 == 1) {
 			$wood *= 1.25;
 		}
-		$wood += $wood*$this->ocounter[0]*0.25;
 		$wood *= SPEED;
 		return round($wood);
 	}
 	
 	private function getClayProd() {
 		global $bid2,$bid6,$session;
-		$clay = $brick = 0;
+		$baseclay = $clay = $brick = 0;
 		$clayholder = array();
 		for($i=1;$i<=38;$i++) {
 			if($this->resarray['f'.$i.'t'] == 2) {
@@ -167,24 +162,21 @@ class Village {
 				$brick = $this->resarray['f'.$i];
 			}
 		}
-		for($i=0;$i<=count($clayholder)-1;$i++) { $clay+= $bid2[$this->resarray[$clayholder[$i]]]['prod']; }
+		for($i=0;$i<=count($clayholder)-1;$i++) { $baseclay+= $bid2[$this->resarray[$clayholder[$i]]]['prod']; }
+		$clay = $baseclay + $baseclay * 0.25 * $this->ocounter[1];
 		if($brick >= 1) {
-			$clay += $clay /100 * $bid6[$brick]['attri'];
-		}
-		if($this->ocounter[1] != 0) {
-			$clay += $clay*0.25*$this->ocounter[1];
+			$clay += $baseclay / 100 * $bid6[$brick]['attri'];
 		}
 		if($session->bonus2 == 1) {
 			$clay *= 1.25;
 		}
-		$clay += $clay*$this->ocounter[1]*0.25;
 		$clay *= SPEED;
 		return round($clay);
 	}
 	
 	private function getIronProd() {
 		global $bid3,$bid7,$session;
-		$iron = $foundry = 0;
+		$baseiron = $foundry = 0;
 		$ironholder = array();
 		for($i=1;$i<=38;$i++) {
 			if($this->resarray['f'.$i.'t'] == 3) {
@@ -194,24 +186,21 @@ class Village {
 				$foundry = $this->resarray['f'.$i];
 			}
 		}
-		for($i=0;$i<=count($ironholder)-1;$i++) { $iron+= $bid3[$this->resarray[$ironholder[$i]]]['prod']; }
+		for($i=0;$i<=count($ironholder)-1;$i++) { $baseiron+= $bid3[$this->resarray[$ironholder[$i]]]['prod']; }
+		$iron = $baseiron + $baseiron * 0.25 * $this->ocounter[2];
 		if($foundry >= 1) {
-			$iron += $iron /100 * $bid7[$foundry]['attri'];
-		}
-		if($this->ocounter[2] != 0) {
-			$iron += $iron*0.25*$this->ocounter[2];
+			$iron += $baseiron / 100 * $bid7[$foundry]['attri'];
 		}
 		if($session->bonus3 == 1) {
 			$iron *= 1.25;
 		}
-		$iron += $iron*$this->ocounter[2]*0.25;
 		$iron *= SPEED;
 		return round($iron);
 	}
 	
 	private function getCropProd() {
 		global $bid4,$bid8,$bid9,$session;
-		$crop = $grainmill = $bakery = 0;
+		$basecrop = $grainmill = $bakery = 0;
 		$cropholder = array();
 		for($i=1;$i<=38;$i++) {
 			if($this->resarray['f'.$i.'t'] == 4) {
@@ -224,17 +213,14 @@ class Village {
 				$bakery = $this->resarray['f'.$i];
 			}
 		}
-		for($i=0;$i<=count($cropholder)-1;$i++) { $crop+= $bid4[$this->resarray[$cropholder[$i]]]['prod']; }
+		for($i=0;$i<=count($cropholder)-1;$i++) { $basecrop+= $bid4[$this->resarray[$cropholder[$i]]]['prod']; }
+		$crop = $basecrop + $basecrop * 0.25 * $this->ocounter[3];
 		if($grainmill >= 1 || $bakery >= 1) {
-			$crop += $crop /100 * ($bid8[$grainmill]['attri'] + $bid9[$bakery]['attri']);
-		}
-		if($this->ocounter[3] != 0) {
-			$crop += $crop*0.25*$this->ocounter[3];
+			$crop += $basecrop /100 * ($bid8[$grainmill]['attri'] + $bid9[$bakery]['attri']);
 		}
 		if($session->bonus4 == 1) {
 			$crop *= 1.25;
 		}
-		$crop += $crop*$this->ocounter[3]*0.25;
 		$crop *= SPEED;
 		return round($crop);
 	}
@@ -300,5 +286,4 @@ class Village {
 };
 $village = new Village;
 $building = new Building;
-
 ?>
