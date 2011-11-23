@@ -1,5 +1,4 @@
 <?php
-
 /*-------------------------------------------------------*\
 | ********* DO NOT REMOVE THIS COPYRIGHT NOTICE ********* |
 +---------------------------------------------------------+
@@ -7,85 +6,17 @@
 |                Dzoki < dzoki.travian@gmail.com >        |
 | Copyright:     TravianX Project All rights reserved     |
 \*-------------------------------------------------------*/
-
-   include ("GameEngine/Village.php");
-
-   if($session->plus == 0) {
-       header("Location: plus.php?id=3");
-   }
-
-   if($_POST['type'] == 15) {
-       header("Location: ".$_SERVER['PHP_SELF']."?s=1&x=" . $_POST['x'] . '&y=' . $_POST['y']);
-   } elseif($_POST['type'] == 9) {
-       header("Location: ".$_SERVER['PHP_SELF']."?s=2&x=" . $_POST['x'] . '&y=' . $_POST['y']);
-   } elseif($_POST['type'] == 'both') {
-       header("Location: ".$_SERVER['PHP_SELF']."?s=3&x=" . $_POST['x'] . '&y=' . $_POST['y']);
-   }
-
-?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html>
-<head>
-    <title><?php
-
-   echo SERVER_NAME
-
-?> - Crop Finder</title>
-    <link REL="shortcut icon" HREF="favicon.ico"/>
-    <meta http-equiv="cache-control" content="max-age=0" />
-    <meta http-equiv="pragma" content="no-cache" />
-    <meta http-equiv="expires" content="0" />
-    <meta http-equiv="imagetoolbar" content="no" />
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-    <script src="mt-full.js?0faaa" type="text/javascript"></script>
-    <script src="unx.js?0faaa" type="text/javascript"></script>
-    <script src="new.js?0faaa" type="text/javascript"></script>
-    <link href="<?php
-
-   echo GP_LOCATE;
-
-?>lang/en/lang.css?f4b7c" rel="stylesheet" type="text/css" />
-    <link href="<?php
-
-   echo GP_LOCATE;
-
-?>lang/en/compact.css?f4b7c" rel="stylesheet" type="text/css" />
-    <?php
-
-   if($session->gpack == null || GP_ENABLE == false) {
-   echo "
-    <link href='".GP_LOCATE."travian.css?e21d2' rel='stylesheet' type='text/css' />
-    <link href='".GP_LOCATE."lang/en/lang.css?e21d2' rel='stylesheet' type='text/css' />";
-   }
-   else {
-   echo "
-    <link href='".$session->gpack."travian.css?e21d2' rel='stylesheet' type='text/css' />
-    <link href='".$session->gpack."lang/en/lang.css?e21d2' rel='stylesheet' type='text/css' />";
-   }
-
-?>
-    <script type="text/javascript">
-
-        window.addEvent('domready', start);
-    </script>
-</head>
-
- 
-<body class="v35 ie ie8">
-<div class="wrapper">
-<img style="filter:chroma();" src="img/x.gif" id="msfilter" alt="" />
-<div id="dynamic_header">
-    </div>
-<?php
-
-   include ("Templates/header.tpl");
-
+include ("GameEngine/Village.php");
+if($session->plus == 0) {header("Location: plus.php?id=3");}
+if($_POST['type'] == 15) {   header("Location: ".$_SERVER['PHP_SELF']."?s=1&x=" . $_POST['x'] . '&y=' . $_POST['y']);  }
+elseif($_POST['type'] == 9) {header("Location: ".$_SERVER['PHP_SELF']."?s=2&x=" . $_POST['x'] . '&y=' . $_POST['y']);}
+elseif($_POST['type'] == 'both') { header("Location: ".$_SERVER['PHP_SELF']."?s=3&x=" . $_POST['x'] . '&y=' . $_POST['y']);}
+include ("Templates/header.tpl");
+include ("Templates/res.tpl");
 ?>
 <div id="mid">
 <?php
-
    include ("Templates/menu.tpl");
-
    if(is_numeric($_GET['x']) AND is_numeric($_GET['y'])) {
        $coor2['x'] = $_GET['x'];
        $coor2['y'] = $_GET['y'];       
@@ -315,45 +246,13 @@
    }
 ?>
 </div>
-<div id="side_info">
-<?php
-
-   include ("Templates/quest.tpl");
-   include ("Templates/news.tpl");
-   include ("Templates/multivillage.tpl");
-   include ("Templates/links.tpl");
-
-?>
+<div id="side_info"><?php
+   include("Templates/quest.tpl");
+	include("Templates/news.tpl");
+	include("Templates/multivillage.tpl");
+	include("Templates/links.tpl");?>
 </div>
 <div class="clear"></div>
 </div>
-<div class="footer-stopper"></div>
-<div class="clear"></div>
-
 <?php
-
-   include ("Templates/footer.tpl");
-   include ("Templates/res.tpl");
-
-?>
-<div id="stime">
-<div id="ltime">
-<div id="ltimeWrap">
-Calculated in <b><?php
-
-   echo round(($generator->pageLoadTimeEnd() - $start) * 1000);
-
-?></b> ms
- 
-<br />Server time: <span id="tp1" class="b"><?php
-
-   echo date('H:i:s');
-
-?></span>
-</div>
-    </div>
-</div>
-
-<div id="ce"></div>
-</body>
-</html>
+include("Templates/footer.tpl");
