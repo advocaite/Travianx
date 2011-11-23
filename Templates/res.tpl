@@ -8,9 +8,8 @@
 ##  Copyright:     TravianX (c) 2010-2011. All rights reserved.                ##
 ##                                                                             ##
 #################################################################################
-?>
 
-<?php
+
 $wood = round($village->getProd("wood"));
 $clay = round($village->getProd("clay"));
 $iron = round($village->getProd("iron"));
@@ -19,19 +18,19 @@ $totalproduction = $village->allcrop; // all crops + bakery + grain mill
 ?> 
 
 <div id="res">
-<div id="resWrap">
+<div id="resWrap" style=" z-index:100;">
 
 	<table cellpadding="1" cellspacing="1">
 		<tr>
-							<td><img src="img/x.gif" class="r1" alt="<?php echo LUMBER; ?>" title="<?php echo LUMBER; ?>" /></td>
-				<td id="l4" title="<?php echo $wood; ?>"><?php echo round($village->awood)."/".$village->maxstore; ?></td>
-							<td><img src="img/x.gif" class="r2" alt="<?php echo CLAY; ?>" title="<?php echo CLAY; ?>" /></td>
-				<td id="l3" title="<?php echo $clay; ?>"><?php echo round($village->aclay)."/".$village->maxstore; ?></td>
-							<td><img src="img/x.gif" class="r3" alt="<?php echo IRON; ?>" title="<?php echo IRON; ?>" /></td>
-				<td id="l2" title="<?php echo $iron; ?>"><?php echo round($village->airon)."/".$village->maxstore; ?></td>
-							<td><img src="img/x.gif" class="r4" alt="<?php echo CROP; ?>" title="<?php echo CROP; ?>" /></td>
-				<td id="l1" title="<?php echo $crop; ?>"><?php echo round($village->acrop)."/".$village->maxcrop; ?></td>
-							<td><img src="img/x.gif" class="r5" alt="<?php echo CROP_COM; ?>" title="<?php echo CROP_COM; ?>" /></td>
+			<td><img src="img/x.gif" class="r1" alt="<?php echo LUMBER; ?>" title="<?php echo LUMBER; ?>" /></td>
+			<td id="l4" title="<?php echo $wood; ?>"><?php echo round($village->awood)."/".$village->maxstore; ?></td>
+			<td><img src="img/x.gif" class="r2" alt="<?php echo CLAY; ?>" title="<?php echo CLAY; ?>" /></td>
+			<td id="l3" title="<?php echo $clay; ?>"><?php echo round($village->aclay)."/".$village->maxstore; ?></td>
+			<td><img src="img/x.gif" class="r3" alt="<?php echo IRON; ?>" title="<?php echo IRON; ?>" /></td>
+			<td id="l2" title="<?php echo $iron; ?>"><?php echo round($village->airon)."/".$village->maxstore; ?></td>
+			<td><img src="img/x.gif" class="r4" alt="<?php echo CROP; ?>" title="<?php echo CROP; ?>" /></td>
+			<td id="l1" title="<?php echo $crop; ?>"><?php echo round($village->acrop)."/".$village->maxcrop; ?></td>
+			<td><img src="img/x.gif" class="r5" alt="<?php echo CROP_COM; ?>" title="<?php echo CROP_COM; ?>" /></td>
 			<td><?php echo ($village->pop+$technology->getUpkeep($village->unitall,0))."/".$totalproduction.""; ?></td>
 		</tr>
 	</table>
@@ -52,10 +51,6 @@ $totalproduction = $village->allcrop; // all crops + bakery + grain mill
 			}
 			?>
 			</td>
-            
-            
-            
-				
 		</tr>
 	</table>
     </div>
