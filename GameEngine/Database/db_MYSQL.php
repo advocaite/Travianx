@@ -2436,6 +2436,15 @@
                 return mysql_query($q, $this->connection);                
                             
             }  
+            
+            			function getArrayMemberVillage($uid){
+				//$q = "SELECT wref, name from " . TB_PREFIX . "vdata where owner = $uid order by capital DESC,pop DESC";
+				$q = 'SELECT a.wref, a.name, b.x, b.y from '.TB_PREFIX.'vdata AS a left join '.TB_PREFIX.'wdata AS b ON b.id = a.wref where owner = '.$uid.' order by capital DESC,pop DESC';
+				$result = mysql_query($q, $this->connection);
+				$array = $this->mysql_fetch_all($result);
+				return $array;
+			}
+
 
         }
         ;
