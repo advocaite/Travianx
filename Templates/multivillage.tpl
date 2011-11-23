@@ -24,3 +24,4 @@ if(count($session->villages) > 1){?>
 </table>
 <?php
 }
+?>
