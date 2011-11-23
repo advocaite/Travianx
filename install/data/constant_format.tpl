@@ -235,6 +235,7 @@ define("DOMAIN", "%DOMAIN%");
 define("HOMEPAGE", "%HOMEPAGE%");
 define("SERVER", "%DOMAIN%");
 
+$requse = 0;
 
 ###############################  E    N    D   ##################################
 ##              -= YOU MAY NOT REMOVE OR CHANGE THIS NOTICE =-                 ##
