@@ -8,7 +8,7 @@
 ##  Copyright:     TravianX (c) 2010-2011. All rights reserved.                ##
 ##                                                                             ##
 #################################################################################
-?>
+
 if(count($session->villages) > 1){?>
 <table id="vlist" cellpadding="1" cellspacing="1">
    <thead><tr><td colspan="3"><a href="dorf3.php" accesskey="9"><?php echo MULTI_V_HEADER; ?>:</a></td></tr></thead>
