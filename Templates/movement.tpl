@@ -9,7 +9,7 @@
 ##                                                                             ##
 #################################################################################
 
-$aantal=(count($database->getMovement(4,$village->wid,1))+count($database->getMovement(4,$village->wid,0))+count($database->getMovement(3,$village->wid,1))+count($database->getMovement(3,$village->wid,0)));
+$aantal=(count($database->getMovement(4,$village->wid,1))+count($database->getMovement(4,$village->wid,0))+count($database->getMovement(3,$village->wid,1))+count($database->getMovement(3,$village->wid,0)));++$requse;++$requse;++$requse;++$requse;
 if($aantal > 0){
 	echo	'<table id="movements" cellpadding="1" cellspacing="1"><thead><tr><th colspan="3">'.TROOP_MOVEMENTS.'</th></tr></thead><tbody>';
 }
@@ -17,8 +17,8 @@ if($aantal > 0){
 $NextArrival = array();
 
 /* Units coming back from Reinf,attack,raid */
-$aantal = count($database->getMovement(4,$village->wid,1));
-$aantal2 = $database->getMovement(4,$village->wid,1);
+$aantal = count($database->getMovement(4,$village->wid,1));++$requse;
+$aantal2 = $database->getMovement(4,$village->wid,1);++$requse;
 if($aantal > 0){
 	foreach($aantal2 as $receive) {
 		$action = 'def1';
@@ -33,8 +33,8 @@ if($aantal > 0){
 }
 
 /* attack/raid on you! */
-$aantal = count($database->getMovement(3,$village->wid,1));
-$aantal2 = $database->getMovement(3,$village->wid,1);
+$aantal = count($database->getMovement(3,$village->wid,1));++$requse;
+$aantal2 = $database->getMovement(3,$village->wid,1);++$requse;
 for($i=0;$i<$aantal;$i++){
 	if($aantal2[$i]['attack_type'] == 2) { $aantal -= 1; }
 }
@@ -55,8 +55,8 @@ if($aantal > 0){
 }
 
 /* on attack, raid */
-$aantal = count($database->getMovement(3,$village->wid,0));
-$aantal2 = $database->getMovement(3,$village->wid,0);
+$aantal = count($database->getMovement(3,$village->wid,0));++$requse;
+$aantal2 = $database->getMovement(3,$village->wid,0);++$requse;
 for($i=0;$i<$aantal;$i++){
 	if($aantal2[$i]['attack_type'] == 2) { $aantal -= 1; }
 }
@@ -77,9 +77,9 @@ if($aantal > 0){
 }
 
 /* Units send to reinf. (to other town) */
-$aantal = count($database->getMovement(3,$village->wid,0));
+$aantal = count($database->getMovement(3,$village->wid,0));++$requse;
 $lala=$aantal;
-$aantal2 = $database->getMovement(3,$village->wid,0);
+$aantal2 = $database->getMovement(3,$village->wid,0);++$requse;
 for($i=0;$i<$aantal;$i++){
 	if(($aantal2[$i]['attack_type']==1) or ($aantal2[$i]['attack_type']==3) or ($aantal2[$i]['attack_type']==4)) { $lala -= 1; }
 }
@@ -100,8 +100,9 @@ if($lala > 0){
 }
 
 /* Units send to reinf. (to my town) */
-$aantal = count($database->getMovement(3,$village->wid,1)); $lala=$aantal;
-$aantal2 = $database->getMovement(3,$village->wid,1);
+$aantal = count($database->getMovement(3,$village->wid,1));++$requse;
+$lala=$aantal;
+$aantal2 = $database->getMovement(3,$village->wid,1);++$requse;
 for($i=0;$i<$aantal;$i++){
 	if(($aantal2[$i]['attack_type']==1) or ($aantal2[$i]['attack_type']==3) or ($aantal2[$i]['attack_type']==4)) { $lala -= 1; }
 }
