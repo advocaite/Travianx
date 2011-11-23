@@ -8,24 +8,22 @@
 ##  Copyright:     TravianX (c) 2010-2011. All rights reserved.                ##
 ##                                                                             ##
 #################################################################################
-?>
-<?php if(count($session->villages) > 1) { 
-?> 
-<table id="vlist" cellpadding="1" cellspacing="1"><thead> 
-   <tr><td colspan="3"> 
-    <a href="dorf3.php" accesskey="9"><?php echo MULTI_V_HEADER; ?>:</a> 
-   </td></tr> 
-   </thead><tbody> 
-    <?php 
-    for($i=1;$i<=count($session->villages);$i++) { 
-    if($session->villages[$i-1] == $village->wid){$select = "hl";}else{$select = "";} 
-    echo "<tr><td class=\"dot ".$select."\">●</td><td class=\"link\">"; 
-    echo "<a href=\"?newdid=".$session->villages[$i-1].($id>=19?'&amp;id='.$id:'&amp;id=0')."\">".$database->getVillageField($session->villages[$i-1],'name')."</a></td>";
-    $coorproc = $database->getCoor($session->villages[$i-1]); 
-    echo "<td class=\"aligned_coords\"><div class=\"cox\">(".$coorproc['x']."</div><div class=\"pi\">|</div><div class=\"coy\">".$coorproc['y'].")</div></td></tr>"; 
-    } 
-    ?> 
- </tbody></table> 
- <?php 
- } 
-?> 
+
+if(count($session->villages) > 1){?>
+<table id="vlist" cellpadding="1" cellspacing="1">
+   <thead>
+		<tr><td colspan="3"><a href="dorf3.php" accesskey="9"><?php echo MULTI_V_HEADER; ?>:</a></td></tr>
+	</thead>
+	<tbody><?php
+	for($i=1;$i<=count($session->villages);++$i){++$requse;++$requse;
+		$select = ($session->villages[$i-1] == $village->wid) ? "hl" : "";
+		$coorproc = $database->getCoor($session->villages[$i-1]);echo '
+		<tr>
+			<td class="dot '.$select.'">●</td>
+			<td class="link"><a href="?newdid='.$session->villages[$i-1].(($id>=19) ? "&id=".$id : "&id=0").'">'.$database->getVillageField($session->villages[$i-1],'name').'</a></td>
+			<td class="aligned_coords"><div class="cox">('.$coorproc['x'].'</div><div class="pi">|</div><div class="coy">'.$coorproc['y'].')</div></td></tr>';
+	}?>
+	</tbody>
+</table>
+<?php
+}
