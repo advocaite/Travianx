@@ -25,7 +25,7 @@ for($i=1;$i<=18;$i++) {echo "	<area href=\"build.php?id=$i\" coords=\"$coorarray
 <div id="village_map" class="f<?php echo $village->type; ?>">
 <?php 
 for($i=1;$i<=18;$i++) {
-	if($village->resarray['f'.$i.'t'] != 0) {
+	if($arrayVillage['f'.$i.'t'] != 0) {
 		$text = "";
 		switch($i){
 			case 1:$text = "Woodcutter Level";break;
@@ -33,7 +33,7 @@ for($i=1;$i<=18;$i++) {
 			case 3:$text = "Iron Mine Level";break;
 			case 4:$text = "Cropland Level";break;
 		}
-		echo "<img src=\"img/x.gif\" class=\"reslevel rf$i level".$village->resarray['f'.$i]."\" alt=\"$text ".$village->resarray['f'.$i]."\" />";
+		echo "<img src=\"img/x.gif\" class=\"reslevel rf$i level".$arrayVillage['f'.$i]."\" alt=\"$text ".$arrayVillage['f'.$i]."\" />";
 	}
 }
 ?>
