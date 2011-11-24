@@ -9,26 +9,19 @@
 ##                                                                             ##
 #################################################################################
 ?>
-
 <table cellpadding="1" cellspacing="1" id="building_contract">
-		<thead><tr>
-        <th colspan="4"><?php echo BUILDING_UPGRADING;?>
-			<?php
-            
-            if($session->gold >= 2) {
-            ?> <a href="?buildingFinish=1" onclick="return confirm('Finish all construction and research orders in this village immediately for 2 Gold?');" title="Finish all construction and research orders in this village immediately for 2 Gold?"><img class="clock" alt="Finish all construction and research orders in this village immediately for 2 Gold?" src="img/x.gif"/></a>
-		<?php
-            }
-            ?>
-            </th>
-		</tr></thead>
-		<tbody>
+	<thead>
+		<tr>
+			<th colspan="4"><?php echo BUILDING_UPGRADING;
+			if($session->gold >= 2){?>
+				<a href="?buildingFinish=1" onclick="return confirm('Finish all construction and research orders in this village immediately for 2 Gold?');" title="Finish all construction and research orders in this village immediately for 2 Gold?"><img class="clock" alt="Finish all construction and research orders in this village immediately for 2 Gold?" src="img/x.gif"/></a><?php
+			}?>
+			</th>
+		</tr>
+	</thead>
+	<tbody>
         <?php 
-        if($_GET['buildingFinish'] == 1 AND $session->gold >= 2) {
-        	$gold=$database->getUserField($_SESSION['username'],'gold','username');
-		      $gold-=2;
-		      $database->updateUserField($_SESSION['username'],'gold',$gold,0);
-        }
+        if($_GET['buildingFinish'] == 1 AND $session->gold >= 2){$database->updateUserField($_SESSION['username'],'gold',($session->gold - 2),0);++$requse;}
         
         if(!isset($timer)) {
         $timer = 1;
@@ -38,9 +31,7 @@
             echo "<img src=\"img/x.gif\" class=\"del\" title=\"cancel\" alt=\"cancel\" /></a></td><td>";
 			echo $building->procResType($jobs['type'])." (Level ".($village->resarray['f'.$jobs['field']]+($jobs['field']==$BuildFirst?2:1 )).")";
 			if($jobs['loopcon'] == 0) { $BuildFirst = $jobs['field']; }
-            if($jobs['loopcon'] == 1) {
-            	echo " (waiting loop)";
-            }
+            if($jobs['loopcon'] == 1) {	echo " (waiting loop)";}
             echo "</td><td><span id=\"timer".$timer."\">";
             echo $generator->getTimeFormat($jobs['timestamp']-time());
             echo "</span> hrs.</td>";
@@ -48,6 +39,6 @@
             $timer +=1;
       	}
         ?>
-            </tbody>
-	</table>
-	<script type="text/javascript">var bld=[{"stufe":1,"gid":"1","aid":"3"}]</script>
+	</tbody>
+</table>
+<script type="text/javascript">var bld=[{"stufe":1,"gid":"1","aid":"3"}]</script>
