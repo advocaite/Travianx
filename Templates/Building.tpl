@@ -19,26 +19,22 @@
 			</th>
 		</tr>
 	</thead>
-	<tbody>
-        <?php 
-        if($_GET['buildingFinish'] == 1 AND $session->gold >= 2){$database->updateUserField($_SESSION['username'],'gold',($session->gold - 2),0);++$requse;}
-        
-        if(!isset($timer)) {
-        $timer = 1;
-        }
-        foreach($building->buildArray as $jobs) {
-        	echo "<tr><td class=\"ico\"><a href=\"?d=".$jobs['id']."&a=0&c=$session->checker\">";
-            echo "<img src=\"img/x.gif\" class=\"del\" title=\"cancel\" alt=\"cancel\" /></a></td><td>";
-			echo $building->procResType($jobs['type'])." (Level ".($village->resarray['f'.$jobs['field']]+($jobs['field']==$BuildFirst?2:1 )).")";
+	<tbody><?php
+	if($_GET['buildingFinish'] == 1 AND $session->gold >= 2){$database->updateUserField($_SESSION['username'],'gold',($session->gold - 2),0);++$requse;}
+
+	if(!isset($timer)){$timer = 1;}
+
+	foreach($building->buildArray as $jobs){echo '
+		<tr>
+			<td class="ico"><a href="?d='.$jobs['id'].'&a=0&c='.$session->checker.'"><img src="img/x.gif" class="del" title="cancel" alt="cancel" /></a></td>
+			<td>'.$building->procResType($jobs['type']).' (Level '.($village->resarray['f'.$jobs['field']]+($jobs['field']==$BuildFirst?2:1 )).')';
 			if($jobs['loopcon'] == 0) { $BuildFirst = $jobs['field']; }
-            if($jobs['loopcon'] == 1) {	echo " (waiting loop)";}
-            echo "</td><td><span id=\"timer".$timer."\">";
-            echo $generator->getTimeFormat($jobs['timestamp']-time());
-            echo "</span> hrs.</td>";
-            echo "<td>done at ".date('H:i', $jobs['timestamp'])."</td></tr>";
-            $timer +=1;
-      	}
-        ?>
-	</tbody>
+			if($jobs['loopcon'] == 1) {	echo " (waiting loop)";}
+			echo '</td>
+			<td><span id="timer'.$timer.'">'.$generator->getTimeFormat($jobs['timestamp']-time()).'</span> hrs.</td>
+			<td>done at '.date('H:i', $jobs['timestamp']).'</td>
+		</tr>';$timer +=1;
+	}?>
+</tbody>
 </table>
 <script type="text/javascript">var bld=[{"stufe":1,"gid":"1","aid":"3"}]</script>
