@@ -132,11 +132,14 @@ for($h=0;$h<=6;$h++) {
 			if($maparray[$regcount]['fieldtype'] != 0) {
 			$text.= ",\"".$maparray[$regcount]['name']."\",\"".$database->getUserField($maparray[$regcount]['owner'],'username',0)."\",\"".$maparray[$regcount]['pop']."\",\"".$database->getUserAlliance($maparray[$regcount]['owner'])."\",\"".$database->getUserField($maparray[$regcount]['owner'],'tribe',0)."\"]";
 			}
-			else {
+		} else if($maparray[$regcount]['oasistype'] != 0) {
 				$oasisinfo = $database->getOasisInfo($maparray[$regcount]['id']);
-				$oowner = $database->getVillageField($oasisinfo['conqured'],"owner");
-				$text.= ",\"\",\"".$database->getUserField($oowner,'username',0)."\",\"-\",\"".$database->getUserAlliance($oowner)."\",\"".$database->getUserField($oowner,'tribe',0)."\"]";
-			}
+				if ($oasisinfo['conqured'] != 0) {
+					$oowner = $database->getVillageField($oasisinfo['conqured'],"owner");
+					$text.= ",\"\",\"".$database->getUserField($oowner,'username',0)."\",\"-\",\"".$database->getUserAlliance($oowner)."\",\"".$database->getUserField($oowner,'tribe',0)."\"]";
+				} else {
+					$text .= "]";
+				}
 		}
 		else {
 			$text .= "]";
