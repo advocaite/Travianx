@@ -52,6 +52,16 @@ if(!isset($_COOKIE['COOKUSR'])) {
 <div id="content"  class="login">
 
 <h1><img class="img_login" src="img/x.gif" alt="log in the game" /></h1>
+
+<?php
+$time = time();
+if( COMMENCE > $time )
+{
+echo '<p><font color="red" size="6">'.NOT_OPENED_YET.'</font></p>' ;
+}
+else
+{
+?>
 <h5><img class="img_u04" src="img/x.gif" alt="login" /></h5>
 <p><?php echo COOKIES; ?></p>
 
@@ -78,6 +88,7 @@ if(!isset($_COOKIE['COOKUSR'])) {
 
 </form>
 <?php
+}
 if ($form->getError("pw") == LOGIN_PW_ERROR) {
 echo "<p class=\"error_box\">
 	<span class=\"error\">".PW_FORGOTTEN."</span><br>
