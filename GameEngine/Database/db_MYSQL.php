@@ -1826,9 +1826,11 @@
 				}
         	}
 
-        	function getHero($uid=0) {
-				if (!$uid) {
-					$q = "SELECT * FROM ".TB_PREFIX."hero";
+        	function getHero($uid=0,$all=0) {
+				if ($all) {
+					$q = "SELECT * FROM ".TB_PREFIX."hero WHERE uid=$uid";
+				} elseif (!$uid) {
+	        		$q = "SELECT * FROM ".TB_PREFIX."hero";
 				} else {
 	        		$q = "SELECT * FROM ".TB_PREFIX."hero WHERE dead=0 AND uid=$uid LIMIT 1";
 				}
