@@ -173,7 +173,7 @@ else if (!$basearray['occupied'] && !$basearray['conqured']) {
 		</tr>
 		<tr>
 			<th>Village</th>
-			<td><a href="karte.php?d=<?php echo $basearray['conqured']; ?>&amp;c=12"><?php echo $database->getVillageField($basearray['conqured'],"name"); ?></a></td>
+			<td><a href="karte.php?d=<?php echo $basearray['conqured']; ?>&amp;c=<?php echo $generator->getMapCheck($basearray['conqured']); ?>"><?php echo $database->getVillageField($basearray['conqured'],"name"); ?></a></td>
 		</tr></tbody>
 	</table>
  

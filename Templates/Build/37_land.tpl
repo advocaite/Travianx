@@ -25,7 +25,7 @@
 <tr>
 <td class="nam">
 <!-- a href="build.php?a=37&gid=37&c=016&del=374&land" --><img class="del" src="img/x.gif" alt="delete" title="delete"></a>
-<a href="karte.php?d=<?php echo $oasisarray[$i]['wref']; ?>&c=7a"><?php echo $oasisarray[$i]['name']; ?></a>
+<a href="karte.php?d=<?php echo $oasisarray[$i]['wref']; ?>&c=<?php echo $generator->getMapCheck($oasisarray[$i]['wref']) ?>"><?php echo $oasisarray[$i]['name']; ?></a>
 </td>
 <td class="aligned_coords">
 <div class="cox">(<?php echo $oasiscoor['x']; ?></div>
