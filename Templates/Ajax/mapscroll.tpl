@@ -1,84 +1,99 @@
 <?php
-include("GameEngine/Session.php");
-    if($y < $yy) {
-    $y = $y + (($yy - $y) /2);
-    }
-    else {
-    $y = $yy + (($y - $yy) /2);
-    }
-    $x = $x - (($x - $xx) / 2);
-    $x = ($x < -WORLD_MAX)? $x+WORLD_MAX*2+1 : $x;
-    $x = ($x > WORLD_MAX)? $x-WORLD_MAX*2-1 : $x;
-    $y = ($y < -WORLD_MAX)? $y+WORLD_MAX*2+1 : $y;
-    $y = ($y > WORLD_MAX)? $y-WORLD_MAX*2-1 : $y;
-    $xm3 = ($x-3) < -WORLD_MAX? $x+WORLD_MAX+WORLD_MAX-2 : $x-3;
-    $xm2 = ($x-2) < -WORLD_MAX? $x+WORLD_MAX+WORLD_MAX-1 : $x-2;
-    $xm1 = ($x-1) < -WORLD_MAX? $x+WORLD_MAX+WORLD_MAX : $x-1;
-    $xp1 = ($x+1) > WORLD_MAX? $x-WORLD_MAX-WORLD_MAX : $x+1;
-    $xp2 = ($x+2) > WORLD_MAX? $x-WORLD_MAX-WORLD_MAX+1 : $x+2;
-    $xp3 = ($x+3) > WORLD_MAX? $x-WORLD_MAX-WORLD_MAX+2: $x+3;
-    $ym3 = ($y-3) < -WORLD_MAX? $y+WORLD_MAX+WORLD_MAX-2 : $y-3;
-    $ym2 = ($y-2) < -WORLD_MAX? $y+WORLD_MAX+WORLD_MAX-1 : $y-2;
-    $ym1 = ($y-1) < -WORLD_MAX? $y+WORLD_MAX+WORLD_MAX : $y-1;
-    $yp1 = ($y+1) > WORLD_MAX? $y-WORLD_MAX-WORLD_MAX : $y+1;
-    $yp2 = ($y+2) > WORLD_MAX? $y-WORLD_MAX-WORLD_MAX+1 : $y+2;
-    $yp3 = ($y+3) > WORLD_MAX? $y-WORLD_MAX-WORLD_MAX+2: $y+3;
-    $xarray = array($xm3,$xm2,$xm1,$x,$xp1,$xp2,$xp3);
-	$yarray = array($ym3,$ym2,$ym1,$y,$yp1,$yp2,$yp3);
-	$maparray = array();
+session_start();
+include('GameEngine/config.php');
+mysql_connect(SQL_SERVER, SQL_USER, SQL_PASS) or die(mysql_error());
+mysql_select_db(SQL_DB) or die(mysql_error());
+include("GameEngine/Generator.php");
+
+//include("GameEngine/Session.php");
+
+if($y < $yy)	{$y = $y + (($yy - $y) /2);}
+else			{$y = $yy + (($y - $yy) /2);}
+
+$x = $x - (($x - $xx) / 2);
+$x = ($x < -WORLD_MAX)? $x+WORLD_MAX*2+1 : $x;
+$x = ($x > WORLD_MAX)? $x-WORLD_MAX*2-1 : $x;
+$y = ($y < -WORLD_MAX)? $y+WORLD_MAX*2+1 : $y;
+$y = ($y > WORLD_MAX)? $y-WORLD_MAX*2-1 : $y;
+$xm3 = ($x-3) < -WORLD_MAX? $x+WORLD_MAX+WORLD_MAX-2 : $x-3;
+$xm2 = ($x-2) < -WORLD_MAX? $x+WORLD_MAX+WORLD_MAX-1 : $x-2;
+$xm1 = ($x-1) < -WORLD_MAX? $x+WORLD_MAX+WORLD_MAX : $x-1;
+$xp1 = ($x+1) > WORLD_MAX? $x-WORLD_MAX-WORLD_MAX : $x+1;
+$xp2 = ($x+2) > WORLD_MAX? $x-WORLD_MAX-WORLD_MAX+1 : $x+2;
+$xp3 = ($x+3) > WORLD_MAX? $x-WORLD_MAX-WORLD_MAX+2: $x+3;
+$ym3 = ($y-3) < -WORLD_MAX? $y+WORLD_MAX+WORLD_MAX-2 : $y-3;
+$ym2 = ($y-2) < -WORLD_MAX? $y+WORLD_MAX+WORLD_MAX-1 : $y-2;
+$ym1 = ($y-1) < -WORLD_MAX? $y+WORLD_MAX+WORLD_MAX : $y-1;
+$yp1 = ($y+1) > WORLD_MAX? $y-WORLD_MAX-WORLD_MAX : $y+1;
+$yp2 = ($y+2) > WORLD_MAX? $y-WORLD_MAX-WORLD_MAX+1 : $y+2;
+$yp3 = ($y+3) > WORLD_MAX? $y-WORLD_MAX-WORLD_MAX+2: $y+3;
+$xarray = array($xm3,$xm2,$xm1,$x,$xp1,$xp2,$xp3);
+$yarray = array($ym3,$ym2,$ym1,$y,$yp1,$yp2,$yp3);
+$maparray = array();
 $xcount = 0;
-for($i=0;$i<=6;$i++) {
-if($xcount != 7) {
-array_push($maparray,$database->getMInfo($generator->getBaseID($xarray[$xcount],$yarray[$i])));
-if($i==6) {
-$i = -1;
-$xcount +=1;
+
+$maparray = '';
+$maparray2 = '';
+for($i=0; $i<=6; $i++){
+	if($xcount != 7){
+		$maparray .= '\''.$generator->getBaseID($xarray[$xcount],$yarray[$i]).'\',';
+		$maparray2 .= $generator->getBaseID($xarray[$xcount],$yarray[$i]).',';
+		if($i==6){
+			$i = -1;
+			$xcount +=1;
+		}
+	}
 }
-}
-}
-			$yrow = 0;
-$regcount = 0;
 header("Content-Type: application/json;");
-		echo "[[";
-for($h=0;$h<=6;$h++) {
-	if($yrow!=7) {
-    if($maparray[$regcount]['occupied'] == 1 && $maparray[$regcount]['fieldtype'] > 0) {
-	$targetalliance = $database->getUserField($maparray[$regcount]['owner'],"alliance",0);
-    $friendarray = array();
-    $enemyarray = array();
-    $neutralarray = array();
-    }
-   	$image = ($maparray[$regcount]['occupied'] == 1 && $maparray[$regcount]['fieldtype'] > 0)? (($maparray[$regcount]['owner'] == $session->uid)? ($maparray[$regcount]['pop']>=50? $maparray[$regcount]['pop']>= 100?$maparray[$regcount]['pop']>=200? 'b30': 'b20' :'b10' : 'b00') : (($targetalliance != 0)? (in_array($targetalliance,$friendarray)? ($maparray[$regcount]['pop']>=50? $maparray[$regcount]['pop']>= 100?$maparray[$regcount]['pop']>=200? 'b31': 'b21' :'b11' : 'b01') : (in_array($targetalliance,$enemyarray)? ($maparray[$regcount]['pop']>=50? $maparray[$regcount]['pop']>= 100?$maparray[$regcount]['pop']>=200? 'b32': 'b22' :'b12' : 'b02') : (in_array($targetalliance,$neutralarray)? ($maparray[$regcount]['pop']>=50? $maparray[$regcount]['pop']>= 100?$maparray[$regcount]['pop']>=200? 'b35': 'b25' :'b15' : 'b05') : ($targetalliance == $session->alliance? ($maparray[$regcount]['pop']>=50? $maparray[$regcount]['pop']>= 100?$maparray[$regcount]['pop']>=200? 'b33': 'b23' :'b13' : 'b03') : ($maparray[$regcount]['pop']>=50? $maparray[$regcount]['pop']>= 100?$maparray[$regcount]['pop']>=200? 'b34': 'b24' :'b14' : 'b04'))))) : ($maparray[$regcount]['pop']>=50? $maparray[$regcount]['pop']>= 100?$maparray[$regcount]['pop']>=200? 'b34': 'b24' :'b14' : 'b04'))) : $maparray[$regcount]['image'];
-		$text = "[".$maparray[$regcount]['x'].",".$maparray[$regcount]['y'].",".$maparray[$regcount]['fieldtype'].",".$maparray[$regcount]['oasistype'].",\"d=".$maparray[$regcount]['id']."&c=".$generator->getMapCheck($maparray[$regcount]['id'])."\",\"".$image."\"";
-		if($maparray[$regcount]['occupied']) {
-			if($maparray[$regcount]['fieldtype'] != 0) {
-			$text.= ",\"".$maparray[$regcount]['name']."\",\"".$database->getUserField($maparray[$regcount]['owner'],'username',0)."\",\"".$maparray[$regcount]['pop']."\",\"".$database->getUserAlliance($maparray[$regcount]['owner'])."\",\"".$database->getUserField($maparray[$regcount]['owner'],'tribe',0)."\"]";
-			}
-			else {
-				$oasisinfo = $database->getOasisInfo($maparray[$regcount]['id']);
-				$oowner = $database->getVillageField($oasisinfo['conqured'],"owner");
-				$text.= ",\"\",\"".$database->getUserField($oowner,'username',0)."\",\"-\",\"".$database->getUserAlliance($oowner)."\",\"".$database->getUserField($oowner,'tribe',0)."\"]";
+
+$maparray = (substr($maparray, 0, -1));
+
+$query2 = "SELECT ".TB_PREFIX."wdata.id AS map_id, ".TB_PREFIX."wdata.fieldtype AS map_fieldtype, ".TB_PREFIX."wdata.oasistype AS map_oasis, ".TB_PREFIX."wdata.x AS map_x, ".TB_PREFIX."wdata.y AS map_y, ".TB_PREFIX."wdata.occupied AS map_occupied, ".TB_PREFIX."wdata.image AS map_image,	".TB_PREFIX."odata.conqured AS oasis_conqured, info_user_oasis.username AS oasis_user, info_user_oasis.tribe AS oasis_tribe, info_alliance_oasis.name AS oasis_alli_name, ".TB_PREFIX."vdata.wref AS ville_id, ".TB_PREFIX."vdata.owner AS ville_user, ".TB_PREFIX."vdata.name AS ville_name, ".TB_PREFIX."vdata.capital AS ville_capital, ".TB_PREFIX."vdata.pop AS ville_pop, ".TB_PREFIX."users.id AS user_id, ".TB_PREFIX."users.username AS user_username, ".TB_PREFIX."users.tribe AS user_tribe, ".TB_PREFIX."users.alliance AS user_alliance, ".TB_PREFIX."alidata.id AS aliance_id, ".TB_PREFIX."alidata.name AS aliance_name FROM ((((((".TB_PREFIX."wdata LEFT JOIN ".TB_PREFIX."vdata ON ".TB_PREFIX."vdata.wref = ".TB_PREFIX."wdata.id ) LEFT JOIN ".TB_PREFIX."odata ON ".TB_PREFIX."odata.wref = ".TB_PREFIX."wdata.id ) LEFT JOIN ".TB_PREFIX."users AS info_user_oasis ON info_user_oasis.id = ".TB_PREFIX."odata.owner ) LEFT JOIN ".TB_PREFIX."alidata AS info_alliance_oasis ON info_alliance_oasis.id = info_user_oasis.alliance ) LEFT JOIN ".TB_PREFIX."users ON ".TB_PREFIX."users.id = ".TB_PREFIX."vdata.owner ) LEFT JOIN ".TB_PREFIX."alidata ON ".TB_PREFIX."alidata.id = ".TB_PREFIX."users.alliance ) where ".TB_PREFIX."wdata.id IN ($maparray) ORDER BY FIND_IN_SET(".TB_PREFIX."wdata.id,'$maparray2')";
+$result2 = mysql_query($query2) or die(mysql_error());
+
+$targetalliance = array();
+$neutralarray = array();
+$friendarray = array();
+$enemyarray = array();
+$i=0;
+//Load coor array
+$yrow = 0;
+
+$map_js ='';
+while ($donnees = mysql_fetch_assoc($result2)){	
+
+$image = ($donnees['map_occupied'] == 1 && $donnees['map_fieldtype'] > 0)?(($donnees['ville_user'] == $_SESSION['id_user'])? ($donnees['ville_pop']>=100? $donnees['ville_pop']>= 250?$donnees['ville_pop']>=500? 'b30': 'b20' :'b10' : 'b00') : (($targetalliance != 0)? (in_array($targetalliance,$friendarray)? ($donnees['ville_pop']>=100? $donnees['ville_pop']>= 250?$donnees['ville_pop']>=500? 'b31': 'b21' :'b11' : 'b01') : (in_array($targetalliance,$enemyarray)? ($donnees['ville_pop']>=100? $donnees['ville_pop']>= 250?$donnees['ville_pop']>=500? 'b32': 'b22' :'b12' : 'b02') : (in_array($targetalliance,$neutralarray)? ($donnees['ville_pop']>=100? $donnees['ville_pop']>= 250?$donnees['ville_pop']>=500? 'b35': 'b25' :'b15' : 'b05') : ($targetalliance == $_SESSION['alliance_user']? ($donnees['ville_pop']>=100? $donnees['ville_pop']>= 250?$donnees['ville_pop']>=500? 'b33': 'b23' :'b13' : 'b03') : ($donnees['ville_pop']>=100? $donnees['ville_pop']>= 250?$donnees['ville_pop']>=500? 'b34': 'b24' :'b14' : 'b04'))))) : ($donnees['ville_pop']>=100? $donnees['ville_pop']>= 250?$donnees['ville_pop']>=500? 'b34': 'b24' :'b14' : 'b04'))) : $donnees['map_image'];
+
+	//Javascript map info
+	if($yrow!=7){
+		$map_js .= "[".$donnees['map_x'].",".$donnees['map_y'].",".$donnees['map_fieldtype'].",". ((!empty($donnees['map_oasis'])) ? $donnees['map_oasis'] : 0) .",\"d=".$donnees['map_id']."&c=".$generator->getMapCheck($donnees['map_id'])."\",\"".$image."\"";
+		if($donnees['map_occupied']){
+			if($donnees['map_fieldtype'] != 0){
+				$map_js.= ",\"".htmlspecialchars($donnees['ville_name'])."\",\"".htmlspecialchars($donnees['user_username'])."\",\"".$donnees['ville_pop']."\",\"".htmlspecialchars($donnees['aliance_name'])."\",\"".$donnees['user_tribe']."\"]\n";
 			}
 		}
-		else {
-			$text .= "]";
+		elseif($donnees['map_oasis'] != 0){
+			if ($donnees['oasis_conqured'] != 0){
+					$map_js.= ",\"\",\"".$donnees['oasis_user']."\",\"-\",\"".$donnees['oasis_alli_name']."\",\"".$donnees['oasis_tribe']."\"]";
+			} 
+			else{
+				$map_js.="]";
+			}
 		}
-		echo $text;
-		if($h == 6 && $yrow !=6) {
-			$h = -1;
+		else{$map_js .= "]";}
+
+		if($i == 6 && $yrow !=6){
+			$i = -1;
 			$yrow +=1;
-			echo "],[";
+			$map_js .= "],[";
 		}
 		else {
-			if($yrow == 6 && $h == 6) {
-				echo "]]";
-			}
-			else {
-			echo ",";
-			}
+			if($yrow == 6 && $i == 6) {$map_js .= "]";}
+			else {$map_js .= ",";}
 		}
 		$regcount += 1;
 	}
-
+	else {$map_js .= "]";}
+	++$i;
 }
-?>
+echo '[['.$map_js.']';
