@@ -1551,7 +1551,7 @@
         	}
 
         	function getJobs($wid) {
-        		$q = "SELECT * FROM " . TB_PREFIX . "bdata where wid = $wid order by ID ASC";
+        		$q = "SELECT * FROM " . TB_PREFIX . "bdata where wid = $wid order by timestamp ASC";
         		$result = mysql_query($q, $this->connection);
         		return $this->mysql_fetch_all($result);
         	}

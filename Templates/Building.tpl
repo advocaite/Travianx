@@ -33,11 +33,12 @@
         if(!isset($timer)) {
         $timer = 1;
         }
+		$BuildingList = array();
         foreach($building->buildArray as $jobs) {
         	echo "<tr><td class=\"ico\"><a href=\"?d=".$jobs['id']."&a=0&c=$session->checker\">";
             echo "<img src=\"img/x.gif\" class=\"del\" title=\"cancel\" alt=\"cancel\" /></a></td><td>";
-			echo $building->procResType($jobs['type'])." (Level ".($village->resarray['f'.$jobs['field']]+($jobs['field']==$BuildFirst?2:1 )).")";
-			if($jobs['loopcon'] == 0) { $BuildFirst = $jobs['field']; }
+			echo $building->procResType($jobs['type'])." (Level ".($village->resarray['f'.$jobs['field']]+(in_array($jobs['field'],$BuildingList)?2:1 )).")";
+			if($jobs['loopcon'] == 0) { $BuildingList[] = $jobs['field']; }
             if($jobs['loopcon'] == 1) {
             	echo " (waiting loop)";
             }

@@ -29,7 +29,7 @@ foreach($links as $link) {
        $external = '';
    }
 
-   echo '<tr><td class="dot"><li>&nbsp;</li></td><td class="link">'; 
+   echo '<tr><td class="dot">●</td><td class="link">'; 
    echo '<a href="' . $link['url'] . '"' . $target . '>' . $link['name'] . $external . '</a></td></tr>';
 }
 print '</tbody></table>';
