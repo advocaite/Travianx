@@ -184,15 +184,15 @@ ee.ibox_cells=[];ee.ibox_cells[0]=ee.map_infobox.firstChild.firstChild.lastChild
 		ee.mx[i]=document.getElementById('mx'+i);
 		ee.my[i]=document.getElementById('my'+i);
 	}
-	var ue=document.getElementById('map_makelarge');
-	if(ue){ue.onclick=ve;}
+	//var ue=document.getElementById('map_makelarge');
+	//if(ue){ue.onclick=ve;}
 	if(mdim.x==13){
 		document.getElementById('map_popclose').onclick=we;
 	}
 }
 
 function se(){opener.location=this.href;return false;}
-function xe(ye){var ze=document.getElementById('map_makelarge');ze.className=ye?'loading':'';}
+//function xe(ye){var ze=document.getElementById('map_makelarge');ze.className=ye?'loading':'';}
 function $e(_e){var af;var bf;if(ee.map_infobox!=null){if(_e.normal_field){var cf=df(_e.nr*1);af=[text_k.verlassenes_tal+': '+cf.join('-')];bf='empty';}
 else if(_e.free_oasis&&!_e.classic_oasis){af=[text_k.freie_oase];bf='oasis_empty';}
 else if(_e.occupied_oasis&&!_e.classic_oasis){af=[text_k.besetztes_tal,_e.name,_e.ew,_e.ally];bf='oasis';}
