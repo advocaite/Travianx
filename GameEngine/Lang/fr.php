@@ -20,7 +20,7 @@ define("HOME","Accueil");
 define("INSTRUCT","Instructions");
 define("ADMIN_PANEL","Admin Panel");
 define("MASS_MESSAGE","Mass Message");
-define("LOGOUT","DÈconexion");
+define("LOGOUT","D√©conexion");
 define("PROFILE","Profil");
 define("SUPPORT","Support");
 define("UPDATE_T_10","Update Top 10");
@@ -38,20 +38,20 @@ define("TOUR","Tour du jeux");
 
 
 //ERRORS
-define("USRNM_EMPTY","(Username empty)");
-define("USRNM_TAKEN","(Name is already in use.)");
-define("USRNM_SHORT","(min. ".USRNM_MIN_LENGTH." figures)");
-define("USRNM_CHAR","(Invalid Characters)");
-define("PW_EMPTY","(Password empty)");
-define("PW_SHORT","(min. ".PW_MIN_LENGTH." figures)");
+define("USRNM_EMPTY","(Nom d'utilisateur vide)");
+define("USRNM_TAKEN","(Nom d√©j√† utilis√©.)");
+define("USRNM_SHORT","(minimum. ".USRNM_MIN_LENGTH." caract√®re)");
+define("USRNM_CHAR","(Invalid caract√®re)");
+define("PW_EMPTY","(Password vide)");
+define("PW_SHORT","(minimum. ".PW_MIN_LENGTH." caract√®re)");
 define("PW_INSECURE","(Password insecure. Please choose a more secure one.)");
-define("EMAIL_EMPTY","(Email Empty)");
-define("EMAIL_INVALID","(Invalid email address)");
-define("EMAIL_TAKEN","(Email is already in use)");
-define("TRIBE_EMPTY","<li>Please choose a tribe.</li>");
-define("AGREE_ERROR","<li>You have to agree to the game rules and the general terms & conditions in order to register.</li>");
-define("LOGIN_USR_EMPTY","Enter name.");
-define("LOGIN_PASS_EMPTY","Enter password.");
+define("EMAIL_EMPTY","(Email vide)");
+define("EMAIL_INVALID","(adresse email invalide)");
+define("EMAIL_TAKEN","(Email d√©j√† utilis√©)");
+define("TRIBE_EMPTY","<li>Veuillez choisir une tribu.</li>");
+define("AGREE_ERROR","<li>Vous devez accepter les r√®gles du jeu et les conditions g√©n√©rales de vente afin de vous inscrire.</li>");
+define("LOGIN_USR_EMPTY","Entrer un nom.");
+define("LOGIN_PASS_EMPTY","Entrer un password.");
 define("EMAIL_ERROR","Email does not match existing");
 define("PASS_MISMATCH","Passwords do not match");
 define("ALLI_OWNER","Please appoint an alliance owner before deleting");
@@ -88,7 +88,7 @@ define("IRON","Iron");
 define("CROP","Crop");
 define("LEVEL","Level");
 define("CROP_COM",CROP." consumption");
-define("PER_HR","per hour");
+define("PER_HR","par heure");
 define("PROD_HEADER","Production");
 define("MULTI_V_HEADER","Villages");
 define("ANNOUNCEMENT","Announcement");
@@ -260,20 +260,20 @@ define("CHOOSE","Please choose a server.");
 define("STARTED"," The server started ". round((time()-COMMENCE)/86400) ." days ago.");
 
 //ANMELDEN.php
-define("NICKNAME","Nickname");
+define("NICKNAME","Pseudo");
 define("EMAIL","Email");
 define("PASSWORD","Password");
-define("ROMANS","Romans");
-define("TEUTONS","Teutons");
-define("GAULS","Gauls");
-define("NW","North West");
-define("NE","North East");
-define("SW","South West");
-define("SE","South East");
-define("RANDOM","random");
-define("ACCEPT_RULES"," I accept the game rules and general terms and conditions.");
-define("ONE_PER_SERVER","Each player may only own ONE account per server.");
-define("BEFORE_REGISTER","Before you register an account you should read the <a href='../anleitung.php' target='_blank'>instructions</a> of TravianX to see the specific advantages and disadvantages of the three tribes.");
+define("ROMANS","Romains");
+define("TEUTONS","Germains");
+define("GAULS","Gaulois");
+define("NW","Nord Ouest");
+define("NE","Nord Est");
+define("SW","Sud Ouest");
+define("SE","Sud Est");
+define("RANDOM","al√©atoire");
+define("ACCEPT_RULES"," J'accepte les r√®gles du jeu et conditions g√©n√©rales.");
+define("ONE_PER_SERVER","Chaque joueur ne peut poss√©der un compte par serveur.");
+define("BEFORE_REGISTER","Avant de vous inscrire un compte, vous devriez lire les <a href=''>instructions</a> de ... pour voir les avantages et inconv√©nients des trois tribus.");
 define("BUILDING_UPGRADING","Building:");
 define("HOURS","hours");
 
@@ -289,14 +289,14 @@ define("TROOPS_DORF","Troops:");
 
 
 //LOGIN.php
-define("COOKIES","You must have cookies enabled to be able to log in. If you share this computer with other people you should log out after each session for your own safety.");
-define("NAME","Name");
-define("PW_FORGOTTEN","Password forgotten?");
+define("COOKIES","Vous devez activer les cookies pour √™tre capable de vous connecter si vous partagez cet ordinateur avec d'autres personnes vous devez vous d√©connecter apr√®s chaque session pour votre propre s√©curit√©.");
+define("NAME","Nom");
+define("PW_FORGOTTEN","Mot de passe perdu ?");
 define("PW_REQUEST","Then you can request a new one which will be sent to your email address.");
-define("PW_GENERATE","All fields required");
-define("EMAIL_NOT_VERIFIED","Email not verified!");
-define("EMAIL_FOLLOW","Follow this link to activate your account.");
-define("VERIFY_EMAIL","Verify Email.");
+define("PW_GENERATE","Tous les champs sont requis");
+define("EMAIL_NOT_VERIFIED","Email non verifier!");
+define("EMAIL_FOLLOW","Suiv√© celien pour activ√© votre compte.");
+define("VERIFY_EMAIL","Verifier l'Email.");
 
 
 //404.php
@@ -321,24 +321,21 @@ define("MASS_ABORT","Aborting right now");
 define("MASS_SENT","Mass IGM was sent");
 
 
-/*
-|--------------------------------------------------------------------------
-|   Index 
-|--------------------------------------------------------------------------
-*/
+
+//Index 
 $lang['index'][0][1] = "Bienvenue sur ".SERVER_NAME;
 $lang['index'][0][2] = "Manuel";
 $lang['index'][0][3] = "Jouer maintenant, c'est Gratuit!";
 $lang['index'][0][4] = "C'est quoi ".SERVER_NAME;
-$lang['index'][0][5] = SERVER_NAME." et un <b>Jeux par navigateur</b> dans un monde antique ou s'afronte des milliers de joueurs rÈels.</p><p>C'est <strong>gratuit pour jouer</strong> et aucun <strong>tÈlÈchargement</strong> n'est requits.";
-$lang['index'][0][6] = "Click ici pour jouer ".SERVER_NAME;
+$lang['index'][0][5] = SERVER_NAME." et un <b>Jeux par navigateur</b> dans un monde antique ou s'afronte des milliers de joueurs r√©els.</p><p>C'est <strong>gratuit pour jouer</strong> et aucun <strong>t√©l√©chargement</strong> n'est requits.";
+$lang['index'][0][6] = "Click ici pour jouer √† ".SERVER_NAME;
 $lang['index'][0][7] = "Total de joueur";
 $lang['index'][0][8] = "Joueur actif";
 $lang['index'][0][9] = "Joueur en ligne";
 $lang['index'][0][10] = "A propos du jeux";
-$lang['index'][0][11] = "Vous commencerez en tant que chef d'un petit village et vous vous lancerais dans une quÍte passionnante pour conquÈrir du tÈrritoire.";
-$lang['index'][0][12] = "Construisez des villages, Faite la guerres ou d'Ètablissez des routes commerciales avec vos voisins.";
-$lang['index'][0][13] = "Jouez avec et contre des milliers d'autres joueurs rÈels et conquÈrissez le monde de ".SERVEUR_NAME.".";
+$lang['index'][0][11] = "Vous commencerez en tant que chef d'un petit village et vous vous lancerais dans une qu√™te passionnante pour conqu√©rir du t√©rritoire.";
+$lang['index'][0][12] = "Construisez des villages, Faite la guerres ou d'√©tablissez des routes commerciales avec vos voisins.";
+$lang['index'][0][13] = "Jouez avec et contre des milliers d'autres joueurs r√©els et conqu√©rissez le monde de ".SERVEUR_NAME.".";
 $lang['index'][0][14] = "Nouvelle";
 $lang['index'][0][15] = "FAQ";
 $lang['index'][0][16] = "Screenshots";
@@ -347,44 +344,44 @@ $lang['register'] = "Inscription";
 $lang['login'] = "Connexion";
 
 // ALL building
-define('Build_Woodcutter', 'b˚cheron');
-define('Build_ClayPit', 'CarriËre d\'argile');
+define('Build_Woodcutter', 'b√ªcheron');
+define('Build_ClayPit', 'Carri√®re d\'argile');
 define('Build_IronMine', 'Mine de fer');
-define('Build_Cropland', 'Terres cultivÈes');
+define('Build_Cropland', 'Terres cultiv√©es');
 define('Build_Sawmill', 'Scierie');
 define('Build_Brickyard', 'Usine de poterie');
 define('Build_IronFoundry' , 'Fonderie');
-define('Build_GrainMill', 'Moulin ‡ grain');
+define('Build_GrainMill', 'Moulin √† grain');
 define('Build_Bakery', 'Boulangerie');
-define('Build_Warehouse', 'EntrepÙt');
-define('Build_Granary', 'Silo ‡ cÈrÈales');
+define('Build_Warehouse', 'Entrep√¥t');
+define('Build_Granary', 'Silo √† c√©r√©ales');
 define('Build_Blacksmith', 'Forge');
 define('Build_Armoury', 'Armurerie');
 define('Build_TournamentSquare', 'Place du tournoi');
-define('Build_MainBuilding', 'B‚timent principal');
+define('Build_MainBuilding', 'B√¢timent principal');
 define('Build_RallyPoint', 'Place de rassemblement');
-define('build_Marketplace', 'Place du marchÈ');
+define('build_Marketplace', 'Place du march√©');
 define('Build_Embassy', 'Ambassade ');
 define('Build_Barracks', 'Caserne');
-define('Build_Stable', '…curie');
+define('Build_Stable', '√âcurie');
 define('Build_Workshop','Atelier');
-define('Build_Academy', 'AcadÈmie');
+define('Build_Academy', 'Acad√©mie');
 define('Build_Cranny', 'Cachette');
-define('Build_TownHall', 'HÙtel de ville');
-define('Build_Residence', 'RÈsidence');
+define('Build_TownHall', 'H√¥tel de ville');
+define('Build_Residence', 'R√©sidence');
 define('Build_Palace', 'Palais');
-define('Build_Treasury', 'Chambre du TrÈsor');
+define('Build_Treasury', 'Chambre du Tr√©sor');
 define('Build_TradeOffice', 'Comptoir de commerce');
 define('Build_GreatBarracks', 'Grande caserne');
-define('Build_GreatStable', 'Grange Ècurie');
+define('Build_GreatStable', 'Grange √©curie');
 define('Build_CityWall', 'Mur d\'enceinte');
 define('Build_EarthWall', 'Mur de terre');
 define('Build_Palisade', 'Palissade');
 define('Build_StonemasonsLodge', 'Tailleur de pierre');
 define('Build_Brewery', 'Brasserie');
-define('Build_Trapper', 'Fabricant de piËges');
-define('Build_HerosMansion', 'Manoir du hÈros');
-define('Build_GreatWarehouse', 'Grand EntrepÙt');
+define('Build_Trapper', 'Fabricant de pi√®ges');
+define('Build_HerosMansion', 'Manoir du h√©ros');
+define('Build_GreatWarehouse', 'Grand Entrep√¥t');
 define('Build_GreatGranary', 'Grand grenier');
 define('Build_WonderOfTheWorld', 'Merveille du monde');
 define('Build_HorseDrinkingTrough', 'Abreuvoir');

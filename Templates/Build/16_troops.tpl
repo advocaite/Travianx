@@ -31,4 +31,4 @@
             ?>
            </tr></tbody>
             <tbody class="infos"><tr><th>Upkeep</th>
-            <td colspan="<?php if($village->unitarray['hero'] == 0) {echo"10";}else{echo"11";}?>"><?php echo $technology->getUpkeep($village->unitarray,1); ?><img class="r4" src="img/x.gif" title="Crop" alt="Crop" />per hour</td></tr>
+            <td colspan="<?php if($village->unitarray['hero'] == 0) {echo"10";}else{echo"11";}?>"><?php echo $technology->getUpkeep($village->unitarray,0); ?><img class="r4" src="img/x.gif" title="Crop" alt="Crop" />per hour</td></tr>

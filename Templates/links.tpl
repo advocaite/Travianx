@@ -10,7 +10,7 @@
 #################################################################################
 
 // Fetch all links
-$query = $database->getLinks($session->uid);  
+$query = $database->getLinks($session->uid);++$requse;
 if (mysql_num_rows($query) > 0){
 $links = array();
 while($data = mysql_fetch_assoc($query)) {

@@ -1,6 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <?php
-
 #################################################################################
 ##              -= YOU MAY NOT REMOVE OR CHANGE THIS NOTICE =-                 ##
 ## --------------------------------------------------------------------------- ##
@@ -10,10 +9,8 @@
 ##  Copyright:     TravianX (c) 2010-2011. All rights reserved.                ##
 ##                                                                             ##
 #################################################################################
-
 include("GameEngine/config.php");
 ?>
-
 <html>
 	<head>
 	<title><?php echo SERVER_NAME; ?></title>
@@ -33,37 +30,17 @@ include("GameEngine/config.php");
        </head>
     <body class="manual">
 <?php
-
-if (!ctype_digit($_GET['s'])) {
-	$_GET['s'] = "0";
-}
-if (!ctype_digit($_GET['typ'])) {
-	$_GET['typ'] = null;
-}
-if(!isset($_GET['typ']) && !isset($_GET['s'])) {
-	include("Templates/Manual/00.tpl");
-}
-else if (!isset($_GET['typ']) && $_GET['s'] == 1) {
-	include("Templates/Manual/00.tpl");
-}
-else if (!isset($_GET['typ']) && $_GET['s'] == 2) {
-	include("Templates/Manual/direct.tpl");
-}
-else if (isset($_GET['typ']) && $_GET['typ'] == 5 && $_GET['s'] == 3) {
-	include("Templates/Manual/medal.tpl");
-}
+if (!ctype_digit($_GET['s'])) {	$_GET['s'] = "0";}
+if (!ctype_digit($_GET['typ'])) {	$_GET['typ'] = null;}
+if(!isset($_GET['typ']) && !isset($_GET['s'])) {	include("Templates/Manual/00.tpl");}
+else if (!isset($_GET['typ']) && $_GET['s'] == 1) {	include("Templates/Manual/00.tpl");}
+else if (!isset($_GET['typ']) && $_GET['s'] == 2) {	include("Templates/Manual/direct.tpl");}
+else if (isset($_GET['typ']) && $_GET['typ'] == 5 && $_GET['s'] == 3) {	include("Templates/Manual/medal.tpl");}
+else {	if(isset($_GET['gid'])) {		include("Templates/Manual/".$_GET['typ'].($_GET['gid']).".tpl");	}
 else {
-	if(isset($_GET['gid'])) {
-		include("Templates/Manual/".$_GET['typ'].($_GET['gid']).".tpl");
-	}
-	else {
-		if($_GET['typ'] == 4 && $_GET['s'] == 0) {
-			$_GET['s'] = 1;
-		}
+	if($_GET['typ'] == 4 && $_GET['s'] == 0) {	$_GET['s'] = 1;	}
 	include("Templates/Manual/".$_GET['typ'].$_GET['s'].".tpl");
 	}
-}
-?>
+}?>
 </body>
-
 </html>

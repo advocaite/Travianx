@@ -30,13 +30,11 @@ if(isset($_GET['e'])) {
 	}
 } else if(isset($_GET['id']) && isset($_GET['c'])) {
 	$c=$database->getActivateField($_GET['id'],"email",0);
-	if($_GET['c'] == $generator->encodeStr($c,5)){
-		include("Templates/activate/delete.tpl");
-	} else { include("Templates/activate/activate.tpl"); }
-} else {
-include("Templates/activate/activate.tpl");
+	if($_GET['c'] == $generator->encodeStr($c,5)){include("Templates/activate/delete.tpl");}
+	else{include("Templates/activate/activate.tpl");}
 }
-
+else {include("Templates/activate/activate.tpl");}
+echo $generator->encodeStr($c,5);
 /*if(isset($_GET['e'])) {
 	switch($_GET['e']) {
 		case 1:

@@ -14,11 +14,11 @@
 |   TravianX All rights reserved
 |
 */
+include ("GameEngine/Village.php");
+include ("GameEngine/Chat.php");
 
-       include ("GameEngine/Village.php");
-       include ("GameEngine/Chat.php");
-       $start = $generator->pageLoadTimeStart();
-       $alliance->procAlliance($_GET);
+$start = $generator->pageLoadTimeStart();
+$alliance->procAlliance($_GET);
 
 include ("Templates/header.tpl");
 include ("Templates/res.tpl");

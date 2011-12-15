@@ -8,7 +8,7 @@
 	<table cellpadding="1" cellspacing="1" id="build_value">
 	<tr>
 		<th>Current capacity:</th>
-		<td><b><?php echo $bid39[$village->resarray['f'.$id]]['attri']; ?></b> units</td>
+		<td><b><?php echo $bid39[$village->resarray['f'.$id]]['attri']*STORAGE_MULTIPLIER; ?></b> units</td>
 	</tr>
     
 	<tr>
@@ -16,7 +16,7 @@
         if(!$building->isMax($village->resarray['f'.$id.'t'],$id)) {
         ?>
 		<th>Capacity at level <?php echo $village->resarray['f'.$id]+1; ?>:</th>
-		<td><b><?php echo $bid39[$village->resarray['f'.$id]+1]['attri']; ?></b> units</td>
+		<td><b><?php echo $bid39[$village->resarray['f'.$id]+1]['attri']*STORAGE_MULTIPLIER; ?></b> units</td>
         <?php
             }
             ?>

@@ -35,7 +35,10 @@
         		}
         	}  
             
-        if(mysql_num_rows($hero) == 0){
+		if(isset($_GET['land'])) {
+			include("37_land.tpl");
+		} else {
+		if(mysql_num_rows($hero) == 0){
             include("37_train.tpl");
         }
         if(mysql_num_rows($hero) != 0 AND $hero_info['trainingtime'] > time()){
@@ -47,7 +50,7 @@
         if(mysql_num_rows($hero) != 0 AND $hero_info['dead'] == 0 AND $hero_info['trainingtime'] <= time()){
             include("37_hero.tpl");
         }
-        
+        }
         include ("upgrade.tpl"); ?>
         
     </div>

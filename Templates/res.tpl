@@ -8,8 +8,6 @@
 ##  Copyright:     TravianX (c) 2010-2011. All rights reserved.                ##
 ##                                                                             ##
 #################################################################################
-
-
 $wood = round($village->getProd("wood"));
 $clay = round($village->getProd("clay"));
 $iron = round($village->getProd("iron"));

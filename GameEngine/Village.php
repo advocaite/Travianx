@@ -1,4 +1,5 @@
 <?php
+
 #################################################################################
 ##              -= YOU MAY NOT REMOVE OR CHANGE THIS NOTICE =-                 ##
 ## --------------------------------------------------------------------------- ##
@@ -7,6 +8,7 @@
 ##  Copyright:     TravianX (c) 2010-2011. All rights reserved.                ##
 ##                                                                             ##
 #################################################################################
+
 include("Session.php");
 include("Building.php");
 include("Market.php");
@@ -70,6 +72,7 @@ class Village {
 		$this->researching = $database->getResearching($this->wid);
 		
 		$this->capital = $this->infoarray['capital'];
+		$this->currentcel = $this->infoarray['celebration'];
 		$this->wid = $this->infoarray['wref'];
 		$this->vname = $this->infoarray['name'];
 		$this->awood = $this->infoarray['wood'];
@@ -286,4 +289,5 @@ class Village {
 };
 $village = new Village;
 $building = new Building;
+
 ?>

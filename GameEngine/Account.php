@@ -8,26 +8,38 @@
 ##  Copyright:     TravianX (c) 2010-2011. All rights reserved.                ##
 ##                                                                             ##
 #################################################################################
+
 include("Session.php");
 
 class Account {
-
-	function Account(){
+	
+	function Account() {
 		global $session;
-		if(isset($_POST['ft'])){
-			switch($_POST['ft']){
-				case "a1":				$this->Signup();			break;
-				case "a2":				$this->Activate();			break;
-				case "a3":				$this->Unreg();				break;
-				case "a4":				$this->Login();				break;
+		if(isset($_POST['ft'])) {
+			switch($_POST['ft']) {
+				case "a1":
+				$this->Signup();
+				break;
+				case "a2":
+				$this->Activate();
+				break;
+				case "a3":
+				$this->Unreg();
+				break;
+				case "a4":
+				$this->Login();
+				break;
+			}
+		} if(isset($_GET['code'])) {
+		$_POST['id'] = $_GET['code']; $this->Activate();
+		}
+		else {
+			if($session->logged_in && in_array("logout.php",explode("/",$_SERVER['PHP_SELF']))) {
+				$this->Logout();
 			}
 		}
-		if(isset($_GET['code'])){$_POST['id'] = $_GET['code']; $this->Activate();}
-		else{
-			if($session->logged_in && in_array("logout.php",explode("/",$_SERVER['PHP_SELF']))){$this->Logout();}
-		}
 	}
-
+	
 	private function Signup() {
 		global $database,$form,$mailer,$generator,$session;
 		if(!isset($_POST['name']) || $_POST['name'] == "") {
@@ -109,24 +121,26 @@ class Account {
 			}
 		}
 	}
-
-	private function Activate(){
+	
+	private function Activate() {
 		global $database;
 		$q = "SELECT * FROM ".TB_PREFIX."activate where act = '".$_POST['id']."'";
 		$result = mysql_query($q, $database->connection);
 		$dbarray = mysql_fetch_array($result);
-		if($dbarray['act'] == $_POST['id']){
+		if($dbarray['act'] == $_POST['id']) {
 			$uid = $database->register($dbarray['username'],$dbarray['password'],$dbarray['email'],$dbarray['tribe'],$dbarray['location'],"");
-			if($uid){
-				$database->unreg($dbarray['username']);
-				$this->generateBase($dbarray['kid'],$uid,$dbarray['username']);
-				header("Location: activate.php?e=2");
+			if($uid) {
+			$database->unreg($dbarray['username']);
+			$this->generateBase($dbarray['kid'],$uid,$dbarray['username']);
+			header("Location: activate.php?e=2");
 			}
 		}
-		else{header("Location: activate.php?e=3");}
+		else {
+			header("Location: activate.php?e=3");
+		}
 	}
-
-	private function Unreg(){
+	
+	private function Unreg() {
 		global $database;
 		$q = "SELECT * FROM ".TB_PREFIX."activate where id = '".$_POST['id']."'";
 		$result = mysql_query($q, $database->connection);
@@ -139,17 +153,28 @@ class Account {
 			header("Location: activate.php?e=3");
 		}
 	}
-
-	private function Login(){
+	
+	private function Login() {
 		global $database,$session,$form;
-		if(!isset($_POST['user']) || $_POST['user'] == "")	{	$form->addError("user",LOGIN_USR_EMPTY);}
-		elseif(!$database->checkExist($_POST['user'],0))	{	$form->addError("user",USR_NT_FOUND);	}
-		if(!isset($_POST['pw']) || $_POST['pw'] == "")		{	$form->addError("pw",LOGIN_PASS_EMPTY);	}
-		elseif(!$database->login($_POST['user'],$_POST['pw']) && !$database->sitterLogin($_POST['user'],$_POST['pw'])) {	$form->addError("pw",LOGIN_PW_ERROR);}
-		if($database->getUserField($_POST['user'],"act",1) != "") {	$form->addError("activate",$_POST['user']);	}
+		if(!isset($_POST['user']) || $_POST['user'] == "") {
+			$form->addError("user",LOGIN_USR_EMPTY);
+		}
+		else if(!$database->checkExist($_POST['user'],0)) {
+			$form->addError("user",USR_NT_FOUND);
+		}
+		if(!isset($_POST['pw']) || $_POST['pw'] == "") {
+			$form->addError("pw",LOGIN_PASS_EMPTY);
+		}
+		else if(!$database->login($_POST['user'],$_POST['pw']) && !$database->sitterLogin($_POST['user'],$_POST['pw'])) {
+			$form->addError("pw",LOGIN_PW_ERROR);
+		}
+		if($database->getUserField($_POST['user'],"act",1) != "") {
+			$form->addError("activate",$_POST['user']);
+		}
 		if($form->returnErrors() > 0) {
 			$_SESSION['errorarray'] = $form->getErrors();
 			$_SESSION['valuearray'] = $_POST;
+			
 			header("Location: login.php");
 		}
 		else {
@@ -158,25 +183,32 @@ class Account {
 			$session->login($_POST['user']);
 		}
 	}
-
-	private function Logout(){
+	
+	private function Logout() {
 		global $session,$database;
 		unset($_SESSION['wid']);
 		$database->activeModify($session->username,1);
 		$database->UpdateOnline("logout") or die(mysql_error());
 		$session->Logout();
 	}
-
-	private function validEmail($email){
-		$regexp="/^[a-z0-9]+([_\\.-][a-z0-9]+)*@([a-z0-9]+([\.-][a-z0-9]+)*)+\\.[a-z]{2,}$/i";
-		if(!preg_match($regexp, $email)){return false;}
-		return true;
+	
+	private function validEmail($email) {
+	  $regexp="/^[a-z0-9]+([_\\.-][a-z0-9]+)*@([a-z0-9]+([\.-][a-z0-9]+)*)+\\.[a-z]{2,}$/i";
+	  if ( !preg_match($regexp, $email) ) {
+		   return false;
+	  }
+	  return true;
 	}
-
-	function generateBase($kid,$uid,$username){
+	
+	function generateBase($kid,$uid,$username) {
 		global $database,$message;
 		//$database->updateUserField($uid,"location","",1);
-		$kid = ($kid == 0) ? $kid = rand(1,4) : $_POST['kid'];
+		if($kid == 0) {
+			$kid = rand(1,4);
+		}
+		else{
+			$kid = $_POST['kid'];
+		}
 		
 		$wid = $database->generateBase($kid);
 		$database->setFieldTaken($wid);
@@ -188,7 +220,7 @@ class Account {
 		$database->updateUserField($uid,"access",USER,1);
 		$message->sendWelcome($uid,$username);
 	}
-
+	
 };
 $account = new Account;
 ?>

@@ -6844,6 +6844,7 @@ img.iReport19 {
 }
 div#map a#map_makelarge img {
     background-image: url("../../img/m/max.gif");
+	
     height: 25px;
     width: 33px;
 }

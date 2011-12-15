@@ -23,7 +23,7 @@ echo '</pre>';
 		<table class="troop_details" cellpadding="1" cellspacing="1">
 	<thead>
 		<tr>
-			<td class="role"><a href="karte.php?d=<?php echo $founder['0']; ?>&c=<?php echo $generator->getMapCheck($founder['0']); ?>"><?php echo $database->getUserField($session->uid,'username',0); ?></a></td><td colspan="10"><a href="karte.php?d=<?php echo $newvillage['id']; ?>&c=<?php echo $generator->getMapCheck($newvillage['0']) ?>">Found new village (<?php echo $newvillage['x']; ?>|<?php echo $newvillage['y']; ?>)</a></td>
+			<td class="role"><a href="karte.php?d=<?php echo $founder['0']; ?>&c=<?php echo $generator->getMapCheck($founder['0']); ?>"><?php echo $session->username; ?></a></td><td colspan="10"><a href="karte.php?d=<?php echo $newvillage['id']; ?>&c=<?php echo $generator->getMapCheck($newvillage['0']) ?>">Found new village (<?php echo $newvillage['x']; ?>|<?php echo $newvillage['y']; ?>)</a></td>
 		</tr>
 	</thead>
 	<tbody class="units">
@@ -63,7 +63,7 @@ echo '</pre>';
 $mode = CP; 
 $total = count($database->getProfileVillages($session->uid)); 
 $need_cps = ${'cp'.$mode}[$total];
-$cps = $database->getUserField($session->uid, 'cp',0);
+$cps = $session->cp;
 
 if($cps >= $need_cps) {
 ?>
