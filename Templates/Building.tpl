@@ -20,7 +20,7 @@
 		</tr>
 	</thead>
 	<tbody><?php
-	if($_GET['buildingFinish'] == 1 AND $session->gold >= 2){$database->updateUserField($_SESSION['username'],'gold',($session->gold - 2),0);++$requse;}
+	if($_GET['buildingFinish'] == 1 AND $session->gold >= 2){$database->updateUserField($_SESSION['username'],'gold',($session->gold - 2),0);}
 
 	if(!isset($timer)){$timer = 1;}
 
