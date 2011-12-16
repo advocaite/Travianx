@@ -22,4 +22,4 @@ if(count($session->villages) > 1){?>
 	</tbody>
 </table>
 <?php
-}
+}?>
