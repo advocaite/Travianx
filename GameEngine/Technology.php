@@ -594,8 +594,16 @@ private function trainUnit($unit,$amt,$great=false) {
 		$rcltime = ($resarray['clay']-$village->aclay) / $village->getProd("clay") * 3600;
 		$ritime = ($resarray['iron']-$village->airon) / $village->getProd("iron") * 3600;
 		$rctime = ($resarray['crop']-$village->acrop) / $village->getProd("crop") * 3600;
-		$reqtime = max($rwtime,$rctime,$ritime,$rcltime);
-		$reqtime += time();
+		if($village->getProd("crop") >= 0) {
+			$reqtime = max($rwtime,$rcltime,$ritime,$rctime) + time();
+		} else {
+			$reqtime = max($rwtime,$rcltime,$ritime);
+			if($reqtime > $rctime) { 
+				$reqtime = 0;
+			} else {
+				$reqtime += time();
+			}
+		}
 		return $generator->procMtime($reqtime);
 	}
 

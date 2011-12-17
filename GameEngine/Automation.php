@@ -107,45 +107,53 @@ class Automation {
     }
     
      public function Automation() {
-     
+        if(!file_exists("GameEngine/Prevention/cleardeleting.txt") or time()-filemtime("GameEngine/Prevention/cleardeleting.txt")>50) {
+            $this->clearDeleting();
+        }
         $this->ClearUser();
         $this->ClearInactive();
         $this->pruneResource();
-        $this->loyaltyRegeneration();
-        $this->updateHero();
-        $this->celebrationComplete();
-        if(!file_exists("GameEngine/Prevention/culturepoints.txt") or time()-filemtime("GameEngine/Prevention/culturepoints.txt")>10) {
+        if(!file_exists("GameEngine/Prevention/loyalty.txt") or time()-filemtime("GameEngine/Prevention/loyalty.txt")>50) {
+	        $this->loyaltyRegeneration();
+		}
+        if(!file_exists("GameEngine/Prevention/updatehero.txt") or time()-filemtime("GameEngine/Prevention/updatehero.txt")>50) {
+	        $this->updateHero();
+		}
+        if(!file_exists("GameEngine/Prevention/celebration.txt") or time()-filemtime("GameEngine/Prevention/celebration.txt")>50) {
+	        $this->celebrationComplete();
+		}
+        if(!file_exists("GameEngine/Prevention/culturepoints.txt") or time()-filemtime("GameEngine/Prevention/culturepoints.txt")>50) {
             $this->culturePoints();
         }
-        if(!file_exists("GameEngine/Prevention/research.txt") or time()-filemtime("GameEngine/Prevention/research.txt")>10) {
+        if(!file_exists("GameEngine/Prevention/research.txt") or time()-filemtime("GameEngine/Prevention/research.txt")>50) {
             $this->researchComplete();
         }
-        if(!file_exists("GameEngine/Prevention/cleardeleting.txt") or time()-filemtime("GameEngine/Prevention/cleardeleting.txt")>10) {
-            $this->clearDeleting();
-        }
-        if(!file_exists("GameEngine/Prevention/build.txt") or time()-filemtime("GameEngine/Prevention/build.txt")>10) {
+        if(!file_exists("GameEngine/Prevention/starvation.txt") or time()-filemtime("GameEngine/Prevention/starvation.txt")>50) {
+	        $this->starvation();
+		}
+        if(!file_exists("GameEngine/Prevention/build.txt") or time()-filemtime("GameEngine/Prevention/build.txt")>50) {
             $this->buildComplete();
         }
-        if(!file_exists("GameEngine/Prevention/market.txt") or time()-filemtime("GameEngine/Prevention/market.txt")>10) {
+        if(!file_exists("GameEngine/Prevention/market.txt") or time()-filemtime("GameEngine/Prevention/market.txt")>50) {
             $this->marketComplete();
         }
-        if(!file_exists("GameEngine/Prevention/training.txt") or time()-filemtime("GameEngine/Prevention/training.txt")>10) {
+        if(!file_exists("GameEngine/Prevention/training.txt") or time()-filemtime("GameEngine/Prevention/training.txt")>50) {
             $this->trainingComplete();
         }
-        if(!file_exists("GameEngine/Prevention/sendunits.txt") or time()-filemtime("GameEngine/Prevention/sendunits.txt")>10) {
-            $this->sendunitsComplete();
-        }
-        if(!file_exists("GameEngine/Prevention/sendreinfunits.txt") or time()-filemtime("GameEngine/Prevention/sendreinfunits.txt")>10) {
+        if(!file_exists("GameEngine/Prevention/sendreinfunits.txt") or time()-filemtime("GameEngine/Prevention/sendreinfunits.txt")>50) {
             $this->sendreinfunitsComplete();
         }
-        if(!file_exists("GameEngine/Prevention/returnunits.txt") or time()-filemtime("GameEngine/Prevention/returnunits.txt")>10) {
+        if(!file_exists("GameEngine/Prevention/returnunits.txt") or time()-filemtime("GameEngine/Prevention/returnunits.txt")>50) {
             $this->returnunitsComplete();
         }
-        if(!file_exists("GameEngine/Prevention/settlers.txt") or time()-filemtime("GameEngine/Prevention/settlers.txt")>10) {
+        if(!file_exists("GameEngine/Prevention/settlers.txt") or time()-filemtime("GameEngine/Prevention/settlers.txt")>50) {
             $this->sendSettlersComplete();
         }    
-        if(!file_exists("GameEngine/Prevention/demolition.txt") or time()-filemtime("GameEngine/Prevention/demolition.txt")>10) {  
+        if(!file_exists("GameEngine/Prevention/demolition.txt") or time()-filemtime("GameEngine/Prevention/demolition.txt")>50) {  
             $this->demolitionComplete();    
+        }
+        if(!file_exists("GameEngine/Prevention/sendunits.txt") or time()-filemtime("GameEngine/Prevention/sendunits.txt")>50) {
+            $this->sendunitsComplete();
         }
     } 
     
@@ -226,6 +234,26 @@ class Automation {
                 $database->query($q);
 			}
         }
+        $array = array();
+        $q = "SELECT * FROM ".TB_PREFIX."odata WHERE loyalty<>100";
+        $array = $database->query_return($q);
+		if(!empty($array)) { 
+	        foreach($array as $loyalty) {
+                if($this->getTypeLevel(25,$loyalty['conqured']) >= 1){
+                    $value = $this->getTypeLevel(25,$loyalty['conqured']);
+                }elseif($this->getTypeLevel(26,$loyalty['conqured']) >= 1){
+                    $value = $this->getTypeLevel(26,$loyalty['conqured']);
+                } else {
+					$value = 0;
+				}
+				$newloyalty = min(100,$loyalty['loyalty']+$value*(time()-$loyalty['lastupdate'])*SPEED/(60*60));
+                $q = "UPDATE ".TB_PREFIX."odata SET loyalty = $newloyalty WHERE wref = '".$loyalty['wref']."'";
+                $database->query($q);
+			}
+        }
+		if(file_exists("GameEngine/Prevention/loyalty.txt")) {
+            @unlink("GameEngine/Prevention/loyalty.txt");
+        }
     }
 
 	private function clearDeleting() {
@@ -303,8 +331,8 @@ class Automation {
             $database->query($q);
             $q = "UPDATE ".TB_PREFIX."odata set `crop` = `maxcrop` WHERE `crop` > `maxcrop`";
             $database->query($q);
-            $q = "UPDATE ".TB_PREFIX."odata set `crop` = 100 WHERE `crop` < 0";
-            $database->query($q);
+            //$q = "UPDATE ".TB_PREFIX."odata set `crop` = 100 WHERE `crop` < 0";
+            //$database->query($q);
             $q = "UPDATE ".TB_PREFIX."odata set `wood` = 0 WHERE `wood` < 0";
             $database->query($q);
             $q = "UPDATE ".TB_PREFIX."odata set `clay` = 0 WHERE `clay` < 0";
@@ -328,8 +356,8 @@ class Automation {
             $database->query($q);
             $q = "UPDATE ".TB_PREFIX."vdata set `crop` = `maxcrop` WHERE `crop` > `maxcrop`";
             $database->query($q);
-            $q = "UPDATE ".TB_PREFIX."vdata set `crop` = 100 WHERE `crop` < 0";
-            $database->query($q);
+            //$q = "UPDATE ".TB_PREFIX."vdata set `crop` = 100 WHERE `crop` < 0";
+            //$database->query($q);
             $q = "UPDATE ".TB_PREFIX."vdata set `wood` = 0 WHERE `wood` < 0";
             $database->query($q);
             $q = "UPDATE ".TB_PREFIX."vdata set `clay` = 0 WHERE `clay` < 0";
@@ -2425,6 +2453,9 @@ class Automation {
                 $database->clearCel($id);
                 $database->setCelCp($user,$cp);
             }
+		if(file_exists("GameEngine/Prevention/celebration.txt")) {
+            @unlink("GameEngine/Prevention/celebration.txt");
+        }
     }
     
     private function demolitionComplete() {
@@ -2482,6 +2513,38 @@ class Automation {
 				}
 			}
 		}
+		if(file_exists("GameEngine/Prevention/updatehero.txt")) {
+            @unlink("GameEngine/Prevention/updatehero.txt");
+        }
+
+	}
+
+	private function starvation() {
+		global $database,$technology;
+		$TroopStarvesEvery = 100;
+        $q = "SELECT * FROM ".TB_PREFIX."vdata WHERE crop<0";
+        $array = $database->query_return($q);
+		if(!empty($array)) { 
+	        foreach($array as $village) {
+				$TroopsStarved = floor($village['crop'] / $TroopStarvesEvery) + 1;
+				$ownunit = $database->getUnit($base);
+				$TopUnit = $TopUnitCount = 0;
+				for($i=1;$i<=50;$i++) {
+					if($ownunit['u'.$i] > $TopUnitCount) { $TopUnit = $i; $TopUnitCount = $ownunit['u'.$i]; } 
+				}
+				if($TopUnitCount > 0) {
+					// Remove TroopsStarved from TopUnit
+				} else {
+					// Repeat check for reinforcements
+				}
+				$q = "UPDATE ".TB_PREFIX."vdata set `crop` = 100 WHERE wref=".$village['wref'];
+				$database->query($q);
+			}
+		}
+		
+		if(file_exists("GameEngine/Prevention/starvation.txt")) {
+            @unlink("GameEngine/Prevention/starvation.txt");
+        }
 	}
 }
 

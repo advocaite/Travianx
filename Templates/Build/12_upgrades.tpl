@@ -34,7 +34,7 @@ echo "<div class=\"details\"><img class=\"r1\" src=\"img/x.gif\" alt=\"Lumber\" 
 					echo "<td class=\"act\"><div class=\"none\">Expand<br>granary</div></td></tr>";
 				}
 				else if (${'ab'.$i}[$abdata['b'.$j]+1]['wood'] > $village->awood || ${'ab'.$i}[$abdata['b'.$j]+1]['clay'] > $village->aclay || ${'ab'.$i}[$abdata['b'.$j]+1]['iron'] > $village->airon || ${'ab'.$i}[$abdata['b'.$j]+1]['crop'] > $village->acrop) {
-					if($village->getProd("crop")>0){
+					if($village->getProd("crop")>0 || $village->acrop > ${'ab'.$i}[$abdata['b'.$j]+1]['crop']){
 						$time = $technology->calculateAvaliable(12,${'ab'.$i}[$abdata['b'.$j]+1]);
 			            echo "<br><span class=\"none\">Enough resources ".$time[0]." at ".$time[1]."</span></div></td>";
 					} else {
