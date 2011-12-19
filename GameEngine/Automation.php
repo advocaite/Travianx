@@ -372,15 +372,16 @@ class Automation {
     }
     
     private function culturePoints() {
-        global $database;
-        $time = time()-84600;
+        global $database,$session;
+        $time = time()-600;
         $array = array();
-        $q = "SELECT id, lastupdate FROM ".TB_PREFIX."users where lastupdate < $time";
+        $q = "SELECT id, lastupdate FROM ".TB_PREFIX."users WHERE lastupdate < $time";
         $array = $database->query_return($q);
         
         foreach($array as $indi) {
-            if($indi['lastupdate'] < $time){
-                $cp = $database->getVSumField($indi['id'], 'cp');
+            if($indi['lastupdate'] <= $time){
+                $cp = $database->getVSumField($indi['id'], 'cp') * (time()-$indi['lastupdate'])/86400;
+
                 $newupdate = time();
                 $q = "UPDATE ".TB_PREFIX."users set cp = cp + $cp, lastupdate = $newupdate where id = '".$indi['id']."'";
                 $database->query($q);
