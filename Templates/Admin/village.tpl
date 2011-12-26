@@ -132,6 +132,8 @@ if($village and $user){
 </table>
 
 
+<form method="POST" action="../GameEngine/Admin/Mods/addResources.php">
+<input type="hidden" value="<?php echo $id;?>" id="id" name="id">
 
 <table id="member" cellpadding="1" cellspacing="1" >
 
@@ -147,6 +149,8 @@ if($village and $user){
 
         <td class="hab">Resource</td>
 
+        <td class="hab">Add</td>
+ 
         <td class="hab" colspan="2">Warehouse</td>  
        
 
@@ -158,6 +162,8 @@ if($village and $user){
 
         <td><img src="../img/admin/r/1.gif"> Lumber</td>
 
+        <td class="hab"><input maxlength="10" value="" id="wood" name="wood" class="give_wood"></td>
+
         <td class="hab"><?php echo floor($village['wood']);?></td>
 
         <td class="hab" rowspan="3"><?php echo $village['maxstore'];?></td>      
@@ -168,6 +174,8 @@ if($village and $user){
 
         <td><img src="../img/admin/r/2.gif"> Clay</td>
 
+        <td class="hab"><input maxlength="10" value="" id="clay" name="clay" class="give_wood"></td>
+      
         <td class="hab"><?php echo floor($village['clay']);?></td>
       
 
@@ -177,6 +185,8 @@ if($village and $user){
 
         <td><img src="../img/admin/r/3.gif"> Iron</td>
 
+        <td class="hab"><input maxlength="10" value="" id="iron" name="iron" class="give_wood"></td>
+
         <td class="hab"><?php echo floor($village['iron']);?></td>    
 
     </tr>
@@ -184,6 +194,8 @@ if($village and $user){
     <tr>
 
         <td><img src="../img/admin/r/4.gif"> Crop</td>
+
+        <td class="hab"><input maxlength="10" value="" id="crop" name="crop" class="give_wood"></td>
 
         <td class="hab"><?php echo floor($village['crop']);?></td>
 
@@ -197,7 +209,7 @@ if($village and $user){
     </tbody>
 
 </table>
-
+<p><input type="submit" value="Add resources" name="submit" /></p>
 
 
 
