@@ -20,7 +20,7 @@ include("../GameEngine/Admin/database.php");
 	<link rel=stylesheet type="text/css" href="../img/admin/admin.css">
 	<link rel=stylesheet type="text/css" href="../img/admin/acp.css">
 	<link rel=stylesheet type="text/css" href="../img/img.css">
-		<script src="/mt-full.js?423cb"  type="text/javascript"></script>
+		<script src="../mt-full.js?423cb"  type="text/javascript"></script>
 	<script src="ajax.js" type="text/javascript"></script>
 
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
