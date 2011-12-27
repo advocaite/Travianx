@@ -263,7 +263,7 @@
 
         	function checkactiveSession($username, $sessid) {
         		$q = "SELECT username FROM " . TB_PREFIX . "users where username = '$username' and sessid = '$sessid' LIMIT 1";
-        		$result = mysql_query($q, $this->connection);   
+        		$result = mysql_query($q, $this->connection);
         		if(mysql_num_rows($result) != 0) {
         			return true;
         		} else {
@@ -419,25 +419,25 @@
             $troops_o=0;
             $o_unit2=mysql_query("select * from ".TB_PREFIX."units where `vref`='".$vref."'");
             $o_unit=mysql_fetch_array($o_unit2);
-            
+
             for ($i=1;$i<51;$i++)
             {
                 $troops_o+=$o_unit[$i];
-            }                        
-            $troops_o+=$o_unit['hero'];   
-            
+            }
+            $troops_o+=$o_unit['hero'];
+
             $o_unit2=mysql_query("select * from ".TB_PREFIX."enforcement where `vref`='".$vref."'");
             while ($o_unit=@mysql_fetch_array($o_unit2))
             {
                 for ($i=1;$i<51;$i++)
                 {
                     $troops_o+=$o_unit[$i];
-                }                        
+                }
                 $troops_o+=$o_unit['hero'];
             }
-            return $troops_o;  
+            return $troops_o;
             }
-            
+
 			public function canConquerOasis($vref,$wref) {
 				$AttackerFields = $this->getResourceLevel($vref);
 				for($i=19;$i<=38;$i++) {
@@ -462,8 +462,8 @@
 				}
 			}
 
-           
-            
+
+
 			public function conquerOasis($vref,$wref) {
 				$vinfo = $this->getVillage($vref);
 				$uid = $vinfo['owner'];
@@ -548,7 +548,7 @@
         			}
         		}
         	}
-            
+
             function populateOasisUnitsHigh() {
         		$q2 = "SELECT * FROM " . TB_PREFIX . "wdata where oasistype != 0";
         		$result2 = mysql_query($q2, $this->connection);
@@ -682,7 +682,7 @@
 				$result = mysql_query($q, $this->connection);
 				return mysql_fetch_array($result);
 			}
-			
+
 			public function getPopulation($uid) {
 				$q = "SELECT sum(pop) AS pop FROM ".TB_PREFIX."vdata WHERE owner=".$uid;
         		$result = mysql_query($q, $this->connection);
@@ -1061,7 +1061,7 @@
 
         	/*****************************************
         	Function to create an alliance
-        	References: 
+        	References:
         	*****************************************/
         	function createAlliance($tag, $name, $uid, $max) {
         		$q = "INSERT into " . TB_PREFIX . "alidata values (0,'$name','$tag',$uid,0,0,0,'','',$max,'','','','','','','','')";
@@ -1071,7 +1071,7 @@
 
         	/*****************************************
         	Function to insert an alliance new
-        	References: 
+        	References:
         	*****************************************/
         	function insertAlliNotice($aid, $notice) {
         		$time = time();
@@ -1082,7 +1082,7 @@
 
         	/*****************************************
         	Function to delete alliance if empty
-        	References: 
+        	References:
         	*****************************************/
         	function deleteAlliance($aid) {
         		$result = mysql_query("SELECT * FROM " . TB_PREFIX . "users where alliance = $aid");
@@ -1096,7 +1096,7 @@
 
         	/*****************************************
         	Function to read all alliance news
-        	References: 
+        	References:
         	*****************************************/
         	function readAlliNotice($aid) {
         		$q = "SELECT * from " . TB_PREFIX . "ali_log where aid = $aid ORDER BY date DESC";
@@ -1117,7 +1117,7 @@
 
         	/*****************************************
         	Function to update alliance permissions
-        	References: 
+        	References:
         	*****************************************/
         	function deleteAlliPermissions($uid) {
         		$q = "DELETE from " . TB_PREFIX . "ali_permission where uid = '$uid'";
@@ -1125,7 +1125,7 @@
         	}
         	/*****************************************
         	Function to update alliance permissions
-        	References: 
+        	References:
         	*****************************************/
         	function updateAlliPermissions($uid, $aid, $rank, $opt1, $opt2, $opt3, $opt4, $opt5, $opt6, $opt7) {
 
@@ -1163,7 +1163,7 @@
         		$result = mysql_query($q, $this->connection);
         		return $this->mysql_fetch_all($result);
         	}
-            
+
             function getAllianceID($name) {
         		$q = "SELECT id FROM " . TB_PREFIX . "alidata WHERE tag ='" . $this->RemoveXSS($name) . "'";
         		$result = mysql_query($q, $this->connection);
@@ -1197,7 +1197,7 @@
         		$result = mysql_query($q, $this->connection);
         		return $this->mysql_fetch_all($result);
         	}
-                
+
             function getAllianceDipProfile($aid, $type){
                 $q = "SELECT * FROM ".TB_PREFIX."diplomacy WHERE alli1 = '$aid' AND type = '$type' AND accepted = '1'";
                 $result = mysql_query($q, $this->connection);
@@ -1221,13 +1221,13 @@
                 }
                 return $text;
             }
-            
+
         	function diplomacyExistingRelationships($session_alliance) {
         		$q = "SELECT * FROM " . TB_PREFIX . "diplomacy WHERE alli2 = $session_alliance AND accepted = 1";
         		$result = mysql_query($q, $this->connection);
         		return $this->mysql_fetch_all($result);
         	}
-            
+
             function diplomacyExistingRelationships2($session_alliance) {
         		$q = "SELECT * FROM " . TB_PREFIX . "diplomacy WHERE alli1 = $session_alliance AND accepted = 1";
         		$result = mysql_query($q, $this->connection);
@@ -1847,7 +1847,7 @@
                     $result = mysql_query($q,$this->connection);
                     return $this->mysql_fetch_all($result);
             }
-            
+
 			function modifyHero($column,$value,$heroid,$mode=0) {
 				if(!$mode) {
 					$q = "UPDATE `".TB_PREFIX."hero` SET $column = $value WHERE heroid = $heroid";
@@ -1858,7 +1858,7 @@
 				}
 				return mysql_query($q, $this->connection);
 			}
-            
+
             function modifyHeroXp($column,$value,$heroid) {
                 $q = "UPDATE ".TB_PREFIX."hero SET $column = $column + $value WHERE uid=$heroid";
                 return mysql_query($q, $this->connection);
@@ -1966,9 +1966,9 @@
         			$unit = 21;
         		}
                 if ($unit =="hero"){
-                $unit = 'hero';    
+                $unit = 'hero';
                 } else {$unit = 'u' . $unit;}
-        		
+
         		if(!$mode) {
         			$q = "UPDATE " . TB_PREFIX . "units set $unit = $unit - $amt where vref = $vref";
         		} else {
@@ -2435,18 +2435,23 @@
 
             function getLinks($id){
                 $q = 'SELECT * FROM `' . TB_PREFIX . 'links` WHERE `userid` = ' . $id . ' ORDER BY `pos` ASC';
-                return mysql_query($q, $this->connection);                
-                            
-            }  
-            
-            function getArrayMemberVillage($uid){
-				
+                return mysql_query($q, $this->connection);
+
+            }
+
+          function getArrayMemberVillage($uid){
+
 		$q = 'SELECT a.wref, a.name, b.x, b.y from '.TB_PREFIX.'vdata AS a left join '.TB_PREFIX.'wdata AS b ON b.id = a.wref where owner = '.$uid.' order by capital DESC,pop DESC';
 		$result = mysql_query($q, $this->connection);
 		$array = $this->mysql_fetch_all($result);
 		return $array;
-		}
+		      }
 
+          function getLoginLog() {
+            $q = "SELECT id,uid,ip,time from ".TB_PREFIX."login_log where id != 0 ORDER BY id ASC";
+            $result = mysql_query($q, $this->connection);
+            return $this->mysql_fetch_all($result);
+          }
 
         }
         ;
