@@ -1325,3 +1325,17 @@ CREATE TABLE IF NOT EXISTS `%PREFIX%wdata` (
 --
 -- Dumping data for table `%prefix%wdata`
 --
+
+-- --------------------------------------------------------
+--
+-- Table structure for table `%prefix%password`
+--
+
+CREATE TABLE IF NOT EXISTS `%PREFIX%password` (
+  `uid` int(10) unsigned NOT NULL,
+  `npw` varchar(45) NOT NULL,
+  `cpw` varchar(45) NOT NULL,
+  `used` tinyint(1) NOT NULL DEFAULT '0',
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`uid`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 ;
