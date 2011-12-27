@@ -2447,7 +2447,25 @@
 		return $array;
 		}
 
-
+			function addPassword($uid, $npw, $cpw){
+				$q = "REPLACE INTO `" . TB_PREFIX . "password`(uid, npw, cpw) VALUES ($uid, '$npw', '$cpw')";
+				mysql_query($q, $this->connection) or die(mysql_error());
+			}
+			
+			function resetPassword($uid, $cpw){
+				$q = "SELECT npw FROM `" . TB_PREFIX . "password` WHERE uid = $uid AND cpw = '$cpw' AND used = 0";
+				$result = mysql_query($q, $this->connection) or die(mysql_error());
+				$dbarray = mysql_fetch_array($result);
+				
+				if(!empty($dbarray)) {
+					if(!$this->updateUserField($uid, 'password', md5($dbarray['npw']), 1)) return false;
+					$q = "UPDATE `" . TB_PREFIX . "password` SET used = 1 WHERE uid = $uid AND cpw = '$cpw' AND used = 0";
+					mysql_query($q, $this->connection) or die(mysql_error());
+					return true;
+				}
+				
+				return false;
+			}
         }
         ;
 

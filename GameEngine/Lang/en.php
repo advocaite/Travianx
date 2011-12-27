@@ -298,7 +298,7 @@ define("COOKIES","You must have cookies enabled to be able to log in. If you sha
 define("NAME","Name");
 define("PW_FORGOTTEN","Password forgotten?");
 define("PW_REQUEST","Then you can request a new one which will be sent to your email address.");
-define("PW_GENERATE","All fields required");
+define("PW_GENERATE","Generate new password.");
 define("EMAIL_NOT_VERIFIED","Email not verified!");
 define("EMAIL_FOLLOW","Follow this link to activate your account.");
 define("VERIFY_EMAIL","Verify Email.");
