@@ -2311,7 +2311,7 @@
         		$residence = $building->getTypeLevel(25);
         		$palace = $building->getTypeLevel(26);
         		if($residence > 0) {
-        			$maxslots -= (3 - floor($residence / 10));
+        			$maxslots += (3 - floor($residence / 10));
         		}
         		if($palace > 0) {
         			$maxslots -= (3 - floor(($palace - 5) / 5));
