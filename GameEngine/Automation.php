@@ -186,11 +186,13 @@ class Automation {
        
             $resourcearray = $database->getResourceLevel($vid);
         
-        foreach(array_keys($resourcearray,$tid) as $key) {
-            if(strpos($key,'t')) {
-                $key = preg_replace("/[^0-9]/", '', $key);
-                array_push($keyholder, $key);
-            }     
+        if (is_array($resourcearray)) {
+          foreach(array_keys($resourcearray,$tid) as $key) {
+              if(strpos($key,'t')) {
+                  $key = preg_replace("/[^0-9]/", '', $key);
+                  array_push($keyholder, $key);
+              }     
+          }
         }
         $element = count($keyholder);
         if($element >= 2) {
