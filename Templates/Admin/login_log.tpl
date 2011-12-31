@@ -71,5 +71,6 @@
         echo "<td>".date("d.m.Y H:i", $log[$i]['time'])."</td>";
         echo "</tr>";
     }
+    echo "</tbody></table>\n";
 
 ?>
