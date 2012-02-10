@@ -12,7 +12,7 @@
 #################################################################################
 
 class Automation {
-    
+
     private $bountyresarray = array();
     private $bountyinfoarray = array();
     private $bountyproduction = array();
@@ -23,7 +23,7 @@ class Automation {
     private $bountyOinfoarray = array();
     private $bountyOproduction = array();
     private $bountyOpop = 1;
-    
+
         public function procResType($ref) {
         global $session;
         switch($ref) {
@@ -73,90 +73,112 @@ class Automation {
         }
         return $build;
     }
-    
+
     function recountPop($vid){
     global $database;
-        $fdata = $database->getResourceLevel($vid); 
+        $fdata = $database->getResourceLevel($vid);
         $popTot = 0;
-        
+
         for ($i = 1; $i <= 40; $i++) {
             $lvl = $fdata["f".$i];
             $building = $fdata["f".$i."t"];
             if($building){
                 $popTot += $this->buildingPOP($building,$lvl);
-            }       
-        }        
-        
+            }
+        }
+
         $q = "UPDATE ".TB_PREFIX."vdata set pop = $popTot where wref = $vid";
         mysql_query($q);
-        
+
         return $popTot;
 
     }
-  
+
     function buildingPOP($f,$lvl){
     $name = "bid".$f;
-    global $$name;        
+    global $$name;
         $popT = 0;
         $dataarray = $$name;
-    
+
         for ($i = 0; $i <= $lvl; $i++) {
             $popT += $dataarray[$i]['pop'];
         }
     return $popT;
     }
-    
+
      public function Automation() {
-        if(!file_exists("GameEngine/Prevention/cleardeleting.txt") or time()-filemtime("GameEngine/Prevention/cleardeleting.txt")>50) {
-            $this->clearDeleting();
-        }
-        $this->ClearUser();
-        $this->ClearInactive();
-        $this->pruneResource();
-        if(!file_exists("GameEngine/Prevention/loyalty.txt") or time()-filemtime("GameEngine/Prevention/loyalty.txt")>50) {
-	        $this->loyaltyRegeneration();
-		}
-        if(!file_exists("GameEngine/Prevention/updatehero.txt") or time()-filemtime("GameEngine/Prevention/updatehero.txt")>50) {
-	        $this->updateHero();
-		}
-        if(!file_exists("GameEngine/Prevention/celebration.txt") or time()-filemtime("GameEngine/Prevention/celebration.txt")>50) {
-	        $this->celebrationComplete();
-		}
-        if(!file_exists("GameEngine/Prevention/culturepoints.txt") or time()-filemtime("GameEngine/Prevention/culturepoints.txt")>50) {
-            $this->culturePoints();
-        }
-        if(!file_exists("GameEngine/Prevention/research.txt") or time()-filemtime("GameEngine/Prevention/research.txt")>50) {
-            $this->researchComplete();
-        }
-        if(!file_exists("GameEngine/Prevention/starvation.txt") or time()-filemtime("GameEngine/Prevention/starvation.txt")>50) {
-	        $this->starvation();
-		}
-        if(!file_exists("GameEngine/Prevention/build.txt") or time()-filemtime("GameEngine/Prevention/build.txt")>50) {
-            $this->buildComplete();
-        }
-        if(!file_exists("GameEngine/Prevention/market.txt") or time()-filemtime("GameEngine/Prevention/market.txt")>50) {
-            $this->marketComplete();
-        }
-        if(!file_exists("GameEngine/Prevention/training.txt") or time()-filemtime("GameEngine/Prevention/training.txt")>50) {
-            $this->trainingComplete();
-        }
-        if(!file_exists("GameEngine/Prevention/sendreinfunits.txt") or time()-filemtime("GameEngine/Prevention/sendreinfunits.txt")>50) {
-            $this->sendreinfunitsComplete();
-        }
-        if(!file_exists("GameEngine/Prevention/returnunits.txt") or time()-filemtime("GameEngine/Prevention/returnunits.txt")>50) {
-            $this->returnunitsComplete();
-        }
-        if(!file_exists("GameEngine/Prevention/settlers.txt") or time()-filemtime("GameEngine/Prevention/settlers.txt")>50) {
-            $this->sendSettlersComplete();
-        }    
-        if(!file_exists("GameEngine/Prevention/demolition.txt") or time()-filemtime("GameEngine/Prevention/demolition.txt")>50) {  
-            $this->demolitionComplete();    
-        }
-        if(!file_exists("GameEngine/Prevention/sendunits.txt") or time()-filemtime("GameEngine/Prevention/sendunits.txt")>50) {
-            $this->sendunitsComplete();
-        }
-    } 
-    
+      // added locking ability to prevent concurency
+      $mutex_fname = 'GameEngine/Prevention/lock';
+      $maxlock = 20; // sec
+    	$fp = @fopen($mutex_fname . '.lock','xb');
+      if ($fp === false) { // did not got a lock
+					$ts = @filemtime($mutex_fname . ".lock");
+					if ($ts !== false && time() - $ts > $maxlock) { // stale situation
+						$fp = @fopen($mutex_fname . ".stale", "xb");
+						if ($fp !== false) {
+							@unlink($mutex_fname . ".lock");
+							fclose($fp);
+							$fp = @fopen($mutex_fname . ".lock", "xb");
+							@unlink($mutex_fname . ".stale");
+						}
+					}
+      }
+    	else { // obtained lock - do the code bellow
+
+
+          if(!file_exists("GameEngine/Prevention/cleardeleting.txt") or time()-filemtime("GameEngine/Prevention/cleardeleting.txt")>50) {
+              $this->clearDeleting();
+          }
+          $this->ClearUser();
+          $this->ClearInactive();
+          $this->pruneResource();
+          if(!file_exists("GameEngine/Prevention/loyalty.txt") or time()-filemtime("GameEngine/Prevention/loyalty.txt")>50) {
+  	        $this->loyaltyRegeneration();
+  		}
+          if(!file_exists("GameEngine/Prevention/updatehero.txt") or time()-filemtime("GameEngine/Prevention/updatehero.txt")>50) {
+  	        $this->updateHero();
+  		}
+          if(!file_exists("GameEngine/Prevention/celebration.txt") or time()-filemtime("GameEngine/Prevention/celebration.txt")>50) {
+  	        $this->celebrationComplete();
+  		}
+          if(!file_exists("GameEngine/Prevention/culturepoints.txt") or time()-filemtime("GameEngine/Prevention/culturepoints.txt")>50) {
+              $this->culturePoints();
+          }
+          if(!file_exists("GameEngine/Prevention/research.txt") or time()-filemtime("GameEngine/Prevention/research.txt")>50) {
+              $this->researchComplete();
+          }
+          if(!file_exists("GameEngine/Prevention/starvation.txt") or time()-filemtime("GameEngine/Prevention/starvation.txt")>50) {
+  	        $this->starvation();
+  		}
+          if(!file_exists("GameEngine/Prevention/build.txt") or time()-filemtime("GameEngine/Prevention/build.txt")>50) {
+              $this->buildComplete();
+          }
+          if(!file_exists("GameEngine/Prevention/market.txt") or time()-filemtime("GameEngine/Prevention/market.txt")>50) {
+              $this->marketComplete();
+          }
+          if(!file_exists("GameEngine/Prevention/training.txt") or time()-filemtime("GameEngine/Prevention/training.txt")>50) {
+              $this->trainingComplete();
+          }
+          if(!file_exists("GameEngine/Prevention/sendreinfunits.txt") or time()-filemtime("GameEngine/Prevention/sendreinfunits.txt")>50) {
+              $this->sendreinfunitsComplete();
+          }
+          if(!file_exists("GameEngine/Prevention/returnunits.txt") or time()-filemtime("GameEngine/Prevention/returnunits.txt")>50) {
+              $this->returnunitsComplete();
+          }
+          if(!file_exists("GameEngine/Prevention/settlers.txt") or time()-filemtime("GameEngine/Prevention/settlers.txt")>50) {
+              $this->sendSettlersComplete();
+          }
+          if(!file_exists("GameEngine/Prevention/demolition.txt") or time()-filemtime("GameEngine/Prevention/demolition.txt")>50) {
+              $this->demolitionComplete();
+          }
+          if(!file_exists("GameEngine/Prevention/sendunits.txt") or time()-filemtime("GameEngine/Prevention/sendunits.txt")>50) {
+              $this->sendunitsComplete();
+          }
+    	} // end of locking
+    	@unlink($mutex_fname . '.lock');
+
+    }
+
    private function getfieldDistance($coorx1, $coory1, $coorx2, $coory2) {
    $max = 2 * WORLD_MAX + 1;
    $x1 = intval($coorx1);
@@ -167,19 +189,21 @@ class Automation {
    $distanceY = min(abs($y2 - $y1), abs($max - abs($y2 - $y1)));
    $dist = sqrt(pow($distanceX, 2) + pow($distanceY, 2));
    return round($dist, 1);
-   } 
-   
+   }
+
      public function getTypeLevel($tid,$vid) {
         global $village,$database;
         $keyholder = array();
-       
+
             $resourcearray = $database->getResourceLevel($vid);
-        
-        foreach(array_keys($resourcearray,$tid) as $key) {
-            if(strpos($key,'t')) {
-                $key = preg_replace("/[^0-9]/", '', $key);
-                array_push($keyholder, $key);
-            }     
+
+        if (is_array($resourcearray)) {
+          foreach(array_keys($resourcearray,$tid) as $key) {
+              if(strpos($key,'t')) {
+                  $key = preg_replace("/[^0-9]/", '', $key);
+                  array_push($keyholder, $key);
+              }
+          }
         }
         $element = count($keyholder);
         if($element >= 2) {
@@ -189,8 +213,8 @@ class Automation {
                     array_push($temparray,$resourcearray['f'.$keyholder[$i]]);
                 }
                 foreach ($temparray as $key => $val) {
-                    if ($val == max($temparray)) 
-                    $target = $key; 
+                    if ($val == max($temparray))
+                    $target = $key;
                 }
             }
             else {
@@ -214,13 +238,13 @@ class Automation {
         else {
             return 0;
         }
-    }  
+    }
     private function loyaltyRegeneration() {
         global $database;
         $array = array();
         $q = "SELECT * FROM ".TB_PREFIX."vdata WHERE loyalty<>100";
         $array = $database->query_return($q);
-		if(!empty($array)) { 
+		if(!empty($array)) {
 	        foreach($array as $loyalty) {
                 if($this->getTypeLevel(25,$loyalty['wref']) >= 1){
                     $value = $this->getTypeLevel(25,$loyalty['wref']);
@@ -237,7 +261,7 @@ class Automation {
         $array = array();
         $q = "SELECT * FROM ".TB_PREFIX."odata WHERE loyalty<>100";
         $array = $database->query_return($q);
-		if(!empty($array)) { 
+		if(!empty($array)) {
 	        foreach($array as $loyalty) {
                 if($this->getTypeLevel(25,$loyalty['conqured']) >= 1){
                     $value = $this->getTypeLevel(25,$loyalty['conqured']);
@@ -302,7 +326,7 @@ class Automation {
             @unlink("GameEngine/Prevention/cleardeleting.txt");
         }
     }
-    
+
     private function ClearUser() {
         global $database;
         if(AUTO_DEL_INACTIVE) {
@@ -311,7 +335,7 @@ class Automation {
             $database->query($q);
         }
     }
-    
+
     private function ClearInactive() {
         global $database;
         if(TRACK_USR) {
@@ -370,14 +394,14 @@ class Automation {
             $database->query($q);
         }
     }
-    
+
     private function culturePoints() {
         global $database,$session;
         $time = time()-600;
         $array = array();
         $q = "SELECT id, lastupdate FROM ".TB_PREFIX."users WHERE lastupdate < $time";
         $array = $database->query_return($q);
-        
+
         foreach($array as $indi) {
             if($indi['lastupdate'] <= $time){
                 $cp = $database->getVSumField($indi['id'], 'cp') * (time()-$indi['lastupdate'])/86400;
@@ -391,7 +415,7 @@ class Automation {
             @unlink("GameEngine/Prevention/culturepoints.txt");
         }
     }
-    
+
     private function buildComplete() {
         global $database,$bid18,$bid10,$bid11,$bid38,$bid39;
         $time = time();
@@ -415,11 +439,11 @@ class Automation {
                     if($indi['type'] == 10) {
                       $max=$database->getVillageField($indi['wid'],"maxstore");
                       if($level=='1' && $max==STORAGE_BASE){ $max-=STORAGE_BASE; }
-                      $max-=$bid10[$level-1]['attri']*STORAGE_MULTIPLIER;      
-                      $max+=$bid10[$level]['attri']*STORAGE_MULTIPLIER;  
+                      $max-=$bid10[$level-1]['attri']*STORAGE_MULTIPLIER;
+                      $max+=$bid10[$level]['attri']*STORAGE_MULTIPLIER;
                       $database->setVillageField($indi['wid'],"maxstore",$max);
                     }
-                    
+
                     if($indi['type'] == 11) {
                       $max=$database->getVillageField($indi['wid'],"maxcrop");
                       if($level=='1' && $max==STORAGE_BASE){ $max-=STORAGE_BASE; }
@@ -442,7 +466,7 @@ class Automation {
                     $max+=$bid39[$level]['attri']*STORAGE_MULTIPLIER;
                     $database->setVillageField($indi['wid'],"maxcrop",$max);
                     }
-          
+
                 $q4 = "UPDATE ".TB_PREFIX."bdata set loopcon = 0 where loopcon = 1 and wid = ".$indi['wid'];
                 $database->query($q4);
                 $q = "DELETE FROM ".TB_PREFIX."bdata where id = ".$indi['id'];
@@ -453,7 +477,7 @@ class Automation {
             @unlink("GameEngine/Prevention/build.txt");
         }
     }
-    
+
     private function getPop($tid,$level) {
         $name = "bid".$tid;
         global $$name,$village;
@@ -462,14 +486,14 @@ class Automation {
         $cp = $dataarray[($level+1)]['cp'];
         return array($pop,$cp);
     }
-    
+
     private function marketComplete() {
         global $database,$generator;
         $time = time();
         $q = "SELECT * FROM ".TB_PREFIX."movement, ".TB_PREFIX."send where ".TB_PREFIX."movement.ref = ".TB_PREFIX."send.id and ".TB_PREFIX."movement.proc = 0 and sort_type = 0 and endtime < $time";
         $dataarray = $database->query_return($q);
         foreach($dataarray as $data) {
-            
+
             if($data['wood'] >= $data['clay'] && $data['wood'] >= $data['iron'] && $data['wood'] >= $data['crop']){ $sort_type = "10"; }
             elseif($data['clay'] >= $data['wood'] && $data['clay'] >= $data['iron'] && $data['clay'] >= $data['crop']){ $sort_type = "11"; }
             elseif($data['iron'] >= $data['wood'] && $data['iron'] >= $data['clay'] && $data['iron'] >= $data['crop']){ $sort_type = "12"; }
@@ -477,7 +501,7 @@ class Automation {
 
             $to = $database->getMInfo($data['to']);
             $from = $database->getMInfo($data['from']);
-            $database->addNotice($to['owner'],$sort_type,''.addslashes($from['name']).' send resources to '.addslashes($to['name']).'',''.$from['owner'].','.$from['wref'].','.$data['wood'].','.$data['clay'].','.$data['iron'].','.$data['crop'].'',$data['endtime']); 
+            $database->addNotice($to['owner'],$sort_type,''.addslashes($from['name']).' send resources to '.addslashes($to['name']).'',''.$from['owner'].','.$from['wref'].','.$data['wood'].','.$data['clay'].','.$data['iron'].','.$data['crop'].'',$data['endtime']);
             if($from['owner'] != $to['owner']) {
                 $database->addNotice($from['owner'],$sort_type,''.addslashes($from['name']).' send resources to '.addslashes($to['name']).'',''.$from['owner'].','.$from['wref'].','.$data['wood'].','.$data['clay'].','.$data['iron'].','.$data['crop'].'',$data['endtime']);
             }
@@ -495,24 +519,24 @@ class Automation {
             @unlink("GameEngine/Prevention/market.txt");
         }
     }
-    
+
     private function sendunitsComplete() {
         global $bid23,$database,$battle,$village,$technology,$logging;
         $time = time();
         $q = "SELECT * FROM ".TB_PREFIX."movement, ".TB_PREFIX."attacks where ".TB_PREFIX."movement.ref = ".TB_PREFIX."attacks.id and ".TB_PREFIX."movement.proc = '0' and ".TB_PREFIX."movement.sort_type = '3' and ".TB_PREFIX."attacks.attack_type != '2' and endtime < $time ORDER BY endtime ASC";
         $dataarray = $database->query_return($q);
-        
+
         foreach($dataarray as $data) {
             //set base things
 			//$battle->resolveConflict($data);
             $tocoor = $database->getCoor($data['from']);
             $fromcoor = $database->getCoor($data['to']);
             $isoasis = $database->isVillageOases($data['to']);
-            $AttackArrivalTime = $data['endtime']; 
+            $AttackArrivalTime = $data['endtime'];
             if ($isoasis == 0){
             $Attacker['id'] = $database->getUserField($database->getVillageField($data['from'],"owner"),"id",0);
             $Defender['id'] = $database->getUserField($database->getVillageField($data['to'],"owner"),"id",0);
-                
+
             $owntribe = $database->getUserField($database->getVillageField($data['from'],"owner"),"tribe",0);
             $targettribe = $database->getUserField($database->getVillageField($data['to'],"owner"),"tribe",0);
             $ownally = $database->getUserField($database->getVillageField($data['from'],"owner"),"alliance",0);
@@ -521,8 +545,8 @@ class Automation {
             $from = $database->getMInfo($data['from']);
             $toF = $database->getVillage($data['to']);
             $fromF = $database->getVillage($data['from']);
-            
-           
+
+
             /*--------------------------------
             // Battle part
             --------------------------------*/
@@ -540,7 +564,7 @@ class Automation {
                                                 else
                                                     $Defender['u'.$i] = '';
                                                 }*/
-                        //get defence units 
+                        //get defence units
                         $Defender = array();    $rom = $ger = $gal = $nat = $natar = 0;
                         $Defender = $database->getUnit($data['to']);
                         $enforcementarray = $database->getEnforceVillage($data['to'],0);
@@ -556,22 +580,22 @@ class Automation {
                                     $Defender['u'.$i] = '0';
                                 } else {
                                  if($Defender['u'.$i]=='' or $Defender['u'.$i]<='0'){
-                                    $Defender['u'.$i] = '0';                                 
+                                    $Defender['u'.$i] = '0';
                                  } else {
-                                                if($i<=10){ $rom='1'; } 
-                                            else if($i<=20){ $ger='1'; } 
-                                            else if($i<=30){ $gal='1'; } 
-                                            else if($i<=40){ $nat='1'; } 
-                                            else if($i<=50){ $natar='1'; } 
+                                                if($i<=10){ $rom='1'; }
+                                            else if($i<=20){ $ger='1'; }
+                                            else if($i<=30){ $gal='1'; }
+                                            else if($i<=40){ $nat='1'; }
+                                            else if($i<=50){ $natar='1'; }
                                 }
                                 }
                             }
-                                    //get attack units            
+                                    //get attack units
                                             $Attacker = array();
                                             $start = ($owntribe-1)*10+1;
                                             $end = ($owntribe*10);
-                                            $u = (($owntribe-1)*10);                                                            
-                                            $catp =  0;                                
+                                            $u = (($owntribe-1)*10);
+                                            $catp =  0;
                                             $catapult = array(8,18,28,38,48);
                                             $ram = array(7,17,27,37,47);
                                             $chief = array(9,19,29,39,49);
@@ -596,8 +620,8 @@ class Automation {
                                                 $chiefs += $Attacker['u'.$i];
                                                 $spy_pic = $i;
                                                 }
-                                                } 
-                                                $Attacker['uhero'] = $dataarray[0]['t11'];       
+                                                }
+                                                $Attacker['uhero'] = $dataarray[0]['t11'];
                                                 $hero_pic = "hero";
                                     //need to set these variables.
                                     $def_wall = $database->getFieldLevel($data['to'],40);
@@ -605,14 +629,14 @@ class Automation {
                                     $def_tribe = $targettribe;
                                     $residence = "0";
                                     $attpop = $fromF['pop'];
-                                    $defpop = $toF['pop']; 
+                                    $defpop = $toF['pop'];
                                     for ($i=19; $i<40; $i++){
                                         if ($database->getFieldLevel($data['to'],"".$i."t")=='25' OR $database->getFieldLevel($data['to'],"".$i."t")=='26'){
                                             $residence = $database->getFieldLevel($data['to'],$i);
                                             $i=40;
                                         }
                                     }
-                        
+
                                     //type of attack
                                     if($dataarray[0]['attack_type'] == 1){
                                         $type = 1;
@@ -627,7 +651,7 @@ class Automation {
                                     if($dataarray[0]['attack_type'] == 4){
                                         $type = 4;
                                     }
-                                
+
                                     $def_ab = Array (
                                         "b1" => 0, // Blacksmith level
                                         "b2" => 0, // Blacksmith level
@@ -637,8 +661,8 @@ class Automation {
                                         "b6" => 0, // Blacksmith level
                                         "b7" => 0, // Blacksmith level
                                         "b8" => 0); // Blacksmith level
-                                    
-                                    $att_ab = Array ( 
+
+                                    $att_ab = Array (
                                         "a1" => 0, // armoury level
                                         "a2" => 0, // armoury level
                                         "a3" => 0, // armoury level
@@ -649,24 +673,24 @@ class Automation {
                                         "a8" => 0); // armoury level
 
                         //rams attack
-                         if($rams > 0 and $type=='3'){ 
-                        $basearraywall = $database->getMInfo($data['to']); 
+                         if($rams > 0 and $type=='3'){
+                        $basearraywall = $database->getMInfo($data['to']);
                         if($database->getFieldLevel($basearraywall['wref'],40)>'0'){
-                            for ($w=1; $w<2; $w++){  
+                            for ($w=1; $w<2; $w++){
                         if ($database->getFieldLevel($basearraywall['wref'],40)!='0'){
-                        
+
                         $walllevel = $database->getFieldLevel($basearraywall['wref'],40);
                         $wallgid = $database->getFieldLevel($basearraywall['wref'],"40t");
                         $wallid = 40;
                         $w='4';
-                                            } else {$w = $w--; } 
-                            }                          
+                                            } else {$w = $w--; }
+                            }
                         }else{
-                        $empty = 1;    
+                        $empty = 1;
                         }
                         }
-                        
-                        
+
+
                             //choose a building to attack
                            /* if($catp > 0 and $type=='3'){
                                 if($toF['pop']>'1'){
@@ -675,7 +699,7 @@ class Automation {
                                         $basearray = $database->getMInfo($data['to']);
                                         $resarray = $database->getResourceLevel($basearray['wref']);
                                         if($data['ctar1'] == 0){
-                                            $rand = 0; 
+                                            $rand = 0;
                                             for($j=19;$j<=40;$j++) {
                                         if($resarray['f'.$j.'t'] != 0 ) {
                                         $rand = $j;
@@ -683,20 +707,20 @@ class Automation {
                                         }
                                         }else{
                                         //$resarray = $database->getResourceLevel($data['to']);
-                                        $rand = 0; 
+                                        $rand = 0;
                                         for($j=19;$j<=40;$j++) {
                                         if($resarray['f'.$j.'t'] == $data['ctar1']) {
-                                            
+
                                             $rand = $j;
                                             }
-                                        } 
+                                        }
                                         }
                                         if ($rand == 0){
                                         for($j=19;$j<=40;$j++) {
                                         if($resarray['f'.$j.'t'] != 0 ) {
                                         $rand = $j;
                                             }
-                                        }   
+                                        }
                                         }
                                         //$rand=$data['ctar1'];
                                             if ($database->getFieldLevel($basearray['wref'],$rand)!='0'){
@@ -709,18 +733,18 @@ class Automation {
                                 } else { $empty='1'; }
                             } else { $tblevel = '0'; }
                                     $stonemason = "1";  */
-                                    
-                                    $tblevel = '1';                    
-                                    $stonemason = "1";  
 
-                            
+                                    $tblevel = '1';
+                                    $stonemason = "1";
+
+
             /*--------------------------------
             // End Battle part
             --------------------------------*/
             }else{
             $Attacker['id'] = $database->getUserField($database->getVillageField($data['from'],"owner"),"id",0);
             $Defender['id'] = 3;
-                
+
             $owntribe = $database->getUserField($database->getVillageField($data['from'],"owner"),"tribe",0);
             $targettribe = 4;
             $ownally = $database->getUserField($database->getVillageField($data['from'],"owner"),"alliance",0);
@@ -729,9 +753,9 @@ class Automation {
             $from = $database->getMInfo($data['from']);
             $toF = $database->getOasisV($data['to']);
             $fromF = $database->getVillage($data['from']);
-            
-            
-                        //get defence units 
+
+
+                        //get defence units
                         $Defender = array();    $rom = $ger = $gal = $nat = $natar = 0;
                         $Defender = $database->getUnit($data['to']);
                         $enforcementarray = $database->getEnforceVillage($data['to'],0);
@@ -747,22 +771,22 @@ class Automation {
                                     $Defender['u'.$i] = '0';
                                 } else {
                                  if($Defender['u'.$i]=='' or $Defender['u'.$i]<='0'){
-                                    $Defender['u'.$i] = '0';                                 
+                                    $Defender['u'.$i] = '0';
                                  } else {
-                                                if($i<=10){ $rom='1'; } 
-                                            else if($i<=20){ $ger='1'; } 
-                                            else if($i<=30){ $gal='1'; } 
-                                            else if($i<=40){ $nat='1'; } 
-                                            else if($i<=50){ $natar='1'; } 
+                                                if($i<=10){ $rom='1'; }
+                                            else if($i<=20){ $ger='1'; }
+                                            else if($i<=30){ $gal='1'; }
+                                            else if($i<=40){ $nat='1'; }
+                                            else if($i<=50){ $natar='1'; }
                                 }
                                 }
                             }
-                                    //get attack units            
+                                    //get attack units
                                             $Attacker = array();
                                             $start = ($owntribe-1)*10+1;
                                             $end = ($owntribe*10);
-                                            $u = (($owntribe-1)*10);                                                            
-                                            $catp =  0;                                
+                                            $u = (($owntribe-1)*10);
+                                            $catp =  0;
                                             $catapult = array(8,18,28,38,48);
                                             $ram = array(7,17,27,37,47);
                                             $chief = array(9,19,29,39,49);
@@ -787,8 +811,8 @@ class Automation {
                                                 $chiefs += $Attacker['u'.$i];
                                                 $spy_pic = $i;
                                                 }
-                                                }        
-                                                $Attacker['uhero'] = $dataarray[0]['t11'];       
+                                                }
+                                                $Attacker['uhero'] = $dataarray[0]['t11'];
                                                 $hero_pic = "hero";
                                     //need to set these variables.
                                     $def_wall = 1;
@@ -796,9 +820,9 @@ class Automation {
                                     $def_tribe = $targettribe;
                                     $residence = "0";
                                     $attpop = $fromF['pop'];
-                                    $defpop = 100; 
-              
-                        
+                                    $defpop = 100;
+
+
                                     //type of attack
                                     if($dataarray[0]['attack_type'] == 1){
                                         $type = 1;
@@ -813,7 +837,7 @@ class Automation {
                                     if($dataarray[0]['attack_type'] == 4){
                                         $type = 4;
                                     }
-                                
+
                                     $def_ab = Array (
                                         "b1" => 0, // Blacksmith level
                                         "b2" => 0, // Blacksmith level
@@ -823,8 +847,8 @@ class Automation {
                                         "b6" => 0, // Blacksmith level
                                         "b7" => 0, // Blacksmith level
                                         "b8" => 0); // Blacksmith level
-                                    
-                                    $att_ab = Array ( 
+
+                                    $att_ab = Array (
                                         "a1" => 0, // armoury level
                                         "a2" => 0, // armoury level
                                         "a3" => 0, // armoury level
@@ -833,29 +857,29 @@ class Automation {
                                         "a6" => 0, // armoury level
                                         "a7" => 0, // armoury level
                                         "a8" => 0); // armoury level
-                                        
-                                        $empty='1'; 
-                                        $tblevel = '0'; 
+
+                                        $empty='1';
+                                        $tblevel = '0';
                                         $stonemason = "1";
-   
+
         }
             $battlepart = $battle->calculateBattle($Attacker,$Defender,$def_wall,$att_tribe,$def_tribe,$residence,$attpop,$defpop,$type,$def_ab,$att_ab,$tblevel,$stonemason,$walllevel);
-            
+
             //units attack string for battleraport
             $unitssend_att = ''.$data['t1'].','.$data['t2'].','.$data['t3'].','.$data['t4'].','.$data['t5'].','.$data['t6'].','.$data['t7'].','.$data['t8'].','.$data['t9'].','.$data['t10'].'';
-            
-            //units defence string for battleraport 
+
+            //units defence string for battleraport
                 $unitssend_def[1] = ''.$Defender['u1'].','.$Defender['u2'].','.$Defender['u3'].','.$Defender['u4'].','.$Defender['u5'].','.$Defender['u6'].','.$Defender['u7'].','.$Defender['u8'].','.$Defender['u9'].','.$Defender['u10'].'';
                 $unitssend_def[2] = ''.$Defender['u11'].','.$Defender['u12'].','.$Defender['u13'].','.$Defender['u14'].','.$Defender['u15'].','.$Defender['u16'].','.$Defender['u17'].','.$Defender['u18'].','.$Defender['u19'].','.$Defender['u20'].'';
                 $unitssend_def[3] = ''.$Defender['u21'].','.$Defender['u22'].','.$Defender['u23'].','.$Defender['u24'].','.$Defender['u25'].','.$Defender['u26'].','.$Defender['u27'].','.$Defender['u28'].','.$Defender['u29'].','.$Defender['u30'].'';
                 $unitssend_def[4] = ''.$Defender['u31'].','.$Defender['u32'].','.$Defender['u33'].','.$Defender['u34'].','.$Defender['u35'].','.$Defender['u56'].','.$Defender['u37'].','.$Defender['u38'].','.$Defender['u39'].','.$Defender['u40'].'';
                 $unitssend_def[5] = ''.$Defender['u41'].','.$Defender['u42'].','.$Defender['u43'].','.$Defender['u44'].','.$Defender['u45'].','.$Defender['u46'].','.$Defender['u47'].','.$Defender['u48'].','.$Defender['u49'].','.$Defender['u50'].'';
-                $unitssend_deff[1] = '?,?,?,?,?,?,?,?,?,?,'; 
-                $unitssend_deff[2] = '?,?,?,?,?,?,?,?,?,?,'; 
-                $unitssend_deff[3] = '?,?,?,?,?,?,?,?,?,?,'; 
-                $unitssend_deff[4] = '?,?,?,?,?,?,?,?,?,?,'; 
-                $unitssend_deff[5] = '?,?,?,?,?,?,?,?,?,?,'; 
-              
+                $unitssend_deff[1] = '?,?,?,?,?,?,?,?,?,?,';
+                $unitssend_deff[2] = '?,?,?,?,?,?,?,?,?,?,';
+                $unitssend_deff[3] = '?,?,?,?,?,?,?,?,?,?,';
+                $unitssend_deff[4] = '?,?,?,?,?,?,?,?,?,?,';
+                $unitssend_deff[5] = '?,?,?,?,?,?,?,?,?,?,';
+
             //how many troops died? for battleraport
             if($battlepart['casualties_attacker'][1] == 0) { $dead1 = 0; } else { $dead1 = $battlepart['casualties_attacker'][1]; }
             if($battlepart['casualties_attacker'][2] == 0) { $dead2 = 0; } else { $dead2 = $battlepart['casualties_attacker'][2]; }
@@ -868,13 +892,13 @@ class Automation {
             if($battlepart['casualties_attacker'][9] == 0) { $dead9 = 0; } else { $dead9 = $battlepart['casualties_attacker'][9]; }
             if($battlepart['casualties_attacker'][10] == 0) { $dead10 = 0; } else { $dead10 = $battlepart['casualties_attacker'][10]; }
 
-            
+
                     //kill own defence
                     $q = "SELECT * FROM ".TB_PREFIX."units WHERE vref='".$data['to']."'";
-                    $unitlist = $database->query_return($q); 
+                    $unitlist = $database->query_return($q);
                     $start = ($targettribe-1)*10+1;
                     $end = ($targettribe*10);
-                        
+
                         if($targettribe == 1){ $u = ""; $rom='1'; } else if($targettribe == 2){ $u = "1"; $ger='1'; } else if($targettribe == 3){$u = "2"; $gal='1'; }else if($targettribe == 4){ $u = "3"; $nat='1'; } else { $u = "4"; $natar='1'; }     //FIX
                             for($i=$start;$i<=$end;$i++) { if($i==$end){ $u=$targettribe; }
                                 if($unitlist){
@@ -888,7 +912,7 @@ class Automation {
                     $life='';    $notlife=''; $wrong='0';
                     $tribe = $database->getUserField($database->getVillageField($enforce['from'],"owner"),"tribe",0);
                     $start = ($tribe-1)*10+1;
-                    
+
                     if($tribe == 1){ $rom='1'; } else if($tribe == 2){ $ger='1'; }else if($tribe == 3){ $gal='1'; }else if($tribe == 4){ $nat='1'; } else { $natar='1'; }
                         for($i=$start;$i<=($start+9);$i++) {
                             if($enforce['u'.$i]>'0'){
@@ -933,7 +957,7 @@ class Automation {
             if($battlepart['casualties_defender'][10] == 0) { $dead20 = 0; } else { $dead20 = $battlepart['casualties_defender'][10]; }
 */
 
-            // Set units returning from attack 
+            // Set units returning from attack
             $database->modifyAttack($data['ref'],1,$dead1);
             $database->modifyAttack($data['ref'],2,$dead2);
             $database->modifyAttack($data['ref'],3,$dead3);
@@ -944,20 +968,20 @@ class Automation {
             $database->modifyAttack($data['ref'],8,$dead8);
             $database->modifyAttack($data['ref'],9,$dead9);
             $database->modifyAttack($data['ref'],10,$dead10);
-            
+
 
             $unitsdead_att = ''.$dead1.','.$dead2.','.$dead3.','.$dead4.','.$dead5.','.$dead6.','.$dead7.','.$dead8.','.$dead9.','.$dead10.'';
             //$unitsdead_def = ''.$dead11.','.$dead12.','.$dead13.','.$dead14.','.$dead15.','.$dead16.','.$dead17.','.$dead18.','.$dead19.','.$dead20.'';
 
-            
+
             //top 10 attack and defence update
             $totaldead_att = $dead1+$dead2+$dead3+$dead4+$dead5+$dead6+$dead7+$dead8+$dead9+$dead10;
             for($i=1;$i<=50;$i++) {
             $totaldead_def += $dead[''.$i.''];
             }
-            if ($Attacker['uhero'] != 0){ 
-             $heroxp = $totaldead_def; 
-             $database->modifyHeroXp("experience",$heroxp,$from['owner']);  
+            if ($Attacker['uhero'] != 0){
+             $heroxp = $totaldead_def;
+             $database->modifyHeroXp("experience",$heroxp,$from['owner']);
             }
             $database->modifyPoints($toF['owner'],'dpall',$totaldead_att );
             $database->modifyPoints($from['owner'],'apall',$totaldead_def);
@@ -966,14 +990,14 @@ class Automation {
             $database->modifyPointsAlly($targetally,'Adp',$totaldead_att );
             $database->modifyPointsAlly($ownally,'Aap',$totaldead_def);
             $database->modifyPointsAlly($targetally,'dp',$totaldead_att );
-            $database->modifyPointsAlly($ownally,'ap',$totaldead_def);    
-                    
-                
-            
-            if ($isoasis == 0){  
+            $database->modifyPointsAlly($ownally,'ap',$totaldead_def);
+
+
+
+            if ($isoasis == 0){
             // get toatal cranny value:
             $buildarray = $database->getResourceLevel($data['to']);
-            $cranny = 0;    
+            $cranny = 0;
             for($i=19;$i<39;$i++){
                 if($buildarray['f'.$i.'t']==23){
                 $cranny += $bid23[$buildarray['f'.$i.'']]['attri'];
@@ -983,52 +1007,52 @@ class Automation {
             //cranny efficiency
             $atk_bonus = ($owntribe == 2)? (4/5) : 1;
             $def_bonus = ($targettribe == 3)? 2 : 1;
-            
+
             $cranny_eff = ($cranny * $atk_bonus)*$def_bonus;
-            
+
             // work out available resources.
             $this->updateRes($data['to'],$to['owner']);
             $this->pruneResource();
-            
+
             $totclay = $database->getVillageField($data['to'],'clay');
             $totiron = $database->getVillageField($data['to'],'iron');
             $totwood = $database->getVillageField($data['to'],'wood');
             $totcrop = $database->getVillageField($data['to'],'crop');
             }else{
             $cranny_eff = 0;
-            
+
             // work out available resources.
             $this->updateORes($data['to']);
             $this->pruneOResource();
-            
+
             $totclay = $database->getOasisField($data['to'],'clay');
             $totiron = $database->getOasisField($data['to'],'iron');
             $totwood = $database->getOasisField($data['to'],'wood');
-            $totcrop = $database->getOasisField($data['to'],'crop');    
-            }            
+            $totcrop = $database->getOasisField($data['to'],'crop');
+            }
             $avclay = floor($totclay - $cranny_eff);
             $aviron = floor($totiron - $cranny_eff);
             $avwood = floor($totwood - $cranny_eff);
             $avcrop = floor($totcrop - $cranny_eff);
-                        
+
             $avclay = ($avclay < 0)? 0 : $avclay;
             $aviron = ($aviron < 0)? 0 : $aviron;
             $avwood = ($avwood < 0)? 0 : $avwood;
             $avcrop = ($avcrop < 0)? 0 : $avcrop;
-            
-            
+
+
             $avtotal = array($avwood, $avclay, $aviron,  $avcrop);
-            
+
             $av = $avtotal;
-            
+
             // resources (wood,clay,iron,crop)
             $steal = array(0,0,0,0);
-            
+
             //bounty variables
             $btotal = $battlepart['bounty'];
-            $bmod = 0;            
-            
-            
+            $bmod = 0;
+
+
             for($i = 0; $i<5; $i++)
             {
                 for($j=0;$j<4;$j++)
@@ -1060,15 +1084,15 @@ class Automation {
                         }
                     }
                 }
-                
+
                 // handle unballanced amounts.
                 $btotal +=$bmod;
                 $bmod = $btotal%count($avtotal);
                 $btotal -=$bmod;
                 $bsplit = $btotal/count($avtotal);
-        
+
                 $max_steal = (min($avtotal) < $bsplit)? min($avtotal): $bsplit;
-            
+
                 for($j=0;$j<4;$j++)
                 {
                     if(isset($avtotal[$j]))
@@ -1079,20 +1103,20 @@ class Automation {
                     }
                 }
             }
-            
-            
+
+
             //work out time of return
             $start = ($owntribe-1)*10+1;
             $end = ($owntribe*10);
-            
+
             $unitspeeds = array(6,5,7,16,14,10,4,3,4,5,
                                 7,7,6,9,10,9,4,3,4,5,
                                 7,6,17,19,16,13,4,3,4,5,
                                 7,7,6,9,10,9,4,3,4,5,
                                 7,7,6,9,10,9,4,3,4,5);
-            
+
             $speeds = array();
-    
+
             //find slowest unit.
             for($i=1;$i<=10;$i++)
             {
@@ -1105,10 +1129,10 @@ class Automation {
 
 
 // Data for when troops return.
-    
+
                 //catapulten kijken :D
             $info_cat = $info_chief = $info_ram = ",";
-            
+
             if ($type=='3'){
                 if ($rams!='0'){
                     if (isset($empty)){
@@ -1122,38 +1146,38 @@ class Automation {
                             $pop=$this->recountPop($data['to']);
 
                     }elseif ($battlepart[8]==0){
-                    
+
                         $info_ram = "".$ram_pic.",Wall was not damaged.";
                     }else{
-            
+
                         $demolish=$battlepart[8]/$battlepart[7];
                         $totallvl = round(sqrt(pow(($walllevel+0.5),2)-($battlepart[8]*8)));
                     $info_ram = "".$ram_pic.",Wall damaged from level <b>".$walllevel."</b> to level <b>".$totallvl."</b>.";
                             $database->setVillageLevel($data['to'],"f".$wallid."",$totallvl);
 
-                    }                  
+                    }
                 }
             }
            if ($type=='3')
 {
     if ($catp!='0')
     {
-        
+
         if($toF['pop']<=0)
         {
             $info_cat = ",".$catp_pic.", Village already destroyed.";
         }
         else
         {
-            $basearray = $data['to']; 
-            
+            $basearray = $data['to'];
+
             if ($data['ctar2']==0)
-            {                               
+            {
                 $bdo2=mysql_query("select * from " . TB_PREFIX . "fdata where vref = $basearray");
                 $bdo=mysql_fetch_array($bdo2);
-                
+
                 $rand=$data['ctar1'];
-                
+
                 if ($rand != 0)
                 {
                     $_rand=array();
@@ -1162,11 +1186,11 @@ class Automation {
                     for ($i=1;$i<=41;$i++)
                     {
                         if ($i==41) $i=99;
-                        if ($bdo['f'.$i.'t']==$rand && $bdo['f'.$i]>0) 
+                        if ($bdo['f'.$i.'t']==$rand && $bdo['f'.$i]>0)
                         {
                             $j++;
-                            $_rand[$j]=$bdo['f'.$i];    
-                            $__rand[$j]=$i;             
+                            $_rand[$j]=$bdo['f'.$i];
+                            $__rand[$j]=$i;
                         }
                     }
                     if (count($_rand)>0)
@@ -1176,14 +1200,14 @@ class Automation {
                         {
                             $rand=rand(1, $j);
                             $rand=$__rand[$rand];
-                        }  
-                    }                                
+                        }
+                    }
                     else
                     {
                         $rand=0;
-                    }                                 
+                    }
                 }
-                
+
                 if ($rand == 0)
                 {
                     $list=array();
@@ -1200,10 +1224,10 @@ class Automation {
                     $rand=rand(1, $j);
                     $rand=$list[$rand];
                 }
-                                            
+
                 $tblevel = $bdo['f'.$rand];
                 $tbgid = $bdo['f'.$rand.'t'];
-                $tbid = $rand; 
+                $tbid = $rand;
                 $needed_cata = round((($battlepart[5] * (pow($tblevel,2) + $tblevel + 1)) / (8 * (round(200 * pow(1.0205,$battlepart[6]))/200) / (1 * $bid34[$stonemason]['attri']/100))) + 0.5);
                 if ($battlepart[4]>$needed_cata)
                 {
@@ -1219,17 +1243,17 @@ class Automation {
                         $q = "UPDATE ".TB_PREFIX."vdata SET `maxstore`='".$tmaxstore."' WHERE wref=".$data['to'];
                         $database->query($q);
                     }
-                    if ($tbgid==11 || $tbgid==39) {                    
+                    if ($tbgid==11 || $tbgid==39) {
                         $tsql=mysql_query("select `maxstore`,`maxcrop` from ".TB_PREFIX."vdata where wref=".$data['to']."");
                         $t_sql=mysql_fetch_array($tsql);
                         $tmaxcrop=$t_sql['maxcrop']-$buildarray[$tblevel]['attri'];
                         if ($tmaxcrop<800) $tmaxcrop=800;
                         $q = "UPDATE ".TB_PREFIX."vdata SET `maxcrop`='".$tmaxcrop."' WHERE wref=".$data['to'];
                         $database->query($q);
-                    }                                    
+                    }
                     $pop=$this->recountPop($data['to']);
                     if($pop=='0')
-                    { 
+                    {
                         $varray = $database->getProfileVillages($to['owner']);
                         if(count($varray)!='1' AND $to['capital']!='1'){
                                 $q = "DELETE FROM ".TB_PREFIX."abdata where wref = ".$data['to'];
@@ -1263,14 +1287,14 @@ class Automation {
                     }
                 }
                 elseif ($battlepart[4]==0)
-                {                        
+                {
                     $info_cat = "".$catp_pic.",".$this->procResType($tbgid)." was not damaged.";
                 }
                 else
-                {                
+                {
                     $demolish=$battlepart[4]/$needed_cata;
                     $totallvl = round(sqrt(pow(($tblevel+0.5),2)-($battlepart[4]*8)));
-                    if ($tblevel==$totallvl) 
+                    if ($tblevel==$totallvl)
                         $info_cata=" was not damaged.";
                     else
                     {
@@ -1284,14 +1308,14 @@ class Automation {
                             $q = "UPDATE ".TB_PREFIX."vdata SET `maxstore`='".$tmaxstore."' WHERE wref=".$data['to'];
                             $database->query($q);
                         }
-                        if ($tbgid==11 || $tbgid==39) {                    
+                        if ($tbgid==11 || $tbgid==39) {
                             $tsql=mysql_query("select `maxstore`,`maxcrop` from ".TB_PREFIX."vdata where wref=".$data['to']."");
                             $t_sql=mysql_fetch_array($tsql);
                             $tmaxcrop=$t_sql['maxcrop']+$buildarray[$totallvl]['attri']-$buildarray[$tblevel]['attri'];
                             if ($tmaxcrop<800) $tmaxcrop=800;
                             $q = "UPDATE ".TB_PREFIX."vdata SET `maxcrop`='".$tmaxcrop."' WHERE wref=".$data['to'];
                             $database->query($q);
-                        }       
+                        }
                         $pop=$this->recountPop($data['to']);
                     }
                     $info_cat = "".$catp_pic.",".$this->procResType($tbgid).$info_cata;
@@ -1314,8 +1338,8 @@ class Automation {
                         if ($bdo['f'.$i.'t']==$rand && $bdo['f'.$i]>0)
                         {
                             $j++;
-                            $_rand[$j]=$bdo['f'.$i];  
-                            $__rand[$j]=$i;           
+                            $_rand[$j]=$bdo['f'.$i];
+                            $__rand[$j]=$i;
                         }
                     }
                     if (count($_rand)>0)
@@ -1325,14 +1349,14 @@ class Automation {
                         {
                             $rand=rand(1, $j);
                             $rand=$__rand[$rand];
-                        }  
-                    }                                
+                        }
+                    }
                     else
                     {
                         $rand=0;
-                    }                                 
+                    }
                 }
-                
+
                 if ($rand == 0)
                 {
                     $list=array();
@@ -1349,10 +1373,10 @@ class Automation {
                     $rand=rand(1, $j);
                     $rand=$list[$rand];
                 }
-                                            
+
                 $tblevel = $bdo['f'.$rand];
                 $tbgid = $bdo['f'.$rand.'t'];
-                $tbid = $rand; 
+                $tbid = $rand;
                 $needed_cata = round((($battlepart[5] * (pow($tblevel,2) + $tblevel + 1)) / (8 * (round(200 * pow(1.0205,$battlepart[6]))/200) / (1 * $bid34[$stonemason]['attri']/100))) + 0.5);
                 if (($battlepart[4]/2)>$needed_cata)
                 {
@@ -1368,17 +1392,17 @@ class Automation {
                         $q = "UPDATE ".TB_PREFIX."vdata SET `maxstore`='".$tmaxstore."' WHERE wref=".$data['to'];
                         $database->query($q);
                     }
-                    if ($tbgid==11 || $tbgid==39) {                    
+                    if ($tbgid==11 || $tbgid==39) {
                         $tsql=mysql_query("select `maxstore`,`maxcrop` from ".TB_PREFIX."vdata where wref=".$data['to']."");
                         $t_sql=mysql_fetch_array($tsql);
                         $tmaxcrop=$t_sql['maxcrop']-$buildarray[$tblevel]['attri'];
                         if ($tmaxcrop<800) $tmaxcrop=800;
                         $q = "UPDATE ".TB_PREFIX."vdata SET `maxcrop`='".$tmaxcrop."' WHERE wref=".$data['to'];
                         $database->query($q);
-                    }                                    
+                    }
                     $pop=$this->recountPop($data['to']);
                     if($pop=='0')
-                    { 
+                    {
                         $varray = $database->getProfileVillages($to['owner']);
                         if(count($varray)!='1' AND $to['capital']!='1'){
                                 $q = "DELETE FROM ".TB_PREFIX."abdata where wref = ".$data['to'];
@@ -1412,14 +1436,14 @@ class Automation {
                     }
                 }
                 elseif ($battlepart[4]==0)
-                {                        
+                {
                     $info_cat = "".$catp_pic.",".$this->procResType($tbgid)." was not damaged.";
                 }
                 else
-                {                
+                {
                     $demolish=($battlepart[4]/2)/$needed_cata;
                     $totallvl = round(sqrt(pow(($tblevel+0.5),2)-(($battlepart[4]/2)*8)));
-                    if ($tblevel==$totallvl) 
+                    if ($tblevel==$totallvl)
                         $info_cata=" was not damaged.";
                     else
                     {
@@ -1433,14 +1457,14 @@ class Automation {
                             $q = "UPDATE ".TB_PREFIX."vdata SET `maxstore`='".$tmaxstore."' WHERE wref=".$data['to'];
                             $database->query($q);
                         }
-                        if ($tbgid==11 || $tbgid==39) {                    
+                        if ($tbgid==11 || $tbgid==39) {
                             $tsql=mysql_query("select `maxstore`,`maxcrop` from ".TB_PREFIX."vdata where wref=".$data['to']."");
                             $t_sql=mysql_fetch_array($tsql);
                             $tmaxcrop=$t_sql['maxcrop']+$buildarray[$totallvl]['attri']-$buildarray[$tblevel]['attri'];
                             if ($tmaxcrop<800) $tmaxcrop=800;
                             $q = "UPDATE ".TB_PREFIX."vdata SET `maxcrop`='".$tmaxcrop."' WHERE wref=".$data['to'];
                             $database->query($q);
-                        }       
+                        }
                         $pop=$this->recountPop($data['to']);
                     }
                     $info_cat = "".$catp_pic.",".$this->procResType($tbgid).$info_cata;
@@ -1457,11 +1481,11 @@ class Automation {
                     for ($i=1;$i<=41;$i++)
                     {
                         if ($i==41) $i=99;
-                        if ($bdo['f'.$i.'t']==$rand && $bdo['f'.$i]>0) 
+                        if ($bdo['f'.$i.'t']==$rand && $bdo['f'.$i]>0)
                         {
                             $j++;
-                            $_rand[$j]=$bdo['f'.$i];   
-                            $__rand[$j]=$i;             
+                            $_rand[$j]=$bdo['f'.$i];
+                            $__rand[$j]=$i;
                         }
                     }
                     if (count($_rand)>0)
@@ -1471,14 +1495,14 @@ class Automation {
                         {
                             $rand=rand(1, $j);
                             $rand=$__rand[$rand];
-                        }  
-                    }                                
+                        }
+                    }
                     else
                     {
                         $rand=99;
-                    }                                 
+                    }
                 }
-                
+
                 if ($rand == 99)
                 {
                     $list=array();
@@ -1495,10 +1519,10 @@ class Automation {
                     $rand=rand(1, $j);
                     $rand=$list[$rand];
                 }
-                                            
+
                 $tblevel = $bdo['f'.$rand];
                 $tbgid = $bdo['f'.$rand.'t'];
-                $tbid = $rand; 
+                $tbid = $rand;
                 $needed_cata = round((($battlepart[5] * (pow($tblevel,2) + $tblevel + 1)) / (8 * (round(200 * pow(1.0205,$battlepart[6]))/200) / (1 * $bid34[$stonemason]['attri']/100))) + 0.5);
                 if (($battlepart[4]/2)>$needed_cata)
                 {
@@ -1515,17 +1539,17 @@ class Automation {
                         $q = "UPDATE ".TB_PREFIX."vdata SET `maxstore`='".$tmaxstore."' WHERE wref=".$data['to'];
                         $database->query($q);
                     }
-                    if ($tbgid==11 || $tbgid==39) {                    
+                    if ($tbgid==11 || $tbgid==39) {
                         $tsql=mysql_query("select `maxstore`,`maxcrop` from ".TB_PREFIX."vdata where wref=".$data['to']."");
                         $t_sql=mysql_fetch_array($tsql);
                         $tmaxcrop=$t_sql['maxcrop']-$buildarray[$tblevel]['attri'];
                         if ($tmaxcrop<800) $tmaxcrop=800;
                         $q = "UPDATE ".TB_PREFIX."vdata SET `maxcrop`='".$tmaxcrop."' WHERE wref=".$data['to'];
                         $database->query($q);
-                    }                                  
+                    }
                     $pop=$this->recountPop($data['to']);
                     if($pop=='0')
-                    { 
+                    {
                         $varray = $database->getProfileVillages($to['owner']);
                         if(count($varray)!='1' AND $to['capital']!='1'){
                                 $q = "DELETE FROM ".TB_PREFIX."abdata where wref = ".$data['to'];
@@ -1559,15 +1583,15 @@ class Automation {
                     }
                 }
                 elseif ($battlepart[4]==0)
-                {                        
+                {
                     $info_cat .= "<br><tbody class=\"goods\"><tr><th>Information</th><td colspan=\"11\">
                     <img class=\"unit u".$catp_pic."\" src=\"img/x.gif\" alt=\"Catapult\" title=\"Catapult\" /> ".$this->procResType($tbgid)." was not damaged.</td></tr></tbody>";
                 }
                 else
-                {                
+                {
                     $demolish=($battlepart[4]/2)/$needed_cata;
                     $totallvl = round(sqrt(pow(($tblevel+0.5),2)-(($battlepart[4]/2)*8)));
-                    if ($tblevel==$totallvl) 
+                    if ($tblevel==$totallvl)
                         $info_cata=" was not damaged.";
                     else
                     {
@@ -1581,28 +1605,28 @@ class Automation {
                             $q = "UPDATE ".TB_PREFIX."vdata SET `maxstore`='".$tmaxstore."' WHERE wref=".$data['to'];
                             $database->query($q);
                         }
-                        if ($tbgid==11 || $tbgid==39) {                    
+                        if ($tbgid==11 || $tbgid==39) {
                             $tsql=mysql_query("select `maxstore`,`maxcrop` from ".TB_PREFIX."vdata where wref=".$data['to']."");
                             $t_sql=mysql_fetch_array($tsql);
                             $tmaxcrop=$t_sql['maxcrop']+$buildarray[$totallvl]['attri']-$buildarray[$tblevel]['attri'];
                             if ($tmaxcrop<800) $tmaxcrop=800;
                             $q = "UPDATE ".TB_PREFIX."vdata SET `maxcrop`='".$tmaxcrop."' WHERE wref=".$data['to'];
                             $database->query($q);
-                        }       
+                        }
                         $pop=$this->recountPop($data['to']);
                     }
-                        
+
                     $info_cat .= "<br><tbody class=\"goods\"><tr><th>Information</th><td colspan=\"11\">
                     <img class=\"unit u".$catp_pic."\" src=\"img/x.gif\" alt=\"Catapult\" title=\"Catapult\" /> ".$this->procResType($tbgid).$info_cata."</td></tr></tbody>";
                     $database->setVillageLevel($data['to'],"f".$tbid."",$totallvl);
 
                 }
             }
-        }    
+        }
     }
-}  
-            
-            
+}
+
+
         //chiefing village
         //there are senators
         if(($data['t9']-$dead9)>0){
@@ -1640,12 +1664,12 @@ class Automation {
                         $database->clearExpansionSlot($data['to']);
                         //kill a chief
                         $database->modifyAttack($data['ref'],9,1);
-                        
-                        
+
+
                         $exp1 = $database->getVillageField($data['from'],'exp1');
                         $exp2 = $database->getVillageField($data['from'],'exp2');
                         $exp3 = $database->getVillageField($data['from'],'exp3');
-                        
+
                         if($exp1 == 0){
                             $exp = 'exp1';
                             $value = $data['to'];
@@ -1659,15 +1683,15 @@ class Automation {
                             $value = $data['to'];
                         }
                         $database->setVillageField($data['from'],$exp,$value);
-                        
-                        
+
+
                     }
                 }
             } else {
                 $info_chief = "".$chief_pic.",You cant take over this village.";
             }
         }
-        
+
         if($data['t11'] > 0){
 			if ($isoasis != 0) {
 				if ($database->canConquerOasis($data['from'],$data['to'])) {
@@ -1691,45 +1715,45 @@ class Automation {
                 }
 			}
         }
-        
-            
-            
+
+
+
                 if($scout){
                 if ($data['spy'] == 1){
-                $info_spy = "".$spy_pic.",<div class=\"res\"><img class=\"r1\" src=\"img/x.gif\" alt=\"Lumber\" title=\"Lumber\" />".round($totwood)." | 
-                 <img class=\"r2\" src=\"img/x.gif\" alt=\"Clay\" title=\"Clay\" />".round($totclay)." | 
-                 <img class=\"r3\" src=\"img/x.gif\" alt=\"Iron\" title=\"Iron\" />".round($totiron)." | 
+                $info_spy = "".$spy_pic.",<div class=\"res\"><img class=\"r1\" src=\"img/x.gif\" alt=\"Lumber\" title=\"Lumber\" />".round($totwood)." |
+                 <img class=\"r2\" src=\"img/x.gif\" alt=\"Clay\" title=\"Clay\" />".round($totclay)." |
+                 <img class=\"r3\" src=\"img/x.gif\" alt=\"Iron\" title=\"Iron\" />".round($totiron)." |
                  <img class=\"r4\" src=\"img/x.gif\" alt=\"Crop\" title=\"Crop\" />".round($totcrop)."</div>
                  <div class=\"carry\"><img class=\"car\" src=\"img/x.gif\" alt=\"carry\" title=\"carry\" />Total Resources : ".round($totwood+$totclay+$totiron+$totcrop)."</div>
     ";
                 }else if($data['spy'] == 2){
-                    if ($isoasis == 0){  
+                    if ($isoasis == 0){
                 $basearray = $database->getMInfo($data['to']);
                 $resarray = $database->getResourceLevel($basearray['wref']);
-                
-                
+
+
                 $crannylevel =0;
                 $rplevel = 0;
                 $walllevel = 0;
                 for($j=19;$j<=40;$j++) {
                 if($resarray['f'.$j.'t'] == 25 || $resarray['f'.$j.'t'] == 26 ) {
-                
+
                 $rplevel = $database->getFieldLevel($basearray['wref'],$j);
-    
+
                 }
                 }
                 for($j=19;$j<=40;$j++) {
                 if($resarray['f'.$j.'t'] == 40) {
-                
+
                 $walllevel = $database->getFieldLevel($basearray['wref'],$j);
-    
+
                 }
                 }
                 for($j=19;$j<=40;$j++) {
                 if($resarray['f'.$j.'t'] == 23) {
-                
+
                 $crannylevel = $database->getFieldLevel($basearray['wref'],$j);
-    
+
                 }
                 }
                     }else {
@@ -1737,14 +1761,14 @@ class Automation {
                         $walllevel =0;
                         $rplevel =0;
                     }
-               
-                
-                                        
+
+
+
                 $info_spy = "".$spy_pic.",Residance/Palace Level : ".$rplevel.".
                 <br>Wall Level : ".$walllevel.".<br>Cranny Level : ".$crannylevel.".";
-            
+
                 }
-                
+
                 $data2 = ''.$from['owner'].','.$from['wref'].','.$owntribe.','.$unitssend_att.','.$unitsdead_att.',0,0,0,0,0,'.$to['owner'].','.$to['wref'].','.addslashes($to['name']).','.$targettribe.',,,'.$rom.','.$unitssend_def[1].','.$unitsdead_def[1].','.$ger.','.$unitssend_def[2].','.$unitsdead_def[2].','.$gal.','.$unitssend_def[3].','.$unitsdead_def[3].','.$nat.','.$unitssend_def[4].','.$unitsdead_def[4].','.$natar.','.$unitssend_def[5].','.$unitsdead_def[5].','.$info_ram.','.$info_cat.','.$info_chief.','.$info_spy.'';
             }
             else{
@@ -1757,7 +1781,7 @@ class Automation {
 
             // When all troops die, sends no info.
             $data_fail = ''.$from['owner'].','.$from['wref'].','.$owntribe.','.$unitssend_att.','.$unitsdead_att.','.$steal[0].','.$steal[1].','.$steal[2].','.$steal[3].','.$battlepart['bounty'].','.$to['owner'].','.$to['wref'].','.addslashes($to['name']).','.$targettribe.',,,'.$rom.','.$unitssend_def[1].','.$unitsdead_deff[1].','.$ger.','.$unitssend_def[2].','.$unitsdead_deff[2].','.$gal.','.$unitssend_def[3].','.$unitsdead_deff[3].','.$nat.','.$unitssend_def[4].','.$unitsdead_deff[4].','.$natar.','.$unitssend_def[5].','.$unitsdead_deff[5].',,,';
-            
+
             //Undetected and detected in here.
             if($scout){
                 for($i=1;$i<=10;$i++)
@@ -1774,9 +1798,9 @@ class Automation {
             }else {
             $database->addNotice($to['owner'],5,''.addslashes($from['name']).' attacks '.addslashes($to['name']).'',$data2,$AttackArrivalTime);
                 }
-            }    
+            }
             //to here
-            
+
             // If the dead units not equal the ammount sent they will return and report
             if($unitsdead_att != $unitssend_att)
             {
@@ -1787,14 +1811,14 @@ class Automation {
                 }else {
                     if ($totaldead_att == 0){
                     $database->addNotice($from['owner'],1,''.addslashes($from['name']).' attacks '.addslashes($to['name']).'',$data2,$AttackArrivalTime);
-                    }else{ 
+                    }else{
                     $database->addNotice($from['owner'],2,''.addslashes($from['name']).' attacks '.addslashes($to['name']).'',$data2,$AttackArrivalTime);
-                    }       
+                    }
                 }
-                
-                $database->setMovementProc($data['moveid']); 
+
+                $database->setMovementProc($data['moveid']);
                 $database->addMovement(4,$to['wref'],$from['wref'],$data['ref'],$endtime);
-                
+
                 // send the bounty on type 6.
                 if($type !== 1)
                 {
@@ -1807,7 +1831,7 @@ class Automation {
                     $database->modifyPoints($from['owner'],'RR',$totalstolengain);
                     $database->modifyPoints($to['owner'],'RR',$totalstolentaken);
                     $database->modifyPointsAlly($targetally,'RR',$totalstolentaken );
-                    $database->modifyPointsAlly($ownally,'RR',$totalstolengain); 
+                    $database->modifyPointsAlly($ownally,'RR',$totalstolengain);
                 }
             }
             else //else they die and don't return or report.
@@ -1824,13 +1848,13 @@ class Automation {
                 @unlink("GameEngine/Prevention/sendunits.txt");
             }
     }
-    
+
     private function sendreinfunitsComplete() {
         global $bid23,$database,$battle;
         $time = time();
         $q = "SELECT * FROM ".TB_PREFIX."movement, ".TB_PREFIX."attacks where ".TB_PREFIX."movement.ref = ".TB_PREFIX."attacks.id and ".TB_PREFIX."movement.proc = '0' and ".TB_PREFIX."movement.sort_type = '3' and ".TB_PREFIX."attacks.attack_type = '2' and endtime < $time";
         $dataarray = $database->query_return($q);
-        
+
         foreach($dataarray as $data) {
             //set base things
             $owntribe = $database->getUserField($database->getVillageField($data['from'],"owner"),"tribe",0);
@@ -1851,11 +1875,11 @@ class Automation {
 						$HeroTransfer = 1;
 					}
 				}
-			} if(!$HeroTransfer) {	
+			} if(!$HeroTransfer) {
 	            //check if there is defence from town in to town
 		        $check=$database->getEnforce($data['to'],$data['from']);
 			    if (!isset($check['id'])){
-				    //no: 
+				    //no:
 					$database->addEnforce($data);
 				} else{
 				 //yes
@@ -1866,7 +1890,7 @@ class Automation {
 					 for($i=$start;$i<=$end;$i++){
 				        $database->modifyEnforce($check['id'],$i,$data['t'.$j.''],1); $j++;
 					}
-				}	
+				}
             }
             //send rapport
             $unitssend_att = ''.$data['t1'].','.$data['t2'].','.$data['t3'].','.$data['t4'].','.$data['t5'].','.$data['t6'].','.$data['t7'].','.$data['t8'].','.$data['t9'].','.$data['t10'].','.$data['t11'].'';
@@ -1876,24 +1900,24 @@ class Automation {
 				$database->addNotice($to['owner'],8,''.addslashes($from['name']).' reinforcement '.addslashes($to['name']).'',$data_fail,$AttackArrivalTime);
 			}
             //update status
-            $database->setMovementProc($data['moveid']); 
+            $database->setMovementProc($data['moveid']);
 
         }
 		if(file_exists("GameEngine/Prevention/sendreinfunits.txt")) {
                 @unlink("GameEngine/Prevention/sendreinfunits.txt");
             }
     }
-    
+
     private function returnunitsComplete() {
         global $database;
         $time = time();
         $q = "SELECT * FROM ".TB_PREFIX."movement, ".TB_PREFIX."attacks where ".TB_PREFIX."movement.ref = ".TB_PREFIX."attacks.id and ".TB_PREFIX."movement.proc = '0' and ".TB_PREFIX."movement.sort_type = '4' and endtime < $time";
         $dataarray = $database->query_return($q);
-        
+
         foreach($dataarray as $data) {
-        
+
         $tribe = $database->getUserField($database->getVillageField($data['to'],"owner"),"tribe",0);
-        
+
         if($tribe == 1){ $u = ""; } elseif($tribe == 2){ $u = "1"; } elseif($tribe == 3){ $u = "2"; } elseif($tribe == 4){ $u = "3"; } else{ $u = "4"; }
         $database->modifyUnit($data['to'],$u."1",$data['t1'],1);
         $database->modifyUnit($data['to'],$u."2",$data['t2'],1);
@@ -1905,16 +1929,16 @@ class Automation {
         $database->modifyUnit($data['to'],$u."8",$data['t8'],1);
         $database->modifyUnit($data['to'],$u."9",$data['t9'],1);
         $database->modifyUnit($data['to'],$tribe."0",$data['t10'],1);
-        $database->modifyUnit($data['to'],"hero",$data['t11'],1); 
+        $database->modifyUnit($data['to'],"hero",$data['t11'],1);
         $database->setMovementProc($data['moveid']);
         }
-        
+
         // Recieve the bounty on type 6.
-        
+
         $q = "SELECT * FROM ".TB_PREFIX."movement, ".TB_PREFIX."send where ".TB_PREFIX."movement.ref = ".TB_PREFIX."send.id and ".TB_PREFIX."movement.proc = 0 and sort_type = 6 and endtime < $time";
         $dataarray = $database->query_return($q);
         foreach($dataarray as $data) {
-            
+
             if($data['wood'] >= $data['clay'] && $data['wood'] >= $data['iron'] && $data['wood'] >= $data['crop']){ $sort_type = "10"; }
             elseif($data['clay'] >= $data['wood'] && $data['clay'] >= $data['iron'] && $data['clay'] >= $data['crop']){ $sort_type = "11"; }
             elseif($data['iron'] >= $data['wood'] && $data['iron'] >= $data['clay'] && $data['iron'] >= $data['crop']){ $sort_type = "12"; }
@@ -1930,8 +1954,8 @@ class Automation {
 		if(file_exists("GameEngine/Prevention/returnunits.txt")) {
             @unlink("GameEngine/Prevention/returnunits.txt");
         }
-    }        
-    
+    }
+
     private function sendSettlersComplete() {
         global $database, $building;
         $time = time();
@@ -1949,11 +1973,11 @@ class Automation {
                         $database->addTech($data['to']);
                         $database->addABTech($data['to']);
                         $database->setMovementProc($data['moveid']);
-                        
+
                         $exp1 = $database->getVillageField($data['from'],'exp1');
                         $exp2 = $database->getVillageField($data['from'],'exp2');
                         $exp3 = $database->getVillageField($data['from'],'exp3');
-                        
+
                         if($exp1 == 0){
                             $exp = 'exp1';
                             $value = $data['to'];
@@ -1977,7 +2001,7 @@ class Automation {
                 @unlink("GameEngine/Prevention/settlers.txt");
             }
     }
-    
+
     private function researchComplete() {
         global $database;
         $time = time();
@@ -2002,16 +2026,16 @@ class Automation {
             @unlink("GameEngine/Prevention/research.txt");
         }
     }
-    
+
     private function updateRes($bountywid,$uid) {
         global $session;
-                
+
 
         $this->bountyLoadTown($bountywid);
         $this->bountycalculateProduction($bountywid,$uid);
         $this->bountyprocessProduction($bountywid);
     }
-    
+
     private function updateORes($bountywid) {
         global $session;
         $this->bountyLoadOTown($bountywid);
@@ -2023,7 +2047,7 @@ class Automation {
         $this->bountyinfoarray = $database->getOasisV($bountywid);
         $this->bountyresarray = $database->getResourceLevel($bountywid);
         $this->bountypop = 2;
-        
+
     }
     private function bountyLoadTown($bountywid) {
         global $database,$session,$logging,$technology;
@@ -2032,7 +2056,7 @@ class Automation {
         $this->bountyoasisowned = $database->getOasis($bountywid);
         $this->bountyocounter = $this->bountysortOasis();
         $this->bountypop = $this->bountyinfoarray['pop'];
-        
+
         //$unitarray = $database->getUnit($bountywid);
         //if(count($unitarray) > 0) {
         //    for($i=1;$i<=50;$i++) {
@@ -2048,7 +2072,7 @@ class Automation {
         //    }
         //}
     }
-    
+
     private function bountysortOasis() {
         $crop = $clay = $wood = $iron = 0;
         foreach ($this->bountyoasisowned as $oasis) {
@@ -2088,7 +2112,7 @@ class Automation {
         }
         return array($wood,$clay,$iron,$crop);
     }
-    
+
     function getAllUnits($base) {
         global $database;
         $ownunit = $database->getUnit($base);
@@ -2107,8 +2131,8 @@ class Automation {
             }
         }
         return $ownunit;
-    }    
-    
+    }
+
     public function getUpkeep($array,$type) {
         $upkeep = 0;
         switch($type) {
@@ -2136,7 +2160,7 @@ class Automation {
             $start = 41;
             $end = 50;
             break;
-        }    
+        }
         for($i=$start;$i<=$end;$i++) {
             $unit = "u".$i;
             global $$unit;
@@ -2145,16 +2169,16 @@ class Automation {
         }
         return $upkeep;
     }
-    private function bountycalculateOProduction($bountywid) { 
+    private function bountycalculateOProduction($bountywid) {
         global $technology,$database;
         $this->bountyOproduction['wood'] = $this->bountyGetOWoodProd();
         $this->bountyOproduction['clay'] = $this->bountyGetOClayProd();
         $this->bountyOproduction['iron'] = $this->bountyGetOIronProd();
         $this->bountyOproduction['crop'] = $this->bountyGetOCropProd();
     }
-    private function bountycalculateProduction($bountywid,$uid) { 
+    private function bountycalculateProduction($bountywid,$uid) {
         global $technology,$database;
-        $normalA = $database->getOwnArtefactInfoByType($bountywid,4);  
+        $normalA = $database->getOwnArtefactInfoByType($bountywid,4);
         $largeA = $database->getOwnUniqueArtefactInfo($uid,4,2);
         $uniqueA = $database->getOwnUniqueArtefactInfo($uid,4,3);
         $upkeep = $this->getUpkeep($this->getAllUnits($bountywid),0);
@@ -2162,19 +2186,19 @@ class Automation {
         $this->bountyproduction['clay'] = $this->bountyGetClayProd();
         $this->bountyproduction['iron'] = $this->bountyGetIronProd();
         if ($uniqueA['size']==3 && $uniqueA['owner']==$uid){
-        $this->bountyproduction['crop'] = $this->bountyGetCropProd()-$this->bountypop-(($upkeep)-round($upkeep*0.50));  
-        
+        $this->bountyproduction['crop'] = $this->bountyGetCropProd()-$this->bountypop-(($upkeep)-round($upkeep*0.50));
+
         }else if ($normalA['type']==4 && $normalA['size']==1 && $normalA['owner']==$uid){
         $this->bountyproduction['crop'] = $this->bountyGetCropProd()-$this->bountypop-(($upkeep)-round($upkeep*0.25));
-        
+
         }else if ($largeA['size']==2 && $largeA['owner']==$uid){
-         $this->bountyproduction['crop'] = $this->bountyGetCropProd()-$this->bountypop-(($upkeep)-round($upkeep*0.25));   
-       
+         $this->bountyproduction['crop'] = $this->bountyGetCropProd()-$this->bountypop-(($upkeep)-round($upkeep*0.25));
+
         }else{
-        $this->bountyproduction['crop'] = $this->bountyGetCropProd()-$this->bountypop-$upkeep;  
+        $this->bountyproduction['crop'] = $this->bountyGetCropProd()-$this->bountypop-$upkeep;
     }
         }
-    
+
     private function bountyprocessProduction($bountywid) {
         global $database;
         $timepast = time() - $this->bountyinfoarray['lastupdate'];
@@ -2195,7 +2219,7 @@ class Automation {
         $database->modifyOasisResource($bountywid,$nwood,$nclay,$niron,$ncrop,1);
         $database->updateOasis($bountywid);
     }
-    
+
     private function bountyGetWoodProd() {
         global $bid1,$bid5,$session;
         $wood = $sawmill = 0;
@@ -2235,11 +2259,11 @@ class Automation {
     }private function bountyGetOIronProd() {
         global $session;
         $iron = 0;
-        $iron += 40; 
+        $iron += 40;
         $iron *= SPEED;
         return round($iron);
     }
-    
+
     private function bountyGetOCropProd() {
         global $session;
         $crop = 0;
@@ -2270,7 +2294,7 @@ class Automation {
         $clay *= SPEED;
         return round($clay);
     }
-    
+
     private function bountyGetIronProd() {
         global $bid3,$bid7,$session;
         $iron = $foundry = 0;
@@ -2294,7 +2318,7 @@ class Automation {
         $iron *= SPEED;
         return round($iron);
     }
-    
+
     private function bountyGetCropProd() {
         global $bid4,$bid8,$bid9,$session;
         $crop = $grainmill = $bakery = 0;
@@ -2320,7 +2344,7 @@ class Automation {
         if($this->bountyocounter[3] != 0) {
             $crop += $crop*0.25*$this->bountyocounter[3];
         }
-        
+
 //        $crop += $crop*$this->bountyocounter[3]*0.25;
         $crop *= SPEED;
         return round($crop);
@@ -2356,7 +2380,7 @@ class Automation {
             @unlink("GameEngine/Prevention/training.txt");
         }
     }
-    
+
     private function procDistanceTime($coor,$thiscoor,$ref,$mode) {
         global $bid14,$database,$generator;
         $resarray = $database->getResourceLevel($generator->getBaseID($coor['x'],$coor['y']));
@@ -2392,22 +2416,22 @@ class Automation {
                 $speed = $distance <= TS_THRESHOLD ? $speed : $speed * ( ( TS_THRESHOLD + ( $distance - TS_THRESHOLD ) * $bid14[$this->getsort_typeLevel(14,$resarray)]['attri'] / 100 ) / $distance ) ;
             }
         }
-        
-        
+
+
         return round(($distance/$speed) * 3600 / INCREASE_SPEED);
 
     }
-    
+
     private function getsort_typeLevel($tid,$resarray) {
-    
-        
+
+
         global $village;
         $keyholder = array();
         foreach(array_keys($resarray,$tid) as $key) {
-            if(strpos($key,'t')) { 
+            if(strpos($key,'t')) {
                 $key = preg_replace("/[^0-9]/", '', $key);
                 array_push($keyholder, $key);
-            } 
+            }
         }
         $element = count($keyholder);
         if($element >= 2) {
@@ -2417,8 +2441,8 @@ class Automation {
                     array_push($temparray,$resarray['f'.$keyholder[$i]]);
                 }
                 foreach ($temparray as $key => $val) {
-                    if ($val == max($temparray)) 
-                    $target = $key; 
+                    if ($val == max($temparray))
+                    $target = $key;
                 }
             }
             else {
@@ -2442,10 +2466,10 @@ class Automation {
             return 0;
         }
     }
-    
+
     private function celebrationComplete() {
         global $database;
-        $varray = $database->getCel(); 
+        $varray = $database->getCel();
             foreach($varray as $vil){
                 $id = $vil['wref'];
                 $type = $vil['type'];
@@ -2458,7 +2482,7 @@ class Automation {
             @unlink("GameEngine/Prevention/celebration.txt");
         }
     }
-    
+
     private function demolitionComplete() {
         global $building,$database;
         $varray = $database->getDemolition();
@@ -2525,13 +2549,13 @@ class Automation {
 		$TroopStarvesEvery = 100;
         $q = "SELECT * FROM ".TB_PREFIX."vdata WHERE crop<0";
         $array = $database->query_return($q);
-		if(!empty($array)) { 
+		if(!empty($array)) {
 	        foreach($array as $village) {
 				$TroopsStarved = floor($village['crop'] / $TroopStarvesEvery) + 1;
 				$ownunit = $database->getUnit($base);
 				$TopUnit = $TopUnitCount = 0;
 				for($i=1;$i<=50;$i++) {
-					if($ownunit['u'.$i] > $TopUnitCount) { $TopUnit = $i; $TopUnitCount = $ownunit['u'.$i]; } 
+					if($ownunit['u'.$i] > $TopUnitCount) { $TopUnit = $i; $TopUnitCount = $ownunit['u'.$i]; }
 				}
 				if($TopUnitCount > 0) {
 					// Remove TroopsStarved from TopUnit
@@ -2542,7 +2566,7 @@ class Automation {
 				$database->query($q);
 			}
 		}
-		
+
 		if(file_exists("GameEngine/Prevention/starvation.txt")) {
             @unlink("GameEngine/Prevention/starvation.txt");
         }
