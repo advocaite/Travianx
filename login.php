@@ -93,7 +93,7 @@ if ($form->getError("pw") == LOGIN_PW_ERROR) {
 echo "<p class=\"error_box\">
 	<span class=\"error\">".PW_FORGOTTEN."</span><br>
 	".PW_REQUEST."<br>
-	<a href=\"activate.php?npw=71699\">".PW_GENERATE."</a>
+	<a href=\"password.php?npw=".$database->getUserField($form->getValue('user'), 'id', 1)."\">".PW_GENERATE."</a>
 </p>";
 }
 if($form->getError("activate") != "") {
