@@ -26,7 +26,8 @@ if($displayarray['tribe'] == 1) {
 }else if($displayarray['tribe'] == 3) {
     $trip = "Gauls";
 }
-$input = $arr[post];
+$input = $arr['post'];
+$bbcoded = $input;
 include("GameEngine/bbcode.php");
 $bbcode_topic = nl2br($bbcoded);
 ?>
@@ -51,7 +52,7 @@ if($database->CheckEditRes($aid)=="1"){
 	echo '<div class="admin"><a class="edit" href="allianz.php?s=2&pid='.$arr['alliance'].'&idf='.$arr['cat'].'&idt='.$arr['id'].'&admin=editans"><img src="img/x.gif" title="edit" alt="edit" /></a><a class="fdel" href="?s=2&pid='.$arr['alliance'].'&tid='.$arr['id'].'&admin=deltopic" onClick="return confirm(\'confirm delete?\');"><img src="img/x.gif" title="delete" alt="delete" /></a></div><br />';
 }
 ?>
-		<div class="clear dotted"></div><div class="text"><?php echo $bbcode_topic; ?>x</div></td>
+		<div class="clear dotted"></div><div class="text"><?php echo $bbcode_topic; ?></div></td>
 	</tr>
 <?php
 foreach($posts as $po) {
