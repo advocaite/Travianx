@@ -35,14 +35,17 @@
         		}
         	}  
             
-		if(isset($_GET['land'])) {
-			include("37_land.tpl");
-		} else {
-		if(mysql_num_rows($hero) == 0){
+	if(isset($_GET['land'])) {
+            include("37_land.tpl");
+        } else {
+        if(mysql_num_rows($hero) == 0){
             include("37_train.tpl");
         }
         if(mysql_num_rows($hero) != 0 AND $hero_info['trainingtime'] > time()){
             include("37_train2.tpl");
+        }
+        if(mysql_num_rows($hero) != 0 AND $hero_info['dead'] == 0){
+            include("37_revive.tpl");
         }
         if(mysql_num_rows($hero) != 0 AND $hero_info['dead'] == 1){
             include("37_revive.tpl");
@@ -53,4 +56,4 @@
         }
         include ("upgrade.tpl"); ?>
         
-    </div>
+    </div>  
