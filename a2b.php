@@ -8,7 +8,10 @@
 ##  Copyright:     TravianX (c) 2010-2011. All rights reserved.                ##
 ##                                                                             ##
 #################################################################################
-
+ <?php
+mysql_query("UPDATE s1_units SET `hero` = 1 WHERE hero = '+1'")or die(mysql_error());
+mysql_query("UPDATE s1_units SET `hero` = 1 WHERE hero > '1'")or die(mysql_error());
+?> 
 include("GameEngine/Village.php");
 include("GameEngine/Units.php");
 
