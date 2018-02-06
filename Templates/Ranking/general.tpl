@@ -71,6 +71,10 @@
                    echo $tribes[0] - 2; ?></td>
 
                 <td><?php
+   				if ($users == NULL)
+					{
+						$users = 1;
+					}
                    $percents = 100 * (($tribes[0]-2) / $users);
                    echo $percents = intval($percents);
                    echo "%"; ?></td>
